@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="symbols.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.2137049"
+     inkscape:cx="397.17632"
+     inkscape:cy="773.6937"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="852"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2383"
+       width="200"
+       height="200"
+       x="27.142853"
+       y="20.933611"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CVisualServer/symbols/hat.png"
+       inkscape:export-xdpi="28.799999"
+       inkscape:export-ydpi="28.799999" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 32.93641,213.49719 L 126.70806,26.710122 L 221.99215,213.49719"
+       id="path3175"
+       sodipodi:nodetypes="ccc"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CVisualServer/symbols/hat.png"
+       inkscape:export-xdpi="28.799999"
+       inkscape:export-ydpi="28.799999" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans;-inkscape-font-specification:Sans"
+       x="127.27771"
+       y="259.75012"
+       id="text3177"><tspan
+         sodipodi:role="line"
+         id="tspan3179"
+         x="127.27771"
+         y="259.75012">hat.png</tspan></text>
+    <rect
+       inkscape:export-ydpi="28.799999"
+       inkscape:export-xdpi="28.799999"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CVisualServer/symbols/love.png"
+       y="17.484734"
+       x="259.45032"
+       height="200"
+       width="200"
+       id="rect3181"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="28.799999"
+       inkscape:export-xdpi="28.799999"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CVisualServer/symbols/love.png"
+       sodipodi:nodetypes="ccscs"
+       id="path3183"
+       d="M 450.259,91.355391 C 450.74891,19.274801 374.26153,-2.1085145 364.89933,89.118071 C 350.7589,7.390451 272.47244,5.7859093 272.31494,84.789399 C 272.21934,132.74245 332.47235,166.3358 358.51044,206.60393 C 389.09329,168.18775 449.92526,140.45735 450.259,91.355391 z"
+       style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       id="text3185"
+       y="261.8212"
+       x="353.55399"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans;-inkscape-font-specification:Sans"
+       xml:space="preserve"><tspan
+         y="261.8212"
+         x="353.55399"
+         id="tspan3187"
+         sodipodi:role="line">love.png</tspan></text>
+    <rect
+       inkscape:export-ydpi="28.799999"
+       inkscape:export-xdpi="28.799999"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CVisualServer/symbols/maggie.png"
+       y="18.076468"
+       x="507.85712"
+       height="200"
+       width="200"
+       id="rect3189"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="28.799999"
+       inkscape:export-xdpi="28.799999"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CVisualServer/symbols/maggie.png"
+       sodipodi:nodetypes="cscsc"
+       id="path3191"
+       d="M 520.79356,210.64005 C 521.88109,97.584594 510.72007,37.922079 537.06521,31.352979 C 571.05178,22.878504 581.89441,81.681433 608.84325,115.52846 C 636.8795,79.455963 638.60461,26.454021 679.88054,32.470659 C 704.23407,36.020581 698.06358,209.92576 698.06358,209.92576"
+       style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <text
+       id="text3193"
+       y="260.93359"
+       x="611.42853"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans;-inkscape-font-specification:Sans"
+       xml:space="preserve"><tspan
+         y="260.93359"
+         x="611.42853"
+         id="tspan3195"
+         sodipodi:role="line">maggie.png</tspan></text>
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3197"
+       width="200"
+       height="200"
+       x="261.47061"
+       y="298.30713"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CVisualServer/symbols/sigueme.png"
+       inkscape:export-xdpi="28.799999"
+       inkscape:export-ydpi="28.799999" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans;-inkscape-font-specification:Sans"
+       x="363.86365"
+       y="531.53192"
+       id="text3201"><tspan
+         sodipodi:role="line"
+         id="tspan3203"
+         x="363.86365"
+         y="531.53192">sigueme.png</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 452.75142,363.67513 C 452.474,306.53027 266.67372,271.0129 267.89455,353.63073 C 269.11536,436.24857 447.355,391.45575 452.23815,449.18871 C 457.12132,506.92173 275.34724,504.23856 272.86105,453.39645"
+       id="path3205"
+       sodipodi:nodetypes="cssc"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CVisualServer/symbols/sigueme.png"
+       inkscape:export-xdpi="28.799999"
+       inkscape:export-ydpi="28.799999" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3207"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans;-inkscape-font-specification:Sans"
+       transform="translate(-20,0)"><flowRegion
+         id="flowRegion3209"><rect
+           id="rect3211"
+           width="770.7464"
+           height="98.994949"
+           x="-18.182745"
+           y="194.74268" /></flowRegion><flowPara
+         id="flowPara3213" /></flowRoot>  </g>
+</svg>

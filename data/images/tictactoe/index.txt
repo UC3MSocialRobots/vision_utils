@@ -1,0 +1,7 @@
+//////// here you can specify all the files you want to load
+//////// in the pattern recognizer.
+
+cross.png
+//round.png
+emptyRound.png
+//line.png

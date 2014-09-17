@@ -1,0 +1,4 @@
+//////// here you can specify all the files you want to load
+//////// in the pattern recognizer.
+
+model.png

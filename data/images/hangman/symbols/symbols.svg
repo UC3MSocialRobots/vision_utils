@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.46"
+   sodipodi:docname="symbols.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.2137049"
+     inkscape:cx="518.4158"
+     inkscape:cy="716.37706"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="852"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3207"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans;-inkscape-font-specification:Sans"
+       transform="translate(-20,0)"><flowRegion
+         id="flowRegion3209"><rect
+           id="rect3211"
+           width="770.7464"
+           height="98.994949"
+           x="-18.182745"
+           y="194.74268" /></flowRegion><flowPara
+         id="flowPara3213" /></flowRoot>    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/z.png"
+       y="465.1228"
+       x="516.90979"
+       height="64"
+       width="64"
+       id="rect3792"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3794"
+       width="64"
+       height="64"
+       x="447.90979"
+       y="465.1228"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/y.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/sigueme/CHangMan/data/symbols/x.png"
+       y="465.1228"
+       x="378.90979"
+       height="64"
+       width="64"
+       id="rect3796"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3798"
+       width="64"
+       height="64"
+       x="309.90979"
+       y="465.1228"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/w.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/v.png"
+       y="465.1228"
+       x="240.90979"
+       height="64"
+       width="64"
+       id="rect3800"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3802"
+       width="64"
+       height="64"
+       x="171.90979"
+       y="465.1228"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/u.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/t.png"
+       y="378.89774"
+       x="652.88599"
+       height="64"
+       width="64"
+       id="rect3804"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3806"
+       width="64"
+       height="64"
+       x="583.88599"
+       y="378.89774"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/sigueme/CHangMan/data/symbols/s.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/r.png"
+       y="378.89774"
+       x="514.88599"
+       height="64"
+       width="64"
+       id="rect3808"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3810"
+       width="64"
+       height="64"
+       x="445.88599"
+       y="378.89774"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/q.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/p.png"
+       y="378.89774"
+       x="376.88599"
+       height="64"
+       width="64"
+       id="rect3812"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3814"
+       width="64"
+       height="64"
+       x="307.88593"
+       y="378.89774"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/o.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/sigueme/CHangMan/data/symbols/n.png"
+       y="378.89774"
+       x="238.88593"
+       height="64"
+       width="64"
+       id="rect3816"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3818"
+       width="64"
+       height="64"
+       x="169.88593"
+       y="378.89774"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/m.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/l.png"
+       y="378.89774"
+       x="100.88593"
+       height="64"
+       width="64"
+       id="rect3820"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3822"
+       width="64"
+       height="64"
+       x="31.885923"
+       y="378.89774"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/k.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/j.png"
+       y="290.34225"
+       x="659.6778"
+       height="64"
+       width="64"
+       id="rect3824"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3826"
+       width="64"
+       height="64"
+       x="590.6778"
+       y="290.34225"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/i.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/h.png"
+       y="290.34225"
+       x="521.6778"
+       height="64"
+       width="64"
+       id="rect3828"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3830"
+       width="64"
+       height="64"
+       x="452.6778"
+       y="290.34225"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/g.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/f.png"
+       y="290.34225"
+       x="383.6778"
+       height="64"
+       width="64"
+       id="rect3832"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3834"
+       width="64"
+       height="64"
+       x="314.6778"
+       y="290.34225"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/e.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/d.png"
+       y="290.34225"
+       x="245.6778"
+       height="64"
+       width="64"
+       id="rect3836"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3838"
+       width="64"
+       height="64"
+       x="176.6778"
+       y="290.34225"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/c.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <rect
+       inkscape:export-ydpi="90"
+       inkscape:export-xdpi="90"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/b.png"
+       y="290.34225"
+       x="107.6778"
+       height="64"
+       width="64"
+       id="rect3840"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:30;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3842"
+       width="64"
+       height="64"
+       x="38.677803"
+       y="290.34225"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/a.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <text
+       xml:space="preserve"
+       style="font-size:86.08076477px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       x="472.29102"
+       y="579.25458"
+       id="text3266"
+       sodipodi:linespacing="100%"
+       transform="scale(1.102569,0.9069727)"><tspan
+         sodipodi:role="line"
+         x="472.29102"
+         y="579.25458"
+         style="font-size:86.08076477px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         id="tspan3276">Z</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text3292"
+       y="537.33698"
+       x="441.67657"
+       style="font-size:80.88066101px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       xml:space="preserve"
+       transform="scale(1.0211804,0.9792589)"><tspan
+         id="tspan3294"
+         style="font-size:80.88066101px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         y="537.33698"
+         x="441.67657"
+         sodipodi:role="line">Y</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:85.58153534px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       x="351.54984"
+       y="566.78699"
+       id="text3296"
+       sodipodi:linespacing="100%"
+       transform="scale(1.0805324,0.9254697)"><tspan
+         sodipodi:role="line"
+         x="351.54984"
+         y="566.78699"
+         style="font-size:85.58153534px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         id="tspan3298">X</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text3300"
+       y="489.48816"
+       x="332.62805"
+       style="font-size:71.68789673px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       xml:space="preserve"
+       transform="scale(0.9317051,1.073301)"><tspan
+         id="tspan3302"
+         style="font-size:71.68789673px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         y="489.48816"
+         x="332.62805"
+         sodipodi:role="line">W</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:83.87837219px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       x="234.30203"
+       y="543.48669"
+       id="text3304"
+       sodipodi:linespacing="100%"
+       transform="scale(1.0296431,0.9712103)"><tspan
+         sodipodi:role="line"
+         x="234.30203"
+         y="543.48669"
+         style="font-size:83.87837219px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         id="tspan3306">V</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text3308"
+       y="523.11157"
+       x="177.52406"
+       style="font-size:78.4209671px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       xml:space="preserve"
+       transform="scale(0.997405,1.0026018)"><tspan
+         id="tspan3310"
+         style="font-size:78.4209671px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         y="523.11157"
+         x="177.52406"
+         sodipodi:role="line">U</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:88.86299133px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       x="583.46704"
+       y="492.70239"
+       id="text3312"
+       sodipodi:linespacing="100%"
+       transform="scale(1.1219634,0.8912947)"><tspan
+         sodipodi:role="line"
+         x="583.46704"
+         y="492.70239"
+         style="font-size:88.86299133px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         id="tspan3314">T</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text3316"
+       y="471.66418"
+       x="541.59406"
+       style="font-size:82.34474182px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       xml:space="preserve"
+       transform="scale(1.0813589,0.9247624)"><tspan
+         id="tspan3318"
+         style="font-size:82.34474182px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         y="471.66418"
+         x="541.59406"
+         sodipodi:role="line">S</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:90.41398621px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       x="459.86429"
+       y="487.23566"
+       id="text3320"
+       sodipodi:linespacing="100%"
+       transform="scale(1.1054241,0.9046302)"><tspan
+         sodipodi:role="line"
+         x="459.86429"
+         y="487.23566"
+         style="font-size:90.41398621px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         id="tspan3322">R</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text3324"
+       y="448.8121"
+       x="432.13104"
+       style="font-size:74.85081482px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       xml:space="preserve"
+       transform="scale(1.032585,0.9684433)"><tspan
+         id="tspan3326"
+         style="font-size:74.85081482px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         y="448.8121"
+         x="432.13104"
+         sodipodi:role="line">Q</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:94.86465454px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       x="316.46747"
+       y="513.77454"
+       id="text3328"
+       sodipodi:linespacing="100%"
+       transform="scale(1.1657009,0.857853)"><tspan
+         sodipodi:role="line"
+         x="316.46747"
+         y="513.77454"
+         style="font-size:94.86465454px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         id="tspan3330">P</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text3332"
+       y="455.61139"
+       x="295.81473"
+       style="font-size:78.15218353px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       xml:space="preserve"
+       transform="scale(1.0412156,0.9604159)"><tspan
+         id="tspan3334"
+         style="font-size:78.15218353px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         y="455.61139"
+         x="295.81473"
+         sodipodi:role="line">O</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:88.2638092px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       x="211.91266"
+       y="486.82498"
+       id="text3336"
+       sodipodi:linespacing="100%"
+       transform="scale(1.1065035,0.9037477)"><tspan
+         sodipodi:role="line"
+         x="211.91266"
+         y="486.82498"
+         style="font-size:88.2638092px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         id="tspan3338">N</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text3340"
+       y="456.75757"
+       x="159.22256"
+       style="font-size:84.41437531px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       xml:space="preserve"
+       transform="scale(1.0362228,0.9650434)"><tspan
+         id="tspan3342"
+         style="font-size:84.41437531px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         y="456.75757"
+         x="159.22256"
+         sodipodi:role="line">M</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:100.70555878px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       x="77.347786"
+       y="541.1535"
+       id="text3344"
+       sodipodi:linespacing="100%"
+       transform="scale(1.2276878,0.8145393)"><tspan
+         sodipodi:role="line"
+         x="77.347786"
+         y="541.1535"
+         style="font-size:100.70555878px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         id="tspan3346">L</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text3348"
+       y="486.05011"
+       x="25.573509"
+       style="font-size:89.60016632px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       xml:space="preserve"
+       transform="scale(1.1037088,0.9060361)"><tspan
+         id="tspan3350"
+         style="font-size:89.60016632px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         y="486.05011"
+         x="25.573509"
+         sodipodi:role="line">K</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:105.6149292px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       x="483.80655"
+       y="475.59534"
+       id="text3352"
+       sodipodi:linespacing="100%"
+       transform="scale(1.3607539,0.7348867)"><tspan
+         sodipodi:role="line"
+         x="483.80655"
+         y="475.59534"
+         style="font-size:105.6149292px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         id="tspan3354">J</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text3356"
+       y="374.5741"
+       x="571.46051"
+       style="font-size:85.0758667px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       xml:space="preserve"
+       transform="scale(1.0665383,0.9376128)"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/i.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45"><tspan
+         id="tspan3358"
+         style="font-size:85.0758667px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         y="374.5741"
+         x="571.46051"
+         sodipodi:role="line">I</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:90.95921326px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       x="459.31058"
+       y="395.5773"
+       id="text3360"
+       sodipodi:linespacing="100%"
+       transform="scale(1.1243632,0.8893923)"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/h.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         x="459.31058"
+         y="395.5773"
+         style="font-size:90.95921326px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         id="tspan3362">H</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text3364"
+       y="363.28333"
+       x="434.56738"
+       style="font-size:79.92118835px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       xml:space="preserve"
+       transform="scale(1.041739,0.9599333)"><tspan
+         id="tspan3366"
+         style="font-size:79.92118835px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         y="363.28333"
+         x="434.56738"
+         sodipodi:role="line">G</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:99.68742371px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       x="315.43344"
+       y="419.88586"
+       id="text3368"
+       sodipodi:linespacing="100%"
+       transform="scale(1.1906679,0.8398648)"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/f.png"
+       inkscape:export-xdpi="28"
+       inkscape:export-ydpi="28"><tspan
+         sodipodi:role="line"
+         x="315.43344"
+         y="419.88586"
+         style="font-size:99.68742371px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         id="tspan3370">F</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text3372"
+       y="408.63425"
+       x="265.98651"
+       style="font-size:94.45200348px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       xml:space="preserve"
+       transform="scale(1.1594391,0.862486)"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/e.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         id="tspan3374"
+         style="font-size:94.45200348px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         y="408.63425"
+         x="265.98651"
+         sodipodi:role="line">E</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:90.51919556px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       x="212.87373"
+       y="395.76465"
+       id="text3376"
+       sodipodi:linespacing="100%"
+       transform="scale(1.1232108,0.8903048)"><tspan
+         sodipodi:role="line"
+         x="212.87373"
+         y="395.76465"
+         style="font-size:90.51919556px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         id="tspan3378">D</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text3380"
+       y="373.03305"
+       x="167.12238"
+       style="font-size:81.84816742px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       xml:space="preserve"
+       transform="scale(1.0647324,0.9392031)"><tspan
+         id="tspan3382"
+         style="font-size:81.84816742px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         y="373.03305"
+         x="167.12238"
+         sodipodi:role="line">C</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:92.03962708px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       x="97.785423"
+       y="382.40274"
+       id="text3384"
+       sodipodi:linespacing="100%"
+       transform="scale(1.081766,0.9244143)"><tspan
+         sodipodi:role="line"
+         x="97.785423"
+         y="382.40274"
+         style="font-size:92.03962708px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         id="tspan3386">B</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text3388"
+       y="374.28296"
+       x="36.356983"
+       style="font-size:90.8006897px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       xml:space="preserve"
+       transform="scale(1.0594954,0.9438455)"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CVisualServer/symbols/a.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         id="tspan3390"
+         style="font-size:90.8006897px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         y="374.28296"
+         x="36.356983"
+         sodipodi:role="line">A</tspan></text>
+    <text
+       transform="matrix(0,-1.0665383,0.9376128,0,0,0)"
+       xml:space="preserve"
+       style="font-size:85.0758667px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       x="-338.1012"
+       y="695.27448"
+       id="text3844"
+       sodipodi:linespacing="100%"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/i.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45"><tspan
+         sodipodi:role="line"
+         x="-338.1012"
+         y="695.27448"
+         style="font-size:85.0758667px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         id="tspan3846">I</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text3848"
+       y="695.27448"
+       x="-290.59113"
+       style="font-size:85.0758667px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Charter;-inkscape-font-specification:Bitstream Charter"
+       xml:space="preserve"
+       transform="matrix(0,-1.0665383,0.9376128,0,0,0)"
+       inkscape:export-filename="/home/arnaud/Escritorio/sigueme/CHangMan/data/symbols/i.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45"><tspan
+         id="tspan3850"
+         style="font-size:85.0758667px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         y="695.27448"
+         x="-290.59113"
+         sodipodi:role="line">I</tspan></text>
+  </g>
+</svg>

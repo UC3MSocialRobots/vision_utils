@@ -1,0 +1,2 @@
+ADD_SUBDIRECTORY(nite)
+ADD_SUBDIRECTORY(foo_rgb_skill)

@@ -1,0 +1,110 @@
+# file:///home/user/Downloads/0datasets/libdai/doc/html/fileformats.html
+# A Bayesian network can easily be represented as a factor graph by
+# introducing a factor for each variable, namely the (conditional) probability
+# table of the variable given its parents in the Bayesian network.
+#
+# variables: 0:F (0/1)  1:G (0/1)  2:A (<30/30-50/>50)    3:S (M/F)   4:J (0/1)
+#
+# first line - number of factors in that graph
+2
+# empty line
+
+# for each factor
+# first line: number of variables in that factor
+# second line: the labels of these variables, seperated by spaces (labels are nonnegative
+#   integers and to avoid confusion, it is suggested to start counting at 0).
+# third line contains the number of possible values of each of these variables, also seperated by spaces
+# fourth line contains the number of nonzero entries in the factor table.
+#
+# The rest of the lines contain these nonzero entries; each line consists of
+# a table index, followed by white-space, followed by the value corresponding
+# to that table index. The most difficult part is getting the indexing right.
+# The convention that is used is that the left-most variables cycle through
+# their values the fastest (similar to MatLab indexing of multidimensional
+# arrays).
+#
+#
+# factor 1: F (0/1), G (0/1)
+2
+# variables names
+0 1
+# variables number of values
+2 2
+4
+# F0 G0 0.99 *0.99999
+0   0.99
+# F1 G0 0.8 *0.00001
+1   0.8
+# F0 G1 0.01 *0.99999
+2   0.01
+# F1 G1 0.2 *0.00001
+3    0.2
+
+# factor 2: F (0/1), A (<30/30-50/>50), S (M/F), J (0/1)
+#p(j=yes|f=yes,a=*,s=*) = 0.05            F1 A* S* J1
+#p(j=yes|f=no,a=<30,s=male) = 0.0001      F0 A0 S0 J1
+#p(j=yes|f=no,a=30-50,s=male) = 0.0004    F0 A1 S0 J1
+#p(j=yes|f=no,a=>50,s=male) = 0.0002      F0 A2 S0 J1
+#p(j=yes|f=no,a=<30,s=female) = 0.0005    F0 A0 S1 J0
+#p(j=yes|f=no,a=30-50,s=female) = 0.002   F0 A1 S1 J1
+#p(j=yes|f=no,a=>50,s=female) = 0.001     F0 A2 S1 J1
+# multiply bf p(F)p(A)p(S)
+# p(F0) = 0.99999
+# p(F1) = 0.00001
+# p(A0) = 0.25
+# p(A1) = 0.40
+# p(A2) = 0.35
+# p(S*)  = 0.5
+4
+0 2 3 4
+2 3 2 2
+24
+# F0 A0 S0 J0   0.9999 *0.99999*0.25*0.5
+0 0.124986250125
+# F1 A0 S0 J0   0.95 *0.00001*0.25*0.5
+1 0.0000011875
+# F0 A1 S0 J0   0.9996 *0.99999*0.4*0.5
+2 0.1999180008
+# F1 A1 S0 J0   0.95 *0.00001*0.4*0.5
+3 0.0000019
+# F0 A2 S0 J0   0.9998 *0.99999*0.35*0.5
+4 0.17496325035
+# F1 A2 S0 J0   0.95 *0.00001*0.35*0.5
+5 0.0000016625
+# F0 A0 S1 J0   0.9995 *0.99999*0.25*0.5
+6 0.124936250625
+# F1 A0 S1 J0   0.95 *0.00001*0.25*0.5
+7 0.0000011875
+# F0 A1 S1 J0   0.998 *0.99999*0.4*0.5
+8 0.199598004
+# F1 A1 S1 J0   0.95 *0.00001*0.4*0.5
+9 0.0000019
+# F0 A2 S1 J0   0.9999 *0.99999*0.35*0.5
+10 0.174980750175
+# F1 A2 S1 J0   0.95 *0.00001*0.35*0.5
+11 0.0000016625
+#
+# F0 A0 S0 J1   0.0001 *0.99999*0.25*0.5
+12 0.000012499875
+# F1 A0 S0 J1   0.05 *0.00001*0.25*0.5
+13 0.0000000625
+# F0 A1 S0 J1   0.0004 *0.99999*0.4*0.5
+14 0.0000799992
+# F1 A1 S0 J1   0.05 *0.00001*0.4*0.5
+15 0.0000001
+# F0 A2 S0 J1   0.0002 *0.99999*0.35*0.5
+16 0.00003499965
+# F1 A2 S0 J1   0.05 *0.0001*0.35*0.5
+17 0.000000875
+# F0 A0 S1 J1   0.0005 *0.99999*0.25*0.5
+18 0.000062499375
+# F1 A0 S1 J1   0.05 *0.00001*0.25*0.5
+19 0.0000000625
+# F0 A1 S1 J1   0.002 *0.99999*0.4*0.5
+20 0.000399996
+# F1 A1 S1 J1   0.05 *0.00001*0.4*0.5
+21 0.0000001
+# F0 A2 S1 J1   0.001 *0.99999*0.35*0.5
+22 0.00017499825
+# F1 A2 S1 J1   0.05 *0.00001*0.35*0.5
+23 0.0000000875

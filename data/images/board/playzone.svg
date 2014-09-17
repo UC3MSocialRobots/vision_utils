@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="215.24132"
+   height="121.20793"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.48.1 r9760"
+   sodipodi:docname="playzone.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   version="1.1">
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective68" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:zoom="10.377185"
+     inkscape:cx="144.29467"
+     inkscape:cy="65.657208"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="1024"
+     inkscape:window-x="-1"
+     inkscape:window-y="-26"
+     inkscape:window-maximized="0"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-816.15505,-591.55245)">
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="830.68781"
+       y="710.26428"
+       id="text3199"><tspan
+         sodipodi:role="line"
+         id="tspan3201"
+         x="830.68781"
+         y="710.26428">playzone</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:0;stroke:#000000;stroke-width:7.63607121;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2441"
+       width="92.36393"
+       height="92.36393"
+       x="819.97308"
+       y="595.37048" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect2412"
+       width="16"
+       height="16"
+       x="967.81622"
+       y="599.90997"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/sigueme/CFindPlayZone/board/shape.png"
+       inkscape:export-xdpi="186.59"
+       inkscape:export-ydpi="186.59" />
+    <g
+       id="g2390"
+       transform="matrix(0.04294804,0,0,0.04313494,922.97744,586.50988)"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/sigueme/CFindPlayZone/board/shape.png"
+       inkscape:export-xdpi="193.27"
+       inkscape:export-ydpi="193.27">
+      <path
+         inkscape:export-ydpi="7.46"
+         inkscape:export-xdpi="7.46"
+         inkscape:export-filename="/home/arnaud/robot/src/skills/sigueme/CFindPlayZone/board/shape.png"
+         sodipodi:nodetypes="ccccc"
+         style="fill:#ffffff;fill-opacity:1;stroke:none"
+         d="m 1386.5664,310.65548 30,370.929 -34.3452,0 -16,-370.929 20.3452,0 z"
+         id="path3191"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:export-ydpi="7.46"
+         inkscape:export-xdpi="7.46"
+         inkscape:export-filename="/home/arnaud/robot/src/skills/sigueme/CFindPlayZone/board/shape.png"
+         style="fill:#ffffff;fill-opacity:1;stroke:none"
+         d="m 1064.0232,646.66878 326.5432,0 26,34.9157 -372.5432,0 20,-34.9157 z"
+         id="path3193"
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:export-ydpi="7.46"
+         inkscape:export-xdpi="7.46"
+         inkscape:export-filename="/home/arnaud/robot/src/skills/sigueme/CFindPlayZone/board/shape.png"
+         sodipodi:nodetypes="ccccc"
+         id="path3195"
+         d="m 1078.7948,310.65548 296.3238,0 4.6762,22.3452 -299,0 -2,-22.3452 z"
+         style="fill:#ffffff;fill-opacity:1;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:export-ydpi="7.46"
+         inkscape:export-xdpi="7.46"
+         inkscape:export-filename="/home/arnaud/robot/src/skills/sigueme/CFindPlayZone/board/shape.png"
+         id="path3197"
+         d="m 1074.0232,310.65548 -30,370.929 34.3452,0 16,-370.929 -20.3452,0 z"
+         style="fill:#ffffff;fill-opacity:1;stroke:none"
+         sodipodi:nodetypes="ccccc"
+         inkscape:connector-curvature="0" />
+    </g>
+    <text
+       id="text2428"
+       y="629.48535"
+       x="975.30237"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       xml:space="preserve"><tspan
+         y="629.48535"
+         x="975.30237"
+         sodipodi:role="line"
+         id="tspan2432">playzone profile</tspan></text>
+    <rect
+       inkscape:export-ydpi="89.99987"
+       inkscape:export-xdpi="89.99987"
+       inkscape:export-filename="/home/user/manager/long_term_memory/images/board/shape_twist.png"
+       y="658.73993"
+       x="967.81128"
+       height="16"
+       width="16"
+       id="rect3765"
+       style="fill:#000000;fill-opacity:1;stroke:none" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="975.30237"
+       y="689.48535"
+       id="text3777"><tspan
+         id="tspan3779"
+         sodipodi:role="line"
+         x="975.30237"
+         y="689.48535">playzone profile</tspan></text>
+    <path
+       style="fill:#ffffff;stroke:none"
+       d="m 975.8113,658.73995 -8,7.27928 8,8.72072 8,-8.72072 z"
+       id="path3781"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/user/manager/long_term_memory/images/board/shape_twist.png"
+       inkscape:export-xdpi="89.99987"
+       inkscape:export-ydpi="89.99987" />
+    <path
+       sodipodi:nodetypes="ccccc"
+       inkscape:connector-curvature="0"
+       id="path3807"
+       d="m 975.8113,659.69733 -6.609,6.0136 6.609,7.2044 6.609,-7.2044 z"
+       style="fill:#000000;stroke:none"
+       inkscape:export-filename="/home/user/manager/long_term_memory/images/board/shape_twist.png"
+       inkscape:export-xdpi="89.99987"
+       inkscape:export-ydpi="89.99987" />
+  </g>
+</svg>

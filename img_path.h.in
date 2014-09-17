@@ -1,0 +1,18 @@
+/*!
+\file img_path.h.in
+
+A CMake generated file for the path to images in project vision_utils
+For projects that do not depend from vision_utils, the variable can be built with:
+#include <ros/package.h>
+std::string IMG_DIR = ros::package::getPath("vision_utils") + std::string("/data/images/");
+
+ \date 17/11/2010
+ \author Arnaud Ramey
+*/
+
+#ifndef IMG_PATH_H_
+#define IMG_PATH_H_
+
+#define IMG_DIR                "@CMAKE_CURRENT_SOURCE_DIR@/data/images/"
+
+#endif /* IMG_PATH_H_ */

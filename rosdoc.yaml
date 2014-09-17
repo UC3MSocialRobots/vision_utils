@@ -1,0 +1,6 @@
+#~ documentation on http://www.ros.org/wiki/rosdoc#Basic_Syntax
+ - builder: doxygen
+   tab_size: 2
+   javadoc_autobrief: YES
+   ## remove ROS generated headers corresponding to messages
+   exclude_patterns: '_*.py msg_gen* srv_gen* *third_parties*'

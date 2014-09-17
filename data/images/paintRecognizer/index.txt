@@ -1,0 +1,12 @@
+//////// here you can specify all the files you want to load
+//////// in the pattern recognizer.
+
+sombrero.png
+sierra.png
+corazon.png
+mike.png
+
+/////// old files
+//circle.png
+//tree.png
+//mute.png

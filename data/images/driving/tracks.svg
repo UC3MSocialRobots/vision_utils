@@ -1,0 +1,772 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="3903.0835"
+   height="2381.7812"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="tracks.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   version="1.1">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3504">
+      <stop
+         style="stop-color:#004c00;stop-opacity:1;"
+         offset="0"
+         id="stop3506" />
+      <stop
+         style="stop-color:#008000;stop-opacity:1;"
+         offset="1"
+         id="stop3508" />
+    </linearGradient>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective10" />
+    <inkscape:perspective
+       id="perspective2471"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2452"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective2587"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3490"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3504"
+       id="radialGradient3510"
+       cx="403.60867"
+       cy="622.92542"
+       fx="403.60867"
+       fy="622.92542"
+       r="330.71429"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.8356588,-0.2016575,0.257445,1.0668395,-191.1742,-138.10196)" />
+    <inkscape:perspective
+       id="perspective2485"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3504"
+       id="radialGradient3267"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(2.1809807,-0.2858077,0.671904,1.5120239,-779.86151,628.53313)"
+       cx="403.60867"
+       cy="622.92542"
+       fx="403.60867"
+       fy="622.92542"
+       r="330.71429" />
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3504"
+       id="radialGradient2424"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(2.1809807,-0.2858077,0.671904,1.5120239,-779.86147,628.53313)"
+       cx="403.60867"
+       cy="622.92542"
+       fx="403.60867"
+       fy="622.92542"
+       r="330.71429" />
+    <inkscape:perspective
+       id="perspective3260"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3310"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3363"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.25052"
+     inkscape:cx="777.91258"
+     inkscape:cy="2249.9368"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1323"
+     inkscape:window-height="741"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(528.884,-16.179607)">
+    <image
+       sodipodi:absref="/home/arnaud/7-phd/manager/vision/skills/driving/graphics/track_montmelo-part1+2.png"
+       xlink:href="track_montmelo-part1+2.png"
+       transform="matrix(0.5458748,0.8378667,-0.8570511,0.5152315,0,0)"
+       width="1480.2168"
+       height="1628.0895"
+       id="image3365"
+       x="720.21228"
+       y="-552.27295" />
+    <rect
+       style="fill:url(#radialGradient3510);fill-opacity:1;stroke:none"
+       id="rect2383"
+       width="661.42859"
+       height="661.42859"
+       x="57.856518"
+       y="16.179607"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272.14001"
+       inkscape:export-ydpi="272.14001" />
+    <path
+       style="fill:none;stroke:#333333;stroke-width:65;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 143.5708,171.8939 c -11.33066,88.39356 -11.77773,188.63529 0,282.85715 1.93333,15.4666 22.33872,108.03249 55.38167,108.22305 56.72359,0.32713 57.55699,-47.6691 87.60872,-48.24394 37.3565,-0.71457 80.3781,51.44527 115.28714,59.9145 26.40662,6.40646 47.77235,-36.67398 99.80428,-30.00269 31.38336,4.02383 51.17535,52.37871 71.09896,47.15152 22.63321,-5.93808 41.78366,-14.64257 55.90836,-27.26723 38.7806,-34.6621 38.26358,-118.72021 22.05373,-171.20378 C 607.50155,253.41216 385.9709,373.79049 353.5708,346.17961 320.32648,317.84931 459.16177,92.191566 259.28509,91.893896 152.13283,91.734316 146.19978,151.3845 143.5708,171.8939 z"
+       id="path2385"
+       sodipodi:nodetypes="csssssssssss"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272.14001"
+       inkscape:export-ydpi="272.14001"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:export-ydpi="272.14001"
+       inkscape:export-xdpi="272.14001"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       sodipodi:nodetypes="csssssssssss"
+       id="path3226"
+       d="m 143.5708,171.8939 c -11.33066,88.39356 -11.77773,188.63529 0,282.85715 1.93333,15.4666 22.33872,108.03249 55.38167,108.22305 56.72359,0.32713 57.55699,-47.6691 87.60872,-48.24394 37.3565,-0.71457 80.3781,51.44527 115.28714,59.9145 26.40662,6.40646 47.77235,-36.67398 99.80428,-30.00269 31.38336,4.02383 51.17535,52.37871 71.09896,47.15152 22.63321,-5.93808 41.78366,-14.64257 55.90836,-27.26723 38.7806,-34.6621 38.26358,-118.72021 22.05373,-171.20378 C 607.50155,253.41216 385.9709,373.79049 353.5708,346.17961 320.32648,317.84931 459.16177,92.191566 259.28509,91.893896 152.13283,91.734316 146.19978,151.3845 143.5708,171.8939 z"
+       style="fill:none;stroke:#ffffff;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:connector-curvature="0" />
+    <image
+       sodipodi:absref="/home/arnaud/7-phd/manager/vision/skills/driving/graphics/../../images/powerXML/power2.png"
+       xlink:href="../../images/powerXML/power2.png"
+       inkscape:export-ydpi="272"
+       inkscape:export-xdpi="272"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       transform="matrix(0.9894804,-0.1446667,0.1446667,0.9894804,0,0)"
+       width="74.792778"
+       height="74.792778"
+       id="image2589"
+       x="362.57849"
+       y="283.44278" />
+    <image
+       sodipodi:absref="/home/arnaud/7-phd/manager/vision/skills/driving/graphics/../../images/maggie.png"
+       xlink:href="../../images/maggie.png"
+       inkscape:export-ydpi="272"
+       inkscape:export-xdpi="272"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       transform="matrix(-0.1599956,0.9871177,-0.9871177,-0.1599956,0,0)"
+       width="75.006088"
+       height="102.28102"
+       id="image3492"
+       x="98.129456"
+       y="-333.98923" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect2400"
+       width="10.903866"
+       height="10.903866"
+       x="156.7191"
+       y="304.24448"
+       ry="0"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272" />
+    <rect
+       ry="0"
+       y="304.24448"
+       x="145.81523"
+       height="10.903866"
+       width="10.903866"
+       id="rect3172"
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272" />
+    <rect
+       ry="0"
+       y="304.24448"
+       x="134.91136"
+       height="10.903866"
+       width="10.903866"
+       id="rect3174"
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       id="rect3176"
+       width="10.903866"
+       height="10.903866"
+       x="124.0075"
+       y="304.24448"
+       ry="0"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect3178"
+       width="10.903866"
+       height="10.903866"
+       x="113.10363"
+       y="304.24448"
+       ry="0"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272" />
+    <rect
+       ry="0"
+       y="304.24448"
+       x="102.19977"
+       height="10.903866"
+       width="10.903866"
+       id="rect3180"
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272" />
+    <rect
+       ry="0"
+       y="293.34055"
+       x="156.7191"
+       height="10.903866"
+       width="10.903866"
+       id="rect3182"
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect3184"
+       width="10.903866"
+       height="10.903866"
+       x="145.81523"
+       y="293.34055"
+       ry="0"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       id="rect3186"
+       width="10.903866"
+       height="10.903866"
+       x="134.91136"
+       y="293.34055"
+       ry="0"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272" />
+    <rect
+       ry="0"
+       y="293.34055"
+       x="124.0075"
+       height="10.903866"
+       width="10.903866"
+       id="rect3188"
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272" />
+    <rect
+       ry="0"
+       y="293.34055"
+       x="113.10363"
+       height="10.903866"
+       width="10.903866"
+       id="rect3190"
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect3192"
+       width="10.903866"
+       height="10.903866"
+       x="102.19977"
+       y="293.34055"
+       ry="0"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272" />
+    <text
+       xml:space="preserve"
+       style="font-size:22.60731888px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#999999;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       id="text3194"
+       sodipodi:linespacing="100%"
+       x="393.74014"
+       y="432.25812"
+       transform="matrix(0.9856011,-0.1690871,0.1690871,0.9856011,0,0)"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"><tspan
+         id="tspan3196">GO GO </tspan><tspan
+         id="tspan3198">MAGGIE !</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:5.03900003;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 575.33709,545.00489 0.79967,-44.78137"
+       id="path3220"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#ff0000;stroke-width:4.58562756;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 549.92088,512.09523 52.03192,4.73017 -21.10386,-52.39577 -30.92806,47.6656 z"
+       id="path3222"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:4.92455149;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 570.08061,506.60547 c 0,0 12.90987,3.78211 14.82287,-2.75376 1.913,-6.53587 -15.31813,-4.49355 -14.59095,-10.80911 0.72717,-6.31558 12.93191,-4.91329 12.93191,-4.91329"
+       id="path3224"
+       sodipodi:nodetypes="cssc"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 141.09139,334.18642 0,-5.2434 22.89714,0 0,5.27795"
+       id="path3236"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       inkscape:connector-curvature="0" />
+    <path
+       sodipodi:nodetypes="cccc"
+       id="path3238"
+       d="m 106.88166,350.01903 0,-5.2434 22.89713,0 0,5.27795"
+       style="fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 141.75422,368.50957 -0.18214,-5.24023 22.88332,-0.79541 0.18334,5.27476"
+       id="path3240"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       inkscape:connector-curvature="0" />
+    <path
+       sodipodi:nodetypes="cccc"
+       id="path3242"
+       d="m 108.15495,389.59659 -0.25862,-5.23702 22.86927,-1.12932 0.26031,5.27153"
+       style="fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       inkscape:connector-curvature="0" />
+    <path
+       sodipodi:nodetypes="cccc"
+       id="path3244"
+       d="m 144.98209,408.9286 -0.32457,-5.23334 22.85323,-1.41736 0.32671,5.26783"
+       style="fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 111.96865,430.92145 -0.40092,-5.22805 22.83009,-1.75076 0.40355,5.2625"
+       id="path3246"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/circuit1.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="fill:url(#radialGradient2424);fill-opacity:1;stroke:none"
+       id="rect2420"
+       width="1567.5876"
+       height="629.16327"
+       x="1806.6119"
+       y="1037.8768"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="459.29999"
+       inkscape:export-ydpi="459.29999" />
+    <path
+       inkscape:export-ydpi="459.29999"
+       inkscape:export-xdpi="459.29999"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       sodipodi:nodetypes="cssssssssccscccsssccssscsssssssc"
+       id="path2422"
+       d="m 3183.6073,1553.1562 c 18.8423,-1.0937 48.9841,-13.7459 66.1162,-34.8316 31.2549,-38.4675 26.8472,-54.4956 27.2479,-79.3392 0.4007,-24.8438 3.2997,-168.8142 -0.8015,-179.5156 -3.5193,-9.1832 -17.5948,-32.7518 -32.6148,-39.8225 -8.2193,-3.8694 -169.9773,-57.1046 -184.5669,-52.3395 -54.7755,17.8902 -56.0985,57.7014 -46.4816,86.1514 11.2524,33.2884 104.6391,47.2717 125.8211,65.7155 32.5762,28.3651 55.6979,68.1198 40.4711,108.591 -13.5135,35.9176 -52.8929,21.6378 -52.8929,21.6378 l -490.8627,-285.3013 c -3.6576,-1.7736 -26.9702,-2.1216 -40.2708,1.2021 -20.7983,5.1972 -35.0616,26.0457 -35.0616,26.0457 -38.6011,61.0407 -114.198,177.5093 -115.8035,183.1219 -3.0546,12.4763 6.5402,52.2859 -12.0211,79.7402 -6.6216,6.3243 -18.3235,16.8446 -33.6195,16.6214 l -143.2352,-2.0902 c -12.7783,-0.1865 -22.1159,-3.5439 -26.3024,-5.3152 l -172.4948,-108.0166 c -26.845,-20.3694 -9.5421,-63.0269 19.972,-63.3084 l 214.7137,-0.5769 c 41.2325,-0.1108 75.8063,-43.8884 72.6497,-85.6487 -1.9354,-25.6053 -18.008,-57.4525 -56.7032,-57.4029 l -312.5493,0.4008 c -20.5448,1.0273 -81.2282,21.277 -104.5838,68.9211 -14.2572,29.0836 -23.4793,61.3476 -19.5526,91.0284 3.3868,25.6006 22.1342,69.5587 60.8251,86.083 l 115.4028,49.2865 c 7.1051,3.0345 17.6542,11.6549 18.0521,22.6074 l 1.8715,51.5127 c 0.4946,13.6147 11.7325,33.1389 30.9659,33.1685 l 1086.3091,1.6732 z"
+       style="fill:none;stroke:#333333;stroke-width:17.00751114;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="fill:none;stroke:#0000ff;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect3369"
+       width="1558.3805"
+       height="581.28278"
+       x="-151.54065"
+       y="1097.5981"
+       ry="0"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272" />
+    <path
+       style="fill:none;stroke:#333333;stroke-width:40;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 1251.6111,1579.5469 c 18.8423,-1.0937 50.9841,-9.7459 68.1162,-30.8316 31.2549,-38.4675 26.8472,-54.4956 27.2479,-79.3392 0.4007,-24.8438 3.2997,-154.8142 -0.8015,-165.5156 -3.5193,-9.1832 -17.5948,-32.7518 -32.6148,-39.8225 -8.2193,-3.8694 -171.9773,-67.1046 -186.5669,-62.3395 -54.7755,17.8902 -58.0985,57.7014 -48.4816,86.1514 11.2524,33.2884 106.6391,43.2717 127.8211,61.7155 32.5762,28.3651 55.6979,68.1198 40.4711,108.591 -13.5135,35.9176 -52.8929,21.6378 -52.8929,21.6378 L 703.047,1196.4929 c -9.3121,-2.9045 -26.91768,-1.9039 -40.2708,1.2021 -20.32992,4.7288 -40.76898,15.4494 -53.0616,26.0457 l -111.8035,157.1219 c -30.19621,56.5814 1.89105,70.3277 -24.0211,101.7402 -6.6216,6.3243 -18.3243,16.8941 -33.6195,16.6214 l -117.2352,-2.0902 c -26.93488,-0.4802 -72.28698,-23.1372 -86.80557,-32.4568 l -125.99163,-80.875 c -26.845,-20.3694 -9.5421,-63.0269 19.972,-63.3084 l 196.92294,1.1195 c 41.23199,0.2343 103.51336,-50.6739 100.35676,-92.4342 -1.9354,-25.6053 -25.93081,-53.0253 -64.6195,-52.3138 l -267.75319,4.9244 c -20.5448,1.0273 -102.7153064,23.5388 -132.856309,67.7902 -18.23402,26.7702 -28.002901,57.9549 -24.076201,87.6357 3.3868,25.6006 20.888714,67.859 60.2596498,82.6903 l 84.3030402,31.7575 c 7.229987,2.7236 36.17461,28.6113 36.14651,39.5709 l -0.1285,50.12 c -0.0349,13.6236 25.30332,40.5605 44.5367,40.5194 l 1088.3091,-2.3268 z"
+       id="path2491"
+       sodipodi:nodetypes="cssssssssccscccsssccssscsssssssc"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect2427"
+       width="6.6185837"
+       height="7.4162951"
+       x="1606.0099"
+       y="1001.8559"
+       ry="0"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       transform="matrix(0.01549423,0.99988,0.9999239,-0.01233978,0,0)"
+       inkscape:transform-center-x="-4.4376603"
+       inkscape:transform-center-y="16.498792" />
+    <rect
+       ry="0"
+       y="1001.8559"
+       x="1599.3914"
+       height="7.4162951"
+       width="6.6185837"
+       id="rect2429"
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       transform="matrix(0.01549423,0.99988,0.9999239,-0.01233978,0,0)"
+       inkscape:transform-center-x="-4.3351113"
+       inkscape:transform-center-y="9.8810561" />
+    <rect
+       ry="0"
+       y="1001.8559"
+       x="1592.7728"
+       height="7.4162951"
+       width="6.6185837"
+       id="rect2431"
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       transform="matrix(0.01549423,0.99988,0.9999239,-0.01233978,0,0)"
+       inkscape:transform-center-x="-4.2325623"
+       inkscape:transform-center-y="3.2633201" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       id="rect2433"
+       width="6.6185837"
+       height="7.4162951"
+       x="1586.1542"
+       y="1001.8559"
+       ry="0"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       transform="matrix(0.01549423,0.99988,0.9999239,-0.01233978,0,0)"
+       inkscape:transform-center-x="-4.1300113"
+       inkscape:transform-center-y="-3.3545381" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect2435"
+       width="6.6185837"
+       height="7.4162951"
+       x="1579.5356"
+       y="1001.8559"
+       ry="0"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       transform="matrix(0.01549423,0.99988,0.9999239,-0.01233978,0,0)"
+       inkscape:transform-center-x="-4.0274623"
+       inkscape:transform-center-y="-9.9722741" />
+    <rect
+       ry="0"
+       y="1001.8559"
+       x="1572.917"
+       height="7.4162951"
+       width="6.6185837"
+       id="rect2437"
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       transform="matrix(0.01549423,0.99988,0.9999239,-0.01233978,0,0)"
+       inkscape:transform-center-x="-3.9249114"
+       inkscape:transform-center-y="-16.590132" />
+    <rect
+       ry="0"
+       y="994.4397"
+       x="1606.0099"
+       height="7.4162951"
+       width="6.6185837"
+       id="rect2439"
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       transform="matrix(0.01549423,0.99988,0.9999239,-0.01233978,0,0)"
+       inkscape:transform-center-x="2.977974"
+       inkscape:transform-center-y="16.590306" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect2441"
+       width="6.6185837"
+       height="7.4162951"
+       x="1599.3914"
+       y="994.4397"
+       ry="0"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       transform="matrix(0.01549423,0.99988,0.9999239,-0.01233978,0,0)"
+       inkscape:transform-center-x="3.0805231"
+       inkscape:transform-center-y="9.9725704" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       id="rect2443"
+       width="6.6185837"
+       height="7.4162951"
+       x="1592.7728"
+       y="994.4397"
+       ry="0"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       transform="matrix(0.01549423,0.99988,0.9999239,-0.01233978,0,0)"
+       inkscape:transform-center-x="3.1830721"
+       inkscape:transform-center-y="3.3548343" />
+    <rect
+       ry="0"
+       y="994.4397"
+       x="1586.1542"
+       height="7.4162951"
+       width="6.6185837"
+       id="rect2445"
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       transform="matrix(0.01549423,0.99988,0.9999239,-0.01233978,0,0)"
+       inkscape:transform-center-x="3.285623"
+       inkscape:transform-center-y="-3.2630238" />
+    <rect
+       ry="0"
+       y="994.4397"
+       x="1579.5356"
+       height="7.4162951"
+       width="6.6185837"
+       id="rect2447"
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       transform="matrix(0.01549423,0.99988,0.9999239,-0.01233978,0,0)"
+       inkscape:transform-center-x="3.3881721"
+       inkscape:transform-center-y="-9.8807598" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect2449"
+       width="6.6185837"
+       height="7.4162951"
+       x="1572.917"
+       y="994.4397"
+       ry="0"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       transform="matrix(0.01549423,0.99988,0.9999239,-0.01233978,0,0)"
+       inkscape:transform-center-x="3.490723"
+       inkscape:transform-center-y="-16.498618" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:1.49999988;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 1056.8804,1583.7184 -3.566,0.044 0.2153,13.8968 3.5895,-0.044"
+       id="path2451"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       inkscape:transform-center-x="-29.231778"
+       inkscape:transform-center-y="10.46992"
+       inkscape:connector-curvature="0" />
+    <path
+       sodipodi:nodetypes="cccc"
+       id="path2453"
+       d="m 1067.3264,1562.8228 -3.566,0.044 0.2153,13.8967 3.5895,-0.044"
+       style="fill:none;stroke:#ffffff;stroke-width:1.49999988;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       inkscape:transform-center-x="-39.677778"
+       inkscape:transform-center-y="-10.42563"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:export-ydpi="272"
+       inkscape:export-xdpi="272"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       sodipodi:nodetypes="cccc"
+       id="path2503"
+       d="m 1096.8804,1583.7184 -3.566,0.044 0.2153,13.8968 3.5895,-0.044"
+       style="fill:none;stroke:#ffffff;stroke-width:1.49999988;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:transform-center-x="-69.231778"
+       inkscape:transform-center-y="10.46992"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:export-ydpi="272"
+       inkscape:export-xdpi="272"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       style="fill:none;stroke:#ffffff;stroke-width:1.49999988;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 1107.3264,1562.8228 -3.566,0.044 0.2153,13.8967 3.5895,-0.044"
+       id="path2505"
+       sodipodi:nodetypes="cccc"
+       inkscape:transform-center-x="-79.677778"
+       inkscape:transform-center-y="-10.42563"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:1.49999988;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 1136.8804,1583.7184 -3.566,0.044 0.2153,13.8968 3.5895,-0.044"
+       id="path2507"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       inkscape:transform-center-x="-109.23178"
+       inkscape:transform-center-y="10.46992"
+       inkscape:connector-curvature="0" />
+    <path
+       sodipodi:nodetypes="cccc"
+       id="path2509"
+       d="m 1147.3264,1562.8228 -3.566,0.044 0.2153,13.8967 3.5895,-0.044"
+       style="fill:none;stroke:#ffffff;stroke-width:1.49999988;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       inkscape:transform-center-x="-119.67778"
+       inkscape:transform-center-y="-10.42563"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:export-ydpi="272"
+       inkscape:export-xdpi="272"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       sodipodi:nodetypes="cccc"
+       id="path2511"
+       d="m 1176.8804,1583.7184 -3.566,0.044 0.2153,13.8968 3.5895,-0.044"
+       style="fill:none;stroke:#ffffff;stroke-width:1.49999988;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:transform-center-x="-149.23178"
+       inkscape:transform-center-y="10.46992"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:export-ydpi="272"
+       inkscape:export-xdpi="272"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       style="fill:none;stroke:#ffffff;stroke-width:1.49999988;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 1187.3264,1562.8228 -3.566,0.044 0.2153,13.8967 3.5895,-0.044"
+       id="path2513"
+       sodipodi:nodetypes="cccc"
+       inkscape:transform-center-x="-159.67778"
+       inkscape:transform-center-y="-10.42563"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#ffffff;stroke-width:1.49999988;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 1216.8804,1583.7184 -3.566,0.044 0.2153,13.8968 3.5895,-0.044"
+       id="path2515"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       inkscape:transform-center-x="-189.23178"
+       inkscape:transform-center-y="10.46992"
+       inkscape:connector-curvature="0" />
+    <path
+       sodipodi:nodetypes="cccc"
+       id="path2517"
+       d="m 1227.3264,1562.8228 -3.566,0.044 0.2153,13.8967 3.5895,-0.044"
+       style="fill:none;stroke:#ffffff;stroke-width:1.49999988;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:export-filename="/home/arnaud/robot/src/skills/vision/driving/graphics/track_montmelo.png"
+       inkscape:export-xdpi="272"
+       inkscape:export-ydpi="272"
+       inkscape:transform-center-x="-199.67778"
+       inkscape:transform-center-y="-10.42563"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

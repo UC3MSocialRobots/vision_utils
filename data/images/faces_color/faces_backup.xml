@@ -1,0 +1,448 @@
+<?xml version="1.0" ?>
+<images>
+	<image filename="google/face001.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.543847" texture="0.899241"/>
+	</image>
+	<image filename="google/face002.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.725887" texture="0.941014"/>
+	</image>
+	<image filename="google/face003.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.694558" texture="0.934665"/>
+	</image>
+	<image filename="google/face004.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.630624" texture="0.875656"/>
+	</image>
+	<image filename="google/face005.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.608697" texture="0.90696"/>
+	</image>
+	<image filename="google/face006.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.690335" texture="0.934774"/>
+	</image>
+	<image filename="google/face007.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.668354" texture="0.969768"/>
+	</image>
+	<image filename="google/face008.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.691957" texture="0.951912"/>
+	</image>
+	<image filename="google/face009.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.687253" texture="0.943105"/>
+	</image>
+	<image filename="google/face010.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.747145" texture="0.965885"/>
+	</image>
+	<image filename="google/face011.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.577895" texture="0.931865"/>
+	</image>
+	<image filename="google/face012.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.360976" texture="0.985274"/>
+	</image>
+	<image filename="google/face013.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.261678" texture="0.921327"/>
+	</image>
+	<image filename="google/face014.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.3634" texture="0.902733"/>
+	</image>
+	<image filename="google/face015.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.686536" texture="0.962694"/>
+	</image>
+	<image filename="google/face016.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.688876" texture="0.928739"/>
+	</image>
+	<image filename="google/face017.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.660436" texture="0.97603"/>
+	</image>
+	<image filename="google/face018.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.660878" texture="0.886074"/>
+	</image>
+	<image filename="google/face019.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.822084" texture="0.96834"/>
+	</image>
+	<image filename="google/face020.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.38166" texture="0.777846"/>
+	</image>
+	<image filename="google/face021.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.645029" texture="0.978334"/>
+	</image>
+	<image filename="google/face022.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.759387" texture="0.937557"/>
+	</image>
+	<image filename="google/face023.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.786332" texture="0.958291"/>
+	</image>
+	<image filename="google/face024.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.734133" texture="0.946065"/>
+	</image>
+	<image filename="google/face025.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.547149" texture="1.02083"/>
+	</image>
+	<image filename="google/face026.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.680441" texture="0.866028"/>
+	</image>
+	<image filename="google/face027.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="0" color="0.835764" texture="0.969919"/>
+	</image>
+	<image filename="google/face028.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.783576" texture="0.994036"/>
+	</image>
+	<image filename="google/face029.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.743371" texture="0.943798"/>
+	</image>
+	<image filename="google/face030.jpg">
+		<face visible="1" frontal="1"/>
+		<detectors haar="1" color="0.519797" texture="0.857966"/>
+	</image>
+	<image filename="MIT-CBCL_profiles/0001_00000003.jpg">
+		<face visible="1" frontal="0"/>
+		<detectors haar="0" color="0.372126" texture="0.983173"/>
+	</image>
+	<image filename="MIT-CBCL_profiles/0002_3.jpg">
+		<face visible="1" frontal="0"/>
+		<detectors haar="0" color="0.458706" texture="-0.632678"/>
+	</image>
+	<image filename="MIT-CBCL_profiles/0002_5.jpg">
+		<face visible="1" frontal="0"/>
+		<detectors haar="0" color="0.508821" texture="-0.0388706"/>
+	</image>
+	<image filename="MIT-CBCL_profiles/0003_00000003.jpg">
+		<face visible="1" frontal="0"/>
+		<detectors haar="0" color="0.420089" texture="1.07411"/>
+	</image>
+	<image filename="MIT-CBCL_profiles/0004_3.jpg">
+		<face visible="1" frontal="0"/>
+		<detectors haar="0" color="0.479288" texture="0.837828"/>
+	</image>
+	<image filename="MIT-CBCL_profiles/0004_5.jpg">
+		<face visible="1" frontal="0"/>
+		<detectors haar="1" color="0.496876" texture="-6.06489"/>
+	</image>
+	<image filename="MIT-CBCL_profiles/0005_18.jpg">
+		<face visible="1" frontal="0"/>
+		<detectors haar="0" color="0.613559" texture="-0.899929"/>
+	</image>
+	<image filename="MIT-CBCL_profiles/0005_20.jpg">
+		<face visible="1" frontal="0"/>
+		<detectors haar="0" color="0.602195" texture="-0.852566"/>
+	</image>
+	<image filename="MIT-CBCL_profiles/0005_22.jpg">
+		<face visible="1" frontal="0"/>
+		<detectors haar="0" color="0.608069" texture="-0.533834"/>
+	</image>
+	<image filename="MIT-CBCL_profiles/0006_003.jpg">
+		<face visible="1" frontal="0"/>
+		<detectors haar="0" color="0.521902" texture="-2.17115"/>
+	</image>
+	<image filename="MIT-CBCL_profiles/0007_004.jpg">
+		<face visible="1" frontal="0"/>
+		<detectors haar="0" color="0.442889" texture="-0.417277"/>
+	</image>
+	<image filename="MIT-CBCL_profiles/0007_006.jpg">
+		<face visible="1" frontal="0"/>
+		<detectors haar="0" color="0.45177" texture="-0.548937"/>
+	</image>
+	<image filename="MIT-CBCL_profiles/0008_007.jpg">
+		<face visible="1" frontal="0"/>
+		<detectors haar="0" color="0.497869" texture="-5.12535"/>
+	</image>
+	<image filename="MIT-CBCL_profiles/0009_004.jpg">
+		<face visible="1" frontal="0"/>
+		<detectors haar="0" color="0.501305" texture="0.580746"/>
+	</image>
+	<image filename="MIT-CBCL_profiles/0009_006.jpg">
+		<face visible="1" frontal="0"/>
+		<detectors haar="0" color="0.5784" texture="1.51884"/>
+	</image>
+	<image filename="../balloon.png">
+		<face visible="0" frontal="2"/>
+		<detectors haar="1" color="0.128093" texture="-1.23052"/>
+	</image>
+	<image filename="../maggie.png">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.475303" texture="1.01615"/>
+	</image>
+	<image filename="../paleo.png">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.0956322" texture="0.900169"/>
+	</image>
+	<image filename="../pz/pz01.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.35643" texture="-0.176154"/>
+	</image>
+	<image filename="../pz/pz08.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.391728" texture="-0.209879"/>
+	</image>
+	<image filename="../pz/pz31.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.395285" texture="0.220892"/>
+	</image>
+	<image filename="../pz/pz05.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="1" color="0.35345" texture="0.27972"/>
+	</image>
+	<image filename="../pz/pz25.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.345385" texture="-3.55542"/>
+	</image>
+	<image filename="../pz/pz16.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.391054" texture="-0.189805"/>
+	</image>
+	<image filename="../pz/pz46.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.388302" texture="0.31169"/>
+	</image>
+	<image filename="../pz/pz12.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.353226" texture="0.370408"/>
+	</image>
+	<image filename="../pz/pz20.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.360228" texture="0.42934"/>
+	</image>
+	<image filename="../pz/pz33.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.376599" texture="0.200767"/>
+	</image>
+	<image filename="../pz/pz61.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.419595" texture="0.393002"/>
+	</image>
+	<image filename="../pz/pz36.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.38617" texture="-0.41385"/>
+	</image>
+	<image filename="../pz/pz58.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.367476" texture="0.550161"/>
+	</image>
+	<image filename="../pz/pz51.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.375557" texture="0.191688"/>
+	</image>
+	<image filename="../pz/pz21.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.476324" texture="0.68799"/>
+	</image>
+	<image filename="../pz/pz43.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.537539" texture="0.37417"/>
+	</image>
+	<image filename="../pz/pz44.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.483196" texture="0.0138791"/>
+	</image>
+	<image filename="../pz/pz42.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.464301" texture="0.778218"/>
+	</image>
+	<image filename="../pz/pz24.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.356442" texture="0.24782"/>
+	</image>
+	<image filename="../pz/pz26.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.358694" texture="0.214825"/>
+	</image>
+	<image filename="../pz/pz19.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.359741" texture="-0.416112"/>
+	</image>
+	<image filename="../pz/pz49.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.376707" texture="-0.448205"/>
+	</image>
+	<image filename="../pz/pz35.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.400384" texture="-0.0609429"/>
+	</image>
+	<image filename="../pz/pz03.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.340045" texture="-0.297265"/>
+	</image>
+	<image filename="../pz/pz40.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.471255" texture="0.488398"/>
+	</image>
+	<image filename="../pz/pz60.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.356347" texture="0.380255"/>
+	</image>
+	<image filename="../pz/pz32.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.461472" texture="0.350989"/>
+	</image>
+	<image filename="../pz/pz57.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.349988" texture="-0.190919"/>
+	</image>
+	<image filename="../pz/pz47.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.350708" texture="0.116445"/>
+	</image>
+	<image filename="../pz/pz41.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.45792" texture="0.546189"/>
+	</image>
+	<image filename="../pz/pz48.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.337507" texture="-0.338934"/>
+	</image>
+	<image filename="../pz/pz06.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.361276" texture="-0.30768"/>
+	</image>
+	<image filename="../pz/pz37.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.381408" texture="-0.0190512"/>
+	</image>
+	<image filename="../pz/pz02.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.37695" texture="-0.188738"/>
+	</image>
+	<image filename="../pz/pz34.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.402272" texture="-0.176544"/>
+	</image>
+	<image filename="../pz/pz52.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.410735" texture="0.0748434"/>
+	</image>
+	<image filename="../pz/pz29.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.400647" texture="0.410659"/>
+	</image>
+	<image filename="../pz/pz62.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.42502" texture="-10.9597"/>
+	</image>
+	<image filename="../pz/pz04.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.36993" texture="0.306384"/>
+	</image>
+	<image filename="../pz/pz17.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.388225" texture="-0.00607065"/>
+	</image>
+	<image filename="../pz/pz50.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.358151" texture="-2.85788"/>
+	</image>
+	<image filename="../pz/pz59.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.408747" texture="0.121325"/>
+	</image>
+	<image filename="../pz/pz14.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.382852" texture="0.330742"/>
+	</image>
+	<image filename="../pz/pz54.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.351502" texture="-0.275235"/>
+	</image>
+	<image filename="../pz/pz15.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.408788" texture="-0.518753"/>
+	</image>
+	<image filename="../pz/pz11.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.365425" texture="-0.0152223"/>
+	</image>
+	<image filename="../pz/pz30.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.347487" texture="-0.19919"/>
+	</image>
+	<image filename="../pz/pz63.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.370801" texture="-0.0113631"/>
+	</image>
+	<image filename="../pz/pz13.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.382855" texture="0.154903"/>
+	</image>
+	<image filename="../pz/pz56.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.401041" texture="0.601184"/>
+	</image>
+	<image filename="../pz/pz38.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.355557" texture="-0.294967"/>
+	</image>
+	<image filename="../pz/pz22.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.379123" texture="0.144988"/>
+	</image>
+	<image filename="../pz/pz55.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.353863" texture="0.398816"/>
+	</image>
+	<image filename="../pz/pz23.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.364198" texture="-0.49709"/>
+	</image>
+	<image filename="../pz/pz07.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.33659" texture="0.595066"/>
+	</image>
+	<image filename="../pz/pz27.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.391964" texture="0.230445"/>
+	</image>
+	<image filename="../pz/pz09.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.348767" texture="-0.0521746"/>
+	</image>
+	<image filename="../pz/pz53.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.380987" texture="-0.0269513"/>
+	</image>
+	<image filename="../pz/pz39.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.450961" texture="0.196511"/>
+	</image>
+	<image filename="../pz/pz18.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.391395" texture="0.0169345"/>
+	</image>
+	<image filename="../pz/pz45.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.366677" texture="-0.358537"/>
+	</image>
+	<image filename="../pz/pz10.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.284205" texture="-1.4985"/>
+	</image>
+	<image filename="../pz/pz28.jpg">
+		<face visible="0" frontal="2"/>
+		<detectors haar="0" color="0.404857" texture="0.435806"/>
+	</image>
+</images>
+

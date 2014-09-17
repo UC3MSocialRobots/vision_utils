@@ -1,0 +1,42 @@
+<launch>
+<arg name="robot"/>
+
+<!-- decompress images -->
+<include file="$(find camera)/launch/republish_rgb_camera.launch">
+  <arg name="robot" value="$(arg robot)" />
+</include>
+
+<group ns="$(arg robot)">
+  <node pkg="vision" type="launcher_foo_vision_skill.exe"
+        name="launcher_foo_vision_skill"  output="screen" required="false" respawn="true"
+        args="--display --google
+              _data_acquisition_want_rgb:=true
+              _data_acquisition_want_depth:=false
+              _data_acquisition_by_wait_for_message:=false"
+    />
+<!--
+        launch-prefix="valgrind"
+  -->
+
+  <node pkg="vision" type="launcher_foo_vision_skill2.exe"
+        name="launcher_foo_vision_skill2"  output="screen" required="false" respawn="true"
+        args="--display --google
+              _data_acquisition_want_rgb:=true
+              _data_acquisition_want_depth:=true
+              _data_acquisition_by_wait_for_message:=false"
+    />
+<!--
+        launch-prefix="valgrind"
+-->
+
+  <!-- the event interface skill -->
+  <node pkg="ad_core" type="launcher_qt_event_sender_interface.exe"
+        name="foo_ad_voice_skill_event_interface"
+        output="screen"
+        args='event_keys="|FOO_VISION_SKILL_START;FOO_VISION_SKILL_START;0
+                          |FOO_VISION_SKILL_STOP;FOO_VISION_SKILL_STOP;0
+                          |FOO_VISION_SKILL2_START;FOO_VISION_SKILL2_START;0
+                          |FOO_VISION_SKILL2_STOP;FOO_VISION_SKILL2_STOP;0"'/>
+
+</group>
+</launch>

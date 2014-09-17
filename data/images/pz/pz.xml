@@ -1,0 +1,376 @@
+<?xml version="1.0" ?>
+<images>
+	<image filename="pz01.jpg">
+		<corner x="207" y="280"/>
+		<corner x="264" y="290"/>
+		<corner x="248" y="339"/>
+		<corner x="193" y="329"/>
+	</image>
+	<image filename="pz02.jpg">
+		<corner x="174" y="329"/>
+		<corner x="218" y="336"/>
+		<corner x="212" y="381"/>
+		<corner x="164" y="373"/>
+	</image>
+	<image filename="pz03.jpg">
+		<corner x="199" y="302"/>
+		<corner x="263" y="329"/>
+		<corner x="288" y="269"/>
+		<corner x="228" y="247"/>
+	</image>
+	<image filename="pz04.jpg">
+		<corner x="172" y="301"/>
+		<corner x="222" y="303"/>
+		<corner x="225" y="351"/>
+		<corner x="173" y="352"/>
+	</image>
+	<image filename="pz05.jpg">
+		<corner x="260" y="338"/>
+		<corner x="360" y="345"/>
+		<corner x="358" y="263"/>
+		<corner x="266" y="254"/>
+	</image>
+	<image filename="pz06.jpg">
+		<corner x="270" y="255"/>
+		<corner x="291" y="330"/>
+		<corner x="370" y="318"/>
+		<corner x="344" y="244"/>
+	</image>
+	<image filename="pz07.jpg">
+		<corner x="279" y="261"/>
+		<corner x="374" y="280"/>
+		<corner x="367" y="372"/>
+		<corner x="261" y="352"/>
+	</image>
+	<image filename="pz08.jpg">
+		<corner x="210" y="149"/>
+		<corner x="287" y="157"/>
+		<corner x="270" y="235"/>
+		<corner x="186" y="227"/>
+	</image>
+	<image filename="pz09.jpg">
+		<corner x="231" y="233"/>
+		<corner x="300" y="234"/>
+		<corner x="304" y="309"/>
+		<corner x="230" y="312"/>
+	</image>
+	<image filename="pz10.jpg">
+		<corner x="256" y="203"/>
+		<corner x="343" y="219"/>
+		<corner x="322" y="321"/>
+		<corner x="230" y="301"/>
+	</image>
+	<image filename="pz11.jpg">
+		<corner x="223" y="230"/>
+		<corner x="284" y="238"/>
+		<corner x="290" y="184"/>
+		<corner x="231" y="175"/>
+	</image>
+	<image filename="pz12.jpg">
+		<corner x="246" y="210"/>
+		<corner x="303" y="210"/>
+		<corner x="310" y="269"/>
+		<corner x="249" y="275"/>
+	</image>
+	<image filename="pz13.jpg">
+		<corner x="178" y="243"/>
+		<corner x="265" y="261"/>
+		<corner x="287" y="183"/>
+		<corner x="205" y="167"/>
+	</image>
+	<image filename="pz14.jpg">
+		<corner x="222" y="217"/>
+		<corner x="295" y="209"/>
+		<corner x="304" y="281"/>
+		<corner x="224" y="286"/>
+	</image>
+	<image filename="pz16.jpg">
+		<corner x="214" y="167"/>
+		<corner x="316" y="175"/>
+		<corner x="307" y="269"/>
+		<corner x="192" y="257"/>
+	</image>
+	<image filename="pz18.jpg">
+		<corner x="253" y="249"/>
+		<corner x="329" y="251"/>
+		<corner x="329" y="330"/>
+		<corner x="248" y="328"/>
+	</image>
+	<image filename="pz19.jpg">
+		<corner x="195" y="111"/>
+		<corner x="369" y="139"/>
+		<corner x="322" y="313"/>
+		<corner x="123" y="270"/>
+	</image>
+	<image filename="pz20.jpg">
+		<corner x="162" y="279"/>
+		<corner x="344" y="281"/>
+		<corner x="345" y="132"/>
+		<corner x="181" y="127"/>
+	</image>
+	<image filename="pz21.jpg">
+		<corner x="250" y="184"/>
+		<corner x="243" y="346"/>
+		<corner x="474" y="351"/>
+		<corner x="429" y="191"/>
+	</image>
+	<image filename="pz22.jpg">
+		<corner x="150" y="99"/>
+		<corner x="361" y="110"/>
+		<corner x="369" y="312"/>
+		<corner x="134" y="311"/>
+	</image>
+	<image filename="pz23.jpg">
+		<corner x="90" y="364"/>
+		<corner x="394" y="387"/>
+		<corner x="398" y="119"/>
+		<corner x="147" y="113"/>
+	</image>
+	<image filename="pz24.jpg">
+		<corner x="226" y="143"/>
+		<corner x="372" y="173"/>
+		<corner x="347" y="303"/>
+		<corner x="167" y="256"/>
+	</image>
+	<image filename="pz26.jpg">
+		<corner x="121" y="364"/>
+		<corner x="338" y="345"/>
+		<corner x="319" y="180"/>
+		<corner x="135" y="194"/>
+	</image>
+	<image filename="pz28.jpg">
+		<corner x="211" y="153"/>
+		<corner x="204" y="271"/>
+		<corner x="384" y="261"/>
+		<corner x="363" y="142"/>
+	</image>
+	<image filename="pz29.jpg">
+		<corner x="189" y="264"/>
+		<corner x="351" y="298"/>
+		<corner x="379" y="161"/>
+		<corner x="238" y="135"/>
+	</image>
+	<image filename="pz39.jpg">
+		<corner x="221" y="238"/>
+		<corner x="368" y="222"/>
+		<corner x="406" y="364"/>
+		<corner x="243" y="393"/>
+	</image>
+	<image filename="pz40.jpg">
+		<corner x="134" y="283"/>
+		<corner x="289" y="278"/>
+		<corner x="282" y="145"/>
+		<corner x="140" y="147"/>
+	</image>
+	<image filename="pz41.jpg">
+		<corner x="214" y="238"/>
+		<corner x="335" y="235"/>
+		<corner x="330" y="351"/>
+		<corner x="190" y="351"/>
+	</image>
+	<image filename="pz42.jpg">
+		<corner x="181" y="222"/>
+		<corner x="386" y="236"/>
+		<corner x="364" y="134"/>
+		<corner x="200" y="116"/>
+	</image>
+	<image filename="pz43.jpg">
+		<corner x="303" y="281"/>
+		<corner x="384" y="291"/>
+		<corner x="379" y="236"/>
+		<corner x="309" y="224"/>
+	</image>
+	<image filename="pz44.jpg">
+		<corner x="198" y="204"/>
+		<corner x="316" y="206"/>
+		<corner x="297" y="124"/>
+		<corner x="192" y="119"/>
+	</image>
+	<image filename="pz45.jpg">
+		<corner x="156" y="332"/>
+		<corner x="336" y="373"/>
+		<corner x="383" y="197"/>
+		<corner x="220" y="174"/>
+	</image>
+	<image filename="pz47.jpg">
+		<corner x="198" y="426"/>
+		<corner x="382" y="408"/>
+		<corner x="357" y="245"/>
+		<corner x="205" y="267"/>
+	</image>
+	<image filename="pz48.jpg">
+		<corner x="62" y="393"/>
+		<corner x="234" y="415"/>
+		<corner x="269" y="260"/>
+		<corner x="119" y="247"/>
+	</image>
+	<image filename="pz49.jpg">
+		<corner x="248" y="352"/>
+		<corner x="372" y="356"/>
+		<corner x="359" y="256"/>
+		<corner x="250" y="249"/>
+	</image>
+	<image filename="pz50.jpg">
+		<corner x="233" y="272"/>
+		<corner x="327" y="280"/>
+		<corner x="337" y="194"/>
+		<corner x="251" y="190"/>
+	</image>
+	<image filename="pz52.jpg">
+		<corner x="239" y="361"/>
+		<corner x="398" y="358"/>
+		<corner x="388" y="245"/>
+		<corner x="258" y="252"/>
+	</image>
+	<image filename="pz56.jpg">
+		<corner x="351" y="296"/>
+		<corner x="414" y="288"/>
+		<corner x="399" y="243"/>
+		<corner x="342" y="243"/>
+	</image>
+	<image filename="pz57.jpg">
+		<corner x="220" y="354"/>
+		<corner x="279" y="363"/>
+		<corner x="286" y="305"/>
+		<corner x="231" y="295"/>
+	</image>
+	<image filename="pz59.jpg">
+		<corner x="301" y="353"/>
+		<corner x="371" y="358"/>
+		<corner x="367" y="313"/>
+		<corner x="302" y="305"/>
+	</image>
+	<image filename="pz60.jpg">
+		<corner x="217" y="236"/>
+		<corner x="278" y="249"/>
+		<corner x="263" y="301"/>
+		<corner x="204" y="287"/>
+	</image>
+	<image filename="pz61.jpg">
+		<corner x="364" y="198"/>
+		<corner x="423" y="199"/>
+		<corner x="437" y="248"/>
+		<corner x="373" y="250"/>
+	</image>
+	<image filename="pz63.jpg">
+		<corner x="164" y="156"/>
+		<corner x="243" y="166"/>
+		<corner x="238" y="247"/>
+		<corner x="149" y="235"/>
+	</image>
+	<image filename="pz17.jpg">
+		<corner x="338" y="170"/>
+		<corner x="366" y="239"/>
+		<corner x="269" y="261"/>
+		<corner x="247" y="184"/>
+	</image>
+	<image filename="pz25.jpg">
+		<corner x="203" y="169"/>
+		<corner x="125" y="309"/>
+		<corner x="312" y="359"/>
+		<corner x="362" y="203"/>
+	</image>
+	<image filename="pz27.jpg">
+		<corner x="239" y="150"/>
+		<corner x="180" y="282"/>
+		<corner x="349" y="329"/>
+		<corner x="386" y="180"/>
+	</image>
+	<image filename="pz30.jpg">
+		<corner x="325" y="194"/>
+		<corner x="313" y="336"/>
+		<corner x="152" y="322"/>
+		<corner x="180" y="182"/>
+	</image>
+	<image filename="pz31.jpg">
+		<corner x="264" y="133"/>
+		<corner x="168" y="262"/>
+		<corner x="325" y="345"/>
+		<corner x="409" y="183"/>
+	</image>
+	<image filename="pz32.jpg">
+		<corner x="202" y="236"/>
+		<corner x="166" y="356"/>
+		<corner x="328" y="380"/>
+		<corner x="347" y="252"/>
+	</image>
+	<image filename="pz33.jpg">
+		<corner x="207" y="122"/>
+		<corner x="193" y="313"/>
+		<corner x="425" y="315"/>
+		<corner x="402" y="131"/>
+	</image>
+	<image filename="pz34.jpg">
+		<corner x="169" y="178"/>
+		<corner x="93" y="371"/>
+		<corner x="370" y="398"/>
+		<corner x="374" y="192"/>
+	</image>
+	<image filename="pz35.jpg">
+		<corner x="142" y="171"/>
+		<corner x="82" y="366"/>
+		<corner x="372" y="376"/>
+		<corner x="357" y="184"/>
+	</image>
+	<image filename="pz36.jpg">
+		<corner x="190" y="158"/>
+		<corner x="94" y="331"/>
+		<corner x="357" y="387"/>
+		<corner x="394" y="187"/>
+	</image>
+	<image filename="pz37.jpg">
+		<corner x="178" y="210"/>
+		<corner x="165" y="332"/>
+		<corner x="334" y="338"/>
+		<corner x="319" y="218"/>
+	</image>
+	<image filename="pz38.jpg">
+		<corner x="137" y="244"/>
+		<corner x="130" y="377"/>
+		<corner x="306" y="367"/>
+		<corner x="286" y="240"/>
+	</image>
+	<image filename="pz46.jpg">
+		<corner x="124" y="181"/>
+		<corner x="75" y="354"/>
+		<corner x="294" y="362"/>
+		<corner x="298" y="180"/>
+	</image>
+	<image filename="pz51.jpg">
+		<corner x="254" y="240"/>
+		<corner x="259" y="353"/>
+		<corner x="405" y="344"/>
+		<corner x="376" y="237"/>
+	</image>
+	<image filename="pz53.jpg">
+		<corner x="248" y="416"/>
+		<corner x="384" y="395"/>
+		<corner x="347" y="293"/>
+		<corner x="230" y="308"/>
+	</image>
+	<image filename="pz54.jpg">
+		<corner x="123" y="206"/>
+		<corner x="326" y="209"/>
+		<corner x="330" y="405"/>
+		<corner x="70" y="398"/>
+	</image>
+	<image filename="pz55.jpg">
+		<corner x="317" y="162"/>
+		<corner x="309" y="222"/>
+		<corner x="386" y="228"/>
+		<corner x="393" y="169"/>
+	</image>
+	<image filename="pz58.jpg">
+		<corner x="164" y="224"/>
+		<corner x="237" y="230"/>
+		<corner x="245" y="188"/>
+		<corner x="182" y="180"/>
+	</image>
+	<image filename="pz62.jpg">
+		<corner x="323" y="225"/>
+		<corner x="450" y="250"/>
+		<corner x="452" y="166"/>
+		<corner x="341" y="139"/>
+	</image>
+</images>
+

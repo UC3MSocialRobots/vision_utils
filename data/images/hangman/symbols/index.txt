@@ -1,0 +1,29 @@
+//////// here you can specify all the files you want to load
+//////// in the pattern recognizer.
+
+a.png
+b.png
+c.png
+d.png
+e.png
+f.png
+g.png
+h.png
+i.png
+j.png
+k.png
+l.png
+m.png
+n.png
+o.png
+p.png
+q.png
+r.png
+s.png
+t.png
+u.png
+v.png
+w.png
+x.png
+y.png
+z.png
