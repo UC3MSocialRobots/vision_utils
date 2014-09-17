@@ -24,8 +24,8 @@ ________________________________________________________________________________
 
  */
 
-#include "src/combinatorics/combinatorics_utils.h"
-#include "src/time/timer.h"
+#include "combinatorics/combinatorics_utils.h"
+#include "time/timer.h"
 #include "pie_chart_utils.h"
 
 template<class _T>

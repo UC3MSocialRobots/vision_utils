@@ -26,9 +26,9 @@ Some tests for VoronoiThinner
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp> // for erode
-#include "src/time/timer.h"
+#include "time/timer.h"
 #include <vision_utils/img_path.h>
-#include "vision_utils/image_utils/voronoi.h"
+#include "image_utils/voronoi.h"
 
 //int codec = CV_FOURCC('M', 'P', '4', '2');
 int codec = CV_FOURCC('M', 'J', 'P', 'G');

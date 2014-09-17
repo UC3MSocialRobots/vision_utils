@@ -28,7 +28,7 @@ ________________________________________________________________________________
 #define CLOUD_TILTER_H
 
 #include <opencv2/core/core.hpp>
-#include <src/stats/stats_utils.h>
+#include <stats/stats_utils.h>
 
 class CloudTilter {
 public:

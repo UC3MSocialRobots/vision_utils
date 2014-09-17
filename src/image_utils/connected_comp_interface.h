@@ -1,7 +1,7 @@
 #ifndef CONNECTED_COMP_INTERFACE_H
 #define CONNECTED_COMP_INTERFACE_H
 
-#include "vision_utils/connected_comp/disjoint_sets2.h"
+#include "connected_comp/disjoint_sets2.h"
 
 namespace image_utils {
 

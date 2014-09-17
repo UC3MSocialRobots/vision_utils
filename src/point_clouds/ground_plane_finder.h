@@ -27,7 +27,7 @@ ________________________________________________________________________________
 #define GROUND_PLANE_FINDER_H
 
 // AD
-#include <src/kinect_utils/kinect_openni_utils.h>
+#include <kinect_utils/kinect_openni_utils.h>
 // PCL
 #include <pcl/ModelCoefficients.h>
 #include <pcl/io/pcd_io.h>

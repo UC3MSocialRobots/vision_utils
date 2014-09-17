@@ -26,8 +26,8 @@ http://liris.cnrs.fr/voir/activities-dataset/index.html
 #ifndef LIRIS2IMGS_H
 #define LIRIS2IMGS_H
 
-#include <vision_utils/databases_io/database_player.h>
-#include <src/xml/XmlDocument.h>
+#include <databases_io/database_player.h>
+#include <xml/XmlDocument.h>
 
 class Liris2Imgs : public DatabasePlayer {
 public:

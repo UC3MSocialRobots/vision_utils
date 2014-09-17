@@ -1,5 +1,5 @@
 // maggie
-#include "src/debug/error.h"
+#include "debug/error.h"
 #include "disjoint_sets2.h"
 // C++
 #include <iostream>

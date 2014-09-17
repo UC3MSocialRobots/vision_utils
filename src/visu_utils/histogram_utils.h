@@ -27,11 +27,11 @@ Some useful tools for handling with histograms
 #define HISTOGRAM_UTILS_H
 
 #include <opencv2/imgproc/imgproc.hpp>
-#include <vision_utils/color/colormaps.h>
-#include <src/gnuplot-cpp/gnuplot_i.hpp>
-#include <src/stats/stats_utils.h>
-#include <vision_utils/image_utils/drawing_utils.h>
-#include <vision_utils/image_utils/layer_utils.h>
+#include <color/colormaps.h>
+#include <gnuplot-cpp/gnuplot_i.hpp>
+#include <stats/stats_utils.h>
+#include <image_utils/drawing_utils.h>
+#include <image_utils/layer_utils.h>
 
 namespace histogram_utils {
 

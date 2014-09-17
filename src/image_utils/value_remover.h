@@ -7,8 +7,8 @@
 #include "opencv2/photo/photo.hpp" // for versions 2.4 and +
 #endif // CV_MAJOR_VERSION == 2 && CV_MINOR_VERSION >= 4
 // AD
-#include <vision_utils/image_utils/border_remover.h>
-#include <src/debug/debug.h>
+#include <image_utils/border_remover.h>
+#include <debug/debug_utils.h>
 
 namespace image_utils {
 

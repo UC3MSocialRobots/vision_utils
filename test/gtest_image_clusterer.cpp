@@ -29,9 +29,9 @@ Some tests for class \a ImageClusterer
 // Bring in gtest
 #include <gtest/gtest.h>
 // utils
-#include <src/time/timer.h>
-#include "vision_utils/image_utils/io.h"
-#include "vision_utils/point_clouds/image_clusterer.h"
+#include <time/timer.h>
+#include "image_utils/io.h"
+#include "point_clouds/image_clusterer.h"
 #include <vision_utils/img_path.h>
 
 void test_image_roi(const std::string & rgb_depth_filename_prefix,

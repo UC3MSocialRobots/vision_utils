@@ -24,11 +24,11 @@ Some speed tests for OpenCV imread, imwrite functions
  */
 
 #include <opencv2/highgui/highgui.hpp>
-#include "src/time/timer.h"
-#include "src/system/system_utils.h"
+#include "time/timer.h"
+#include "system/system_utils.h"
 #include <vision_utils/img_path.h>
-#include "src/tests/float_image_generator.h"
-#include "vision_utils/image_utils/content_processing.h"
+#include "tests/float_image_generator.h"
+#include "image_utils/content_processing.h"
 
 inline std::string file_size(const std::string & filename) {
   std::ostringstream command;

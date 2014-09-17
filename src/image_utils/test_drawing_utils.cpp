@@ -26,9 +26,9 @@ ________________________________________________________________________________
 #include <opencv2/highgui/highgui.hpp>
 // AD
 #include <vision_utils/img_path.h>
-#include <src/time/timer.h>
+#include <time/timer.h>
 // vision
-#include "vision_utils/image_utils/drawing_utils.h"
+#include "image_utils/drawing_utils.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 

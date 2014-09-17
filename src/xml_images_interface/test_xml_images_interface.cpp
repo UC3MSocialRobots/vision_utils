@@ -1,5 +1,5 @@
 #include "xml_images_interface.h"
-#include "src/debug/error.h"
+#include "debug/error.h"
 #include <vision_utils/img_path.h>
 
 class XmlImageFooInterface : public XmlImagesInterface {

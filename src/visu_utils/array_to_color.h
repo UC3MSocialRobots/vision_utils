@@ -30,8 +30,8 @@ Optionnal header drawing.
 #define ARRAY_TO_COLOR_H
 
 #include <opencv2/core/core.hpp>
-#include <vision_utils/color/colormaps.h>
-#include <vision_utils/image_utils/drawing_utils.h>
+#include <color/colormaps.h>
+#include <image_utils/drawing_utils.h>
 
 /*!
  * Compute the ROI of a given cell in the array.

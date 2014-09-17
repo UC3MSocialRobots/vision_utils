@@ -4,10 +4,10 @@
 // the interface
 #include "comp_labeller_interface.h"
 // third parties
-#include "third_parties/blob/BlobResult.h"
-#include "third_parties/blob/Blob.h"
-#include "third_parties/blob/BlobExtraction.h"
-#include "third_parties/blob/BlobLibraryConfiguration.h"
+#include "blob/BlobResult.h"
+#include "blob/Blob.h"
+#include "blob/BlobExtraction.h"
+#include "blob/BlobLibraryConfiguration.h"
 
 
 /*! \class  CBlobWrapper

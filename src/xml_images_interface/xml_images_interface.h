@@ -1,7 +1,7 @@
 #ifndef XML_IMAGES_INTERFACE_H
 #define XML_IMAGES_INTERFACE_H
 
-#include "vision_utils/xml_images_reader/xml_images_reader.h"
+#include "xml_images_reader/xml_images_reader.h"
 
 /*! \class  XmlImagesInterface
  *

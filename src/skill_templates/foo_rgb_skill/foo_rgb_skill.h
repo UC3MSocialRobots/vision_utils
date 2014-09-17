@@ -47,7 +47,7 @@ T4: rostopic pub /FOO_RGB_SKILL_START std_msgs/Int16 {}
 #ifndef FOO_RGB_SKILL_H
 #define FOO_RGB_SKILL_H
 
-#include <vision_utils/skill_templates/rgb_skill.h>
+#include <skill_templates/rgb_skill.h>
 
 class FooRgbSkill : public RgbSkill {
 public:

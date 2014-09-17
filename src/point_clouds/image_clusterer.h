@@ -28,8 +28,8 @@ designed for clustering reprojected images.
 #ifndef IMAGE_CLUSTERER_H
 #define IMAGE_CLUSTERER_H
 
-#include "vision_utils/point_clouds/clusterer.h"
-#include "src/kinect_utils/kinect_openni_utils.h"
+#include "point_clouds/clusterer.h"
+#include "kinect_utils/kinect_openni_utils.h"
 
 
 class ImageClusterer : public geometry_utils::Clusterer {

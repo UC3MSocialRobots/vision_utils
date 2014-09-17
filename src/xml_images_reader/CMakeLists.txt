@@ -1,4 +1,4 @@
-IF(AD_USE_OPENCV)
+#IF(AD_USE_OPENCV)
 	add_library(xml_images_reader xml_images_reader.cpp)
         target_link_libraries(xml_images_reader xml_document ${catkin_LIBRARIES})
 
@@ -10,4 +10,4 @@ IF(AD_USE_OPENCV)
 	  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 	  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 	)
-ENDIF(AD_USE_OPENCV)
+#ENDIF(AD_USE_OPENCV)

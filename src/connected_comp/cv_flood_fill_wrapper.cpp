@@ -1,6 +1,6 @@
 #include "cv_flood_fill_wrapper.h"
-#include "vision_utils/image_utils/content_processing.h"
-#include "src/debug/debug.h"
+#include "image_utils/content_processing.h"
+#include "debug/debug_utils.h"
 // third parties
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>

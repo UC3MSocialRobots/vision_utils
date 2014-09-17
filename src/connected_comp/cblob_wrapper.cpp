@@ -1,7 +1,7 @@
 #include "cblob_wrapper.h"
 
-#include "vision_utils/image_utils/content_processing.h"
-#include "src/debug/debug.h"
+#include "image_utils/content_processing.h"
+#include "debug/debug_utils.h"
 #include <opencv2/highgui/highgui.hpp>
 
 CBlobWrapper::CBlobWrapper() {

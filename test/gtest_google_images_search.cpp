@@ -22,8 +22,8 @@ ________________________________________________________________________________
 */
 // Bring in gtest
 #include <gtest/gtest.h>
-#include <src/string/string_split.h>
-#include "vision_utils/image_utils/google_images_search.h"
+#include <string/string_split.h>
+#include "image_utils/google_images_search.h"
 #include <vision_utils/img_path.h>
 
 TEST(TestSuite, empty_image) {

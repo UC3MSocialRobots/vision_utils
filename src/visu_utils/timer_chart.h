@@ -27,9 +27,9 @@ ________________________________________________________________________________
 #ifndef TIMER_CHART_H
 #define TIMER_CHART_H
 
-#include <src/time/timer.h>
-#include <vision_utils/visu_utils/pie_chart_utils.h>
-#include <src/map/map_utils.h>
+#include <time/timer.h>
+#include <visu_utils/pie_chart_utils.h>
+#include <map/map_utils.h>
 
 // some useful preprocesor functions for TimerCharts.
 // put the line "#define CHART_TIMER_ON" in your code,

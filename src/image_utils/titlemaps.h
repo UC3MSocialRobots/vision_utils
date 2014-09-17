@@ -27,7 +27,7 @@ ________________________________________________________________________________
 #ifndef TITLEMAPS_H
 #define TITLEMAPS_H
 
-#include <src/string/string_casts.h>
+#include <string/string_casts.h>
 
 namespace titlemaps {
 

@@ -23,7 +23,7 @@ ________________________________________________________________________________
 \todo Description of the file
  */
 
-#include <vision_utils/databases_io/oni2imgs.h>
+#include <databases_io/oni2imgs.h>
 
 int main(int argc, char **argv) {
   Oni2Imgs player;

@@ -27,8 +27,8 @@ ________________________________________________________________________________
 #include <gtest/gtest.h>
 // AD
 #include <vision_utils/img_path.h>
-#include "src/test/matrix_testing.h"
-#include "vision_utils/image_utils/drawing_utils.h"
+#include "test/matrix_testing.h"
+#include "image_utils/drawing_utils.h"
 
 // #define DISPLAY
 

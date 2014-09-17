@@ -29,8 +29,8 @@ ________________________________________________________________________________
 
 #include <vector>
 #include <opencv2/core/core.hpp>
-#include <src/string/file_io.h>
-#include <src/system/system_utils.h>
+#include <string/file_io.h>
+#include <system/system_utils.h>
 
 class CloudViewerGnuPlot {
 public:

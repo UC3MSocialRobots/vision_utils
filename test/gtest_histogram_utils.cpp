@@ -27,9 +27,9 @@ ________________________________________________________________________________
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
 // AD
-#include <vision_utils/visu_utils/histogram_utils.h>
-#include <src/time/timer.h>
-#include <src/test/matrix_testing.h>
+#include <visu_utils/histogram_utils.h>
+#include <time/timer.h>
+#include <test/matrix_testing.h>
 #include <vision_utils/img_path.h>
 
 ////////////////////////////////////////////////////////////////////////////////

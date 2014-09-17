@@ -27,7 +27,7 @@ http://docs.opencv.org/modules/imgproc/doc/filtering.html?highlight=dilate#cv2.d
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <src/debug/debug.h>
+#include <debug/debug_utils.h>
 
 void draw_rectangles(cv::Mat1b & dst, const std::vector<cv::Rect> & recs,
                      const int thickness = 1, const int color = 180) {

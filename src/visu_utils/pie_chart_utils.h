@@ -30,9 +30,9 @@ Some utilities for drawing pie charts and their associated captions.
 #include <vector>
 #include <numeric>
 #include <opencv2/highgui/highgui.hpp>
-#include "vision_utils/color/colormaps.h"
-#include "vision_utils/image_utils/drawing_utils.h"
-#include "src/geom/geometry_utils.h"
+#include "color/colormaps.h"
+#include "image_utils/drawing_utils.h"
+#include "geom/geometry_utils.h"
 
 namespace pie_chart_utils {
 

@@ -25,7 +25,7 @@ ________________________________________________________________________________
  */
 
 #include "io.h"
-#include "src/geom/geometry_utils.h"
+#include "geom/geometry_utils.h"
 
 class FooPointIo : public geometry_utils::FooPoint2f {
 public:

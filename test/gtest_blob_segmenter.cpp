@@ -25,10 +25,10 @@ ________________________________________________________________________________
  */
 // Bring in gtest
 #include <gtest/gtest.h>
-#include "src/time/timer.h"
-#include "src/test/matrix_testing.h"
-#include "vision_utils/point_clouds/blob_segmenter.h"
-#include "src/kinect_utils/user_image_to_rgb.h"
+#include "time/timer.h"
+#include "test/matrix_testing.h"
+#include "point_clouds/blob_segmenter.h"
+#include "kinect_utils/user_image_to_rgb.h"
 #include <vision_utils/img_path.h>
 
 //#define DISPLAY

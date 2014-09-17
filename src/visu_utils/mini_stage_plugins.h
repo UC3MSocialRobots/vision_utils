@@ -28,11 +28,11 @@ Some plugins to draw more stuff with a MiniStage.
 #define MINI_STAGE_PLUGINS_H
 
 #include "mini_stage.h"
-#include "src/ros_utils/costmap_utils.h"
+#include "ros_utils/costmap_utils.h"
 // kinect
-#include "src/kinect_utils/kinect_openni_utils.h"
+#include "kinect_utils/kinect_openni_utils.h"
 // ellipse
-#include "vision_utils/image_utils/ellipse_utils.h"
+#include "image_utils/ellipse_utils.h"
 
 namespace mini_stage_plugins {
 

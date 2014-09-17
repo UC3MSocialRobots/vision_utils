@@ -25,8 +25,8 @@ Some tests for clouds viewing.
  */
 
 // Bring in my package's API, which is what I'm testing
-#include "vision_utils/point_clouds/cloud_viewer.h"
-#include "src/combinatorics/combinatorics_utils.h"
+#include "point_clouds/cloud_viewer.h"
+#include "combinatorics/combinatorics_utils.h"
 // Bring in gtest
 #include <gtest/gtest.h>
 

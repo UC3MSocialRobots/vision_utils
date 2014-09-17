@@ -25,9 +25,9 @@ ________________________________________________________________________________
 // Bring in gtest
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
-#include "vision_utils/image_utils/layer_utils.h"
-#include "src/test/matrix_testing.h"
-#include "src/time/timer.h"
+#include "image_utils/layer_utils.h"
+#include "test/matrix_testing.h"
+#include "time/timer.h"
 #include <vision_utils/img_path.h>
 
 

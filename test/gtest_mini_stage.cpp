@@ -26,7 +26,7 @@ and \b mini_stage_plugins namespace.
  */
 // Bring in gtest
 #include <gtest/gtest.h>
-#include "vision_utils/visu_utils/mini_stage_plugins.h"
+#include "visu_utils/mini_stage_plugins.h"
 
 TEST(TestSuite, test_reproject_points) {
   MiniStage ms;

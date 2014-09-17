@@ -1,6 +1,6 @@
-#include "src/debug/error.h"
-#include "src/time/timer.h"
-#include <border_remover.h>
+#include "debug/error.h"
+#include "time/timer.h"
+#include "border_remover.h"
 #include <vision_utils/img_path.h>
 
 #include <opencv2/highgui/highgui.hpp>

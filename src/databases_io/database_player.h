@@ -26,13 +26,13 @@ A template class for iteratively access RGB+depth+user databases.
 #define DATABASE_PLAYER_H
 
 #include <opencv2/highgui/highgui.hpp>
-#include <src/cv_conversion_float_uchar.h>
-#include <src/kinect_utils/user_image_to_rgb.h>
+#include <cv_conversion_float_uchar.h>
+#include <kinect_utils/user_image_to_rgb.h>
 // AD
-#include <src/string/filename_handling.h>
-#include <src/string/string_casts_stl.h>
-#include <src/string/timestamp.h>
-#include <vision_utils/image_utils/io.h>
+#include <string/filename_handling.h>
+#include <string/string_casts_stl.h>
+#include <string/timestamp.h>
+#include <image_utils/io.h>
 
 class DatabasePlayer {
 public:

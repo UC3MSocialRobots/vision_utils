@@ -61,7 +61,7 @@ This leads to a speedup by almost 100 times on experimental tests.
 
 #include <deque>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <vision_utils/image_utils/image_contour.h>
+#include <image_utils/image_contour.h>
 
 #define IMPL_MORPH                "morph"
 #define IMPL_ZHANG_SUEN           "zhang_suen"

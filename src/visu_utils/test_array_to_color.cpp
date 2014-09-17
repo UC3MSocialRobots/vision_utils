@@ -25,8 +25,8 @@ Some tests for array_to_color()
  */
 
 #include <opencv2/highgui/highgui.hpp>
-#include "src/cmatrix/cmatrix.h"
-#include "vision_utils/visu_utils/array_to_color.h"
+#include "cmatrix/cmatrix.h"
+#include "visu_utils/array_to_color.h"
 
 int main() {
   // create some data

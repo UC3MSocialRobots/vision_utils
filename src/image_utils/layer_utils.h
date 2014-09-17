@@ -1,7 +1,7 @@
 #ifndef LAYER_UTILS_H
 #define LAYER_UTILS_H
 
-#include "vision_utils/color/color_utils.h"
+#include "color/color_utils.h"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 

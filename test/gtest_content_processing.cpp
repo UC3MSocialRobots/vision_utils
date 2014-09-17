@@ -26,12 +26,12 @@ and \b mini_stage_plugins namespace.
  */
 // Bring in gtest
 #include <gtest/gtest.h>
-#include "vision_utils/image_utils/content_processing.h"
+#include "image_utils/content_processing.h"
 #include <vision_utils/img_path.h>
-#include "src/time/timer.h"
-#include "src/map/map_utils.h"
-#include "src/test/matrix_testing.h"
-#include "src/kinect_utils/user_image_to_rgb.h"
+#include "time/timer.h"
+#include "map/map_utils.h"
+#include "test/matrix_testing.h"
+#include "kinect_utils/user_image_to_rgb.h"
 
 #define GRAYSCALE CV_LOAD_IMAGE_GRAYSCALE
 //#define DISPLAY

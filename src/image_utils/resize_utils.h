@@ -26,7 +26,7 @@ ________________________________________________________________________________
 #ifndef RESIZE_UTILS_H
 #define RESIZE_UTILS_H
 
-#include <src/geom/rect_utils.h>
+#include <geom/rect_utils.h>
 #include <opencv2/imgproc/imgproc.hpp>
 
 namespace image_utils {

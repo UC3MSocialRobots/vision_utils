@@ -25,9 +25,9 @@ ________________________________________________________________________________
 #ifndef _curr_prefix2IMGS_H
 #define _curr_prefix2IMGS_H
 
-#include <vision_utils/databases_io/database_player.h>
-#include <vision_utils/image_utils/io.h>
-#include <src/string/find_and_replace.h>
+#include <databases_io/database_player.h>
+#include <image_utils/io.h>
+#include <string/find_and_replace.h>
 
 class FilenamePrefix2Imgs : public DatabasePlayer {
 public:

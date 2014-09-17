@@ -22,8 +22,8 @@ ________________________________________________________________________________
 
  */
 // Bring in my package's API, which is what I'm testing
-#include "vision_utils/point_clouds/cloud_viewer_gnuplot.h"
-#include "src/combinatorics/combinatorics_utils.h"
+#include "point_clouds/cloud_viewer_gnuplot.h"
+#include "combinatorics/combinatorics_utils.h"
 // Bring in gtest
 #include <gtest/gtest.h>
 

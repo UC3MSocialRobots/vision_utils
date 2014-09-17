@@ -24,8 +24,8 @@ ________________________________________________________________________________
 
  */
 
-#include <src/debug/debug.h>
-#include <src/time/timer.h>
+#include <debug/debug_utils.h>
+#include <time/timer.h>
 #include <vision_utils/img_path.h>
 #include "mini_stage.h"
 #include "mini_stage_plugins.h"

@@ -11,7 +11,7 @@
 #define OcrUtils_H_
 
 // languages ID
-#include "src/translator/Translator.h"
+#include "translator/Translator.h"
 // openCV
 #include "opencv2/core/core.hpp"
 // std

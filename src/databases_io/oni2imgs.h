@@ -32,7 +32,7 @@ ________________________________________________________________________________
 #include <XnCppWrapper.h>
 #include <XnPropNames.h>
 
-#include <vision_utils/databases_io/database_player.h>
+#include <databases_io/database_player.h>
 
 // based on http://openni-discussions.979934.n3.nabble.com/OpenNI-dev-Extracting-RGB-stream-into-AVI-file-from-ONI-file-td4025312.html
 

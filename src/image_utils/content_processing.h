@@ -6,8 +6,8 @@
 // OpenCV
 #include <opencv2/imgproc/imgproc.hpp>
 // AD
-#include <src/geom/geometry_utils.h>
-#include <src/cmatrix/cmatrix.h>
+#include <geom/geometry_utils.h>
+#include <cmatrix/cmatrix.h>
 // vision
 #include "io.h"
 

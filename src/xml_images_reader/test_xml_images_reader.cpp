@@ -1,7 +1,7 @@
 #include "xml_images_reader.h"
 #include <vision_utils/img_path.h>
 
-#include "src/debug/error.h"
+#include "debug/error.h"
 
 class FooXmlImagesReader : public XmlImagesReader {
 public:

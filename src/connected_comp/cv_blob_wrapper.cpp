@@ -1,5 +1,5 @@
 #include "cv_blob_wrapper.h"
-#include "src/debug/debug.h"
+#include "debug/debug_utils.h"
 
 CvBlobWrapper::CvBlobWrapper() {
     label_img = NULL;

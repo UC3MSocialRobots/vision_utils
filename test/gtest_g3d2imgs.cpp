@@ -25,7 +25,7 @@ ________________________________________________________________________________
 //#define DISPLAY
 
 #include <gtest/gtest.h>
-#include <vision_utils/databases_io/g3d2imgs.h>
+#include <databases_io/g3d2imgs.h>
 
 #define G3D_DIR "/home/user/Downloads/0datasets/g3d_kingston/"
 //#define G3D_DIR "/home/arnaud/disk/Datasets/g3d_kingston/"

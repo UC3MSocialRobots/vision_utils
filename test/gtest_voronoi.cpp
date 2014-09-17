@@ -26,9 +26,9 @@ Some tests for Voronoi functions
 // Bring in gtest
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
-#include "src/time/timer.h"
+#include "time/timer.h"
 #include <vision_utils/img_path.h>
-#include "vision_utils/image_utils/voronoi.h"
+#include "image_utils/voronoi.h"
 
 #define SKEL_DIR IMG_DIR "skeletons/"
 #define MAX_RATIO_DIFF 2E-2

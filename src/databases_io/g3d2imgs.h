@@ -26,8 +26,8 @@ http://dipersec.king.ac.uk/G3D/
 #ifndef G3D2IMGS_H
 #define G3D2IMGS_H
 
-#include <vision_utils/databases_io/database_player.h>
-#include <src/xml/XmlDocument.h>
+#include <databases_io/database_player.h>
+#include <xml/XmlDocument.h>
 
 class G3D2Imgs : public DatabasePlayer {
 public:

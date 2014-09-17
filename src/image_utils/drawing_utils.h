@@ -2,9 +2,9 @@
 #define DRAWING_UTILS_H
 
 #include <opencv2/imgproc/imgproc.hpp>
-#include <src/geom/geometry_utils.h>
-#include <vision_utils/image_utils/resize_utils.h>
-#include <vision_utils/image_utils/titlemaps.h>
+#include <geom/geometry_utils.h>
+#include <image_utils/resize_utils.h>
+#include <image_utils/titlemaps.h>
 
 namespace image_utils {
 

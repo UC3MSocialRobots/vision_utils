@@ -27,8 +27,8 @@ ________________________________________________________________________________
 #ifndef COLORMAPS_H
 #define COLORMAPS_H
 
-#include <vision_utils/color/color_utils.h>
-#include <src/data_filters/clamp.h>
+#include <color/color_utils.h>
+#include <data_filters/clamp.h>
 
 namespace colormaps {
 

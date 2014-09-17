@@ -7,8 +7,8 @@
  * \author Arnaud Ramey
  */
 
-#include "vision_utils/visu_utils/GraphMaker.h"
-#include "src/debug/debug.h"
+#include "visu_utils/GraphMaker.h"
+#include "debug/debug_utils.h"
 #include "highgui.h"
 
 int main() {

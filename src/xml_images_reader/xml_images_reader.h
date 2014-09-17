@@ -1,7 +1,7 @@
 #ifndef XML_IMAGES_READER_H
 #define XML_IMAGES_READER_H
 
-#include "src/xml/XmlDocument.h"
+#include "xml/XmlDocument.h"
 // std
 #include <vector>
 // opencv

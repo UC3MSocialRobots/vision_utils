@@ -44,9 +44,9 @@ http://www.embeddedheaven.com/ros-nodelet.htm
  */
 
 
-#include "src/kinect_utils/skeleton_utils.h"
-#include "vision_utils/image_utils/io.h"
-#include "vision_utils/skill_templates/nite/nite_nodelet_subscriber_template.h"
+#include "kinect_utils/skeleton_utils.h"
+#include "image_utils/io.h"
+#include "skill_templates/nite/nite_nodelet_subscriber_template.h"
 
 namespace nite_nodelet_ns {
 

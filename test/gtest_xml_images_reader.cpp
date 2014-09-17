@@ -26,7 +26,7 @@ Some tests for XmlImage
 // Bring in gtest
 #include <gtest/gtest.h>
 #include <vision_utils/img_path.h>
-#include "vision_utils/xml_images_reader/xml_images_reader.h"
+#include "xml_images_reader/xml_images_reader.h"
 
 class FooXmlImagesReader : public XmlImagesReader {
 public:

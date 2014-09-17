@@ -5,7 +5,10 @@ project(vision_utils)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS roscpp roslib cv_bridge
-                                        message_generation utils kinect)
+                                        message_generation utils kinect
+                                        compressed_rounded_image_transport)
+
+find_package(PCL 1.2 REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -78,10 +81,15 @@ generate_messages()
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+set(devel_pkg_inc ${CATKIN_DEVEL_PREFIX}/include/${PROJECT_NAME})
+configure_file(cmake/img_path.h.in ${devel_pkg_inc}/img_path.h)
+install(FILES ${devel_pkg_inc}/img_path.h DESTINATION ${devel_pkg_inc})
+
 catkin_package(
   INCLUDE_DIRS src
   CATKIN_DEPENDS roscpp roslib message_runtime cv_bridge
-  DEPENDS utils kinect
+  DEPENDS utils kinect compressed_rounded_image_transport
+  CFG_EXTRAS img_path.h
 )
 
 ###########
@@ -91,18 +99,18 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-  include src ${catkin_INCLUDE_DIRS} ${utils_INCLUDE_DIRS} ${kinect_INCLUDE_DIRS}
-          /usr/include/openni /usr/include/nite /usr/include/ni
+  include src third_parties ${catkin_INCLUDE_DIRS}
+  ${utils_INCLUDE_DIRS} ${kinect_INCLUDE_DIRS}
+  /usr/include/openni /usr/include/nite /usr/include/ni
 )
-
-ADD_SUBDIRECTORY(src)
-ADD_SUBDIRECTORY(test)
-ADD_SUBDIRECTORY(third_parties)
 
 SET(AD_USE_ROS 1)
 SET(AD_USE_OPENCV 1 CACHE BOOL "")
 SET(AD_USE_NITE 1 CACHE BOOL "")
 
+ADD_SUBDIRECTORY(src)
+ADD_SUBDIRECTORY(test)
+ADD_SUBDIRECTORY(third_parties)
 
 ## Declare a cpp library
 # add_library(foo

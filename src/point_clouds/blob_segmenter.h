@@ -27,10 +27,10 @@ ________________________________________________________________________________
 #ifndef BLOB_SEGMENTER_H
 #define BLOB_SEGMENTER_H
 
-#include <vision_utils/image_utils/depth_canny.h>
-#include <vision_utils/image_utils/content_processing.h>
-#include <vision_utils/connected_comp/disjoint_sets2.h>
-#include "vision_utils/point_clouds/ground_plane_finder.h"
+#include <image_utils/depth_canny.h>
+#include <image_utils/content_processing.h>
+#include <connected_comp/disjoint_sets2.h>
+#include "point_clouds/ground_plane_finder.h"
 
 class BlobSegmenter {
 public:

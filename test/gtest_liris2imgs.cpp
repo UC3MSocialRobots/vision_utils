@@ -24,7 +24,7 @@ ________________________________________________________________________________
  */
 //#define DISPLAY
 #include <gtest/gtest.h>
-#include <vision_utils/databases_io/liris2imgs.h>
+#include <databases_io/liris2imgs.h>
 
 //#define LIRIS_DIR "/home/user/Downloads/0datasets/liris/training-validation/"
 #define LIRIS_DIR "/home/arnaud/disk/Datasets/liris/training-validation/"

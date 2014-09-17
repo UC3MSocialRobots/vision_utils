@@ -25,7 +25,7 @@ ________________________________________________________________________________
  */
 // Bring in gtest
 #include <gtest/gtest.h>
-#include "vision_utils/image_utils/ellipse_utils.h"
+#include "image_utils/ellipse_utils.h"
 
 typedef cv::Point2i Pt2;
 

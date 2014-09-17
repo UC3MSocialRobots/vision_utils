@@ -34,8 +34,8 @@ are done thanks to pixel2world() and world2pixel().
 #define MINI_STAGE_H
 
 #include <opencv2/highgui/highgui.hpp>
-#include <src/geom/geometry_utils.h>
-#include <vision_utils/image_utils/drawing_utils.h>
+#include <geom/geometry_utils.h>
+#include <image_utils/drawing_utils.h>
 
 class MiniStage {
 public:

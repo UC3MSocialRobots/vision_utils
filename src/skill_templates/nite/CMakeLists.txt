@@ -5,7 +5,7 @@ IF(AD_USE_NITE)
     add_executable(foo_nite_subscriber.exe foo_nite_subscriber.cpp
                                        nite_subscriber_template.h)
     target_link_libraries(foo_nite_subscriber.exe string_utils OpenNI
-                                                  XnVNite ${catkin_LIBRARIES})
+                                                  ${catkin_LIBRARIES}) #XnVNite)
 
     install(TARGETS foo_nite_nodelet_subscriber
       ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}

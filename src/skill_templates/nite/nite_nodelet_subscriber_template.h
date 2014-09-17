@@ -43,7 +43,7 @@ ________________________________________________________________________________
 #define NITE_NODELET_RECEIVER_TEMPLATE_H
 
 #include <nodelet/nodelet.h>
-#include "vision_utils/skill_templates/nite/nite_subscriber_template.h"
+#include "skill_templates/nite/nite_subscriber_template.h"
 
 class NiteNodeletSubscriberTemplate : public nodelet::Nodelet, public NiteSubscriberTemplate {
 public:

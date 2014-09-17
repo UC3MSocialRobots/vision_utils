@@ -30,10 +30,10 @@ This class also computes them.
 #ifndef DGAITDB_H
 #define DGAITDB_H
 
-#include <src/time/timer.h>
-#include <vision_utils/databases_io/oni2imgs.h>
-#include <vision_utils/point_clouds/blob_segmenter.h>
-#include <vision_utils/image_utils/io.h>
+#include <time/timer.h>
+#include <databases_io/oni2imgs.h>
+#include <point_clouds/blob_segmenter.h>
+#include <image_utils/io.h>
 
 class DGaitDB : public Oni2Imgs {
 public:

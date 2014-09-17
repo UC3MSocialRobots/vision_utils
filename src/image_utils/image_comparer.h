@@ -13,11 +13,11 @@
  *******************************************************************************/
 
 ////// my imports
-#include "src/geom/hausdorff_distances.h"
-#include "src/debug/debug.h"
-#include "src/string/file_io.h"
-#include "src/string/filename_handling.h"
-#include "vision_utils/image_utils/content_processing.h"
+#include "geom/hausdorff_distances.h"
+#include "debug/debug.h"
+#include "string/file_io.h"
+#include "string/filename_handling.h"
+#include "image_utils/content_processing.h"
 
 ///// STL imports
 #include <opencv2/core/core.hpp>

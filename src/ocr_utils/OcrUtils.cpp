@@ -7,10 +7,10 @@
  * \author Arnaud Ramey
  */
 
-#include "vision_utils/ocr_utils/OcrUtils.h"
-#include "vision_utils/image_utils/io.h"
-#include "src/string/StringUtils.h"
-#include "src/debug/error.h"
+#include "ocr_utils/OcrUtils.h"
+#include "image_utils/io.h"
+#include "string/StringUtils.h"
+#include "debug/error.h"
 #include "vision_utils/img_path.h"
 
 

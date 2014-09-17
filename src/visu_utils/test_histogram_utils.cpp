@@ -24,13 +24,13 @@ ________________________________________________________________________________
 
 #include <vision_utils/img_path.h>
 // utils
-#include <src/time/timer.h>
-#include <src/string/string_casts.h>
-#include <src/geom/rect_utils.h>
+#include <time/timer.h>
+#include <string/string_casts.h>
+#include <geom/rect_utils.h>
 // kinect
-#include "src/kinect_utils/user_image_to_rgb.h"
+#include "kinect_utils/user_image_to_rgb.h"
 // vision
-#include <vision_utils/image_utils/layer_utils.h>
+#include <image_utils/layer_utils.h>
 #include "histogram_utils.h"
 
 namespace HU = histogram_utils;

@@ -3,7 +3,7 @@
 
 // std
 #include "opencv2/core/core.hpp"
-#include <src/sort/sort_utils.h>
+#include <sort/sort_utils.h>
 
 /*! \class  CompLabellerInterface
  *
