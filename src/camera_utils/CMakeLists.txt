@@ -1,37 +1,31 @@
 IF(AD_USE_OPENCV)
-  add_maggie_test(opencv_calibration
-    SOURCES       opencv_calibration.cpp
-  )
+  add_executable(opencv_calibration.exe opencv_calibration.cpp)
 
   IF(AD_USE_ROS)
-    add_maggie_test(image_topic_to_video
-      SOURCES       image_topic_to_video.cpp
-      LINK          string_utils
-    )
+	add_executable(image_topic_to_video.exe image_topic_to_video.cpp)
+        target_link_libraries(image_topic_to_video.exe string_utils ${catkin_LIBRARIES})
 
-    add_maggie_test(rgb_and_depth_to_yaml
-      SOURCES       rgb_and_depth_to_yaml.cpp
-      LINK          string_utils
-    )
+	add_executable(rgb_and_depth_to_yaml.exe rgb_and_depth_to_yaml.cpp)
+        target_link_libraries(rgb_and_depth_to_yaml.exe string_utils ${catkin_LIBRARIES})
 
-    add_maggie_test(ros_camera_info_to_binary
-      SOURCES       ros_camera_info_to_binary.cpp
-      LINK          string_utils
-    )
+	add_executable(ros_camera_info_to_binary.exe image_topic_to_video.cpp)
+        target_link_libraries(ros_camera_info_to_binary.exe string_utils ${catkin_LIBRARIES})
   ENDIF(AD_USE_ROS)
 
-  add_maggie_test(launcher_camera_blocker_skill.exe
-      SOURCES     launcher_camera_blocker_skill.cpp
-      LINK        string_utils # non_verbal
-  )
-
-  add_maggie_lib (camera_utils
-    SOURCES       camera_utils.cpp
-    LINK          opencv
-  )
-
-  add_maggie_test(test_camera_utils.exe
-    SOURCES       test_camera_utils.cpp
-    LINK          camera_utils # camera_calibrator
-  )
+	add_executable(launcher_camera_blocker_skill.exe launcher_camera_blocker_skill.cpp)
+        target_link_libraries(launcher_camera_blocker_skill.exe string_utils ${catkin_LIBRARIES})
+	
+	add_library(camera_utils camera_utils.cpp)
+        target_link_libraries(camera_utils ${catkin_LIBRARIES})
+	
+	add_executable(test_camera_utils.exe test_camera_utils.cpp)
+	target_link_libraries(test_camera_utils.exe camera_utils)
+	
+	install(TARGETS camera_utils
+		ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+		LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+		RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+	)
 ENDIF(AD_USE_OPENCV)
+
+

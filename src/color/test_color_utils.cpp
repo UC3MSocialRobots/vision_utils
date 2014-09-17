@@ -1,5 +1,5 @@
 #include "color_utils.h"
-#include "src/debug/error.h"
+#include "debug/error.h"
 #include <opencv2/highgui/highgui.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////

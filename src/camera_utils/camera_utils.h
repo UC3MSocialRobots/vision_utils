@@ -24,8 +24,8 @@
 #include <vector>           // for vectors
 
 #include <ros/ros.h>
-#include <src/ros_utils/marker_utils.h>
-#include <src/ros_utils/pt_utils.h>
+#include <ros_utils/marker_utils.h>
+#include <ros_utils/pt_utils.h>
 
 /** some useful functions for handling images */
 namespace CameraUtils {

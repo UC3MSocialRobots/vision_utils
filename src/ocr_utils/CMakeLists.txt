@@ -1,7 +1,11 @@
 
-IF(AD_USE_OPENCV)
-    add_maggie_lib (OcrUtils
-        SOURCES     OcrUtils.cpp
-        LINK         string_utils opencv # tesseract_full
-    )
+IF(AD_USE_OPENCV)  
+    add_library(OcrUtils OcrUtils.cpp)
+        target_link_libraries(OcrUtils string_utils ${catkin_LIBRARIES})
+
+	install(TARGETS OcrUtils
+	  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+	  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+	  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+	)
 ENDIF(AD_USE_OPENCV)

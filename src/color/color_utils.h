@@ -5,10 +5,10 @@
 #include <stdlib.h>
 
 // compressed_rounded_image_transport
-#include <vision_utils/color/hue_utils.h>
+#include <color/hue_utils.h>
 // #include <src/cv_conversion_float_uchar.h>
 // utils
-#include <src/geom/foo_point.h>
+#include <geom/foo_point.h>
 
 namespace color_utils {
 //typedef AD::Point3<double> Color;

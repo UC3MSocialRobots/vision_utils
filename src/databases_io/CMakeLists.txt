@@ -1,19 +1,11 @@
-add_maggie_test(oni2imgs.exe
-    SOURCES     oni2imgs.cpp oni2imgs.h database_player.h
-    LINK        OpenNI
-)
+add_executable(oni2imgs.exe oni2imgs.cpp oni2imgs.h database_player.h)
+target_link_libraries(oni2imgs.exe OpenNI)
 
-add_maggie_test(dgaitdb.exe
-    SOURCES     dgaitdb.cpp dgaitdb.h database_player.h
-    LINK        OpenNI disjoint_sets2 string_utils
-)
+add_executable(dgaitdb.exe dgaitdb.cpp dgaitdb.h database_player.h)
+target_link_libraries(dgaitdb.exe OpenNI disjoint_sets2 string_utils ${catkin_LIBRARIES})
 
-add_maggie_test(liris2imgs.exe
-    SOURCES     liris2imgs.cpp liris2imgs.h database_player.h
-    LINK        xml_document
-)
+add_executable(liris2imgs.exe liris2imgs.cpp liris2imgs.h database_player.h)
+target_link_libraries(liris2imgs.exe xml_document)
 
-add_maggie_test(g3d2imgs.exe
-    SOURCES     g3d2imgs.cpp g3d2imgs.h database_player.h
-    LINK        xml_document
-)
+add_executable(g3d2imgs.exe g3d2imgs.cpp g3d2imgs.h database_player.h)
+target_link_libraries(g3d2imgs.exe xml_document)

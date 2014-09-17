@@ -7,7 +7,7 @@
  * \author Arnaud Ramey
  */
 
-#include "vision_utils/camera_utils/camera_utils.h"
+#include "camera_utils/camera_utils.h"
 
 inline void get_video_capture_param(cv::VideoCapture & capture,
                                     const std::string & name,
