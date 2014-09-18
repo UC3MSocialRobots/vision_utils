@@ -6,9 +6,10 @@ project(vision_utils)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS roscpp roslib cv_bridge
                                         message_generation utils kinect
-                                        compressed_rounded_image_transport)
+                                        compressed_rounded_image_transport
+                                        pcl_ros pcl_conversions)
 
-find_package(PCL 1.2 REQUIRED)
+find_package(PCL REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -102,6 +103,7 @@ include_directories(
   include src third_parties ${catkin_INCLUDE_DIRS}
   ${utils_INCLUDE_DIRS} ${kinect_INCLUDE_DIRS}
   /usr/include/openni /usr/include/nite /usr/include/ni
+  ${PCL_INCLUDE_DIRS}
 )
 
 SET(AD_USE_ROS 1)

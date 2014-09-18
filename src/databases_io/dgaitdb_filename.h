@@ -27,7 +27,7 @@ The filenames for the files generated with database available in
 #ifndef DGAITDB_FILENAME_H
 #define DGAITDB_FILENAME_H
 
-#include <src/system/system_utils.h>
+#include <system/system_utils.h>
 
 class DGaitDBFilename {
 public:

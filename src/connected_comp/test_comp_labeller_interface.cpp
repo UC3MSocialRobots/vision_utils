@@ -1,5 +1,5 @@
 
-#include "vision_utils/xml_images_reader/xml_images_reader.h"
+#include "xml_images_reader/xml_images_reader.h"
 
 // implementations
 #include "cv_blob_wrapper.h"

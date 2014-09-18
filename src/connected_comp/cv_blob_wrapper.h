@@ -2,7 +2,7 @@
 #define CV_BLOB_WRAPPER_H
 
 // third parties
-#include "third_parties/cvBlob/cvblob.h"
+#include "cvBlob/cvblob.h"
 // the interface
 #include "comp_labeller_interface.h"
 

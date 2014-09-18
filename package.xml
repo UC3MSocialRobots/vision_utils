@@ -55,6 +55,8 @@
   <depend>kinect</depend>
   <depend>utils</depend>
   <depend>compressed_rounded_image_transport</depend>
+  <depend>pcl</depend>
+  <depend>pcl_ros</depend>
   
 
   <!-- The export tag contains other, unspecified, tags -->

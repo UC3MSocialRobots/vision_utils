@@ -12,7 +12,7 @@ target_link_libraries(cblob_wrapper ${catkin_LIBRARIES} comp_labeller_interface 
 
 ### rules for CvBlobWrapper
 add_library(cv_blob_wrapper cv_blob_wrapper.cpp)
-target_link_libraries(cv_blob_wrapper ${catkin_LIBRARIES} comp_labeller_interface cvblob)
+target_link_libraries(cv_blob_wrapper ${catkin_LIBRARIES} comp_labeller_interface blob cvblob ${OpenCV_LIBS})
 
 ### rules for CvFloodFillWrapper
 add_library(cv_flood_fill_wrapper cv_flood_fill_wrapper.cpp)
@@ -21,10 +21,10 @@ target_link_libraries(cv_flood_fill_wrapper ${catkin_LIBRARIES} comp_labeller_in
 ### the tests
 add_executable(test_comp_labeller_interface.exe test_comp_labeller_interface.cpp)
 target_link_libraries(test_comp_labeller_interface.exe xml_images_reader
-														disjoint_sets2
-														cblob_wrapper
-														cv_blob_wrapper
-														cv_flood_fill_wrapper)
+                                                        disjoint_sets2										cblob_wrapper
+                                                        cv_blob_wrapper
+                                                        cv_flood_fill_wrapper
+                                                        ${catkin_LIBRARIES})
 
 install(TARGETS comp_labeller_interface disjoint_sets2
                 cblob_wrapper cv_blob_wrapper cv_flood_fill_wrapper
