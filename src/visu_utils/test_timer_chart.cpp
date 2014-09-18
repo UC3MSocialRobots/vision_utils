@@ -26,6 +26,8 @@ ________________________________________________________________________________
 
 #define CHART_TIMER_ON
 #include "timer_chart.h"
+#include <unistd.h>
+
 // put the line "#define CHART_TIMER_ON" in your code to activate the TimerChart
 
 int main() {

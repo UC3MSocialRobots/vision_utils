@@ -40,8 +40,8 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <cv_bridge/cv_bridge.h>
 // AD
-#include "src/debug/error.h"
-#include "src/string/StringUtils.h"
+#include "debug/error.h"
+#include "string/StringUtils.h"
 
 cv_bridge::CvImageConstPtr _bridge_img_ptr;
 cv::VideoWriter _video_writer;

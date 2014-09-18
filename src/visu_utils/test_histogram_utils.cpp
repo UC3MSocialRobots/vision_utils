@@ -25,6 +25,7 @@ ________________________________________________________________________________
 #include <vision_utils/img_path.h>
 // utils
 #include <time/timer.h>
+#include <iomanip>
 #include <string/string_casts.h>
 #include <geom/rect_utils.h>
 // kinect

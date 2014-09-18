@@ -11,7 +11,7 @@
 #include "camera_utils/camera_utils.h"
 #include <ros/package.h>
 
-#include <img_path.h>
+#include <vision_utils/img_path.h>
 
 inline int get_camera_nb_prompt() {
   std::cout << "Camera index ? (0=default)" << std::endl;

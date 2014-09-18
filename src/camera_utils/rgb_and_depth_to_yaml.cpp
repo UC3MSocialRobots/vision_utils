@@ -72,8 +72,8 @@ rosrun vision rgb_and_depth_to_yaml _rgb_topic:=/color_img  _depth_topic:=/depth
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
 // AD
-#include <src/string/StringUtils.h>
-#include <vision_utils/image_utils/io.h>
+#include <string/StringUtils.h>
+#include <image_utils/io.h>
 
 #define HELP "Press ' ' or 'y' to save the showed images and exit."
 
