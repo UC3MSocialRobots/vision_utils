@@ -39,11 +39,11 @@ ________________________________________________________________________________
 
  */
 
-#include <vision_utils/databases_io/dgaitdb.h>
+#include <databases_io/dgaitdb.h>
 //#include <vision_utils/databases_io/dgaitdb_filename.h>
 #include <image_transport/image_transport.h>
 // people_msgs
-#include <src/ppl_utils/rgb_depth_user2ppl.h>
+#include <ppl_utils/rgb_depth_user2ppl.h>
 
 typedef people_msgs::PeoplePose PP;
 typedef people_msgs::PeoplePoseList PPL;

@@ -37,15 +37,15 @@ ________________________________________________________________________________
  */
 #include <image_transport/image_transport.h>
 // AD
-#include <src/string/find_and_replace.h>
-#include <src/string/file_io.h>
-#include <src/time/timer.h>
-#include <vision_utils/point_clouds/blob_segmenter.h>
-#include <vision_utils/color/color_utils.h>
-#include <vision_utils/databases_io/database_player.h>
+#include <string/find_and_replace.h>
+#include <string/file_io.h>
+#include <time/timer.h>
+#include <point_clouds/blob_segmenter.h>
+#include <color/color_utils.h>
+#include <databases_io/database_player.h>
 // people_msgs
-#include <src/ppl_utils/rgb_depth_user2ppl.h>
-#include <src/ppl_utils/ppl_attributes.h>
+#include <ppl_utils/rgb_depth_user2ppl.h>
+#include <ppl_utils/ppl_attributes.h>
 
 typedef people_msgs::PeoplePose PP;
 typedef people_msgs::PeoplePoseList PPL;

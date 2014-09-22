@@ -63,11 +63,11 @@ and evaluates the mean error of each PPL method.
 #define PPL_BENCHMARKER_H
 
 #include <people_msgs/PeoplePoseList.h>
-#include <src/ros_utils/multi_subscriber.h>
-#include <src/ros_utils/pt_utils.h>
-#include <src/time/timer.h>
-#include <src/string/file_io.h>
-#include <src/combinatorics/assignment_utils.h>
+#include <ros_utils/multi_subscriber.h>
+#include <ros_utils/pt_utils.h>
+#include <time/timer.h>
+#include <string/file_io.h>
+#include <combinatorics/assignment_utils.h>
 // ros
 #include <ros/package.h>
 

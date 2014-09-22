@@ -1,14 +1,8 @@
-add_maggie_test(pplp_benchmarker.exe
-    SOURCES     pplp_benchmarker.cpp pplp_benchmarker.h
-    LINK        lap
-)
+add_executable(pplp_benchmarker.exe pplp_benchmarker.cpp)
+target_link_libraries(pplp_benchmarker.exe lap ${catkin_LIBRARIES})
 
-add_maggie_test(dgait2ppl.exe
-    SOURCES     dgait2ppl.cpp
-    LINK        disjoint_sets2
-)
+add_executable(dgait2ppl.exe dgait2ppl.cpp)
+target_link_libraries(dgait2ppl.exe disjoint_sets2 ${catkin_LIBRARIES})
 
-add_maggie_test(KTP2PPL.exe
-    SOURCES     KTP2PPL.cpp
-    LINK        disjoint_sets2
-)
+add_executable(KTP2PPL.exe KTP2PPL.cpp)
+target_link_libraries(KTP2PPL.exe disjoint_sets2 ${catkin_LIBRARIES})
