@@ -104,6 +104,7 @@ include_directories(
   ${utils_INCLUDE_DIRS} ${kinect_INCLUDE_DIRS}
   /usr/include/openni /usr/include/nite /usr/include/ni
   ${PCL_INCLUDE_DIRS}
+  /usr/include/pcl-1.7/
 )
 
 SET(AD_USE_ROS ON)

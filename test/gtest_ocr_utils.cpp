@@ -12,7 +12,7 @@
 #include <opencv2/highgui/highgui.hpp>
 // AD
 #include "ocr_utils/OcrUtils.h"
-#include "debug/debug.h"
+#include "debug/debug_utils.h"
 #include <vision_utils/img_path.h>
 
 void simple_ocr_test(const std::string filename, Translator::LanguageId language,

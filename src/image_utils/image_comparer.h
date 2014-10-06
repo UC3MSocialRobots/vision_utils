@@ -14,7 +14,7 @@
 
 ////// my imports
 #include "geom/hausdorff_distances.h"
-#include "debug/debug.h"
+#include "debug/debug_utils.h"
 #include "string/file_io.h"
 #include "string/filename_handling.h"
 #include "image_utils/content_processing.h"

@@ -29,7 +29,7 @@ ________________________________________________________________________________
 
 #include <opencv2/highgui/highgui.hpp>
 // vision
-#include <vision_utils/image_utils/drawing_utils.h>
+#include <image_utils/drawing_utils.h>
 
 namespace image_utils {
 

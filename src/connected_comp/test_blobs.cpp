@@ -1,6 +1,6 @@
 
-#include "src/debug/debug.h"
-#include "src/time/timer.h"
+#include "debug/debug_utils.h"
+#include "time/timer.h"
 #include <vision_utils/img_path.h>
 // third parties
 #include "vision_utils/third_parties/blob/BlobResult.h"

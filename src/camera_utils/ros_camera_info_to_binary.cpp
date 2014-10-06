@@ -53,7 +53,7 @@ rosrun vision ros_camera_info_to_binary _camera_info_topic:=/kinect_only_camera/
 #include <message_filters/subscriber.h>
 #include <sensor_msgs/CameraInfo.h>
 // AD
-#include <src/string/string_utils_ros.h>
+#include <string/string_utils_ros.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 

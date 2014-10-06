@@ -10,7 +10,7 @@
 //#define TIMER_ON
 
 #ifdef TIMER_ON
-#include "src/time/timer.h"
+#include "time/timer.h"
 Timer timer;
 #endif // TIMER_ON
 

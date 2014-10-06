@@ -45,11 +45,11 @@ ________________________________________________________________________________
 #define RGB_DEPTH_SKILL_H
 
 // ROS
-#include <vision_utils/skill_templates/nano_skill.h>
+#include <skill_templates/nano_skill.h>
 #include <image_transport/image_transport.h>
 #include <image_transport/subscriber_filter.h>
 #include <sensor_msgs/image_encodings.h>
-#include <src/kinect_utils/kinect_openni_utils.h>
+#include <kinect_utils/kinect_openni_utils.h>
 
 //#define USE_EXACT_TIME // comment to use approx time
 #ifdef USE_EXACT_TIME
