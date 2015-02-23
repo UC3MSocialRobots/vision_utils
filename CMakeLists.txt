@@ -6,3 +6,6 @@ target_link_libraries(dgait2ppl.exe disjoint_sets2 ${catkin_LIBRARIES})
 
 add_executable(KTP2PPL.exe KTP2PPL.cpp)
 target_link_libraries(KTP2PPL.exe disjoint_sets2 ${catkin_LIBRARIES})
+
+add_executable(rlpd2ppl.exe rlpd2ppl.cpp)
+target_link_libraries(rlpd2ppl.exe ${catkin_LIBRARIES})

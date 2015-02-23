@@ -25,25 +25,31 @@ and one or several computed PPL topics,
 and evaluates the mean error of each PPL method.
 
 \section Parameters
-  - \b "ground_truth_ppl_topic"
+  - \b "~ground_truth_ppl_topic"
         [string] (default: "ground_truth_ppl")
         The PPL topic that will contain the ground truth PPL
         of the data that is supplied to the PPL algorithms.
 
-  - \b "ppl_topics"
+  - \b "~ppl_topics"
         [string, semicolon separated] (default: "ppl")
         The PPL topics to subscribe to.
         They should be PPL computed by a given algorhithm.
 
-  - \b "errors_display_timeout"
+  - \b "~errors_display_timeout"
         [double, sec] (default: 5)
         The frequency at which the benchmark results should be printed out,
         in seconds.
 
-  - \b "results_filename"
+  - \b "~results_filename"
         [string] (default: "")
         If not empty, the results are saved in this file
         every {errors_display_timeout} seconds.
+
+  - \b "~verbose_output"
+        [bool] (default: true)
+        If true, displays truepos, trueneg, falsepos, falseneg, average error
+        per PP.
+        If false, only displays ID swaps numbers.
 
 \section Subscriptions
   - \b {ground_truth_ppl_topic}
@@ -90,6 +96,7 @@ public:
     nh_private.param("errors_display_timeout", _errors_display_timeout, _errors_display_timeout);
     _results_filename = "";
     nh_private.param("results_filename", _results_filename, _results_filename);
+    nh_private.param("verbose_output", _verbose_output, true);
 
     // subscribers
     _ppl_subs = ros::MultiSubscriber::subscribe
@@ -119,7 +126,8 @@ public:
     ans << _errors.size() << " methods:\n";
     std::map<MethodName, MethodError>::const_iterator e_it = _errors.begin();
     while(e_it != _errors.end()) {
-      ans << " * " << e_it->first << ":\t "<< e_it->second.to_string() << "\n";
+      ans << " * " << e_it->first << ":\t "
+          << e_it->second.to_string(_verbose_output) << "\n";
       ++e_it;
     }
     if (!_results_filename.empty())
@@ -170,6 +178,7 @@ public:
                                        matchlist_truth2detec, dist2truth_per_pp);
 
     // check the MatchList
+    NamesMap* method_name_map = &(method2truth2track[method_name]);
     bool has_swapped_ids = false;
     for (unsigned int match_idx = 0; match_idx < matchlist_truth2detec.size(); ++match_idx) {
       assignment_utils::Match match = matchlist_truth2detec[match_idx];
@@ -191,19 +200,19 @@ public:
       UserName real_label = _last_ground_truth_ppl.poses[truth_idx].person_name;
       // determine expected label
 
-      NamesMap* method_name_map = &(method2truth2track[method_name]);
       if (method_name_map->find(real_label) == method_name_map->end()) // never seen this track?
         (*method_name_map)[real_label] = curr_label;
       UserName exp_label = (*method_name_map)[real_label];
       // compare expected label and curr label
       if (exp_label != curr_label) {
+        printf("%s: real_label:'%s' (expecting label '%s'), curr_label:'%s'\n",
+               method_name.c_str(), real_label.c_str(), exp_label.c_str(), curr_label.c_str());
         has_swapped_ids = true;
         (*method_name_map)[real_label] = curr_label;
       }
-      //printf("%s: real_label:'%s' (expecting label '%s'), curr_label:'%s'\n",
-      //       method_name.c_str(), real_label.c_str(), exp_label.c_str(), curr_label.c_str());
     } // end loop match_idx
 
+    e->truth2track = StringUtils::map_to_string(*method_name_map);
     // only count one swap per full match
     if (has_swapped_ids)
       e->id_swaps++;
@@ -241,9 +250,9 @@ private:
 
   //! error mesasuring and storing /////////////////////////////////////////////
   struct MethodError {
-    MethodError() : total_pps(0), avg_pp_dist2truth(0) {
+    MethodError() {
       true_positive = false_positive = true_negative = false_negative = 0;
-      id_swaps = 0;
+      total_ppls = total_pps = avg_pp_dist2truth = id_swaps = 0;
     }
 
     // https://en.wikipedia.org/wiki/Precision_and_recall#Definition_.28classification_context.29
@@ -254,30 +263,35 @@ private:
       ++total_ppls;
     } // end add_measure();
 
-    inline std::string to_string() const {
+    inline std::string to_string(bool verbose = true) const {
       std::ostringstream out;
-      out << true_positive << "-truepos(hit), ";
-      out << true_negative << "-trueneg(correct rejection),";
-      out << false_positive << "-falsepos(false alarm),";
-      out << false_negative << "-falseneg(miss),";
-      out << " avg_pp_dist2truth:" << std::setprecision(3)
-          << avg_pp_dist2truth;
-      out << " hitrate(recall):" << std::setprecision(3)
-          << 1. * true_positive / (true_positive + false_negative);
-      out << " accuracy:" << std::setprecision(3)
-          << 1. * (true_positive + true_negative)
-             / (true_positive + false_positive + true_negative + false_negative);
+      if (verbose) {
+        out << true_positive << "-truepos(hit), ";
+        out << true_negative << "-trueneg(correct rejection),";
+        out << false_positive << "-falsepos(false alarm),";
+        out << false_negative << "-falseneg(miss),";
+        out << " hitrate(recall):" << std::setprecision(3)
+            << 1. * true_positive / (true_positive + false_negative);
+        out << " accuracy:" << std::setprecision(3)
+            << 1. * (true_positive + true_negative)
+               / (true_positive + false_positive + true_negative + false_negative);
+        out << " avg_pp_dist2truth:" << std::setprecision(3)
+            << avg_pp_dist2truth;
+      }
       out << " " << id_swaps << " id_swaps of " << total_ppls << " PPLs";
+      out << ", map truth2track:" << truth2track;
       return out.str();
     }
 
     unsigned int true_positive, false_positive, true_negative, false_negative;
     unsigned int total_pps, total_ppls;
+    double avg_pp_dist2truth;
     // labelling
     unsigned int id_swaps;
-    double avg_pp_dist2truth;
+    std::string truth2track;
   }; // enc struct MethodError /////////////////////////////////////////////////
 
+  bool _verbose_output;
   std::string _results_filename;
   std::map<MethodName, MethodError> _errors;
   typedef std::map<UserName, UserName> NamesMap;
