@@ -62,49 +62,23 @@ add_dep kinect publish_kinect_serial.cpp
 # deps
 echo ; echo "Adding deps and changing include paths..."
 # from most specifici to most generic: a file should only depend on the following ones
-add_dep  people_msgs  pplm_template.h
+add_dep  people_utils  pplm_template.h
 add_dep  vision_utils  nano_skill.h
+add_dep  vision_utils  image_comparer.h
+
 add_dep  kinect  user_image_to_rgb.h
 add_dep  kinect  skeleton_utils.h
 add_dep  kinect  kinect_openni_utils.h
 add_dep  kinect  std_utils.h
 add_dep  kinect  color_utils_ros.h
 
-#~ add_dep vision voronoi.h
-#~ add_dep vision image_contour.h
-#~ add_dep vision nite_subscriber_template.h
-#~ add_dep vision drawing_utils.h
-#~ add_dep vision resize_utils.h
-#~ add_dep vision titlemaps.h
-#~ add_dep vision content_processing.h
-#~ add_dep vision io.h
-#~ add_dep kinect user_image_to_rgb.h
-#~ add_dep kinect skeleton_utils.h
-#~ add_dep kinect kinect_openni_utils.h
-#~ add_dep kinect nite_utils.h
-#~ add_dep utils color_utils_ros.h
-#~ add_dep utils pt_utils.h
-#~ add_dep utils geometry_utils.h
-#~ add_dep utils hausdorff_distances.h
-#~ add_dep utils rect_utils.h
-#~ add_dep utils distances.h
-#~ add_dep utils combinatorics_utils.h
-#~ add_dep utils color_utils.h
-#~ add_dep utils foo_point.h
-#~ add_dep utils cmatrix.h
-#~ add_dep utils string_utils_ros.h
-#~ add_dep utils.cpp
-#~ add_dep utils.h
-#~ add_dep utils extract_utils.h
-#~ add_dep utils system_utils.h
-#~ add_dep utils timer.h
-#~ add_dep utils error.h
-#~ add_dep utils debug.h
-#~ add_dep compressed_rounded_image_transport  cv_conversion_float_uchar.h
-#~ add_dep compressed_rounded_image_transport  hue_utils.h
-#~ add_dep compressed_rounded_image_transport  timer_ros.h
-#~ add_dep compressed_rounded_image_transport  nan_handling.h
-#~ add_dep compressed_rounded_image_transport  min_max.h
+add_dep  utils  hausdorff_distances.h
+add_dep  utils  file_io.h
+add_dep  utils  filename_handling.h
+add_dep  utils  string_split.h
+add_dep  utils  debug.h
+add_dep  utils  error.h
+
 remove_include utils_options.h
 echo -e "#define LONG_TERM_MEMORY_DIR \"\"\n#define IMG_DIR \"\"\n" > $SRCDIR/img_path.h ; shorten_include img_path.h
 
@@ -118,6 +92,18 @@ sed -i "s,kinect::NiteSkeleton,$PROJECT::NiteSkeleton," $PKGDIR/src/*.*
 shorten_include NiteSkeletonList.h
 shorten_include NiteSkeletonJointt.h
 shorten_include NiteSkeleton.h
+
+echo ; echo "Adding services..."
+mkdir --parents $PKGDIR/srv
+roscp people_msgs MatchPPL.srv $PKGDIR/srv
+roscp people_msgs PeoplePose.msg $PKGDIR/msg
+roscp people_msgs PeoplePoseList.msg $PKGDIR/msg
+sed -i "s,people_msgs,$PROJECT,"   $PKGDIR/msg/*.*
+sed -i "s,people_msgs,$PROJECT,"   $PKGDIR/srv/*.*
+sed -i "s,people_msgs,$PROJECT,"   $PKGDIR/src/*.*
+shorten_include MatchPPL.h
+shorten_include PeoplePoseList.h
+shorten_include PeoplePose.h
 
 echo ; echo "Adding launch files..."
 mkdir --parents $PKGDIR/launch
@@ -144,7 +130,9 @@ set(LIBRARY_OUTPUT_PATH \${PROJECT_SOURCE_DIR}/lib)
 
 ### build the custom messages and services
 rosbuild_genmsg()
+rosbuild_gensrv()
 INCLUDE_DIRECTORIES(\${PROJECT_SOURCE_DIR}/msg_gen/cpp/include/$PROJECT)
+INCLUDE_DIRECTORIES(\${PROJECT_SOURCE_DIR}/srv_gen/cpp/include/$PROJECT)
 
 ### deps
 FIND_PACKAGE( OpenCV REQUIRED )
@@ -193,7 +181,7 @@ Run the generated executable 'height_pplm' with no arguments.
 
 ### list all files
 #~ ls $PKGDIR -lh
-tree -hD $PKGDIR
+tree -h $PKGDIR
 du -sh $PKGDIR
 #~ exit
 

@@ -23,8 +23,8 @@ ________________________________________________________________________________
 \todo Description of the file
 
  */
-
-#include "io.h"
+#include <gtest/gtest.h>
+#include <image_utils/io.h>
 #include "geom/geometry_utils.h"
 
 class FooPointIo : public geometry_utils::FooPoint2f {
@@ -56,7 +56,7 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////
 
-int main() {
+TEST(TestSuite, test1) {
   FooPointIo pt1(1,2), pt1_clone, pt2(3,4);
   image_utils::to_yaml(pt1, "/tmp/foo", "FooPointIo");
   image_utils::from_yaml(pt1_clone, "/tmp/foo", "FooPointIo");
@@ -74,8 +74,13 @@ int main() {
   printf("pts1:%s, pts2:%s\n",
          StringUtils::accessible_to_string(pts1).c_str(),
          StringUtils::accessible_to_string(pts2).c_str());
-  return 0;
 }
 
+////////////////////////////////////////////////////////////////////////////////
 
-
+int main(int argc, char **argv){
+  // Run all the tests that were declared with TEST()
+  // srand(time(NULL));
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}

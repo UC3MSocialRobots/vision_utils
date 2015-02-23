@@ -48,20 +48,19 @@ rm $OUTDIR/* -rf
 echo ; echo "Adding classes..."
 add_dep people_detection_vision artoolkit_img2patt.cpp
 add_dep people_detection_vision artoolkit_patt2img.cpp
-#~ add_dep utils         StringUtils.cpp
-#~ add_dep utils         StringUtils.h
-add_dep utils         filename_handling.h
-add_dep utils         string_split.h
-add_dep utils         find_and_replace.h
-add_dep utils         string_casts.h
-add_dep utils         file_io.h
 
 # deps
 echo ; echo "Adding deps and changing include paths..."
 # from most specifici to most generic: a file should only depend on the following ones
 add_dep vision_utils  border_remover.h
+add_dep utils         filename_handling.h
+add_dep utils         string_split.h
+add_dep utils         find_and_replace.h
+add_dep utils         string_casts.h
+add_dep utils         file_io.h
 add_dep utils         extract_utils.h
 add_dep utils         system_utils.h
+add_dep utils         exec_system_get_output.h
 add_dep utils         error.h
 add_dep utils         debug.h
 remove_include        utils_options.h
@@ -77,13 +76,13 @@ PROJECT( artoolkit_utils_proj )
 cmake_minimum_required(VERSION 2.6)
 set(CMAKE_BUILD_TYPE RelWithDebInfo)
 SET(CMAKE_VERBOSE_MAKEFILE ON)
-FIND_PACKAGE( OpenCV REQUIRED )
+FIND_PACKAGE(OpenCV REQUIRED)
 FIND_PACKAGE(Boost REQUIRED COMPONENTS system)
 
 ADD_EXECUTABLE( artoolkit_img2patt artoolkit_img2patt.cpp)
 ADD_EXECUTABLE( artoolkit_patt2img artoolkit_patt2img.cpp)
-TARGET_LINK_LIBRARIES( artoolkit_img2patt \${OpenCV_LIBS} \${Boost_LIBS})
-TARGET_LINK_LIBRARIES( artoolkit_patt2img \${OpenCV_LIBS})
+TARGET_LINK_LIBRARIES( artoolkit_img2patt \${OpenCV_LIBS} \${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES( artoolkit_patt2img \${OpenCV_LIBS} \${Boost_LIBRARIES})
 
 " > $OUTDIR/CMakeLists.txt
 
@@ -139,7 +138,7 @@ mkdir --parents $OUTDIR/build
 cd $OUTDIR/build
 cmake ..
 make -j 3
-#~ make 
+#~ make
 if [ $? -ne 0 ]; then # error while building package
   echo "Error while building $PROJECT! Exiting."
   exit -1;

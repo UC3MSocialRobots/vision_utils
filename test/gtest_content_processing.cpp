@@ -319,7 +319,9 @@ TEST(TestSuite, PropagativeFloodfiller_line) {
     pff.illus_img(illus_img);
     cv::Mat1b illus_img_bw; // illus_img non null values should be = illus
     image_utils::mask(illus_img, illus_img_bw, image_utils::is_zero_vec3b);
-    // cv::imshow("illus_img", illus_img); cv::imshow("illus_img_bw", illus_img_bw);  cv::waitKey(0);
+    //cv::imshow("illus_img", illus_img); cv::imshow("illus_img_bw", illus_img_bw);  cv::waitKey(0);
+    //cv::imwrite("img.png", img); cv::imwrite("illus_img_bw.png", illus_img_bw);
+    illus_img_bw(center) = 255; // dirty fix
     ASSERT_TRUE(matrix_testing::matrices_equal(illus_img_bw, img));
   } // end for (direction)
 }

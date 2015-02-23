@@ -5,6 +5,7 @@
 #include <geom/geometry_utils.h>
 #include <image_utils/resize_utils.h>
 #include <image_utils/titlemaps.h>
+#include "draw_arrow.h"
 
 namespace image_utils {
 
@@ -75,27 +76,6 @@ inline void drawCross(cv::Mat & img, const cv::Point & p,
 
 ////////////////////////////////////////////////////////////////////////////////
 
-inline void draw_arrow
-(cv::Mat3b& img, cv::Point pt1, cv::Point pt2, const cv::Scalar& color,
- int thickness=1, int linetype=8, int shift=0) {
-  // draw the body of the arrow
-  cv::line(img, pt1, pt2, color, thickness, linetype, shift);
-  // compute parameters of the arrow
-  double side_strokes_length = hypot(pt2.y - pt1.y, pt2.x - pt1.x) / 3;
-  double arrow_orien = atan2(pt2.y - pt1.y, pt2.x - pt1.x);
-  cv::Point pt_end;
-  // draw first side stroke
-  pt_end.x  = pt2.x + side_strokes_length * cos(arrow_orien + M_PI + M_PI / 6);
-  pt_end.y  = pt2.y + side_strokes_length * sin(arrow_orien + M_PI + M_PI / 6);
-  cv::line(img, pt2, pt_end, color, thickness, linetype, shift);
-  // draw second side stroke
-  pt_end.x  = pt2.x + side_strokes_length * cos(arrow_orien + M_PI - M_PI / 6);
-  pt_end.y  = pt2.y + side_strokes_length * sin(arrow_orien + M_PI - M_PI / 6);
-  cv::line(img, pt2, pt_end, color, thickness, linetype, shift);
-} // end draw_arrow();
-
-////////////////////////////////////////////////////////////////////////////////
-
 inline void drawPolygon(cv::Mat & img,
                         const std::vector<cv::Point> & poly,
                         bool is_closed,
@@ -131,6 +111,17 @@ inline void drawListOfPoints(cv::Mat_<_T> & img,
 
 //! for each point of a list, draw it only if it visible
 template<class _T>
+inline void drawListOfPoints_offset(cv::Mat_<_T> & img,
+                                    const std::vector<cv::Point> & pts,
+                                    const _T & color,
+                                    const cv::Point & offset) {
+  unsigned int npts = pts.size();
+  for (unsigned int pt_idx = 0; pt_idx < npts; ++pt_idx)
+    img(pts[pt_idx]-offset) = color;
+}
+
+//! for each point of a list, draw it only if it visible
+template<class _T>
 inline void drawListOfPoints_safe(cv::Mat_<_T> & img,
                                   const std::vector<cv::Point> & pts,
                                   const _T & color) {
@@ -139,6 +130,19 @@ inline void drawListOfPoints_safe(cv::Mat_<_T> & img,
   for (unsigned int pt_idx = 0; pt_idx < npts; ++pt_idx)
     if (bbox.contains(pts[pt_idx]))
       img(pts[pt_idx]) = color;
+}
+
+//! for each point of a list, draw it only if it visible
+template<class _T>
+inline void drawListOfPoints_offset_safe(cv::Mat_<_T> & img,
+                                         const std::vector<cv::Point> & pts,
+                                         const _T & color,
+                                         const cv::Point & offset) {
+  unsigned int npts = pts.size();
+  cv::Rect bbox(offset.x, offset.y, img.cols, img.rows);
+  for (unsigned int pt_idx = 0; pt_idx < npts; ++pt_idx)
+    if (bbox.contains(pts[pt_idx]))
+      img(pts[pt_idx]-offset) = color;
 }
 
 template<class _T>

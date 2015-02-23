@@ -1,0 +1,13 @@
+alberto1 1.7
+alberto2 1.7
+alvaro1 1.7
+alvaro2 1.7
+david_arnaud1 1.7 1
+david_arnaud2 1.7 1
+david_arnaud3 1.7 1
+david_arnaud1 1.85 2
+david_arnaud2 1.85 2
+david_arnaud3 1.85 2
+juggling1 1.85
+juggling2 1.85
+juggling3 1.85

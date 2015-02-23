@@ -9,3 +9,6 @@ target_link_libraries(liris2imgs.exe xml_document ${catkin_LIBRARIES})
 
 add_executable(g3d2imgs.exe g3d2imgs.cpp g3d2imgs.h database_player.h)
 target_link_libraries(g3d2imgs.exe xml_document ${catkin_LIBRARIES})
+
+add_executable(rlpd2imgs.exe rlpd2imgs.cpp rlpd2imgs.h database_player.h)
+target_link_libraries(rlpd2imgs.exe xml_document ${catkin_LIBRARIES})

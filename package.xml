@@ -54,6 +54,7 @@
   <depend>opencv2</depend>
   <depend>kinect</depend>
   <depend>utils</depend>
+  <depend>screens_msgs</depend>
   <depend>compressed_rounded_image_transport</depend>
   <depend>pcl</depend>
   <depend>pcl_ros</depend>

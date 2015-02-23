@@ -29,41 +29,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-inline void test_comparer() {
-  printf("test_comparer()\n");
-
-  ImageComparer im;
-  im.set_models(IMG_DIR "paintRecognizer/index.txt", cv::Size(32, 32));
-
-  cv::Mat img = cv::imread(IMG_DIR "paintRecognizer/inputs/m.png",
-                           CV_LOAD_IMAGE_GRAYSCALE);
-  int nbTimes = 5;
-  Timer timer;
-  for (int i = 0; i < nbTimes; ++i)
-    im.compareFile(img);
-  timer.printTime_factor("compareFile", nbTimes);
-  printf("results:'%s'\n", im.results_to_string().c_str());
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-inline void test_comparer2() {
-  printf("test_comparer()\n");
-  ImageComparer im;
-  im.set_models(IMG_DIR "comparer/index.txt", cv::Size(32, 32));
-
-  std::vector<std::string> filenames;
-  filenames.push_back(IMG_DIR "comparer/model.png");
-  filenames.push_back(IMG_DIR "comparer/1.png");
-  filenames.push_back(IMG_DIR "comparer/2.png");
-  filenames.push_back(IMG_DIR "comparer/3.png");
-  filenames.push_back(IMG_DIR "comparer/4.png");
-  for (int i = 0 ; i < 5 ; ++i) {
-    im.compareFile(cv::imread(filenames.at(i), CV_LOAD_IMAGE_GRAYSCALE));
-    printf("Comparing with '%s', results:'%s'\n",
-           filenames.at(i).c_str(), im.results_to_string().c_str());
-  }
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -512,8 +477,6 @@ int main() {
   ros::Time::init();
   int idx = 1;
   printf("*** test_image_utils ***\n");
-  printf("%i: test_comparer()\n", idx++);
-  printf("%i: test_comparer2()\n", idx++);
   printf("%i: test_bbox()\n", idx++);
   printf("%i: test_region_growth()\n", idx++);
   printf("%i: test_string_all_images()\n", idx++);
@@ -546,10 +509,6 @@ int main() {
       juggling3_pt = cv::Point(360, 90);
   idx = 1;
   if (choice == idx++)
-    test_comparer();
-  else if (choice == idx++)
-    test_comparer2();
-  else if (choice == idx++)
     test_bbox();
   else if (choice == idx++)
     test_region_growth();

@@ -181,7 +181,7 @@ int main() {
 
   printf("choice?\n");
   int choice = 6;
-  // std::cin >> choice;
+  std::cin >> choice;
 
   idx = 1;
   if (choice == idx++)
@@ -196,5 +196,4 @@ int main() {
     test_paste_image(cv::imread(IMG_DIR "paleo.png"), cv::imread(IMG_DIR "arnaud001.png"));
   else if (choice == idx++)
     test_paste_images();
-
 }

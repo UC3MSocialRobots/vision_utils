@@ -20,12 +20,16 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
 
-\todo Description of the file
+A template skill to subscribe to a synchronized stream of RGB and depth images.
 
 \section Parameters
   - \b "~rgb_topic", "~depth_topic"
         [std::string, default "rgb", "depth"]
         The name of the topic where the RGB image stream can be obtained.
+
+  - \b "~display"
+      [bool, default: false]
+      True to display the acquired RGB, depth, user images
 
 \section Subscriptions
   - \b {start_topic}, {stop_topic}
@@ -78,9 +82,10 @@ public:
   RgbDepthSkill(const std::string & start_topic,
                 const std::string & stop_topic)
     : NanoSkill(start_topic, stop_topic),
+      _display(false),
       _it(_nh_public)
   {
-    // get the image channel
+    // get image topics
     std::string _rgb_topic = "rgb";
     _nh_private.param("rgb_topic", _rgb_topic, _rgb_topic);
     _resolved_rgb_topic = _nh_public.resolveName(_rgb_topic);
@@ -225,7 +230,7 @@ private:
   // //// images stuff
 #ifdef USE_EXACT_TIME
   typedef message_filters::sync_policies::ExactTime<Image, Image> MySyncPolicy;
-#else // not USE_EXACT_T*IME
+#else // not USE_EXACT_TIME
   typedef message_filters::sync_policies::ApproximateTime<Image, Image> MySyncPolicy;
 #endif
   image_transport::ImageTransport _it;
@@ -234,7 +239,7 @@ private:
 
   //! where the camera frames are obtained
   std::string _resolved_rgb_topic, _resolved_depth_topic;
-
+  //! bridges to uncompress the images
   cv_bridge::CvImageConstPtr _rgb_bridge, _depth_bridge;
 
 }; // end class RgbDepthSkill

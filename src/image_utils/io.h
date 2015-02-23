@@ -6,6 +6,7 @@
 #include <debug/error.h>
 #include <cv_conversion_float_uchar.h>
 #include <kinect_utils/user_image_to_rgb.h>
+#include "convert_n_colors.h"
 
 namespace image_utils {
 
@@ -177,26 +178,6 @@ bool read_rgb_depth_user_image_from_image_file(const std::string & filename_pref
 
 ////////////////////////////////////////////////////////////////////////////////
 
-inline bool reduce_monochrome(const std::string & file_in,
-                              const std::string & file_out) {
-  std::ostringstream order;
-  order << "convert " << file_in << " -monochrome " << file_out;
-  int retval = system_utils::exec_system(order.str());
-  return (retval == 0); // http://www.imagemagick.org/script/exception.php
-}
-
-//! from http://stackoverflow.com/questions/14031965/convert-32-bit-png-to-8-bit-png-with-imagemagick-by-preserving-semi-transparent
-inline bool reduce_256_colors(const std::string & file_in,
-                              const std::string & file_out) {
-  std::ostringstream order; // convert original.png -colors 256 PNG8:output.png
-  order << "convert " << file_in //<< " colors 256"
-        << " PNG8:" << file_out;
-  int retval = system_utils::exec_system(order.str());
-  return (retval == 0); // http://www.imagemagick.org/script/exception.php
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
 inline bool write_rgb_depth_user_to_image_file
 (const std::string & filename_prefix,
  const cv::Mat3b * rgb = NULL,
@@ -236,7 +217,8 @@ inline bool write_rgb_depth_user_to_image_file
            "could not write user_mask_illus image '%s'\n", user_mask_illus_filename.str().c_str());
     return false;
   }
-  if (!reduce_256_colors(user_mask_illus_filename.str(),user_mask_illus_filename.str()))
+  if (!convert_n_colors(user_mask_illus_filename.str(), 256,
+                        user_mask_illus_filename.str()))
     return false;
   if (debug_info)
     printf("Written user illus file '%s'.\n", user_mask_illus_filename.str().c_str());
@@ -402,7 +384,7 @@ inline bool imwrite_debug(const std::string& filename, cv::InputArray img,
     return false;
   }
   // color reduction
-  if (ncolors == COLORS256 && !reduce_256_colors(filename, filename)) {
+  if (ncolors == COLORS256 && !convert_n_colors(filename, 256, filename)) {
     printf("/!\\ Could not reduce file '%s' to 256 colors \n", filename.c_str());
     return false;
   }

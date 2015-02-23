@@ -11,6 +11,10 @@ IF(AD_USE_OPENCV)
 
 	add_executable(ros_camera_info_to_binary.exe image_topic_to_video.cpp)
         target_link_libraries(ros_camera_info_to_binary.exe string_utils ${catkin_LIBRARIES})
+    
+    add_executable(ros_camera_info_binary_to_yaml.exe ros_camera_info_binary_to_yaml.cpp)
+        target_link_libraries(ros_camera_info_binary_to_yaml.exe ${catkin_LIBRARIES})
+        
   ENDIF(AD_USE_ROS)
 
 	add_executable(launcher_camera_blocker_skill.exe launcher_camera_blocker_skill.cpp)

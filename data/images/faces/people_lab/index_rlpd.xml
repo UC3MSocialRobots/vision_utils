@@ -1,0 +1,67 @@
+<?xml version="1.0" ?>
+<persons>
+  <person name="david">
+    <img path="david_43.png"/>
+    <img path="david_44.png"/>
+    <img path="david_45.png"/>
+    <img path="david_46.png"/>
+    <img path="david_47.png"/>
+    <img path="david_48.png"/>
+    <img path="david_49.png"/>
+    <img path="david_50.png"/>
+    <img path="david_51.png"/>
+    <img path="david_52.png"/>
+    <img path="david_53.png"/>
+    <img path="david_54.png"/>
+    <img path="david_55.png"/>
+    <img path="david_56.png"/>
+    <img path="david_74.png"/>
+    <img path="david_75.png"/>
+    <img path="david_76.png"/>
+    <img path="david_77.png"/>
+    <img path="david_78.png"/>
+    <img path="david_79.png"/>
+    <img path="david_80.png"/>
+  </person>
+  <person name="irene">
+    <img path="irene_57.png"/>
+    <img path="irene_58.png"/>
+    <img path="irene_59.png"/>
+    <img path="irene_60.png"/>
+    <img path="irene_61.png"/>
+    <img path="irene_62.png"/>
+    <img path="irene_63.png"/>
+    <img path="irene_64.png"/>
+    <img path="irene_65.png"/>
+    <img path="irene_66.png"/>
+    <img path="irene_67.png"/>
+    <img path="irene_68.png"/>
+    <img path="irene_69.png"/>
+    <img path="irene_70.png"/>
+    <img path="irene_71.png"/>
+    <img path="irene_72.png"/>
+    <img path="irene_73.png"/>
+    <img path="irene_75.png"/>
+    <img path="irene_76.png"/>
+    <img path="irene_77.png"/>
+    <img path="irene_78.png"/>
+    <img path="irene_79.png"/>
+    <img path="irene_80.png"/>
+    <img path="irene_81.png"/>
+    <img path="irene_82.png"/>
+    <img path="irene_83.png"/>
+    <img path="irene_84.png"/>
+    <img path="irene_85.png"/>
+  </person>
+  <person name="jc">
+    <img path="jc_76.png"/>
+    <img path="jc_77.png"/>
+    <img path="jc_78.png"/>
+    <img path="jc_79.png"/>
+    <img path="jc_80.png"/>
+    <img path="jc_81.png"/>
+    <img path="jc_82.png"/>
+    <img path="jc_83.png"/>
+  </person>
+</persons>
+

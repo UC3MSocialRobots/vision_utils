@@ -3,7 +3,7 @@
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
   \date        2013/8/1
-  
+
 ________________________________________________________________________________
 
 This program is free software: you can redistribute it and/or modify
@@ -94,6 +94,17 @@ void test_color_image(const cv::Mat & rgb) {
       cv::imwrite("/tmp/foo.jpg", rgb, compression_params);
     maggiePrint("JPG writing, quality %i: \t\t\t%g ms, %s", quality, timer.time() / ntimes,
                 file_size("/tmp/foo.jpg").c_str());
+  } // end loop quality
+
+  for (unsigned int quality = 55; quality <= 100; quality+=15) {
+    compression_params.clear();
+    compression_params.push_back(CV_IMWRITE_JPEG_QUALITY);
+    compression_params.push_back(quality);
+    timer.reset();
+    for (unsigned int time = 0; time < ntimes; ++time)
+      cv::imwrite("/tmp/foo.jp2", rgb, compression_params);
+    maggiePrint("JPG2000 writing, quality %i: \t\t\t%g ms, %s", quality, timer.time() / ntimes,
+                file_size("/tmp/foo.jp2").c_str());
   } // end loop quality
 
   timer.reset();

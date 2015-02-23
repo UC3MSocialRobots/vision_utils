@@ -1,0 +1,6 @@
+max_luminance: 150
+min_luminance: 40
+levels: 15
+min_detections: 30
+zero_contrast_threshold: 10
+

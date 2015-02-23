@@ -10,6 +10,7 @@
 #include <cmatrix/cmatrix.h>
 // vision
 #include "io.h"
+#include "mask.h"
 
 namespace image_utils {
 
@@ -492,58 +493,6 @@ inline void region_growth_no_seen_points(
   region_growth(mat, seenPoints, seed, maxDistWithNeighbour,
                 maxDistWithSeedValue, queue);
 }
-
-////////////////////////////////////////////////////////////////////////////////
-
-inline bool is_nan_const_double(const double & val) { return isnan(val);}
-
-inline bool is_nan_const_float(const float & val) { return isnan(val);}
-
-inline bool is_zero_uchar(const uchar & val) { return val == 0; }
-
-inline bool is_zero_vec3b(const cv::Vec3b & val) {
-  return val[0] == 0 && val[1] == 0 && val[2] == 0;
-}
-
-inline bool is_white_vec3b(const cv::Vec3b & val) {
-  return val[0] == 255 && val[1] == 255 && val[2] == 255;
-}
-
-inline bool is_non_zero_vec3b(const cv::Vec3b & val) {
-  return val[0] || val[1] || val[2];
-}
-
-/*!
- * Apply a mask function on an input image.
- * \param in
- *    the image for generating the mask.
- * \param out
- *    the output mask.
- * \param excluding_fn_ptr
- *    the function that determines if a value belongs to the mask or not.
- *    The mask is initially equal to 255 for all pixels.
- *    For a pixel with a given value, if the function returns true,
- *    then the given pixel does not belong to the mask,
- *    and its value in the mask is set to 0.
- *    For instance, with a RGB image, you can use is_zero_vec3b()
- *    to keep only non null values of the image in the mask.
- */
-template<class _T>
-inline void mask(const cv::Mat & in,
-                 cv::Mat1b & out,
-                 bool (*excluding_fn_ptr)(const _T & zero_val)) {
-  out.create(in.size());
-  out.setTo(255);
-  for (int row = 0; row < in.rows; ++row) {
-    // get the address of row
-    const _T* in_data = in.ptr<_T>(row);
-    uchar* out_data = out.ptr<uchar>(row);
-    for (int col = 0; col < in.cols; ++col) {
-      if ((*excluding_fn_ptr)(in_data[col]))
-        out_data[col] = 0;
-    } // end loop col
-  } // end loop row
-} // end mask()
 
 ////////////////////////////////////////////////////////////////////////////////
 

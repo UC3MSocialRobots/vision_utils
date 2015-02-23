@@ -100,6 +100,22 @@ catkin_add_gtest(gtest_ocr_utils
 )
 TARGET_LINK_LIBRARIES(gtest_ocr_utils  OcrUtils translator)
 
+catkin_add_gtest(gtest_head_finder
+  gtest_head_finder.cpp
+  ../src/image_utils/head_finder.h)
+
+### border_remover
+catkin_add_gtest(gtest_border_remover
+  gtest_border_remover.cpp
+  ../src/image_utils/border_remover.h
+)
+
+catkin_add_gtest(gtest_io
+  gtest_io.cpp
+  ../src/image_utils/io.h
+)
+
+
 #### database
 catkin_add_gtest(gtest_nano_skill
   gtest_nano_skill.cpp

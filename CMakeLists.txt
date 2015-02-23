@@ -6,7 +6,7 @@ project(vision_utils)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS roscpp roslib cv_bridge
                                         message_generation utils kinect
-                                        compressed_rounded_image_transport
+                                        compressed_rounded_image_transport screens_msgs
                                         pcl_ros pcl_conversions)
 
 find_package(PCL REQUIRED)
@@ -89,7 +89,7 @@ install(FILES ${devel_pkg_inc}/img_path.h DESTINATION ${devel_pkg_inc})
 catkin_package(
   INCLUDE_DIRS src
   CATKIN_DEPENDS roscpp roslib message_runtime cv_bridge
-  DEPENDS utils kinect compressed_rounded_image_transport
+  DEPENDS utils kinect compressed_rounded_image_transport screens_msgs
   CFG_EXTRAS img_path.h
 )
 
@@ -108,12 +108,13 @@ include_directories(
 )
 
 SET(AD_USE_ROS ON)
-SET(AD_USE_OPENCV ON CACHE BOOL "")
+SET(AD_USE_OPENCV ON)# CACHE BOOL "")
 SET(AD_USE_NITE ON CACHE BOOL "")
 
-ADD_SUBDIRECTORY(src)
-ADD_SUBDIRECTORY(test)
 ADD_SUBDIRECTORY(third_parties)
+ADD_SUBDIRECTORY(src)
+#ADD_SUBDIRECTORY(test)
+
 
 ## Declare a cpp library
 # add_library(foo

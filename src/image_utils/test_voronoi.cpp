@@ -461,6 +461,5 @@ int main(int argc, char** argv) {
   //                          true, 1, "opencv_src_");
   //  generate_video_comparer(cv::imread(IMG_DIR "powerXML/power.png", CV_LOAD_IMAGE_GRAYSCALE),
   //                          true, 2, "comparer_power_");
-
-  //return CLI(argc, argv);
+  return CLI(argc, argv);
 }

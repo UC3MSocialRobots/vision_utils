@@ -1,0 +1,8 @@
+<launch>
+<arg name="robot"/>
+<group ns="$(arg robot)">
+  <rosparam command="load" file="$(find vision_utils)/config/light_intensity_measurer_config.yaml" ns="/light_intensity_measurer" />
+  <node pkg="vision_utils" type="lightintensitymeasurer"
+        name="lightintensitymeasurer"  output="screen" />
+</group>
+</launch>

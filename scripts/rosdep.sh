@@ -1,7 +1,7 @@
 #!/bin/sh
 # External, ROS and system package dependencies
 
-PACKAGES="ros-groovy-blob
+PACKAGES="ros-hydro-blob
           tesseract-ocr
           tesseract-ocr-eng
           tesseract-ocr-spa

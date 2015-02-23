@@ -1,8 +1,8 @@
 /*!
-  \file        nite_nodelet_receiver_template.h
+  \file        rlpd2imgs.cpp
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
-  \date        2012/11/7
+  \date        2014/11/20
 
 ________________________________________________________________________________
 
@@ -21,39 +21,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
 
 \todo Description of the file
-
-\section Parameters
-  - \b "foo"
-        [string] (default: "bar")
-        Description of the parameter.
-
-\section Subscriptions
-  - \b "/foo"
-        [xxx]
-        Descrption of the subscription
-
-\section Publications
-  - \b "~foo"
-        [xxx]
-        Descrption of the publication
-
  */
-
-#ifndef NITE_NODELET_RECEIVER_TEMPLATE_H
-#define NITE_NODELET_RECEIVER_TEMPLATE_H
-
-#include <nodelet/nodelet.h>
-#include "skill_templates/nite/nite_subscriber_template.h"
-
-class NiteNodeletSubscriberTemplate : public nodelet::Nodelet, public NiteSubscriberTemplate {
-public:
-
-  virtual void onInit() {
-    NODELET_INFO("onInit()");
-    NiteSubscriberTemplate::init();
-  }
-
-}; // end class NiteNodeletSubscriberTemplate
-
-
-#endif // NITE_NODELET_RECEIVER_TEMPLATE_H
+#include "rlpd2imgs.h"
+int main(int argc, char **argv) {
+  RLPD2Imgs player;
+  return RLPD2Imgs::static_player(player, argc, argv);
+}

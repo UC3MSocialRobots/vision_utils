@@ -138,9 +138,45 @@ TEST(TestSuite, constructor_four_files) {
   test_four_files<Pt2Deque>();
   timer.printTime("test_four_files<Pt2Deque>()");
 
-//  timer.reset();
-//  test_four_files<Pt2Queue>();
-//  timer.printTime("test_four_files<Pt2Queue>()");
+  //  timer.reset();
+  //  test_four_files<Pt2Queue>();
+  //  timer.printTime("test_four_files<Pt2Queue>()");
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+TEST(TestSuite, test_comparer) {
+  ImageComparer im;
+  im.set_models(IMG_DIR "paintRecognizer/index.txt", cv::Size(32, 32));
+
+  cv::Mat img = cv::imread(IMG_DIR "paintRecognizer/inputs/m.png",
+                           CV_LOAD_IMAGE_GRAYSCALE);
+  int nbTimes = 5;
+  Timer timer;
+  for (int i = 0; i < nbTimes; ++i)
+    im.compareFile(img);
+  timer.printTime_factor("compareFile", nbTimes);
+  printf("results:'%s'\n", im.results_to_string().c_str());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+TEST(TestSuite, test_comparer2) {
+  printf("test_comparer()\n");
+  ImageComparer im;
+  im.set_models(IMG_DIR "comparer/index.txt", cv::Size(32, 32));
+
+  std::vector<std::string> filenames;
+  filenames.push_back(IMG_DIR "comparer/model.png");
+  filenames.push_back(IMG_DIR "comparer/1.png");
+  filenames.push_back(IMG_DIR "comparer/2.png");
+  filenames.push_back(IMG_DIR "comparer/3.png");
+  filenames.push_back(IMG_DIR "comparer/4.png");
+  for (int i = 0 ; i < 5 ; ++i) {
+    im.compareFile(cv::imread(filenames.at(i), CV_LOAD_IMAGE_GRAYSCALE));
+    printf("Comparing with '%s', results:'%s'\n",
+           filenames.at(i).c_str(), im.results_to_string().c_str());
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

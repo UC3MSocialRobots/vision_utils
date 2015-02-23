@@ -35,13 +35,13 @@ public:
      */
   virtual void get_connected_components
   (const int cols,
-   std::vector< Comp > & components_pts,
+   std::vector< std::vector<cv::Point> > & components_pts,
    std::vector<cv::Rect> & boundingBoxes) = 0;
 
   ////////////////////////////////////////////////////////////////////////////
 
   //! sort the components by number of points
-  bool sort_comps_by_decreasing_size(std::vector< Comp > & components_pts,
+  bool sort_comps_by_decreasing_size(std::vector< std::vector<cv::Point> > & components_pts,
                                      std::vector<cv::Rect> & boundingBoxes) {
     unsigned int ncomps = components_pts.size();
     sizes.resize(ncomps);
