@@ -107,8 +107,6 @@ include_directories(
   /usr/include/pcl-1.7/
 )
 
-SET(AD_USE_ROS ON)
-SET(AD_USE_OPENCV ON)# CACHE BOOL "")
 SET(AD_USE_NITE ON CACHE BOOL "")
 
 ADD_SUBDIRECTORY(third_parties)
