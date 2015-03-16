@@ -31,7 +31,8 @@ A class to apply Canny filters on depth images.
 // OpenCV
 #include <opencv2/imgproc/imgproc.hpp>
 // AD
-#include <cv_conversion_float_uchar.h>
+#include "compressed_rounded_image_transport/cv_conversion_float_uchar.h"
+
 #include <image_utils/value_remover.h>
 #include <image_utils/io.h>
 

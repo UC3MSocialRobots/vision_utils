@@ -1,5 +1,6 @@
 add_subdirectory(color)
 ADD_SUBDIRECTORY(camera_utils)
+ADD_SUBDIRECTORY(compressed_rounded_image_transport)
 ADD_SUBDIRECTORY(connected_comp)
 ADD_SUBDIRECTORY(databases_io)
 ADD_SUBDIRECTORY(image_utils)

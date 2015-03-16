@@ -13,7 +13,8 @@
 // AD
 #include <vision_utils/img_path.h>
 #include <time/timer.h>
-#include <cv_conversion_float_uchar.h>
+#include "compressed_rounded_image_transport/cv_conversion_float_uchar.h"
+
 // vision_utils
 #include "image_utils/content_processing.h"
 #include "image_utils/connected_comp_interface.h"

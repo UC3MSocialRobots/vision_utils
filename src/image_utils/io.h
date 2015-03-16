@@ -4,7 +4,7 @@
 #include "opencv2/highgui/highgui.hpp"
 #include <system/system_utils.h>
 #include <debug/error.h>
-#include <cv_conversion_float_uchar.h>
+#include "compressed_rounded_image_transport/cv_conversion_float_uchar.h"
 #include <kinect_utils/user_image_to_rgb.h>
 #include "convert_n_colors.h"
 

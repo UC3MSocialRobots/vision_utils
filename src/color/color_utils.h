@@ -6,7 +6,8 @@
 
 // compressed_rounded_image_transport
 #include <color/hue_utils.h>
-// #include <cv_conversion_float_uchar.h>
+// #include "compressed_rounded_image_transport/cv_conversion_float_uchar.h"
+
 // utils
 #include <geom/foo_point.h>
 
