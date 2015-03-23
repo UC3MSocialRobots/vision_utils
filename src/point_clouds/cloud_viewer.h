@@ -50,7 +50,7 @@ inline void look_at(Viewer & v,
                     double cam_x, double cam_y, double cam_z,
                     double lookat_x, double lookat_y, double lookat_z,
                     double up_x = 0, double up_y = 1, double up_z = 0) {
-  v.camera_.pos[0] = cam_x;
+  /*v.camera_.pos[0] = cam_x;
   v.camera_.pos[1] = cam_y;
   v.camera_.pos[2] = cam_z;
   v.camera_.focal[0] = lookat_x;
@@ -59,6 +59,8 @@ inline void look_at(Viewer & v,
   v.camera_.view[0] = up_x;
   v.camera_.view[1] = up_y;
   v.camera_.view[2] = up_z;
+  */
+  v.setCameraPosition(cam_x, cam_y, cam_z,  lookat_x, lookat_y, lookat_z,  up_x, up_y, up_z);
   v.updateCamera();
 }
 
