@@ -1,7 +1,7 @@
 #!/bin/sh
 # External, ROS and system package dependencies
 
-PACKAGES="ros-hydro-blob
+PACKAGES="ros-`rosversion -d`-blob
           tesseract-ocr
           tesseract-ocr-eng
           tesseract-ocr-spa
