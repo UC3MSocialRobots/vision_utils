@@ -1,27 +1,29 @@
 catkin_add_gtest(gtest_opencv_ml  gtest_opencv_ml.cpp)
-
+target_link_libraries(gtest_opencv_ml ${catkin_LIBRARIES})
 
 catkin_add_gtest(gtest_mini_stage  gtest_mini_stage.cpp)
 TARGET_LINK_LIBRARIES(gtest_mini_stage string_utils ${catkin_LIBRARIES})
 
 
 catkin_add_gtest(gtest_xml_images_reader  gtest_xml_images_reader.cpp)
-TARGET_LINK_LIBRARIES(gtest_xml_images_reader xml_images_reader)
+TARGET_LINK_LIBRARIES(gtest_xml_images_reader xml_images_reader ${catkin_LIBRARIES})
 
 
 catkin_add_gtest(gtest_content_processing  gtest_content_processing.cpp
   ../src/image_utils/content_processing.h)
-
+target_link_libraries(gtest_content_processing ${catkin_LIBRARIES})
 
 catkin_add_gtest(gtest_image_contour
   gtest_image_contour.cpp
   ../src/image_utils/image_contour.h)
+target_link_libraries(gtest_image_contour ${catkin_LIBRARIES})
 
 
 catkin_add_gtest(gtest_voronoi
   gtest_voronoi.cpp
   ../src/image_utils/image_contour.h
   ../src/image_utils/voronoi.h)
+target_link_libraries(gtest_voronoi ${catkin_LIBRARIES})
 
 
 catkin_add_gtest(gtest_image_comparer
@@ -32,16 +34,19 @@ TARGET_LINK_LIBRARIES(gtest_image_comparer string_utils ${catkin_LIBRARIES})
 catkin_add_gtest(gtest_drawing_utils
   gtest_drawing_utils.cpp
   ../src/image_utils/drawing_utils.h)
+target_link_libraries(gtest_drawing_utils ${catkin_LIBRARIES})
 
 
 catkin_add_gtest(gtest_resize_utils
   gtest_resize_utils.cpp
   ../src/image_utils/resize_utils.h)
+target_link_libraries(gtest_resize_utils ${catkin_LIBRARIES})
 
 
 catkin_add_gtest(gtest_layer_utils
   gtest_layer_utils.cpp
   ../src/image_utils/layer_utils.h)
+target_link_libraries(gtest_layer_utils ${catkin_LIBRARIES})
 
 catkin_add_gtest(gtest_ellipse_utils
   gtest_ellipse_utils.cpp
@@ -51,6 +56,7 @@ TARGET_LINK_LIBRARIES(gtest_ellipse_utils string_utils ${catkin_LIBRARIES})
 catkin_add_gtest(gtest_histogram_utils
   gtest_histogram_utils.cpp
   ../src/visu_utils/histogram_utils.h)
+target_link_libraries(gtest_histogram_utils ${catkin_LIBRARIES})
 
 catkin_add_gtest(gtest_google_images_search
   gtest_google_images_search.cpp
@@ -68,6 +74,7 @@ TARGET_LINK_LIBRARIES(gtest_ground_plane_finder string_utils ${catkin_LIBRARIES}
 catkin_add_gtest(gtest_clusterer
   gtest_clusterer.cpp
   ../src/point_clouds/clusterer.h)
+target_link_libraries(gtest_clusterer ${catkin_LIBRARIES})
 
 catkin_add_gtest(gtest_cloud_tilter
   gtest_cloud_tilter.cpp
@@ -92,35 +99,37 @@ TARGET_LINK_LIBRARIES(gtest_blob_segmenter string_utils disjoint_sets2 ${catkin_
 
 catkin_add_gtest(gtest_image_clusterer
   gtest_image_clusterer.cpp
-  ../src/point_clouds/image_clusterer.h
-)
+  ../src/point_clouds/image_clusterer.h)
+target_link_libraries(gtest_image_clusterer ${catkin_LIBRARIES})
 
 catkin_add_gtest(gtest_ocr_utils
-  gtest_ocr_utils.cpp
-)
-TARGET_LINK_LIBRARIES(gtest_ocr_utils  OcrUtils translator)
+  gtest_ocr_utils.cpp)
+TARGET_LINK_LIBRARIES(gtest_ocr_utils  OcrUtils translator ${catkin_LIBRARIES})
 
 catkin_add_gtest(gtest_head_finder
   gtest_head_finder.cpp
   ../src/image_utils/head_finder.h)
+target_link_libraries(gtest_head_finder ${catkin_LIBRARIES})
 
 ### border_remover
 catkin_add_gtest(gtest_border_remover
   gtest_border_remover.cpp
   ../src/image_utils/border_remover.h
 )
+target_link_libraries(gtest_border_remover ${catkin_LIBRARIES})
 
 catkin_add_gtest(gtest_io
   gtest_io.cpp
   ../src/image_utils/io.h
 )
-
+target_link_libraries(gtest_io ${catkin_LIBRARIES})
 
 #### database
 catkin_add_gtest(gtest_nano_skill
   gtest_nano_skill.cpp
   ../src/skill_templates/nano_skill.h
 )
+target_link_libraries(gtest_nano_skill ${catkin_LIBRARIES})
 
 
 #### database
@@ -129,14 +138,16 @@ catkin_add_gtest(gtest_filename_prefix2imgs
   ../src/databases_io/filename_prefix2imgs.h
   ../src/databases_io/database_player.h
 )
+target_link_libraries(gtest_filename_prefix2imgs ${catkin_LIBRARIES})
+
 catkin_add_gtest(gtest_liris2imgs
   gtest_liris2imgs.cpp
   ../src/databases_io/liris2imgs.h
   TIMEOUT 240.0) # 4 minutes
-TARGET_LINK_LIBRARIES(gtest_liris2imgs  xml_document)
+TARGET_LINK_LIBRARIES(gtest_liris2imgs  xml_document ${catkin_LIBRARIES})
 
 catkin_add_gtest(gtest_g3d2imgs
   gtest_g3d2imgs.cpp
   ../src/databases_io/g3d2imgs.h
 )
-TARGET_LINK_LIBRARIES(gtest_g3d2imgs  xml_document)
+TARGET_LINK_LIBRARIES(gtest_g3d2imgs  xml_document ${catkin_LIBRARIES})

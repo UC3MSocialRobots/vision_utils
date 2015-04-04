@@ -39,7 +39,7 @@ SET(AD_USE_NITE ON CACHE BOOL "")
 ADD_SUBDIRECTORY(third_parties)
 ADD_SUBDIRECTORY(src)
 ### 8 - Tests to build (catkin_add_gtest())
-# Nothing in this package
+ADD_SUBDIRECTORY(test)
 ### 9 - Install rules (install())
 install(DIRECTORY include/${PROJECT_NAME}/
    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
