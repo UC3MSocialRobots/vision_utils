@@ -56,9 +56,10 @@ void benchmark(const std::string & imgfile,
 }
 
 TEST(TestSuite, benchmark) {
-  benchmark(IMG_DIR "depth/alberto1_rgb.png", 1, 50, 1, 100);
-  benchmark(IMG_DIR "depth/alberto1_rgb.png", .5, 50, .8, 100);
-  benchmark(IMG_DIR "depth/alberto1_rgb.png", 1.5, 50, 1.2, 100);
+  unsigned int ntimes = 30;
+  benchmark(IMG_DIR "depth/alberto1_rgb.png", 1, 50, 1, ntimes);
+  benchmark(IMG_DIR "depth/alberto1_rgb.png", .5, 50, .8, ntimes);
+  benchmark(IMG_DIR "depth/alberto1_rgb.png", 1.5, 50, 1.2, ntimes);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -68,6 +69,3 @@ int main(int argc, char **argv){
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
-
-
-

@@ -15,9 +15,9 @@
 #include "debug/debug_utils.h"
 #include <vision_utils/img_path.h>
 
-void simple_ocr_test(const std::string filename, Translator::LanguageId language,
+void ocr_test(const std::string filename, Translator::LanguageId language,
                      const std::string & searched_pattern = "") {
-  printf("\n\n*** simple_ocr_test('%s')\n", filename.c_str());
+  printf("\n\n*** ocr_test('%s')\n", filename.c_str());
   cv::Mat m = cv::imread(filename);
   ASSERT_FALSE(m.empty());
 
@@ -27,32 +27,39 @@ void simple_ocr_test(const std::string filename, Translator::LanguageId language
   printf("ocr_result:'%s'\n", ocr_result.c_str());
   ASSERT_TRUE(ocr_result.find(searched_pattern) != std::string::npos)
       << "searched_pattern:'" << searched_pattern <<"'";
-
-  std::string trad = Translator::translate(ocr_result, language, Translator::LANGUAGE_ENGLISH);
-  printf("trad:'%s'\n", trad.c_str());
+//  std::string trad = Translator::translate(ocr_result, language, Translator::LANGUAGE_ENGLISH);
+//  printf("trad:'%s'\n", trad.c_str());
 }
 
-TEST(TestSuite, all_tests) {
-  simple_ocr_test(IMG_DIR "ocr/ocr.png", Translator::LANGUAGE_ENGLISH,
-                  "1234");
-  simple_ocr_test(IMG_DIR "ocr/ocr2.png", Translator::LANGUAGE_SPANISH,
-                  "escuelas infantiles");
-  simple_ocr_test(IMG_DIR "ocr/ocr3.png", Translator::LANGUAGE_SPANISH,
-                  "rendimiento");
-  simple_ocr_test(IMG_DIR "ocr/ocr4.png", Translator::LANGUAGE_SPANISH,
-                  "vuelta");
-  simple_ocr_test(IMG_DIR "ocr/ocr5.png", Translator::LANGUAGE_SPANISH,
-                  "cita en esta muestra");
-  simple_ocr_test(IMG_DIR "ocr/ocr6.png", Translator::LANGUAGE_SPANISH,
-                  "sospechar");
-  simple_ocr_test(IMG_DIR "ocr/ocr7.png", Translator::LANGUAGE_SPANISH,
-                  "urgente");
-  simple_ocr_test(IMG_DIR "ocr/ocr8.png", Translator::LANGUAGE_ENGLISH,
-                  "caps lock");
-  simple_ocr_test(IMG_DIR "ocr/ocr-ru-one_language_is_never_enough.png",
-                  Translator::LANGUAGE_RUSSIAN);
-  simple_ocr_test(IMG_DIR "ocr/ocr-ja.png",
-                  Translator::LANGUAGE_JAPANESE);
+TEST(TestSuite, ocr1) {
+  ocr_test(IMG_DIR "ocr/ocr.png", Translator::LANGUAGE_ENGLISH, "1234");
+}
+TEST(TestSuite, ocr2) {
+  ocr_test(IMG_DIR "ocr/ocr2.png", Translator::LANGUAGE_SPANISH, "escuelas infantiles");
+}
+TEST(TestSuite, ocr3) {
+  ocr_test(IMG_DIR "ocr/ocr3.png", Translator::LANGUAGE_SPANISH, "rendimiento");
+}
+TEST(TestSuite, ocr4) {
+  ocr_test(IMG_DIR "ocr/ocr4.png", Translator::LANGUAGE_SPANISH, "vuelta");
+}
+TEST(TestSuite, ocr5) {
+  ocr_test(IMG_DIR "ocr/ocr5.png", Translator::LANGUAGE_SPANISH, "cita en esta muestra");
+}
+TEST(TestSuite, ocr6) {
+  ocr_test(IMG_DIR "ocr/ocr6.png", Translator::LANGUAGE_SPANISH, "nuestras");
+}
+TEST(TestSuite, ocr7) {
+  ocr_test(IMG_DIR "ocr/ocr7.png", Translator::LANGUAGE_SPANISH, "urgente");
+}
+TEST(TestSuite, ocr8) {
+  ocr_test(IMG_DIR "ocr/ocr8.png", Translator::LANGUAGE_ENGLISH, "caps lock");
+}
+TEST(TestSuite, ru) {
+  ocr_test(IMG_DIR "ocr/ocr-ru-one_language_is_never_enough.png", Translator::LANGUAGE_RUSSIAN);
+}
+TEST(TestSuite, ja) {
+  ocr_test(IMG_DIR "ocr/ocr-ja.png", Translator::LANGUAGE_JAPANESE);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

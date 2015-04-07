@@ -1,8 +1,8 @@
 /*!
-  \file        gtest_g3d2imgs.cpp
+  \file        test_timer_chart.cpp
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
-  \date        2014/2/7
+  \date        2012/12/14
 
 ________________________________________________________________________________
 
@@ -20,49 +20,47 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
 
-\todo Description of the file
+Some tests for the TimerChart class.
+
  */
 //#define DISPLAY
-
+// put the line "#define CHART_TIMER_ON" in your code to activate the TimerChart
+#define CHART_TIMER_ON
+#include "visu_utils/timer_chart.h"
 #include <gtest/gtest.h>
-#include <databases_io/g3d2imgs.h>
+#include <unistd.h>
 
-#define G3D_DIR "/home/user/Downloads/0datasets/g3d_kingston/"
-//#define G3D_DIR "/home/arnaud/disk/Datasets/g3d_kingston/"
-inline bool check_dir_exists() {
-  if (system_utils::directory_exists(G3D_DIR))
-    return true;
-  printf("/!\\ Directory " G3D_DIR " does not exist\n");
-  return false;
+inline void usleep_gauss(const double avg_us) {
+  usleep(std::max(1., combinatorics_utils::rand_gaussian() * 3E3 + avg_us));
 }
 
-TEST(TestSuite, ctor) {
-  G3D2Imgs db;
-  ASSERT_TRUE(db.get_playlist_size() == 0);
-}
+TEST(TestSuite, test1) {
+  TIMER_CREATE(timer);
+  for (int i = 0; i < 100; ++i) {
+    printf("i:%i\n", i);
 
-////////////////////////////////////////////////////////////////////////////////
-
-TEST(TestSuite, simple_load) {
-  if (!check_dir_exists()) return;
-  G3D2Imgs db;
-  ASSERT_TRUE(db.from_file(G3D_DIR "Fighting/KinectOutput22/Colour/Colour 12.png"));
-  unsigned int nframes = db.n_frames_in_curr_video();
-  ASSERT_TRUE(nframes > 400);
-  for (unsigned int frame_idx = 0; frame_idx < nframes - 1; ++frame_idx) {
+    usleep_gauss(50E3);
+    TIMER_PRINT_RESET(timer, "foo");
+    usleep_gauss(10E3);
+    TIMER_PRINT_RESET(timer, "bar");
+    usleep_gauss(20E3);
+    TIMER_PRINT_RESET(timer, "zim");
+    usleep_gauss(50E3);
+    TIMER_PRINT_RESET(timer, "zam");
 #ifdef DISPLAY
-    db.display();
-    if (frame_idx == 0)
-      cv::waitKey(0);
+    TIMER_DISPLAY_CHART(timer, 1);
+    char c = cv::waitKey(50);
+    if ((int) c == 27)
+      break;
 #endif // DISPLAY
-    ASSERT_TRUE(db.go_to_next_frame());
-  } // end for (frame_idx)
+  } // end while (true)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-int main(int argc, char **argv){
+int main(int argc, char** argv) {
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
+

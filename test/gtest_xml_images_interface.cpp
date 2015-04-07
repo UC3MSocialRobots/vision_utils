@@ -1,4 +1,6 @@
-#include "xml_images_interface.h"
+// Bring in gtest
+#include <gtest/gtest.h>
+#include "xml_images_interface/xml_images_interface.h"
 #include "debug/error.h"
 #include <vision_utils/img_path.h>
 
@@ -38,10 +40,14 @@ protected:
 
 ////////////////////////////////////////////////////////////////////////////////
 
-int main() {
+int main(int argc, char** argv) {
   maggieDebug2("main()");
   XmlImageFooInterface interf;
-  interf.from_xml_file(IMG_DIR "pz/", "pz.xml");
-  return 0;
+  //interf.from_xml_file(IMG_DIR "pz/", "pz.xml");
+
+  // Run all the tests that were declared with TEST()
+  // srand(time(NULL));
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }
 

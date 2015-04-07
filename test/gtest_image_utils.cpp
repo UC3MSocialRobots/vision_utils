@@ -7,8 +7,9 @@
  *
  * \date April 2009
  *******************************************************************************/
-
+//#define DISPLAY
 // std
+#include <gtest/gtest.h>
 #include <iostream>
 // AD
 #include <vision_utils/img_path.h>
@@ -30,11 +31,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-
-////////////////////////////////////////////////////////////////////////////////
-
-inline void test_bbox() {
-  printf("test_bbox()\n");
+TEST(TestSuite, bbox) {
   cv::Mat1b test = cv::imread(IMG_DIR "star.png",
                               CV_LOAD_IMAGE_GRAYSCALE);
 
@@ -51,8 +48,7 @@ inline void test_bbox() {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-inline void test_region_growth() {
-  printf("test_region_growth()\n");
+TEST(TestSuite, region_growth) {
   std::vector<cv::Point2i> ans;
 
   cv::Mat1b image = cv::imread(IMG_DIR "region_growth.png", 0);
@@ -70,9 +66,6 @@ inline void test_region_growth() {
 ////////////////////////////////////////////////////////////////////////////////
 
 inline void test_string(const std::string & img_filename, int nb_times) {
-  std::cout << std::endl;
-  std::cout << std::endl;
-  printf("test_string(img_filename:'%s')", img_filename.c_str());
   /*
      * to string
      */
@@ -105,8 +98,10 @@ inline void test_string(const std::string & img_filename, int nb_times) {
   // for (size_t var = 0; var < image_cp.cols * image_cp.rows
   // * image_cp.elemSize(); ++var)
   // maggieDebug2("from_string:var %i=%i", var, *mat_data_ptr++);
+#ifdef DISPLAY
   cv::imshow("image_cp", image_cp);
   cv::waitKey(5000);
+#endif // DISPLAY
 
   /*
      * check with the diff
@@ -119,17 +114,16 @@ inline void test_string(const std::string & img_filename, int nb_times) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-inline void test_string_all_images() {
+TEST(TestSuite, string_all_images) {
   test_string(IMG_DIR "balloon.png", 200);
   test_string(IMG_DIR "paleo.png", 200);
   test_string(IMG_DIR "rectangles.png", 200);
-  test_string(IMG_DIR "frame.png", 200);
+  test_string(IMG_DIR "depth/alberto1_rgb.png", 200);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-inline void test_redim_content() {
-  printf("test_redim_content()\n");
+TEST(TestSuite, redim_content) {
   cv::Mat1b test = cv::imread(IMG_DIR  "balloonBW.png" , CV_LOAD_IMAGE_GRAYSCALE);
   cv::Mat1b test_roi;
   test(cv::Rect(50, 50, 150, 150)).copyTo(test_roi);
@@ -157,15 +151,16 @@ inline void test_redim_content() {
   out.setTo(0);
   image_utils::drawListOfPoints(out, comp_resized, cv::Vec3b(255, 0 ,0));
   image_utils::drawListOfPoints(out, comp, cv::Vec3b(0, 255 , 0));
+#ifdef DISPLAY
   cv::imshow("out", out);
   cv::waitKey(0);
-  cv::imwrite("out.png", out);
+#endif // DISPLAY
+  cv::imwrite("/tmp/out.png", out);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-inline void test_redim_content2() {
-  printf("test_redim_content2()\n");
+TEST(TestSuite, redim_content2) {
   cv::Mat1b test(300, 300);
   test.setTo(0);
   int circle_diam = 75;
@@ -189,15 +184,16 @@ inline void test_redim_content2() {
     image_utils::drawListOfPoints(test, comp_resized,
                                   (uchar) (255 * occur / occur_max));
   }
+#ifdef DISPLAY
   cv::imshow("test", test);
   cv::waitKey(0);
-  cv::imwrite("test.png", test);
+  cv::imwrite("/tmp/test.png", test);
+#endif // DISPLAY
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 inline void test_redim_content3(cv::Mat1b & img_out) {
-  printf("test_redim_content3()\n");
   std::vector<cv::Point> comp;
   image_utils::biggestComponent_vector2(img_out, comp);
 
@@ -217,9 +213,13 @@ inline void test_redim_content3(cv::Mat1b & img_out) {
     timer.printTime("redimContent_vector_without_repetition()\n");
     cv::rectangle(img_out, bbox, CV_RGB(100, 100, 100), 5);
     image_utils::drawListOfPoints(img_out, comp_resized, (uchar) 255);
+#ifdef DISPLAY
     cv::imshow("img_out", img_out);
+#endif // DISPLAY
   } // end loop var
+#ifdef DISPLAY
   cv::waitKey();
+#endif // DISPLAY
 
   for(std::vector<cv::Point>::const_iterator pt = comp_resized.begin();
       pt != comp_resized.end() ; ++pt) {
@@ -229,7 +229,7 @@ inline void test_redim_content3(cv::Mat1b & img_out) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-inline void test_redim_content3() {
+TEST(TestSuite, redim_content3) {
   cv::Mat1b img_out(500, 500);
   // make a nice rectangle
   img_out.setTo(0);
@@ -244,17 +244,20 @@ inline void test_redim_content3() {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void test_remove_value(const std::string yaml_filename) {
+void test_remove_value(const std::string image_filename) {
   cv::Mat rgb, depth;
-  image_utils::read_depth_rgb_from_yaml_file(yaml_filename, rgb, depth);
+  image_utils::read_rgb_depth_user_image_from_image_file
+      (image_filename, &rgb, &depth, NULL);
   cv::Mat1b uchar_greyscale_buffer;
   cv::Mat src_float_clean_buffer;
   cv::Mat3b depth_illus;
   image_utils::depth_image_to_vizualisation_color_image
       (depth, depth_illus, image_utils::FULL_RGB_STRETCHED);
+#ifdef DISPLAY
   cv::imshow("rgb", rgb);
   cv::imshow("depth_illus", depth_illus);
   cv::waitKey(0); cv::destroyAllWindows();
+#endif // DISPLAY
 
   // remove nans
   cv::Mat1b img_uchar_with_no_nan_arr[4];
@@ -283,16 +286,17 @@ void test_remove_value(const std::string yaml_filename) {
       inpaint_mask, image_utils::VALUE_REMOVAL_METHOD_AVERAGE_BORDER);
   timer.printTime("VALUE_REMOVAL_METHOD_AVERAGE_BORDER"); timer.reset();
 
+#ifdef DISPLAY
   cv::imshow("VALUE_REMOVAL_METHOD_DO_NOTHING", img_uchar_with_no_nan_arr[0]);
   cv::imshow("VALUE_REMOVAL_METHOD_DIRECTIONAL_VALUE_PROPAGATION", img_uchar_with_no_nan_arr[1]);
   cv::imshow("VALUE_REMOVAL_METHOD_INPAINT", img_uchar_with_no_nan_arr[2]);
   cv::imshow("VALUE_REMOVAL_METHOD_AVERAGE_BORDER", img_uchar_with_no_nan_arr[3]);
   cv::waitKey(0); cv::destroyAllWindows();
+#endif // DISPLAY
 } // end test_remove_value();
 
-inline void test_value_remover() {
-  printf("test_value_remover()\n");
-  test_remove_value(IMG_DIR "depth/inside1.yaml");
+TEST(TestSuite, value_remover) {
+  test_remove_value(IMG_DIR "depth/inside1");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -312,10 +316,12 @@ void test_floodfill_edge_closer(const std::string filename,
   cv::Mat1b img_closed_scale;
   cv::resize(img_closed, img_closed_scale, cv::Size(), 15, 15, CV_INTER_NN);
   // cv::imwrite("img_closed.png", img_closed);
+#ifdef DISPLAY
   cv::imshow("img", img);
   cv::imshow("img_closed", img_closed);
   cv::imshow("img_closed_scale", img_closed_scale);
   cv::waitKey(0);
+#endif // DISPLAY
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -333,9 +339,11 @@ void test_find_top_point_centered(const cv::Mat1b & img) {
   cv::rectangle(img_illus, search_window, CV_RGB(255, 0, 0));
   cv::circle(img_illus, top_point, 3, CV_RGB(0, 0, 255), 2);
 
+#ifdef DISPLAY
   cv::imshow("img", img);
   cv::imshow("img_illus", img_illus);
   cv::waitKey(0); cv::destroyAllWindows();
+#endif // DISPLAY
 } // end test_find_top_point_centered();
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -365,9 +373,11 @@ void test_propagative_floodfill(const std::string filename,
       (seen_buffer_short, seen_buffer_float_buffer, seen_buffer_illus);
   cv::circle(seen_buffer_illus, seed_copy, 4, CV_RGB(0, 0, 255), 2);
 
+#ifdef DISPLAY
   cv::imshow("img", img);
   cv::imshow("seen_buffer_illus", seen_buffer_illus);
   cv::waitKey(0); cv::destroyAllWindows();
+#endif // DISPLAY
 } // end test_propagative_floodfill();
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -401,10 +411,12 @@ void test_propagative_floodfill_custom_lookup
   lookup_result.convertTo(lookup_result_uchar, CV_8U);
   user_image_to_rgb(lookup_result_uchar, lookup_result_illus, 8);
 
+#ifdef DISPLAY
   cv::imshow("img", img);
   cv::imshow("seen_buffer_illus", seen_buffer_illus);
   cv::imshow("lookup_result_illus", lookup_result_illus);
   cv::waitKey(0); cv::destroyAllWindows();
+#endif // DISPLAY
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -430,7 +442,7 @@ void test_compute_pixel2meters_factor_mouse_cb
 
   // get pixel2meters_factor
   double pixel2meters_factor = kinect_openni_utils::compute_pixel2meters_factor
-      (data->depth_img, data->depth_camera_model, cv::Point(x, y));
+                               (data->depth_img, data->depth_camera_model, cv::Point(x, y));
 
   // convert a distance of 50 cm to pixel (1 meter circle)
   int fifty_cm_radius = .5f / pixel2meters_factor;
@@ -442,7 +454,9 @@ void test_compute_pixel2meters_factor_mouse_cb
     return;
   cv::circle(data->illus_img, cv::Point(x, y), 2, CV_RGB(255, 0, 0), -1);
   cv::circle(data->illus_img, cv::Point(x, y), fifty_cm_radius, CV_RGB(255, 0, 0), 2);
+#ifdef DISPLAY
   cv::imshow(data->window_name, data->illus_img);
+#endif // DISPLAY
 }
 
 void test_compute_pixel2meters_factor(const std::string & rgb_depth_filename_prefix,
@@ -459,6 +473,7 @@ void test_compute_pixel2meters_factor(const std::string & rgb_depth_filename_pre
   data.rgb_img.copyTo(data.illus_img);
 
   data.window_name = "test_compute_pixel2meters_factor";
+#ifdef DISPLAY
   cv::namedWindow(data.window_name);
   cv::setMouseCallback(data.window_name, test_compute_pixel2meters_factor_mouse_cb, &data);
   cv::imshow("rgb_img", data.rgb_img);
@@ -470,84 +485,59 @@ void test_compute_pixel2meters_factor(const std::string & rgb_depth_filename_pre
     if ((int) c == 27)
       break;
   }
+#endif // DISPLAY
 } // end test_compute_pixel2meters_factor();
 
 ////////////////////////////////////////////////////////////////////////////////
 
-int main() {
-  ros::Time::init();
-  int idx = 1;
-  printf("*** test_image_utils ***\n");
-  printf("%i: test_bbox()\n", idx++);
-  printf("%i: test_region_growth()\n", idx++);
-  printf("%i: test_string_all_images()\n", idx++);
-  printf("%i: test_redim_content()\n", idx++);
-  printf("%i: test_redim_content2()\n", idx++);
-  printf("%i: test_redim_content3()\n", idx++);
-  printf("%i: test_value_remover()\n", idx++);
-  printf("\n");
-  printf("%i: test_floodfill_edge_closer(IMG_DIR broken_edge.png)\n", idx++);
-  printf("%i: test_floodfill_edge_closer(IMG_DIR broken_edge.png)\n", idx++);
-  printf("%i: test_floodfill_edge_closer(IMG_DIR depth/juggling1_broken_edge.png)\n", idx++);
-  printf("%i: test_floodfill_edge_closer(IMG_DIR depth/juggling3_broken_edge.png)\n", idx++);
-  printf("\n");
-  printf("%i: test_find_top_point_centered(IMG_DIR depth/juggling1_user_mask.png)\n", idx++);
-  printf("%i: test_find_top_point_centered(IMG_DIR depth/juggling2_user_mask.png)\n", idx++);
-  printf("\n");
-  printf("%i: test_propagative_floodfill(IMG_DIR depth/juggling1_user_mask.png)\n", idx++);
-  printf("%i: test_propagative_floodfill(IMG_DIR depth/juggling2_user_mask.png)\n", idx++);
-  printf("%i: test_propagative_floodfill_custom_lookup(IMG_DIR depth/juggling1_user_mask.png)\n", idx++);
-  printf("%i: test_propagative_floodfill_custom_lookup(IMG_DIR depth/juggling2_user_mask.png)\n", idx++);
-
-  printf("%i: test_compute_pixel2meters_factor(IMG_DIR depth/juggling1, KINECT_SERIAL_LAB())\n", idx++);
-
-  printf("choice?\n");
-  int choice = 9;
-  std::cin >> choice;
-
+TEST(TestSuite, floodfill_edge_closer) {
   cv::Point juggling1_pt = cv::Point(370, 70),
       juggling2_pt = cv::Point(400, 70),
       juggling3_pt = cv::Point(360, 90);
-  idx = 1;
-  if (choice == idx++)
-    test_bbox();
-  else if (choice == idx++)
-    test_region_growth();
-  else if (choice == idx++)
-    test_string_all_images();
-  else if (choice == idx++)
-    test_redim_content();
-  else if (choice == idx++)
-    test_redim_content2();
-  else if (choice == idx++)
-    test_redim_content3();
-  else if (choice == idx++)
-    test_value_remover();
+  test_floodfill_edge_closer(IMG_DIR "broken_edge.png", cv::Point(11, 19));
+  test_floodfill_edge_closer(IMG_DIR "broken_edge.png", cv::Point(9, 8));
+  test_floodfill_edge_closer(IMG_DIR "depth/juggling1_broken_edge.png", juggling1_pt, false);
+  test_floodfill_edge_closer(IMG_DIR "depth/juggling3_broken_edge.png", juggling3_pt, false);
+}
 
-  else if (choice == idx++)
-    test_floodfill_edge_closer(IMG_DIR "broken_edge.png", cv::Point(11, 19));
-  else if (choice == idx++)
-    test_floodfill_edge_closer(IMG_DIR "broken_edge.png", cv::Point(9, 8));
-  else if (choice == idx++)
-    test_floodfill_edge_closer(IMG_DIR "depth/juggling1_broken_edge.png", juggling1_pt, false);
-  else if (choice == idx++)
-    test_floodfill_edge_closer(IMG_DIR "depth/juggling3_broken_edge.png", juggling3_pt, false);
+////////////////////////////////////////////////////////////////////////////////
 
-  else if (choice == idx++)
-    test_find_top_point_centered(IMG_DIR "depth/juggling1_user_mask.png");
-  else if (choice == idx++)
-    test_find_top_point_centered(IMG_DIR "depth/juggling2_user_mask.png");
+TEST(TestSuite, find_top_point_centered) {
+  cv::Point juggling1_pt = cv::Point(370, 70),
+      juggling2_pt = cv::Point(400, 70),
+      juggling3_pt = cv::Point(360, 90);
+  test_find_top_point_centered(IMG_DIR "depth/juggling1_user_mask.png");
+  test_find_top_point_centered(IMG_DIR "depth/juggling2_user_mask.png");
+  test_propagative_floodfill(IMG_DIR "depth/juggling1_user_mask.png", juggling1_pt);
+  test_propagative_floodfill(IMG_DIR "depth/juggling2_user_mask.png", juggling2_pt);
+  test_propagative_floodfill_custom_lookup(IMG_DIR "depth/juggling1_user_mask.png", juggling1_pt);
+  test_propagative_floodfill_custom_lookup(IMG_DIR "depth/juggling2_user_mask.png", juggling2_pt);
+  test_compute_pixel2meters_factor(IMG_DIR "depth/juggling1", KINECT_SERIAL_LAB());
+}
 
-  else if (choice == idx++)
-    test_propagative_floodfill(IMG_DIR "depth/juggling1_user_mask.png", juggling1_pt);
-  else if (choice == idx++)
-    test_propagative_floodfill(IMG_DIR "depth/juggling2_user_mask.png", juggling2_pt);
-  else if (choice == idx++)
-    test_propagative_floodfill_custom_lookup(IMG_DIR "depth/juggling1_user_mask.png", juggling1_pt);
-  else if (choice == idx++)
-    test_propagative_floodfill_custom_lookup(IMG_DIR "depth/juggling2_user_mask.png", juggling2_pt);
+////////////////////////////////////////////////////////////////////////////////
 
-  else if (choice == idx++)
-    test_compute_pixel2meters_factor(IMG_DIR "depth/juggling1", KINECT_SERIAL_LAB());
-  return 0;
+TEST(TestSuite, propagative_floodfill) {
+  cv::Point juggling1_pt = cv::Point(370, 70),
+      juggling2_pt = cv::Point(400, 70);
+  test_propagative_floodfill(IMG_DIR "depth/juggling1_user_mask.png", juggling1_pt);
+  test_propagative_floodfill(IMG_DIR "depth/juggling2_user_mask.png", juggling2_pt);
+  test_propagative_floodfill_custom_lookup(IMG_DIR "depth/juggling1_user_mask.png", juggling1_pt);
+  test_propagative_floodfill_custom_lookup(IMG_DIR "depth/juggling2_user_mask.png", juggling2_pt);
+  test_compute_pixel2meters_factor(IMG_DIR "depth/juggling1", KINECT_SERIAL_LAB());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+TEST(TestSuite, test_compute_pixel2meters_factor) {
+  test_compute_pixel2meters_factor(IMG_DIR "depth/juggling1", KINECT_SERIAL_LAB());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+int main(int argc, char** argv) {
+  ros::Time::init();
+  // Run all the tests that were declared with TEST()
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }

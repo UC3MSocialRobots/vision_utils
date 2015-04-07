@@ -6,12 +6,13 @@
  * \date Dec 18, 2010
  * \author Arnaud Ramey
  */
-
+//#define DISPLAY
+#include <gtest/gtest.h>
 #include "visu_utils/GraphMaker.h"
 #include "debug/debug_utils.h"
 #include "highgui.h"
 
-int main() {
+int main(int argc, char** argv) {
     maggiePrint("main()");
 
     // rows, cols
@@ -22,7 +23,7 @@ int main() {
     gm.set_window(5, 15, 1, -8, 8, 1);
 
     double global_counter = 0;
-    while (1) {
+    for (int i = 0; i < 1000; ++i) {
         ++global_counter;
         // build a custom curve
         GraphMaker<double, double>::Curve curve_cos, curve_sin;
@@ -40,10 +41,14 @@ int main() {
         gm.draw();
         gm.draw_horizontal(5, CV_RGB(255, 255, 0), 2);
         gm.draw_vertical(11.5, CV_RGB(0, 255, 255), 2);
+#ifdef DISPLAY
         cv::imshow("image", image);
         if ((char) cv::waitKey(5) == 27)
             break;
+#endif // DISPLAY
     }
+
+  // Run all the tests that were declared with TEST()
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }
-
-

@@ -1,10 +1,11 @@
 // opencv
+#include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
 #include "debug/error.h"
 #include "time/timer.h"
 #include "system/system_utils.h"
 #include "string/string_casts.h"
-#include "opencv_face_detector.h"
+#include "image_utils/opencv_face_detector.h"
 #include <iomanip>
 
 void detect_one_pic(const std::string filename,
@@ -145,5 +146,7 @@ int main(int argc, char** argv) {
     test_camera();
   else if (choice == idx++)
     detect_save_all_files_in_folder("/home/user/Downloads/0datasets/google_genders/man");
-  return 0;
+  // Run all the tests that were declared with TEST()
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }

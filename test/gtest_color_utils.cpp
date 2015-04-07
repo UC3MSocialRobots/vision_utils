@@ -1,4 +1,7 @@
-#include "color_utils.h"
+
+//#define DISPLAY
+#include <gtest/gtest.h>
+#include "color/color_utils.h"
 #include "debug/error.h"
 #include <opencv2/highgui/highgui.hpp>
 
@@ -14,7 +17,7 @@ void test_hue_to_string_mouse_cb(int event, int x, int y, int flags, void* param
                cv::Point(x, y), cv::FONT_HERSHEY_PLAIN, 1, CV_RGB(0, 0, 0));
 }
 
-void test_hue_to_string() {
+TEST(TestSuite, test_hue_to_string) {
   // init test_hue_to_string_bg
   for (int col = 0; col < cols; ++col) {
     float h = 180.f * col / cols;
@@ -23,23 +26,25 @@ void test_hue_to_string() {
   } // end loop col
 
   // set callbacks
+  test_hue_to_string_mouse_cb(CV_EVENT_MOUSEMOVE, cols / 2, rows / 2, 0, NULL);
+#ifdef DISPLAY
   std::string window_name = "hue_to_string";
   cv::namedWindow(window_name);
   cv::setMouseCallback(window_name, test_hue_to_string_mouse_cb);
 
   // spin
-  test_hue_to_string_mouse_cb(CV_EVENT_MOUSEMOVE, cols / 2, rows / 2, 0, NULL);
   while (true) {
     cv::imshow(window_name, test_hue_to_string_bg_name);
     char c = cv::waitKey(25);
     if ((int) c == 27)
       break;
   } // end while true
+#endif // DISPLAY
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void test_hue_scales() {
+TEST(TestSuite, test_hue_scales) {
   cv::Mat3b img(600, 800);
   for (int row = 0; row < img.rows; ++row) {
     cv::Vec3b* data = img.ptr<cv::Vec3b>(row);
@@ -61,30 +66,17 @@ void test_hue_scales() {
              color_utils::hue2rgb<cv::Scalar>(h));
   } // end loop col
 
+#ifdef DISPLAY
   cv::imshow("img", img);
   cv::imshow("img2", img2);
   cv::waitKey(0);
+#endif // DISPLAY
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-int main() {
-  maggieDebug2("main()");
-  int idx = 1;
-  printf("%i: test_hue_scales()\n", idx++);
-  printf("%i: test_hue_to_string()\n", idx++);
-  printf("\n");
-
-  printf("choice?\n");
-  int choice = 1;
-  std::cin >> choice;
-
-  idx = 1;
-  if (choice == idx++)
-    test_hue_scales();
-  else if (choice == idx++)
-    test_hue_to_string();
-
-  return 0;
+int main(int argc, char** argv) {
+  // Run all the tests that were declared with TEST()
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }
-

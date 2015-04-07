@@ -5,6 +5,7 @@
  * \date Jan. 2012
   */
 
+#include <gtest/gtest.h>
 #include <stdio.h>
 #include "time/timer.h"
 #include "compressed_rounded_image_transport/cv_conversion_float_uchar.h"
@@ -130,5 +131,7 @@ int main(int argc, char** argv) {
     test_depth_image_to_vizualisation_color_image(argv[2]);
   else if (choice == idx++)
     test_io();
-  return 0;
+  // Run all the tests that were declared with TEST()
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }

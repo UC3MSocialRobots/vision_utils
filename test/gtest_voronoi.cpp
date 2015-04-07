@@ -114,6 +114,9 @@ TEST(TestSuite, test_white_img_no_border) {
   test_thin_impl(query, correct_ans, IMPL_ZHANG_SUEN, true);
   test_thin_impl(query, correct_ans, IMPL_ZHANG_SUEN_ORIGINAL, true);
   test_thin_impl(query, correct_ans, IMPL_ZHANG_SUEN_FAST, true);
+
+  correct_ans.setTo(0);
+  cv::line(correct_ans, cv::Point(2, 2), cv::Point(7, 2), cv::Scalar::all(255), 1);
   test_thin_impl(query, correct_ans, IMPL_GUO_HALL, true);
   test_thin_impl(query, correct_ans, IMPL_GUO_HALL_ORIGINAL, true);
   test_thin_impl(query, correct_ans, IMPL_GUO_HALL_FAST, true);
@@ -124,6 +127,7 @@ TEST(TestSuite, test_white_img_no_border) {
 TEST(TestSuite, test_white_img_border) {
   cv::Mat1b query(5, 10, (uchar) 0), correct_ans = query.clone();
   cv::rectangle(query, cv::Rect(1, 1, query.cols - 2, query.rows - 2), cv::Scalar::all(255), -1);
+  correct_ans.setTo(0);
   cv::line(correct_ans, cv::Point(2, 2), cv::Point(6, 2), cv::Scalar::all(255), 1);
   test_thin_impl(query, correct_ans, IMPL_ZHANG_SUEN, false);
   test_thin_impl(query, correct_ans, IMPL_ZHANG_SUEN, true);
@@ -131,6 +135,9 @@ TEST(TestSuite, test_white_img_border) {
   test_thin_impl(query, correct_ans, IMPL_ZHANG_SUEN_ORIGINAL, true);
   test_thin_impl(query, correct_ans, IMPL_ZHANG_SUEN_FAST, false);
   test_thin_impl(query, correct_ans, IMPL_ZHANG_SUEN_FAST, true);
+
+  correct_ans.setTo(0);
+  cv::line(correct_ans, cv::Point(2, 2), cv::Point(7, 2), cv::Scalar::all(255), 1);
   test_thin_impl(query, correct_ans, IMPL_GUO_HALL, false);
   test_thin_impl(query, correct_ans, IMPL_GUO_HALL, true);
   test_thin_impl(query, correct_ans, IMPL_GUO_HALL_ORIGINAL, false);
@@ -262,5 +269,4 @@ int main(int argc, char **argv){
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
-  return 0;
 }

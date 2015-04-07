@@ -29,8 +29,9 @@ ________________________________________________________________________________
 #include <vision_utils/img_path.h>
 #include "test/matrix_testing.h"
 #include "image_utils/drawing_utils.h"
+#include <time/timer.h>
 
-// #define DISPLAY
+//#define DISPLAY
 
 TEST(TestSuite, paste_images_gallery_empty) {
   std::vector<cv::Mat1b> ims;
@@ -48,7 +49,9 @@ void check_imgs(const std::vector<cv::Mat_<T> > & ims,
   cv::Mat_<T> out;
   image_utils::paste_images_gallery(ims, out, gallerycols, background_color, false); // no border
 #ifdef DISPLAY
-  cv::imshow("out", out); cv::waitKey(0);
+  cv::imshow("out", out);
+  cv::waitKey(0);
+  cv::destroyAllWindows();
 #endif // DISPLAY
   int cols1 = ims.front().cols, rows1 = ims.front().rows;
   unsigned int neededgalrows = std::ceil(1. * ims.size() / gallerycols);
@@ -61,6 +64,8 @@ void check_imgs(const std::vector<cv::Mat_<T> > & ims,
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
 TEST(TestSuite, paste_images_gallery_arnaud) {
   std::vector<cv::Mat1b> ims;
   ims.push_back(cv::imread(IMG_DIR "faces/people_lab/arnaud_20.png", CV_LOAD_IMAGE_GRAYSCALE));
@@ -71,6 +76,8 @@ TEST(TestSuite, paste_images_gallery_arnaud) {
     check_imgs(ims, i, (uchar) 0);
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
 TEST(TestSuite, paste_images_gallery_color) {
   std::vector<cv::Mat3b> ims;
   ims.push_back(cv::imread(IMG_DIR "depth/alberto1_rgb.png", CV_LOAD_IMAGE_COLOR));
@@ -79,6 +86,153 @@ TEST(TestSuite, paste_images_gallery_color) {
   ims.push_back(cv::imread(IMG_DIR "depth/alvaro2_rgb.png", CV_LOAD_IMAGE_COLOR));
   for (unsigned int i = 1; i <= 6; ++i)
     check_imgs(ims, i, cv::Vec3b(0,0,0));
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+TEST(TestSuite, text_rotated) {
+  cv::Mat3b img = cv::imread(IMG_DIR "balloon.png");
+  cv::Mat1b buffer1, buffer2;
+  for (unsigned int i = 0; i <= 10; ++i) {
+    std::ostringstream text; text << "text" << i;
+    image_utils::draw_text_rotated(img, buffer1, buffer2, text.str(),
+                                   cv::Point(50 * i, 100), 0.2 * i,
+                                   CV_FONT_HERSHEY_DUPLEX, 1, CV_RGB(255, 0, 0));
+#ifdef DISPLAY
+    cv::imshow("buffer1", buffer1);
+    // cv::imshow("buffer2", buffer2);
+    cv::imshow("img", img);
+    cv::waitKey(5000);
+#endif // DISPLAY
+  } // end loop i
+#ifdef DISPLAY
+  cv::destroyAllWindows();
+#endif // DISPLAY
+} // end test_text_rotated();
+
+////////////////////////////////////////////////////////////////////////////////
+
+TEST(TestSuite, text_rotated2) {
+  cv::Mat3b img = cv::imread(IMG_DIR "balloon.png");
+  cv::Mat1b buffer1, buffer2;
+  Timer timer;
+  unsigned int n_times = 1000;
+  for (unsigned int i = 0; i <= n_times; ++i) {
+    std::ostringstream text; text << "t" << i;
+    image_utils::draw_text_rotated(img, buffer1, buffer2, text.str(),
+                                   cv::Point(rand()%img.cols, rand()%img.rows), drand48() * 2 * M_PI,
+                                   CV_FONT_HERSHEY_DUPLEX, 1, CV_RGB(255, 0, 0));
+    //  cv::putText(img, text.str(), cv::Point(rand()%img.cols, rand()%img.rows),
+    //              CV_FONT_HERSHEY_DUPLEX, 1, CV_RGB(255, 0, 0));
+    // cv::imshow("img", img); cv::waitKey(1);
+  } // end loop i
+  timer.printTime_factor("draw_text_rotated()", n_times);
+#ifdef DISPLAY
+  cv::imshow("img", img);
+  cv::waitKey(0);
+  cv::destroyAllWindows();
+#endif // DISPLAY
+} // end test_text_rotated2();
+
+////////////////////////////////////////////////////////////////////////////////
+
+TEST(TestSuite, resize_constrain_proportions) {
+  cv::Mat3b img = cv::imread(IMG_DIR "balloon.png");
+  cv::Mat3b img_resize_if_bigger, img_resize_if_bigger2, img_resize_constrain_proportions;
+  image_utils::resize_if_bigger(img, img_resize_if_bigger, 100, 200);
+  image_utils::resize_if_bigger(img, img_resize_if_bigger2, 200, 100);
+  image_utils::resize_constrain_proportions(img, img_resize_constrain_proportions, 100, 200);
+
+#ifdef DISPLAY
+  cv::imshow("img_resize_if_bigger", img_resize_if_bigger);
+  cv::imshow("img_resize_if_bigger2", img_resize_if_bigger2);
+  cv::imshow("img_resize_constrain_proportions", img_resize_constrain_proportions);
+  cv::waitKey(0);
+  cv::destroyAllWindows();
+#endif // DISPLAY
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+inline void test_paste_image(const cv::Mat & bg, const cv::Mat & fg) {
+  printf("test_paste_image() - use keys to move foreground image\n");
+  int fg_x = (bg.cols - fg.cols) / 2, fg_y = (bg.rows - fg.rows) / 2;
+  cv::Mat pasted;
+#ifdef DISPLAY
+  while (true) {
+    bg.copyTo(pasted);
+    image_utils::paste_img(fg, pasted, fg_x, fg_y);
+    cv::imshow("test_paste_image", pasted);
+    char c = cv::waitKey(25);
+    if ((int) c == 27)
+      break;
+    else if ((int) c == 82) // up
+      fg_y -= 10;
+    else if ((int) c == 84) // down
+      fg_y += 10;
+    else if ((int) c == 81) // left
+      fg_x -= 10;
+    else if ((int) c == 83) // right
+      fg_x += 10;
+  } // end while
+  cv::destroyAllWindows();
+#endif // DISPLAY
+}
+
+TEST(TestSuite, paste_image) {
+  test_paste_image(cv::imread(IMG_DIR "arnaud001.png"),
+                   cv::imread(IMG_DIR "paleo.png"));
+  test_paste_image(cv::imread(IMG_DIR "paleo.png"),
+                   cv::imread(IMG_DIR "arnaud001.png"));
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+template<class _T>
+inline void test_paste_images(const std::vector<cv::Mat_<_T> > & imgs) {
+  //printf("test_paste_images(%i images)\n", imgs.size());
+  const int width1 = 100;
+  const int height1 = 100;
+  for (unsigned int horiz_idx = 0; horiz_idx < 2; ++horiz_idx) {
+    bool horiz = (horiz_idx == 0);
+    cv::Mat_<_T> out1;
+    image_utils::paste_images(imgs, out1, horiz, width1, height1, 5, false,
+                              &titlemaps::int_to_number, std::vector<cv::Mat1b>(), false);
+    cv::Mat_<_T> out2;
+    image_utils::paste_images(imgs, out2, horiz, width1, height1, 5, true,
+                              &titlemaps::int_to_number, std::vector<cv::Mat1b>(), false);
+    cv::Mat_<_T> out3;
+    image_utils::paste_images(imgs, out3, horiz, width1, height1, 5, false,
+                              &titlemaps::int_to_number, std::vector<cv::Mat1b>(), true);
+    cv::Mat_<_T> out4;
+    image_utils::paste_images(imgs, out4, horiz, width1, height1, 5, true,
+                              &titlemaps::int_to_number, std::vector<cv::Mat1b>(), true);
+#ifdef DISPLAY
+    cv::imshow("no headers, constrained width", out1);
+    cv::imshow("headers, constrained width", out2);
+    cv::imshow("no headers, no constrained width", out3);
+    cv::imshow("headers, no constrained width", out4);
+    cv::waitKey(0);
+    cv::destroyAllWindows();
+#endif // DISPLAY
+  } // end loop horiz
+}
+
+TEST(TestSuite, paste_images) {
+  std::vector<cv::Mat3b> imgs;
+  test_paste_images(imgs);
+
+  imgs.push_back(cv::imread(IMG_DIR "maggie.png"));
+  test_paste_images(imgs);
+
+  imgs.push_back(cv::Mat());
+  test_paste_images(imgs);
+
+  imgs.push_back(cv::imread(IMG_DIR "frenadol.png"));
+  test_paste_images(imgs);
+
+  imgs.push_back(cv::imread(IMG_DIR "paleo.png"));
+  test_paste_images(imgs);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

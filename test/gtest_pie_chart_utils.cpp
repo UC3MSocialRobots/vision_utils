@@ -23,10 +23,11 @@ ________________________________________________________________________________
 \todo Description of the file
 
  */
-
+//#define DISPLAY
+#include <gtest/gtest.h>
 #include "combinatorics/combinatorics_utils.h"
 #include "time/timer.h"
-#include "pie_chart_utils.h"
+#include "visu_utils/pie_chart_utils.h"
 
 template<class _T>
 void test_pie1(const std::vector<_T> & values,
@@ -51,10 +52,12 @@ void test_pie1(const std::vector<_T> & values,
   timer.printTime_factor("make_pie_and_caption()", ntimes);
 
   // display generated images
+#ifdef DISPLAY
   cv::imshow("pie_img", pie_img);
   cv::imshow("pie_caption", pie_caption);
   cv::imshow("pie_chart", pie_chart);
   cv::waitKey(0);
+#endif // DISPLAY
 } // end if test_pie1()
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -65,7 +68,7 @@ void test_pie2(std::vector<_T> & values,
   srand(time(NULL));
   cv::Mat3b pie_img, pie_caption, pie_chart;
 
-  while (true) {
+  for (int i = 0; i < 1000; ++i) {
     // randomly change values
     for (unsigned int value_idx = 0; value_idx < values.size(); ++value_idx)
       values[value_idx] =
@@ -75,18 +78,20 @@ void test_pie2(std::vector<_T> & values,
     pie_chart_utils::make_pie(values, pie_img);
     pie_chart_utils::make_caption(labels, pie_caption);
     pie_chart_utils::make_pie_and_caption(values, labels, pie_chart);
+#ifdef DISPLAY
     cv::imshow("pie_img", pie_img);
     cv::imshow("pie_caption", pie_caption);
     cv::imshow("pie_chart", pie_chart);
     char c = cv::waitKey(50);
     if ((int) c == 27)
       break;
+#endif // DISPLAY
   } // end while (true)
 } // end if test_pie2()
 
 ////////////////////////////////////////////////////////////////////////////////
 
-int main() {
+int main(int argc, char** argv) {
   // make vectors from C arrays
   int nvals = 4;
   double values_arr[] = {.1, .2, .2, .4};
@@ -96,6 +101,8 @@ int main() {
 
   test_pie1(values, labels);
   test_pie2(values, labels);
-  return 0;
+  // Run all the tests that were declared with TEST()
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }
 
