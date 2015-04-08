@@ -29,11 +29,11 @@ catkin_package(
 )
 ### 7 - Libraries/Executables to build (add_library()/add_executable()/target_link_libraries())
 include_directories(
-  include src third_parties ${catkin_INCLUDE_DIRS}
-  ${utils_INCLUDE_DIRS} ${kinect_INCLUDE_DIRS}
+  include src third_parties
+  ${catkin_INCLUDE_DIRS}
   /usr/include/openni /usr/include/nite /usr/include/ni
   ${PCL_INCLUDE_DIRS}
-  /usr/include/pcl-1.7/
+  ${OpenCV_INCLUDE_DIRS}
 )
 SET(AD_USE_NITE ON CACHE BOOL "")
 ADD_SUBDIRECTORY(third_parties)
