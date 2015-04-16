@@ -7,7 +7,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp roslib cv_bridge message_generation pcl_ros
   pcl_conversions
   # AD
-  kinect utils screens_msgs
+  kinect utils
 )
 find_package(PCL REQUIRED)
 ### 4 - Message/Service/Action Generators (add_message_files(), add_service_files(), add_action_files())
@@ -24,7 +24,7 @@ install(FILES ${devel_pkg_inc}/img_path.h DESTINATION ${devel_pkg_inc})
 catkin_package(
   INCLUDE_DIRS src
   CATKIN_DEPENDS roscpp roslib message_runtime cv_bridge
-  DEPENDS utils kinect screens_msgs
+  DEPENDS utils kinect
   CFG_EXTRAS img_path.h
 )
 ### 7 - Libraries/Executables to build (add_library()/add_executable()/target_link_libraries())

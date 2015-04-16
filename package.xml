@@ -20,7 +20,6 @@
   <build_depend>visualization_msgs</build_depend>
   <!-- AD -->
   <build_depend>kinect</build_depend>
-  <build_depend>screens_msgs</build_depend>
   <build_depend>utils</build_depend>
 
   <run_depend>cv_bridge</run_depend>
@@ -32,7 +31,6 @@
   <run_depend>roslib</run_depend>
   <!-- AD -->
   <run_depend>kinect</run_depend>
-  <run_depend>screens_msgs</run_depend>
   <run_depend>utils</run_depend>
 
   <run_depend>roscpp</run_depend>
