@@ -42,7 +42,7 @@ and a ground truth PPL.
 //#include <vision_utils/databases_io/dgaitdb_filename.h>
 #include <image_transport/image_transport.h>
 // people_msgs
-#include <ppl_utils/rgb_depth_user2ppl.h>
+#include <ppl_utils/images2ppl.h>
 
 typedef people_msgs::PeoplePose PP;
 typedef people_msgs::PeoplePoseList PPL;
@@ -69,7 +69,7 @@ int dgait2ppl(int argc, char **argv) {
   ros::Publisher ppl_pub = nh_public.advertise<PPL>("ground_truth_ppl", 1);
   // PPL stuff
   cv_bridge::CvImage depth_bridge, user_bridge, rgb_bridge;
-  ppl_utils::RgbDepthUser2PPL _ppl_conv;
+  ppl_utils::Images2PPL _ppl_conv;
 
   printf("dgait2ppl: publishing rgb on '%s', depth on '%s', user on '%s', truth PPL on '%s'\n",
          rgb_pub.getTopic().c_str(), depth_pub.getTopic().c_str(), user_pub.getTopic().c_str(),

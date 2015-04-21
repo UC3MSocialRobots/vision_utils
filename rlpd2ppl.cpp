@@ -45,7 +45,7 @@ and a ground truth PPL.
 #include <databases_io/rlpd2imgs.h>
 #include <image_transport/image_transport.h>
 // people_msgs
-#include <ppl_utils/rgb_depth_user2ppl.h>
+#include <ppl_utils/images2ppl.h>
 #include <time/timer.h>
 
 typedef people_msgs::PeoplePose PP;
@@ -83,7 +83,7 @@ int rlpd2ppl(int argc, char **argv) {
   ros::Publisher ground_truth_ppl_pub = nh_public.advertise<PPL>("ground_truth_ppl", 1);
   // PPL stuff
   cv_bridge::CvImage depth_bridge, user_bridge, rgb_bridge;
-  ppl_utils::RgbDepthUser2PPL _ground_truth_ppl_conv;
+  ppl_utils::Images2PPL _ground_truth_ppl_conv;
 
   printf("rlpd2ppl: publishing rgb on '%s', depth on '%s', user on '%s', "
          "ground truth PPL on '%s', every %g s\n",

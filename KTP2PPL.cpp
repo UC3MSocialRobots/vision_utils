@@ -44,7 +44,7 @@ ________________________________________________________________________________
 #include <color/color_utils.h>
 #include <databases_io/database_player.h>
 // people_msgs
-#include <ppl_utils/rgb_depth_user2ppl.h>
+#include <ppl_utils/images2ppl.h>
 #include <ppl_utils/ppl_attributes.h>
 
 typedef people_msgs::PeoplePose PP;
@@ -309,7 +309,7 @@ protected:
   std::string _img_folder;
   BlobSegmenter _segmenter;
   cv::Mat1b _curr_user;
-  ppl_utils::RgbDepthUser2PPL _ppl_conv;
+  ppl_utils::Images2PPL _ppl_conv;
 
   std_msgs::Header _header;
   PPL _ground_truth_ppl, _anonymous_ppl;
