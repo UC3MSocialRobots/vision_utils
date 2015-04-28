@@ -1,6 +1,6 @@
 <launch>
 <arg name="robot" value="nite_only"/>
-<include file="$(find kinect)/launch/nite_node_no_compression.launch">
+<include file="$(find kinect)/launch/nite_node_local.launch">
   <arg name="robot" value="$(arg robot)" />
 </include>
 

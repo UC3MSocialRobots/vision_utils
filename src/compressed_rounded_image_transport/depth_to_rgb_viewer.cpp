@@ -17,13 +17,9 @@
 /*! This is an executable to subscribe to a depth topic
   and show it in a grayscale version.
 
-  Use
-  "_image_transport:=compressed_rounded"
-  to use the compressed_rounded image transport plugin.
-
 \section Parameters
  - \b "~input_topic"
-      [string] (default:/camera/depth_registered/image_rect/)
+      [string] (default:"depth")
       to set the input topic
  - \b "~window_title"
       [string] (default:{input_topic})
@@ -112,7 +108,7 @@ int main(int argc, char** argv) {
 
   // get the input topic
   std::string input_topic;
-  nh_private.param<std::string>("input_topic", input_topic, "camera/depth_registered/image_rect/");
+  nh_private.param<std::string>("input_topic", input_topic, "depth");
   ROS_INFO("input_topic:'%s'", input_topic.c_str());
 
   // subscribe to it
