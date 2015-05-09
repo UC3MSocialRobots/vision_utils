@@ -20,10 +20,16 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
 
-\todo Description of the file
+A very lightweight implementation of the "Skill" paradigm
+in the Automative Deliberative (AD) architecture.
 
 \section Parameters
-  None.
+  - \b "~autostart"
+        [boolean, default=false]
+        True to start skill, i.e. call start() upon.
+        Interesting for skills that require to be running when they are spawned,
+        for instance drivers and perception algorithms.
+        Disabled by default.
 
 \section Subscriptions
   - \b {start_topic}
@@ -64,6 +70,15 @@ public:
   {
     _start_sub = _nh_public.subscribe(_start_topic, 1, &NanoSkill::start_cb, this);
     _stop_sub = _nh_public.subscribe(_stop_topic, 1, &NanoSkill::stop_cb, this);
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  void check_autostart() {
+    bool autostart = false;
+    _nh_private.param("autostart", autostart, autostart);
+    if (autostart)
+      start();
   }
 
   //////////////////////////////////////////////////////////////////////////////

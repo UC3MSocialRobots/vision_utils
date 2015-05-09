@@ -73,7 +73,7 @@ private:
 
 int main(int argc, char** argv) {
   ros::init(argc, argv, "foo_nite_reciever");
-  FooNiteSubscriber receiver;
-  receiver.init();
+  FooNiteSubscriber skill;
+  skill.init();
   ros::spin();
 }

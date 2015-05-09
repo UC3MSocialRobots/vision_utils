@@ -26,6 +26,7 @@ cf "foo_rgb_skill.h" for doc
 int main(int argc, char **argv) {
   ros::init(argc, argv, "launcher_foo_rgb_skill");
   FooRgbSkill skill;
+  skill.check_autostart();
   ros::spin();
   return 0;
 }
