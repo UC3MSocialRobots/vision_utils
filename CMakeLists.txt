@@ -4,8 +4,8 @@ cmake_minimum_required(VERSION 2.8.3)
 project(vision_utils)
 ### 3 - Find other CMake/Catkin packages needed for build
 find_package(catkin REQUIRED COMPONENTS
-  roscpp roslib cv_bridge message_generation pcl_ros
-  pcl_conversions
+  roscpp roslib cv_bridge message_generation screens_msgs pcl_ros
+  pcl_conversions 
   # AD
   kinect utils
 )
