@@ -110,6 +110,11 @@ catkin_add_gtest     (gtest_layer_utils
   ../src/image_utils/layer_utils.h)
 target_link_libraries(gtest_layer_utils ${catkin_LIBRARIES})
 
+catkin_add_gtest     (gtest_mask_acceleration
+  gtest_mask_acceleration.cpp
+  ../src/image_utils/mask_acceleration.h)
+TARGET_LINK_LIBRARIES(gtest_mask_acceleration ${catkin_LIBRARIES})
+
 catkin_add_gtest     (gtest_mini_stage  gtest_mini_stage.cpp)
 TARGET_LINK_LIBRARIES(gtest_mini_stage string_utils ${catkin_LIBRARIES})
 

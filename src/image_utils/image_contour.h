@@ -47,30 +47,43 @@ public:
   //////////////////////////////////////////////////////////////////////////////
 
   //! build frtom the non zero pixels of \arg img, using C4 neigbourhood
-  inline void from_image_C4(const cv::Mat1b & img) {
-    from_image(img, false);
+  inline bool from_image_C4(const cv::Mat1b & img) {
+    return from_image(img, false);
   }
 
   //////////////////////////////////////////////////////////////////////////////
 
   //! build frtom the non zero pixels of \arg img, using C8 neigbourhood
-  inline void from_image_C8(const cv::Mat1b & img) {
-    from_image(img, true);
+  inline bool from_image_C8(const cv::Mat1b & img) {
+    return from_image(img, true);
   }
 
   //////////////////////////////////////////////////////////////////////////////
 
   //! compute contour size
   inline unsigned int contour_size() const {
-    return cv::countNonZero(contour_image());
+    return type_size(CONTOUR);
   }
 
   //////////////////////////////////////////////////////////////////////////////
 
   //! compute size of the inner non-zero pixels
   inline unsigned int inside_size() const {
-    cv::Mat1b this_cp = *this;
-    return cv::countNonZero(this_cp == INNER);
+    return type_size(INNER);
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  /*! \return a vector formed of all contour points */
+  inline void contour2vector(std::vector<cv::Point> & out) const {
+    return type2vector(out, CONTOUR);
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  /*! \return a vector formed of all inside points */
+  inline void inside2vector(std::vector<cv::Point> & out) const {
+    return type2vector(out, INNER);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -201,12 +214,12 @@ public:
 private:
   ////////////////////////////////////////////////////////////////////////////////
 
-  inline void from_image(const cv::Mat1b & img, bool C8 = false) {
+  inline bool from_image(const cv::Mat1b & img, bool C8 = false) {
     // printf("from_image(cols:%i, rows:%i)\n", img.cols, img.rows);
     create(img.rows, img.cols) ;
     if (cols * rows == 0) {
       printf("Empty image\n");
-      return;
+      return false;
     }
     assert(img.isContinuous());
     assert(isContinuous());
@@ -216,14 +229,14 @@ private:
     const uchar *img_data = img.data, *img_ptr = img.data;
     uchar* out_ptr = ptr<uchar>(0);
     if (C8)
-      from_image_loop_C8(img_data, img_ptr, out_ptr);
+      return from_image_loop_C8(img_data, img_ptr, out_ptr);
     else
-      from_image_loop_C4(img_data, img_ptr, out_ptr);
+      return from_image_loop_C4(img_data, img_ptr, out_ptr);
   }
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  inline void from_image_loop_C4(const uchar* img_data, const uchar* img_ptr,
+  inline bool from_image_loop_C4(const uchar* img_data, const uchar* img_ptr,
                                  uchar* out_ptr) {
     for (int row = 0; row < rows; ++row) {
       for (int col = 0; col < cols; ++col) {
@@ -248,11 +261,12 @@ private:
         out_ptr++;
       } // end loop col
     } // end loop row
+    return true;
   } // end from_image_loop_C4()
 
   ////////////////////////////////////////////////////////////////////////////////
 
-  inline void from_image_loop_C8(const uchar* img_data, const uchar* img_ptr,
+  inline bool from_image_loop_C8(const uchar* img_data, const uchar* img_ptr,
                                  uchar* out_ptr) {
     for (int row = 0; row < rows; ++row) {
       for (int col = 0; col < cols; ++col) {
@@ -282,8 +296,35 @@ private:
         out_ptr++;
       } // end loop col
     } // end loop row
+    return true;
   } // end from_image_loop_C8()
 
+  //////////////////////////////////////////////////////////////////////////////
+
+  /*! \return a color image where the contour, the inside and the zero pixels
+   * are represented by custom colors */
+  inline int type_size(const int TYPE) const {
+    cv::Mat1b this_cp = *this;
+    return cv::countNonZero(this_cp == TYPE);
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  /*! \return a vector formed of all contour points */
+  inline void type2vector(std::vector<cv::Point> & out,
+                                const int TYPE) const {
+    out.clear();
+    out.reserve(type_size(TYPE));
+    for (unsigned int row = 0; row < rows; ++row) {
+      const uchar* in_ptr = ptr<uchar>(row);
+      for (unsigned int col = 0; col < cols; ++col) {
+        if (in_ptr[col] == TYPE)
+          out.push_back(cv::Point(col, row));
+      } // end loop col
+    } // end loop row
+  } // end illus()
+
+  //////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////
 
   int rowsm, colsm;
