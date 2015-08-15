@@ -21,9 +21,9 @@
 using namespace cv;
 
 //------------------------------------------------------------------------------
-// cv::isSymmetric
+// libfacerec::isSymmetric
 //------------------------------------------------------------------------------
-namespace cv {
+namespace libfacerec {
 
 template<typename _Tp> static bool
 isSymmetric_(InputArray src) {
@@ -61,7 +61,7 @@ isSymmetric_(InputArray src, double eps) {
 
 }
 
-bool cv::isSymmetric(InputArray src, double eps) {
+bool libfacerec::isSymmetric(InputArray src, double eps) {
     Mat m = src.getMat();
     switch (m.type()) {
     case CV_8SC1: return isSymmetric_<char>(m); break;
@@ -84,21 +84,22 @@ bool cv::isSymmetric(InputArray src, double eps) {
 }
 
 //------------------------------------------------------------------------------
-// cv::argsort
+// libfacerec::argsort
 //------------------------------------------------------------------------------
-Mat cv::argsort(InputArray _src, bool ascending) {
+Mat libfacerec::argsort(InputArray _src, bool ascending) {
     Mat src = _src.getMat();
-    if (src.rows != 1 && src.cols != 1)
+    if (src.rows != 1 && src.cols != 1) {
         CV_Error(CV_StsBadArg, "cv::argsort only sorts 1D matrices.");
+    }
     int flags = CV_SORT_EVERY_ROW+(ascending ? CV_SORT_ASCENDING : CV_SORT_DESCENDING);
     Mat sorted_indices;
     cv::sortIdx(src.reshape(1,1),sorted_indices,flags);
     return sorted_indices;
 }
 //------------------------------------------------------------------------------
-// cv::histc
+// libfacerec::histc
 //------------------------------------------------------------------------------
-namespace cv {
+namespace libfacerec {
 
 static Mat
 histc_(const Mat& src, int minVal=0, int maxVal=255, bool normed=false) {
@@ -119,7 +120,7 @@ histc_(const Mat& src, int minVal=0, int maxVal=255, bool normed=false) {
 
 }
 
-Mat cv::histc(InputArray _src, int minVal, int maxVal, bool normed) {
+Mat libfacerec::histc(InputArray _src, int minVal, int maxVal, bool normed) {
     Mat src = _src.getMat();
     switch (src.type()) {
     case CV_8SC1:
@@ -147,12 +148,14 @@ Mat cv::histc(InputArray _src, int minVal, int maxVal, bool normed) {
 }
 
 //------------------------------------------------------------------------------
-// cv::sortMatrixColumnsByIndices
+// libfacerec::sortMatrixColumnsByIndices
 //------------------------------------------------------------------------------
 
-void cv::sortMatrixColumnsByIndices(InputArray _src, InputArray _indices, OutputArray _dst) {
-    if(_indices.getMat().type() != CV_32SC1)
-        CV_Error(CV_StsUnsupportedFormat, "cv::sortColumnsByIndices only works on integer indices!");
+void libfacerec::sortMatrixColumnsByIndices(InputArray _src, InputArray _indices, OutputArray _dst) {
+    if(_indices.getMat().type() != CV_32SC1) {
+    	string error_message = format("cv::sortRowsByIndices only works on integer indices! Expected: %d. Given: %d.", CV_32SC1, _indices.getMat().type());
+    	CV_Error(CV_StsBadArg, error_message);
+    }
     Mat src = _src.getMat();
     vector<int> indices = _indices.getMat();
     _dst.create(src.rows, src.cols, src.type());
@@ -164,18 +167,20 @@ void cv::sortMatrixColumnsByIndices(InputArray _src, InputArray _indices, Output
     }
 }
 
-Mat cv::sortMatrixColumnsByIndices(InputArray src, InputArray indices) {
+Mat libfacerec::sortMatrixColumnsByIndices(InputArray src, InputArray indices) {
     Mat dst;
     sortMatrixColumnsByIndices(src, indices, dst);
     return dst;
 }
 
 //------------------------------------------------------------------------------
-// cv::sortMatrixRowsByIndices
+// libfacerec::sortMatrixRowsByIndices
 //------------------------------------------------------------------------------
-void cv::sortMatrixRowsByIndices(InputArray _src, InputArray _indices, OutputArray _dst) {
-    if(_indices.getMat().type() != CV_32SC1)
-        CV_Error(CV_StsUnsupportedFormat, "cv::sortRowsByIndices only works on integer indices!");
+void libfacerec::sortMatrixRowsByIndices(InputArray _src, InputArray _indices, OutputArray _dst) {
+    if(_indices.getMat().type() != CV_32SC1) {
+    	string error_message = format("cv::sortRowsByIndices only works on integer indices! Expected: %d. Given: %d.", CV_32SC1, _indices.getMat().type());
+    	CV_Error(CV_StsBadArg, error_message);
+    }
     Mat src = _src.getMat();
     vector<int> indices = _indices.getMat();
     _dst.create(src.rows, src.cols, src.type());
@@ -187,37 +192,56 @@ void cv::sortMatrixRowsByIndices(InputArray _src, InputArray _indices, OutputArr
     }
 }
 
-Mat cv::sortMatrixRowsByIndices(InputArray src, InputArray indices) {
+Mat libfacerec::sortMatrixRowsByIndices(InputArray src, InputArray indices) {
    Mat dst;
    sortMatrixRowsByIndices(src, indices, dst);
    return dst;
 }
 
 //------------------------------------------------------------------------------
-// cv::asRowMatrix
+// libfacerec::asRowMatrix
 //------------------------------------------------------------------------------
-Mat cv::asRowMatrix(InputArrayOfArrays src, int rtype, double alpha, double beta) {
+Mat libfacerec::asRowMatrix(InputArrayOfArrays src, int rtype, double alpha, double beta) {
+    // make sure the input data is a vector of matrices or vector of vector
+    if(src.kind() != _InputArray::STD_VECTOR_MAT && src.kind() != _InputArray::STD_VECTOR_VECTOR) {
+        CV_Error(CV_StsBadArg, "The data is expected as InputArray::STD_VECTOR_MAT (a std::vector<Mat>) or _InputArray::STD_VECTOR_VECTOR (a std::vector< vector<...> >).");
+    }
     // number of samples
-    int n = (int) src.total();
-    // return empty matrix if no data given
+    size_t n = src.total();
+    // return empty matrix if no matrices given
     if(n == 0)
         return Mat();
-    // dimensionality of samples
-    int d = src.getMat(0).total();
+    // dimensionality of (reshaped) samples
+    size_t d = src.getMat(0).total();
     // create data matrix
     Mat data(n, d, rtype);
-    // copy data
+    // now copy data
     for(int i = 0; i < n; i++) {
+        // make sure data can be reshaped, throw exception if not!
+        if(src.getMat(i).total() != d) {
+            string error_message = format("Wrong number of elements in matrix #%d! Expected %d was %d.", i, d, src.getMat(i).total());
+            CV_Error(CV_StsBadArg, error_message);
+        }
+        // get a hold of the current row
         Mat xi = data.row(i);
-        src.getMat(i).reshape(1, 1).convertTo(xi, rtype, alpha, beta);
+        // make reshape happy by cloning for non-continuous matrices
+        if(src.getMat(i).isContinuous()) {
+            src.getMat(i).reshape(1, 1).convertTo(xi, rtype, alpha, beta);
+        } else {
+            src.getMat(i).clone().reshape(1, 1).convertTo(xi, rtype, alpha, beta);
+        }
     }
     return data;
 }
 
 //------------------------------------------------------------------------------
-// cv::asColumnMatrix
+// libfacerec::asColumnMatrix
 //------------------------------------------------------------------------------
-Mat cv::asColumnMatrix(InputArrayOfArrays src, int rtype, double alpha, double beta) {
+Mat libfacerec::asColumnMatrix(InputArrayOfArrays src, int rtype, double alpha, double beta) {
+    // make sure the input data is a vector of matrices or vector of vector
+    if(src.kind() != _InputArray::STD_VECTOR_MAT && src.kind() != _InputArray::STD_VECTOR_VECTOR) {
+        CV_Error(CV_StsBadArg, "The data is expected as InputArray::STD_VECTOR_MAT (a std::vector<Mat>) or _InputArray::STD_VECTOR_VECTOR (a std::vector< vector<...> >).");
+    }
     int n = (int) src.total();
     // return empty matrix if no data given
     if(n == 0)
@@ -226,119 +250,22 @@ Mat cv::asColumnMatrix(InputArrayOfArrays src, int rtype, double alpha, double b
     int d = src.getMat(0).total();
     // create data matrix
     Mat data(d, n, rtype);
-    // copy data
+    // now copy data
     for(int i = 0; i < n; i++) {
+        // make sure data can be reshaped, throw exception if not!
+        if(src.getMat(i).total() != d) {
+            string error_message = format("Wrong number of elements in matrix #%d! Expected %d was %d.", i, d, src.getMat(i).total());
+            CV_Error(CV_StsBadArg, error_message);
+        }
+        // get a hold of the current row
         Mat yi = data.col(i);
-        src.getMat(i).reshape(1, d).convertTo(yi, rtype, alpha, beta);
+        // make reshape happy by cloning for non-continuous matrices
+        if(src.getMat(i).isContinuous()) {
+            src.getMat(i).reshape(1, d).convertTo(yi, rtype, alpha, beta);
+        } else {
+            src.getMat(i).clone().reshape(1, d).convertTo(yi, rtype, alpha, beta);
+        }
     }
     return data;
 }
 
-//------------------------------------------------------------------------------
-// cv::interp1
-//------------------------------------------------------------------------------
-namespace cv {
-
-template <typename _Tp> static
-Mat interp1_(const Mat& X_, const Mat& Y_, const Mat& XI) {
-    int n = XI.rows;
-    // sort input table
-    vector<int> sort_indices = argsort(X_);
-
-    Mat X = sortMatrixRowsByIndices(X_,sort_indices);
-    Mat Y = sortMatrixRowsByIndices(Y_,sort_indices);
-    // interpolated values
-    Mat yi = Mat::zeros(XI.size(), XI.type());
-    for(int i = 0; i < n; i++) {
-        int c = 0;
-        int low = 0;
-        int high = X.rows - 1;
-        // set bounds
-        if(XI.at<_Tp>(i,0) < X.at<_Tp>(low, 0))
-            high = 1;
-        if(XI.at<_Tp>(i,0) > X.at<_Tp>(high, 0))
-            low = high - 1;
-        // binary search
-        while((high-low)>1) {
-            c = low + ((high - low) >> 1);
-            if(XI.at<_Tp>(i,0) > X.at<_Tp>(c,0)) {
-                low = c;
-            } else {
-                high = c;
-            }
-        }
-        // linear interpolation
-        yi.at<_Tp>(i,0) += Y.at<_Tp>(low,0)
-                + (XI.at<_Tp>(i,0) - X.at<_Tp>(low,0))
-                * (Y.at<_Tp>(high,0) - Y.at<_Tp>(low,0))
-                    / (X.at<_Tp>(high,0) - X.at<_Tp>(low,0));
-    }
-    return yi;
-}
-
-}
-
-Mat cv::interp1(InputArray _x, InputArray _Y, InputArray _xi) {
-    // get matrices
-    Mat x = _x.getMat();
-    Mat Y = _Y.getMat();
-    Mat xi = _xi.getMat();
-    // check types & alignment
-    assert((x.type() == Y.type()) && (Y.type() == xi.type()));
-    assert((x.cols == 1) && (x.rows == Y.rows) && (x.cols == Y.cols));
-    // call templated interp1
-    switch(x.type()) {
-        case CV_8SC1: return interp1_<char>(x,Y,xi); break;
-        case CV_8UC1: return interp1_<unsigned char>(x,Y,xi); break;
-        case CV_16SC1: return interp1_<short>(x,Y,xi); break;
-        case CV_16UC1: return interp1_<unsigned short>(x,Y,xi); break;
-        case CV_32SC1: return interp1_<int>(x,Y,xi); break;
-        case CV_32FC1: return interp1_<float>(x,Y,xi); break;
-        case CV_64FC1: return interp1_<double>(x,Y,xi); break;
-    }
-    return Mat();
-}
-
-//------------------------------------------------------------------------------
-// cv::linspace
-//------------------------------------------------------------------------------
-Mat cv::linspace(float x0, float x1, int n) {
-    Mat pts(n, 1, CV_32FC1);
-    float step = (x1-x0)/static_cast<float>(n-1);
-    for(int i = 0; i < n; i++)
-        pts.at<float>(i,0) = x0+i*step;
-    return pts;
-}
-
-//------------------------------------------------------------------------------
-// cv::toGrayscale
-//------------------------------------------------------------------------------
-Mat cv::toGrayscale(InputArray _src, int dtype) {
-    Mat src = _src.getMat();
-    // only allow one channel
-    if(src.channels() != 1)
-        CV_Error(CV_StsBadArg, "Only Matrices with one channel are supported");
-    // create and return normalized image
-    Mat dst;
-    cv::normalize(_src, dst, 0, 255, NORM_MINMAX, CV_8UC1);
-    return dst;
-}
-
-//------------------------------------------------------------------------------
-// cv::transpose
-//------------------------------------------------------------------------------
-Mat cv::transpose(InputArray _src) {
-    Mat src = _src.getMat();
-    Mat dst;
-    transpose(src, dst);
-    return dst;
-}
-
-//------------------------------------------------------------------------------
-// cv::num2str
-//------------------------------------------------------------------------------
-string cv::num2str(int num) {
-    stringstream ss;
-    ss << num;
-    return ss.str();
-}

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2011. Philipp Wagner <bytefish[at]gmx[dot]de>.
- * Released to public domain under terms of the BSD Simplified license.
+ * Released under terms of the BSD Simplified license.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -16,6 +16,7 @@
  *   See <http://www.opensource.org/licenses/bsd-license>
  */
 
+
 #ifndef __HELPER_HPP__
 #define __HELPER_HPP__
 
@@ -24,6 +25,7 @@
 #include <vector>
 #include <set>
 
+using namespace cv;
 using namespace std;
 
 // Removes duplicate elements in a given vector.
@@ -41,7 +43,7 @@ inline vector<_Tp> remove_dups(const vector<_Tp>& src) {
 }
 
 // The namespace cv provides opencv related helper functions.
-namespace cv {
+namespace libfacerec {
 
 // Checks if a given matrix is symmetric, with an epsilon for floating point
 // matrices (1E-16 by default).
@@ -116,29 +118,6 @@ Mat asRowMatrix(InputArrayOfArrays src, int rtype, double alpha=1, double beta=0
 
 // Turns a vector of matrices into a column matrix.
 Mat asColumnMatrix(InputArrayOfArrays src, int rtype, double alpha=1, double beta=0);
-
-// yi = interp1(x,Y,xi) interpolates to find yi, the values of the
-// underlying function Y at the points in the  or array xi.
-//
-// Equivalent to GNU Octave/MATLAB function "interp1".
-Mat interp1(InputArray x, InputArray Y, InputArray xi);
-
-// Turns a given matrix into its grayscale representation.
-Mat toGrayscale(InputArray src, int dtype = CV_8UC1);
-
-// Transposes a matrix.
-Mat transpose(InputArray src);
-
-// Converts an integer number to a string.
-//
-// Equivalent to GNU Octave/MATLAB function "num2str".
-string num2str(int num);
-
-// Performs a linear interpolation of n equally-spaced sample between x0
-// (interpolation start) and x1 (interpolation end).
-//
-// Equivalent to GNU Octave/MATLAB function "linspace".
-Mat linspace(float x0, float x1, int n);
 
 } // //namespace cv
 

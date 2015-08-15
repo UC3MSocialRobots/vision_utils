@@ -1,4 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 set(name "facerec")
 set(the_library "opencv_${name}")
@@ -46,7 +46,26 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/test AND ENABLE_TESTS)
 endif()
 
 #---------------------------------
-# compile a sample executable
+# add samples
 #---------------------------------
-add_executable(fisherfaces src/main.cpp)
-target_link_libraries(fisherfaces ${the_library} opencv_core opencv_imgproc opencv_highgui)
+if(NOT DEFINED ENABLE_SAMPELS)
+    set(ENABLE_SAMPLES FALSE CACHE BOOL "Enable to make the samples")
+endif()
+
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/samples AND ENABLE_SAMPLES) 
+	# probably there's a simpler way to link against multiple executables...
+	add_executable(facerec_demo samples/facerec_demo.cpp)
+	target_link_libraries(facerec_demo ${the_library} opencv_core opencv_imgproc opencv_highgui)
+	
+	add_executable(facerec_video samples/facerec_video.cpp)
+	target_link_libraries(facerec_video ${the_library} opencv_core opencv_imgproc opencv_highgui opencv_objdetect opencv_imgproc)
+	
+	add_executable(facerec_eigenfaces samples/facerec_eigenfaces.cpp)
+	target_link_libraries(facerec_eigenfaces ${the_library} opencv_core opencv_imgproc opencv_highgui)
+	
+	add_executable(facerec_fisherfaces samples/facerec_fisherfaces.cpp)
+	target_link_libraries(facerec_fisherfaces ${the_library} opencv_core opencv_imgproc opencv_highgui)
+
+	add_executable(facerec_lbph samples/facerec_lbph.cpp)
+	target_link_libraries(facerec_lbph ${the_library} opencv_core opencv_imgproc opencv_highgui)
+endif()
