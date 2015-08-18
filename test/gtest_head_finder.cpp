@@ -26,7 +26,7 @@ Some tests for HeadFinder
 #include <gtest/gtest.h>
 #include <time/timer.h>
 #include <vision_utils/img_path.h>
-#include "image_utils/head_finder.h"
+#include "vision_utils/head_finder.h"
 
 // #define DISPLAY
 

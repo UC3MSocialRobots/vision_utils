@@ -26,7 +26,7 @@ Some tests for class \b Imagecontour
 // Bring in gtest
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
-#include "image_utils/image_contour.h"
+#include "vision_utils/image_contour.h"
 #include "time/timer.h"
 #include <vision_utils/img_path.h>
 

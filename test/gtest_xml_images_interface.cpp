@@ -1,6 +1,6 @@
 // Bring in gtest
 #include <gtest/gtest.h>
-#include "xml_images_interface/xml_images_interface.h"
+#include "vision_utils/xml_images_interface.h"
 #include "debug/error.h"
 #include <vision_utils/img_path.h>
 

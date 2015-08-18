@@ -29,8 +29,8 @@ and \b mini_stage_plugins namespace.
 #include <gtest/gtest.h>
 #include <time/timer.h>
 #include <vision_utils/img_path.h>
-#include "visu_utils/mini_stage_plugins.h"
-#include "image_utils/io.h"
+#include "vision_utils/mini_stage_plugins.h"
+#include "vision_utils/io.h"
 
 std::string _window_name = "test_mini_stage";
 

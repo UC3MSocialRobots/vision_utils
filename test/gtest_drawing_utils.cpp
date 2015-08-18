@@ -28,7 +28,7 @@ ________________________________________________________________________________
 // AD
 #include <vision_utils/img_path.h>
 #include "test/matrix_testing.h"
-#include "image_utils/drawing_utils.h"
+#include "vision_utils/drawing_utils.h"
 #include <time/timer.h>
 
 //#define DISPLAY

@@ -26,7 +26,7 @@ ________________________________________________________________________________
 // Bring in gtest
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
-#include "image_utils/resize_utils.h"
+#include "vision_utils/resize_utils.h"
 #include "time/timer.h"
 #include <vision_utils/img_path.h>
 

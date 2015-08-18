@@ -23,7 +23,7 @@ ________________________________________________________________________________
 Some tests for MaskAcceleration
 */
 #include <gtest/gtest.h>
-#include <image_utils/mask_acceleration.h>
+#include "vision_utils/mask_acceleration.h"
 
 //#define DISPLAY
 

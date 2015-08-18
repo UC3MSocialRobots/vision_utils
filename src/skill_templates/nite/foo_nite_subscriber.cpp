@@ -25,8 +25,8 @@ A simple test file for \a NiteSubscriberTemplate.
  */
 
 #include "string/timestamp.h"
-#include "skill_templates/nite/nite_subscriber_template.h"
-#include "image_utils/io.h"
+#include "vision_utils/nite_subscriber_template.h"
+#include "vision_utils/io.h"
 #include "kinect/user_image_to_rgb.h"
 #include "kinect/skeleton_utils.h"
 

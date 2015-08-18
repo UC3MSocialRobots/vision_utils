@@ -1,6 +1,6 @@
 // maggie
 #include "debug/error.h"
-#include "disjoint_sets2.h"
+#include "vision_utils/disjoint_sets2.h"
 // C++
 #include <iostream>
 #include <iomanip>

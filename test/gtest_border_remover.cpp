@@ -2,7 +2,7 @@
 #include <opencv2/highgui/highgui.hpp>
 
 #include "time/timer.h"
-#include "image_utils/border_remover.h"
+#include "vision_utils/border_remover.h"
 #include <vision_utils/img_path.h>
 
 TEST(TestSuite, simple_test) {

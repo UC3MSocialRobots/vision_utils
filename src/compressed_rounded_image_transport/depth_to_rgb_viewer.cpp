@@ -11,7 +11,7 @@
 #include <opencv2/highgui/highgui.hpp>
 // compressed_rounded
 #include "time/timer.h"
-#include "compressed_rounded_image_transport/cv_conversion_float_uchar.h"
+#include "vision_utils/cv_conversion_float_uchar.h"
 
 
 /*! This is an executable to subscribe to a depth topic

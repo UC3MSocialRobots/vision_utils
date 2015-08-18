@@ -25,7 +25,7 @@ Some tests for ImageComparer
  */
 // Bring in gtest
 #include <gtest/gtest.h>
-#include "image_utils/image_comparer.h"
+#include "vision_utils/image_comparer.h"
 #include <vision_utils/img_path.h>
 #include "time/timer.h"
 

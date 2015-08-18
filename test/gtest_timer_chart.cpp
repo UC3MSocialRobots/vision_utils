@@ -26,7 +26,7 @@ Some tests for the TimerChart class.
 //#define DISPLAY
 // put the line "#define CHART_TIMER_ON" in your code to activate the TimerChart
 #define CHART_TIMER_ON
-#include "visu_utils/timer_chart.h"
+#include "vision_utils/timer_chart.h"
 #include <gtest/gtest.h>
 #include <unistd.h>
 

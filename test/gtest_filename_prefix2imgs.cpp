@@ -24,7 +24,7 @@ Some tests for FilenamePrefix2Imgs.
  */
 //#define DISPLAY
 #include <gtest/gtest.h>
-#include <databases_io/filename_prefix2imgs.h>
+#include "vision_utils/filename_prefix2imgs.h"
 #include <vision_utils/img_path.h>
 
 TEST(TestSuite, ctor) {

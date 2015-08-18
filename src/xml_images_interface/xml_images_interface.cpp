@@ -1,4 +1,4 @@
-#include "xml_images_interface.h"
+#include "vision_utils/xml_images_interface.h"
 
 ///////// implementations /////////////////////////////////////////////
 

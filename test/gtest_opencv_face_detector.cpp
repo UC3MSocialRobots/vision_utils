@@ -5,7 +5,7 @@
 #include "time/timer.h"
 #include "system/system_utils.h"
 #include "string/string_casts.h"
-#include "image_utils/opencv_face_detector.h"
+#include "vision_utils/opencv_face_detector.h"
 #include <iomanip>
 
 void detect_one_pic(const std::string filename,

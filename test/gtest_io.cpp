@@ -24,7 +24,7 @@ ________________________________________________________________________________
 
  */
 #include <gtest/gtest.h>
-#include <image_utils/io.h>
+#include "vision_utils/io.h"
 #include "geom/geometry_utils.h"
 
 class FooPointIo : public geometry_utils::FooPoint2f {

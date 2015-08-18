@@ -23,7 +23,7 @@ ________________________________________________________________________________
 Some tests for \a
  */
 // Bring in my package's API, which is what I'm testing
-#include "point_clouds/clusterer.h"
+#include "vision_utils/clusterer.h"
 #include "geom/foo_point.h"
 #include "time/timer.h"
 // Bring in gtest

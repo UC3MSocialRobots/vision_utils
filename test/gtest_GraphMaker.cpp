@@ -8,7 +8,7 @@
  */
 //#define DISPLAY
 #include <gtest/gtest.h>
-#include "visu_utils/GraphMaker.h"
+#include "vision_utils/GraphMaker.h"
 #include "debug/debug_utils.h"
 #include "highgui.h"
 

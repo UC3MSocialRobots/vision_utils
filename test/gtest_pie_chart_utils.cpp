@@ -27,7 +27,7 @@ ________________________________________________________________________________
 #include <gtest/gtest.h>
 #include "combinatorics/combinatorics_utils.h"
 #include "time/timer.h"
-#include "visu_utils/pie_chart_utils.h"
+#include "vision_utils/pie_chart_utils.h"
 
 template<class _T>
 void test_pie1(const std::vector<_T> & values,

@@ -25,8 +25,8 @@ ________________________________________________________________________________
 // Bring in gtest
 #include <gtest/gtest.h>
 #include "time/timer.h"
-#include "point_clouds/ground_plane_finder.h"
-#include "image_utils/io.h"
+#include "vision_utils/ground_plane_finder.h"
+#include "vision_utils/io.h"
 #include <vision_utils/img_path.h>
 
 //#define DISPLAY

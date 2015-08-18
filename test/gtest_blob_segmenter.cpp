@@ -27,7 +27,7 @@ ________________________________________________________________________________
 #include <gtest/gtest.h>
 #include "time/timer.h"
 #include "test/matrix_testing.h"
-#include "point_clouds/blob_segmenter.h"
+#include "vision_utils/blob_segmenter.h"
 #include "kinect/user_image_to_rgb.h"
 #include <vision_utils/img_path.h>
 

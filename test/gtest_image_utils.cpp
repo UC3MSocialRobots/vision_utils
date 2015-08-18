@@ -14,17 +14,17 @@
 // AD
 #include <vision_utils/img_path.h>
 #include <time/timer.h>
-#include "compressed_rounded_image_transport/cv_conversion_float_uchar.h"
+#include "vision_utils/cv_conversion_float_uchar.h"
 
 // vision_utils
-#include "image_utils/content_processing.h"
-#include "image_utils/connected_comp_interface.h"
-#include "image_utils/layer_utils.h"
-#include "image_utils/image_comparer.h"
-#include "image_utils/io.h"
-#include "image_utils/value_remover.h"
-#include "image_utils/resize_utils.h"
-#include "image_utils/drawing_utils.h"
+#include "vision_utils/content_processing.h"
+#include "vision_utils/connected_comp_interface.h"
+#include "vision_utils/layer_utils.h"
+#include "vision_utils/image_comparer.h"
+#include "vision_utils/io.h"
+#include "vision_utils/value_remover.h"
+#include "vision_utils/resize_utils.h"
+#include "vision_utils/drawing_utils.h"
 // kinect
 #include "kinect/user_image_to_rgb.h"
 #include "kinect/kinect_openni_utils.h"

@@ -1,4 +1,4 @@
-#include "xml_images_reader.h"
+#include "vision_utils/xml_images_reader.h"
 
 XmlImagesReader::XmlImagesReader() {
   _is_current_file_valid = false;

@@ -1,7 +1,7 @@
 
 //#define DISPLAY
 #include <gtest/gtest.h>
-#include "color/color_utils.h"
+#include "vision_utils/color_utils.h"
 #include "debug/error.h"
 #include <opencv2/highgui/highgui.hpp>
 

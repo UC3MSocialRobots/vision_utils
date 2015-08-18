@@ -29,10 +29,10 @@ ________________________________________________________________________________
 #include <combinatorics/combinatorics_utils.h>
 #include <time/timer.h>
 // vision_utils
-#include "point_clouds/cloud_viewer_gnuplot.h"
-#include "point_clouds/cloud_tilter.h"
-#include "databases_io/dgaitdb_filename.h"
-#include "image_utils/io.h"
+#include "vision_utils/cloud_viewer_gnuplot.h"
+#include "vision_utils/cloud_tilter.h"
+#include "vision_utils/dgaitdb_filename.h"
+#include "vision_utils/io.h"
 #include <vision_utils/img_path.h>
 
 //#define DISPLAY

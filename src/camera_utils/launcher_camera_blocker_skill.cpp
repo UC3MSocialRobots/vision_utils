@@ -49,8 +49,8 @@ ________________________________________________________________________________
 // opencv
 #include <opencv2/imgproc/imgproc.hpp>
 // vision
-#include "skill_templates/rgb_skill.h"
-#include "skill_templates/nano_etts_api.h"
+#include "vision_utils/rgb_skill.h"
+#include "vision_utils/nano_etts_api.h"
 #include "time/timer.h"
 #include "string/string_split.h"
 

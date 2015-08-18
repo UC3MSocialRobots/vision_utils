@@ -11,7 +11,7 @@
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
 // AD
-#include "ocr_utils/OcrUtils.h"
+#include "vision_utils/OcrUtils.h"
 #include "debug/debug_utils.h"
 #include <vision_utils/img_path.h>
 

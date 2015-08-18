@@ -23,8 +23,8 @@ ________________________________________________________________________________
 \todo Description of the file
  */
 
-#include "dgaitdb.h"
-#include "dgaitdb_filename.h"
+#include "vision_utils/dgaitdb.h"
+#include "vision_utils/dgaitdb_filename.h"
 
 int video_reader(int argc, char **argv) {
   if (argc < 1) {

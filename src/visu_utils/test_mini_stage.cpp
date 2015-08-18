@@ -27,8 +27,8 @@ ________________________________________________________________________________
 #include <debug/debug_utils.h>
 #include <time/timer.h>
 #include <vision_utils/img_path.h>
-#include "mini_stage.h"
-#include "mini_stage_plugins.h"
+#include "vision_utils/mini_stage.h"
+#include "vision_utils/mini_stage_plugins.h"
 
 std::string _window_name = "test_mini_stage";
 

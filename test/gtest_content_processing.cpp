@@ -26,7 +26,7 @@ and \b mini_stage_plugins namespace.
  */
 // Bring in gtest
 #include <gtest/gtest.h>
-#include "image_utils/content_processing.h"
+#include "vision_utils/content_processing.h"
 #include <vision_utils/img_path.h>
 #include "time/timer.h"
 #include "map/map_utils.h"

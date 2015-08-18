@@ -23,7 +23,7 @@ ________________________________________________________________________________
 // Bring in gtest
 #include <gtest/gtest.h>
 #include <string/string_split.h>
-#include "image_utils/google_images_search.h"
+#include "vision_utils/google_images_search.h"
 #include <vision_utils/img_path.h>
 
 bool has_connectivity = false;

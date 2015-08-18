@@ -27,7 +27,7 @@ Tests for the histogram_utils namespace.
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
 // AD
-#include <visu_utils/histogram_utils.h>
+#include "vision_utils/histogram_utils.h"
 #include <time/timer.h>
 #include <test/matrix_testing.h>
 #include <vision_utils/img_path.h>

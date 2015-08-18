@@ -22,7 +22,7 @@ ________________________________________________________________________________
 
 cf "foo_rgb_skill.h" for doc
  */
-#include "foo_rgb_skill.h"
+#include "vision_utils/foo_rgb_skill.h"
 int main(int argc, char **argv) {
   ros::init(argc, argv, "launcher_foo_rgb_skill");
   FooRgbSkill skill;

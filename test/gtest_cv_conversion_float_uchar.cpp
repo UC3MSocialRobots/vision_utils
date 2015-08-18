@@ -8,9 +8,9 @@
 #include <gtest/gtest.h>
 #include <stdio.h>
 #include "time/timer.h"
-#include "compressed_rounded_image_transport/cv_conversion_float_uchar.h"
-#include "compressed_rounded_image_transport/print_3f_img.h"
-#include "compressed_rounded_image_transport/float_image_generator.h"
+#include "vision_utils/cv_conversion_float_uchar.h"
+#include "vision_utils/print_3f_img.h"
+#include "vision_utils/float_image_generator.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 

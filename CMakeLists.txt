@@ -5,7 +5,7 @@ project(vision_utils)
 ### 3 - Find other CMake/Catkin packages needed for build
 find_package(catkin REQUIRED COMPONENTS
   roscpp roslib cv_bridge message_generation screens_msgs pcl_ros
-  pcl_conversions 
+  pcl_conversions
   # AD
   kinect utils
 )
@@ -22,14 +22,14 @@ configure_file(cmake/img_path.h.in ${devel_pkg_inc}/img_path.h)
 install(FILES ${devel_pkg_inc}/img_path.h DESTINATION ${devel_pkg_inc})
 ### 6 - Specify package build info export (catkin_package())
 catkin_package(
-  INCLUDE_DIRS src
+  INCLUDE_DIRS include
   CATKIN_DEPENDS roscpp roslib message_runtime cv_bridge
   DEPENDS utils kinect
   CFG_EXTRAS img_path.h
 )
 ### 7 - Libraries/Executables to build (add_library()/add_executable()/target_link_libraries())
 include_directories(
-  include src third_parties
+  include third_parties
   ${catkin_INCLUDE_DIRS}
   /usr/include/openni /usr/include/nite /usr/include/ni
   ${PCL_INCLUDE_DIRS}
