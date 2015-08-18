@@ -40,9 +40,9 @@ ________________________________________________________________________________
 #include <string/find_and_replace.h>
 #include <string/file_io.h>
 #include <time/timer.h>
-#include <point_clouds/blob_segmenter.h>
-#include <color/color_utils.h>
-#include <databases_io/database_player.h>
+#include "vision_utils/blob_segmenter.h"
+#include "vision_utils/color_utils.h"
+#include "vision_utils/database_player.h"
 // people_msgs
 #include <ppl_utils/images2ppl.h>
 #include <ppl_utils/ppl_attributes.h>
