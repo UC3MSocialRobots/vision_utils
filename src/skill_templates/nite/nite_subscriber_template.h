@@ -63,7 +63,7 @@ ________________________________________________________________________________
 #include <opencv2/highgui/highgui.hpp>
 // AD
 #include <kinect/NiteSkeletonList.h>
-#include <kinect_utils/kinect_openni_utils.h>
+#include "kinect/kinect_openni_utils.h"
 #include "time/timer.h"
 
 class NiteSubscriberTemplate {

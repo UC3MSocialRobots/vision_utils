@@ -29,7 +29,7 @@ designed for clustering reprojected images.
 #define IMAGE_CLUSTERER_H
 
 #include "point_clouds/clusterer.h"
-#include "kinect_utils/kinect_openni_utils.h"
+#include "kinect/kinect_openni_utils.h"
 
 
 class ImageClusterer : public geometry_utils::Clusterer {

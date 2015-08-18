@@ -26,8 +26,8 @@
 #include "image_utils/resize_utils.h"
 #include "image_utils/drawing_utils.h"
 // kinect
-#include "kinect_utils/user_image_to_rgb.h"
-#include "kinect_utils/kinect_openni_utils.h"
+#include "kinect/user_image_to_rgb.h"
+#include "kinect/kinect_openni_utils.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 

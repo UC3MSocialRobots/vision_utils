@@ -32,7 +32,7 @@ Tests for the histogram_utils namespace.
 #include <test/matrix_testing.h>
 #include <vision_utils/img_path.h>
 // kinect
-#include "kinect_utils/user_image_to_rgb.h"
+#include "kinect/user_image_to_rgb.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -25,7 +25,7 @@ ________________________________________________________________________________
 // Bring in gtest
 #include <gtest/gtest.h>
 #include <opencv2/core/core.hpp>
-#include <kinect_utils/kinect_openni_utils.h>
+#include "kinect/kinect_openni_utils.h"
 #include <combinatorics/combinatorics_utils.h>
 #include <time/timer.h>
 // vision_utils

@@ -30,7 +30,7 @@ Some plugins to draw more stuff with a MiniStage.
 #include "mini_stage.h"
 #include "ros_utils/costmap_utils.h"
 // kinect
-#include "kinect_utils/kinect_openni_utils.h"
+#include "kinect/kinect_openni_utils.h"
 // ellipse
 #include "image_utils/ellipse_utils.h"
 

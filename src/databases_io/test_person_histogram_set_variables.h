@@ -30,7 +30,7 @@ ________________________________________________________________________________
 #include <string>
 #include <vector>
 #include <opencv2/core/core.hpp>
-#include <kinect_utils/kinect_openni_utils.h>
+#include "kinect/kinect_openni_utils.h"
 #include <vision_utils/img_path.h>
 
 #define DEPTH_DIR  IMG_DIR "depth/"

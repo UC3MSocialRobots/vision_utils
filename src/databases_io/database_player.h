@@ -28,7 +28,7 @@ A template class for iteratively access RGB+depth+user databases.
 #include <opencv2/highgui/highgui.hpp>
 #include "compressed_rounded_image_transport/cv_conversion_float_uchar.h"
 
-#include <kinect_utils/user_image_to_rgb.h>
+#include "kinect/user_image_to_rgb.h"
 // AD
 #include <string/filename_handling.h>
 #include <string/string_casts_stl.h>

@@ -31,7 +31,7 @@ and \b mini_stage_plugins namespace.
 #include "time/timer.h"
 #include "map/map_utils.h"
 #include "test/matrix_testing.h"
-#include "kinect_utils/user_image_to_rgb.h"
+#include "kinect/user_image_to_rgb.h"
 
 #define GRAYSCALE CV_LOAD_IMAGE_GRAYSCALE
 //#define DISPLAY

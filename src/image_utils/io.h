@@ -5,7 +5,7 @@
 #include <system/system_utils.h>
 #include <debug/error.h>
 #include "compressed_rounded_image_transport/cv_conversion_float_uchar.h"
-#include <kinect_utils/user_image_to_rgb.h>
+#include "kinect/user_image_to_rgb.h"
 #include "convert_n_colors.h"
 
 namespace image_utils {

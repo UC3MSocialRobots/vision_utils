@@ -31,7 +31,7 @@ A useful class for finding the head inside of a user mask.
 #include <stats/stats_utils.h>
 #include <data_filters/clamp.h>
 #include <time/timer.h>
-#include <kinect_utils/user_image_to_rgb.h>
+#include "kinect/user_image_to_rgb.h"
 #include <image_utils/voronoi.h>
 #include <image_utils/ellipse_utils.h>
 
