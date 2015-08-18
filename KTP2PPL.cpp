@@ -44,8 +44,8 @@ ________________________________________________________________________________
 #include "vision_utils/color_utils.h"
 #include "vision_utils/database_player.h"
 // people_msgs
-#include <ppl_utils/images2ppl.h>
-#include <ppl_utils/ppl_attributes.h>
+#include "people_utils/images2ppl.h"
+#include "people_utils/ppl_attributes.h"
 
 typedef people_msgs::PeoplePose PP;
 typedef people_msgs::PeoplePoseList PPL;

@@ -42,7 +42,7 @@ and a ground truth PPL.
 //#include "vision_utils/dgaitdb_filename.h"
 #include <image_transport/image_transport.h>
 // people_msgs
-#include <ppl_utils/images2ppl.h>
+#include "people_utils/images2ppl.h"
 
 typedef people_msgs::PeoplePose PP;
 typedef people_msgs::PeoplePoseList PPL;
