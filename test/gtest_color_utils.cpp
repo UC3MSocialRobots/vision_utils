@@ -2,7 +2,7 @@
 //#define DISPLAY
 #include <gtest/gtest.h>
 #include "vision_utils/color_utils.h"
-#include "debug/error.h"
+#include "vision_utils/utils/error.h"
 #include <opencv2/highgui/highgui.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////

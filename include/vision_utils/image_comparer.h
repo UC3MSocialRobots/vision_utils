@@ -13,10 +13,10 @@
  *******************************************************************************/
 
 ////// my imports
-#include "geom/hausdorff_distances.h"
-#include "debug/debug_utils.h"
-#include "string/file_io.h"
-#include "string/filename_handling.h"
+#include "vision_utils/utils/hausdorff_distances.h"
+#include "vision_utils/utils/debug_utils.h"
+#include "vision_utils/utils/file_io.h"
+#include "vision_utils/utils/filename_handling.h"
 #include "vision_utils/content_processing.h"
 
 ///// STL imports

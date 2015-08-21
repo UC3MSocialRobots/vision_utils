@@ -27,7 +27,7 @@ ________________________________________________________________________________
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
 #include "vision_utils/resize_utils.h"
-#include "time/timer.h"
+#include "vision_utils/utils/timer.h"
 #include <vision_utils/img_path.h>
 
 ////////////////////////////////////////////////////////////////////////////////

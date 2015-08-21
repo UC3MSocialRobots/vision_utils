@@ -9,8 +9,8 @@
 
 #include "vision_utils/OcrUtils.h"
 #include "vision_utils/io.h"
-#include "string/StringUtils.h"
-#include "debug/error.h"
+#include "vision_utils/utils/StringUtils.h"
+#include "vision_utils/utils/error.h"
 #include "vision_utils/img_path.h"
 
 

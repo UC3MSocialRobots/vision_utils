@@ -35,8 +35,8 @@ Some useful functions for manipulating point clouds.
 // utils
 #undef RAD2DEG // defined in both "pcl_macros.h" and "geometry_utils.h"
 #undef DEG2RAD // defined in both "pcl_macros.h" and "geometry_utils.h"
-#include "geom/Rect3.h"
-#include "ros_utils/pt_utils.h"
+#include "vision_utils/utils/Rect3.h"
+#include "vision_utils/utils/pt_utils.h"
 
 namespace geometry_utils {
 

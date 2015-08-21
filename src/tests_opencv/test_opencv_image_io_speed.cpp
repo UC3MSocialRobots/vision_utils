@@ -24,8 +24,8 @@ Some speed tests for OpenCV imread, imwrite functions
  */
 
 #include <opencv2/highgui/highgui.hpp>
-#include "time/timer.h"
-#include "system/system_utils.h"
+#include "vision_utils/utils/timer.h"
+#include "vision_utils/utils/system_utils.h"
 #include <vision_utils/img_path.h>
 #include "vision_utils/float_image_generator.h"
 #include "vision_utils/content_processing.h"

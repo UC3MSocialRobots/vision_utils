@@ -9,7 +9,7 @@
 // #include "vision_utils/cv_conversion_float_uchar.h"
 
 // utils
-#include <geom/foo_point.h>
+#include "vision_utils/utils/foo_point.h"
 
 namespace color_utils {
 //typedef AD::Point3<double> Color;

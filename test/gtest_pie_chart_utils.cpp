@@ -25,8 +25,8 @@ ________________________________________________________________________________
  */
 //#define DISPLAY
 #include <gtest/gtest.h>
-#include "combinatorics/combinatorics_utils.h"
-#include "time/timer.h"
+#include "vision_utils/utils/combinatorics_utils.h"
+#include "vision_utils/utils/timer.h"
 #include "vision_utils/pie_chart_utils.h"
 
 template<class _T>

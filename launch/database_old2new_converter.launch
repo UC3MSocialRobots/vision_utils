@@ -1,0 +1,46 @@
+<launch>
+<arg name="robot" value="datagrabber_kinect"/>
+<!-- the bag to be played - the folder is, by default, ~/.ros/ -->
+<!--
+<arg name="bagfile" default="2014-07-07-22-07-26.bag"/>
+<arg name="bagfile" default="/home/arnaud/Dropbox/work/Experimentos_tesis_Arnaud/arnaud_experiments_take2_4people.bag"/>
+<arg name="bagfile" default="/home/arnaud/Dropbox/Alzheimer/Experimentos_tesis_Arnaud/arnaud_exp_usb_cam.bag"/>
+<arg name="bagfile" default="/home/arnaud/Dropbox/Alzheimer/Experimentos_tesis_Arnaud/arnaud_exp_uvc_cam.bag"/>
+<arg name="bagfile" default="/home/arnaud/Dropbox/Alzheimer/Experimentos_tesis_Arnaud/2014-09-22-arnaud_alice_bag.bag"/>
+-->
+<arg name="bagfile" default="/home/arnaud/Dropbox/work/Experimentos_tesis_Arnaud/arnaud_experiments_take1.bag"/>
+<!-- true to see all images and rviz -->
+<arg name="display" default="false"/>
+
+<!-- republish (decompress) all images from bag -->
+<node pkg="image_transport" type="republish" name="decompress_rgb"
+      output="screen"  args="compressed         in:=/$(arg robot)/rgb
+                             raw               out:=/$(arg robot)/rgb"/>
+<node pkg="image_transport" type="republish" name="decompress_depth"
+      output="screen"  args="compressedDepth    in:=/$(arg robot)/depth
+                             raw               out:=/$(arg robot)/depth"/>
+<node pkg="image_transport" type="republish" name="decompress_user"
+      output="screen"  args="compressed         in:=/$(arg robot)/user
+                             raw               out:=/$(arg robot)/user"/>
+
+<!-- display -->
+<include if="$(arg display)" file="$(find people_utils)/launch/database_viewer.launch">
+  <arg name="robot" value="$(arg robot)" />
+</include>
+
+<!-- rosbag -->
+<group ns="$(arg robot)">
+  <node pkg="rosbag" type="play" name="bagplayer"  output="log"
+        args="$(arg bagfile)"/>
+</group>
+
+<!-- to images files
+ ~/user_image_annotator/build/user_image_annotator /tmp/*depth.png
+-->
+<group ns="$(arg robot)">
+  <node pkg="people_detection_vision" type="rlpd_grabber.exe"
+        name="rlpd_grabber"  output="screen"
+        args="" />
+</group>
+
+</launch>

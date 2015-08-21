@@ -1,5 +1,5 @@
 // maggie
-#include "debug/error.h"
+#include "vision_utils/utils/error.h"
 #include "vision_utils/disjoint_sets2.h"
 // C++
 #include <iostream>
@@ -10,7 +10,7 @@
 //#define TIMER_ON
 
 #ifdef TIMER_ON
-#include "time/timer.h"
+#include "vision_utils/utils/timer.h"
 Timer timer;
 #endif // TIMER_ON
 

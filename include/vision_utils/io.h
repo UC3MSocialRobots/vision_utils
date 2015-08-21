@@ -2,10 +2,10 @@
 #define IO_H
 
 #include "opencv2/highgui/highgui.hpp"
-#include <system/system_utils.h>
-#include <debug/error.h>
+#include "vision_utils/utils/system_utils.h"
+#include "vision_utils/utils/error.h"
 #include "vision_utils/cv_conversion_float_uchar.h"
-#include "kinect/user_image_to_rgb.h"
+#include "vision_utils/user_image_to_rgb.h"
 #include "vision_utils/convert_n_colors.h"
 
 namespace image_utils {

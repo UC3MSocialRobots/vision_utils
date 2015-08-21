@@ -53,7 +53,7 @@ A template skill to subscribe to a synchronized stream of RGB and depth images.
 #include <image_transport/image_transport.h>
 #include <image_transport/subscriber_filter.h>
 #include <sensor_msgs/image_encodings.h>
-#include "kinect/kinect_openni_utils.h"
+#include "vision_utils/kinect_openni_utils.h"
 
 //#define USE_EXACT_TIME // comment to use approx time
 #ifdef USE_EXACT_TIME

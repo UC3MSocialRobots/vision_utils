@@ -29,7 +29,7 @@ Some useful tools for handling with histograms
 #include <opencv2/imgproc/imgproc.hpp>
 #include "vision_utils/colormaps.h"
 #include <gnuplot-cpp/gnuplot_i.hpp>
-#include <stats/stats_utils.h>
+#include "vision_utils/utils/stats_utils.h"
 #include "vision_utils/drawing_utils.h"
 #include "vision_utils/layer_utils.h"
 

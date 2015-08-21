@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- doc: http://wiki.ros.org/catkin/package.xml -->
-<package>
+<package format="2">
   <name>vision_utils</name>
   <version>0.0.0</version>
   <description>
@@ -10,33 +10,18 @@
   <license>LGPLv3</license>
   <!-- dependencies -->
   <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>cv_bridge</build_depend>
-  <build_depend>image_transport</build_depend>
-  <build_depend>message_generation</build_depend>
-  <build_depend>message_runtime</build_depend>
-  <build_depend>pcl_ros</build_depend>
-  <build_depend>roscpp</build_depend>
-  <build_depend>roslib</build_depend>
-  <build_depend>screens_msgs</build_depend>
-  <build_depend>visualization_msgs</build_depend>
-  <build_depend>pcl_conversions</build_depend>
+  <depend>roscpp</depend>
+  <depend>roslib</depend>
+  <depend>cv_bridge</depend>
+  <depend>image_transport</depend>
+  <depend>message_generation</depend>
+  <depend>message_runtime</depend>
+  <depend>pcl_conversions</depend>
+  <depend>pcl_ros</depend>
+  <depend>visualization_msgs</depend>
   <!-- AD -->
-  <build_depend>kinect</build_depend>
-  <build_depend>utils</build_depend>
+  <!-- None -->
 
-  <run_depend>cv_bridge</run_depend>
-  <run_depend>message_generation</run_depend>
-  <run_depend>message_runtime</run_depend>
-  <run_depend>pcl_conversions</run_depend>
-  <run_depend>pcl_ros</run_depend>
-  <run_depend>roscpp</run_depend>
-  <run_depend>roslib</run_depend>
-  <run_depend>screens_msgs</run_depend>
-  <!-- AD -->
-  <run_depend>kinect</run_depend>
-  <run_depend>utils</run_depend>
-
-  <run_depend>roscpp</run_depend>
   <export>
     <rosdoc config="rosdoc.yaml" /> <!-- http://wiki.ros.org/rosdoc_lite -->
   </export>

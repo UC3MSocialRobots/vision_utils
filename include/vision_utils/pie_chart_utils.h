@@ -32,7 +32,7 @@ Some utilities for drawing pie charts and their associated captions.
 #include <opencv2/highgui/highgui.hpp>
 #include "vision_utils/colormaps.h"
 #include "vision_utils/drawing_utils.h"
-#include "geom/geometry_utils.h"
+#include "vision_utils/utils/geometry_utils.h"
 
 namespace pie_chart_utils {
 

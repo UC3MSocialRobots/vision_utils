@@ -1,0 +1,21 @@
+<launch>
+<arg name="robot" default="datagrabber"/>
+<!-- default rate for the playback - 5 fps = real recording speed -->
+<arg name="rate" default="2"/>
+<!-- the RGB files to be played - the folder is, by default, ~/.ros/ -->
+<arg name="rgbfiles" default="/home/arnaud/Datasets/rlpd/frames/*rgb*"/>
+<!-- true to see all images and rviz -->
+<arg name="display" default="false"/>
+
+<!-- display -->
+<include if="$(arg display)" file="$(find people_utils)/launch/database_viewer.launch">
+  <arg name="robot" value="$(arg robot)" />
+</include>
+
+<!-- player -->
+<group ns="$(arg robot)">
+  <node pkg="people_detection_vision" type="rlpd2ppl.exe"
+    name="rlpd2ppl"  output="screen" required="true"
+    args="_rate:=$(arg rate) $(arg rgbfiles)" />
+</group>
+</launch>

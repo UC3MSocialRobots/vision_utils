@@ -125,7 +125,7 @@ private:
 /* *****************************************************************************
  * implementation
  ******************************************************************************/
-//#include "debug_utils.h"
+//#include "vision_utils/utils/debug_utils.h"
 
 template<class Xtype, class Ytype>
 GraphMaker<Xtype, Ytype>::GraphMaker() {

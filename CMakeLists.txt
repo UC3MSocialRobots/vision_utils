@@ -4,10 +4,10 @@ cmake_minimum_required(VERSION 2.8.3)
 project(vision_utils)
 ### 3 - Find other CMake/Catkin packages needed for build
 find_package(catkin REQUIRED COMPONENTS
-  roscpp roslib cv_bridge message_generation screens_msgs pcl_ros
-  pcl_conversions
+  roscpp  roslib  cv_bridge  image_transport  message_generation
+  pcl_ros pcl_conversions
   # AD
-  kinect utils
+  kinect
 )
 find_package(PCL REQUIRED)
 ### 4 - Message/Service/Action Generators (add_message_files(), add_service_files(), add_action_files())
@@ -22,9 +22,9 @@ configure_file(cmake/img_path.h.in ${devel_pkg_inc}/img_path.h)
 install(FILES ${devel_pkg_inc}/img_path.h DESTINATION ${devel_pkg_inc})
 ### 6 - Specify package build info export (catkin_package())
 catkin_package(
-  INCLUDE_DIRS include
+  INCLUDE_DIRS include third_parties
   CATKIN_DEPENDS roscpp roslib message_runtime cv_bridge
-  DEPENDS utils kinect
+  DEPENDS
   CFG_EXTRAS img_path.h
 )
 ### 7 - Libraries/Executables to build (add_library()/add_executable()/target_link_libraries())

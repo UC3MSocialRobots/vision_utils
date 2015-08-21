@@ -24,8 +24,8 @@ Some tests for \a
  */
 // Bring in my package's API, which is what I'm testing
 #include "vision_utils/clusterer.h"
-#include "geom/foo_point.h"
-#include "time/timer.h"
+#include "vision_utils/utils/foo_point.h"
+#include "vision_utils/utils/timer.h"
 // Bring in gtest
 #include <gtest/gtest.h>
 

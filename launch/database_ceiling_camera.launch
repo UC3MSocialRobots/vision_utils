@@ -1,0 +1,55 @@
+<launch>
+<!-- name of the robot. Does not need to be changed -->
+<arg name="robot" value="datagrabber"/>
+<!-- the device corresponding to the camera mounted on the ceiling.
+      Careful, /dev/video0 most often corresponds to the camera integrated in the laptop. -->
+<arg name="ceiling_camera_device" default="/dev/video0"/>
+<!-- the optional calibration files (the ceiling camera MUST BE calibrated) -->
+
+<arg name="ceiling_camera_info_url" default="file://$(find kinect)/data/logitech_calibration.yaml" />
+  
+<!--
+
+<arg name="ceiling_camera_info_url"
+  default="file://$(find kinect)/data/hp_hd_3310_webcam.yaml" />
+  default="file://$(find kinect)/data/eeePc_arnaud_webcam_calibration_new.yaml" />
+-->
+<!-- true to see all images and rviz -->
+<arg name="display" default="false"/>
+
+
+<!-- launch ceiling_camera camera driver -->
+<include file="$(find camera)/launch/camera_node_no_compression.launch">
+  <arg name="device" value="$(arg ceiling_camera_device)" />
+  <arg name="robot" value="$(arg robot)_ceiling_camera" />
+  <arg name="camera_info_url" value="$(arg ceiling_camera_info_url)" />
+  <arg name="fps" value="5" />
+</include>
+
+
+
+<!-- geometrics transforms = TF -->
+<group ns="$(arg robot)">
+  <!-- TF floor -> Kinect (setup the height of the Kinect foot) -->
+  <!-- x y z roll pitch yaw -->
+  <!-- publish TF transform between Kinect and ceiling_camera camera -->
+  <node pkg="tf" type="static_transform_publisher" name="floor2ceiling_tf_broadcaster"
+  args="1.5 0 2.5   1.5707 3.1416 0   floor  head_camera   100"/>
+</group>
+
+<!-- ARToolkit PPLP -->
+<include file="$(find people_detection_vision)/launch/artoolkit2ppl.launch">
+  <arg name="robot" value="$(arg robot)_ceiling_camera" />
+  <arg name="marker" value="$(arg display)"/>
+  <arg name="eventgui" value="false"/>
+</include>
+<node pkg="rostopic" type="rostopic" name="artoolkit_pplp_starter" output="screen"
+        args="pub /$(arg robot)_ceiling_camera/ARTOOLKIT_PPLP_START std_msgs/Int16 '{data: 0}' --latch  --once"/>
+
+
+<!-- display -->
+<include if="$(arg display)" file="$(find people_utils)/launch/database_viewer.launch">
+  <arg name="robot" value="$(arg robot)" />
+</include>
+
+</launch>

@@ -1,0 +1,17 @@
+<launch>
+<arg name="robot"/>
+<!-- ************* DISPLAY ****************************** -->
+<!-- NiTE image viewer -->
+
+<include file="$(find kinect)/launch/nite_viewer.launch">
+  <arg name="robot" value="$(arg robot)" />
+</include>
+
+<!-- rviz -->
+<!--
+<include file="$(find main_control)/launch/viz.launch">
+  <arg name="robot" value="$(arg robot)" />
+</include>
+-->
+
+</launch>

@@ -25,7 +25,7 @@ ________________________________________________________________________________
 #ifndef RLPD2IMGS_H
 #define RLPD2IMGS_H
 
-#include <string/find_and_replace.h>
+#include "vision_utils/utils/find_and_replace.h"
 #include "vision_utils/database_player.h"
 #include "vision_utils/mask.h"
 #include "vision_utils/opencv_safe_image_io.h"

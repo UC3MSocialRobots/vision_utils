@@ -27,7 +27,7 @@ Some tests for ImageComparer
 #include <gtest/gtest.h>
 #include "vision_utils/image_comparer.h"
 #include <vision_utils/img_path.h>
-#include "time/timer.h"
+#include "vision_utils/utils/timer.h"
 
 typedef std::vector<cv::Point> Pt2Vec;
 typedef std::list<cv::Point>   Pt2List;

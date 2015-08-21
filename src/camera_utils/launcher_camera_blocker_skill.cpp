@@ -51,8 +51,8 @@ ________________________________________________________________________________
 // vision
 #include "vision_utils/rgb_skill.h"
 #include "vision_utils/nano_etts_api.h"
-#include "time/timer.h"
-#include "string/string_split.h"
+#include "vision_utils/utils/timer.h"
+#include "vision_utils/utils/string_split.h"
 
 class CameraBlockerSkill : public RgbSkill {
 public:

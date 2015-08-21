@@ -29,7 +29,7 @@ Some tests for class \a ImageClusterer
 // Bring in gtest
 #include <gtest/gtest.h>
 // utils
-#include <time/timer.h>
+#include "vision_utils/utils/timer.h"
 #include "vision_utils/io.h"
 #include "vision_utils/image_clusterer.h"
 #include <vision_utils/img_path.h>

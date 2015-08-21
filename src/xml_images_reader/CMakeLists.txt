@@ -1,5 +1,5 @@
 add_library(xml_images_reader xml_images_reader.cpp)
-target_link_libraries(xml_images_reader xml_document ${catkin_LIBRARIES})
+target_link_libraries(xml_images_reader  ${catkin_LIBRARIES})
 
 install(TARGETS xml_images_reader
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}

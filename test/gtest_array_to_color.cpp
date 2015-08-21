@@ -26,7 +26,7 @@ Some tests for array_to_color()
 //#define DISPLAY
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
-#include "cmatrix/cmatrix.h"
+#include "vision_utils/utils/cmatrix.h"
 #include "vision_utils/array_to_color.h"
 
 int main(int argc, char** argv) {

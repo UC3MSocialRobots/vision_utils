@@ -30,7 +30,7 @@ This class also computes them.
 #ifndef DGAITDB_H
 #define DGAITDB_H
 
-#include <time/timer.h>
+#include "vision_utils/utils/timer.h"
 #include "vision_utils/oni2imgs.h"
 #include "vision_utils/blob_segmenter.h"
 #include "vision_utils/io.h"

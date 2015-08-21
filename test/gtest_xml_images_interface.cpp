@@ -1,7 +1,7 @@
 // Bring in gtest
 #include <gtest/gtest.h>
 #include "vision_utils/xml_images_interface.h"
-#include "debug/error.h"
+#include "vision_utils/utils/error.h"
 #include <vision_utils/img_path.h>
 
 class XmlImageFooInterface : public XmlImagesInterface {

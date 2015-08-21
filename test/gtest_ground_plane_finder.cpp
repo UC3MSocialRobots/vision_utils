@@ -24,7 +24,7 @@ ________________________________________________________________________________
  */
 // Bring in gtest
 #include <gtest/gtest.h>
-#include "time/timer.h"
+#include "vision_utils/utils/timer.h"
 #include "vision_utils/ground_plane_finder.h"
 #include "vision_utils/io.h"
 #include <vision_utils/img_path.h>

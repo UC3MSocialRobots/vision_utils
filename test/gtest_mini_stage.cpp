@@ -27,7 +27,7 @@ and \b mini_stage_plugins namespace.
 //#define DISPLAY
 // Bring in gtest
 #include <gtest/gtest.h>
-#include <time/timer.h>
+#include "vision_utils/utils/timer.h"
 #include <vision_utils/img_path.h>
 #include "vision_utils/mini_stage_plugins.h"
 #include "vision_utils/io.h"

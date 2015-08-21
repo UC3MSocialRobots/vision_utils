@@ -1,6 +1,9 @@
 catkin_add_gtest     (gtest_array_to_color  gtest_array_to_color.cpp)
 TARGET_LINK_LIBRARIES(gtest_array_to_color  ${catkin_LIBRARIES})
 
+catkin_add_gtest     (gtest_atan3D gtest_atan3D.cpp )
+target_link_libraries(gtest_atan3D  ${catkin_LIBRARIES})
+
 catkin_add_gtest     (gtest_blob_segmenter
   gtest_blob_segmenter.cpp
   ../include/vision_utils/blob_segmenter.h
@@ -105,6 +108,9 @@ catkin_add_gtest     (gtest_io
   ../include/vision_utils/io.h)
 target_link_libraries(gtest_io ${catkin_LIBRARIES})
 
+catkin_add_gtest     (gtest_kinect_openni_utils gtest_kinect_openni_utils.cpp )
+target_link_libraries(gtest_kinect_openni_utils ${catkin_LIBRARIES})
+
 catkin_add_gtest     (gtest_layer_utils
   gtest_layer_utils.cpp
   ../include/vision_utils/layer_utils.h)
@@ -135,6 +141,20 @@ target_link_libraries(gtest_opencv_ml ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_pie_chart_utils  gtest_pie_chart_utils.cpp)
 TARGET_LINK_LIBRARIES(gtest_pie_chart_utils  ${catkin_LIBRARIES})
+
+catkin_add_gtest     (gtest_ppl_matcher gtest_ppl_matcher.cpp  )
+target_link_libraries(gtest_ppl_matcher  ${catkin_LIBRARIES}
+  lap gsl)
+
+catkin_add_gtest     (gtest_pplp_template gtest_pplp_template.cpp )
+target_link_libraries(gtest_pplp_template  ${catkin_LIBRARIES})
+
+catkin_add_gtest     (gtest_ppl_utils gtest_ppl_utils.cpp )
+target_link_libraries(gtest_ppl_utils ${catkin_LIBRARIES}
+  string_utils)
+
+catkin_add_gtest     (gtest_ppl_viewer gtest_ppl_viewer.cpp  )
+target_link_libraries(gtest_ppl_viewer  ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_resize_utils
   gtest_resize_utils.cpp

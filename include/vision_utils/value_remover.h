@@ -8,7 +8,7 @@
 #endif // CV_MAJOR_VERSION == 2 && CV_MINOR_VERSION >= 4
 // AD
 #include "vision_utils/border_remover.h"
-#include <debug/debug_utils.h>
+#include "vision_utils/utils/debug_utils.h"
 
 namespace image_utils {
 

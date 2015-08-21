@@ -28,10 +28,10 @@ A useful class for finding the head inside of a user mask.
 #define HEAD_FINDER_H
 
 #include "vision_utils/content_processing.h"
-#include <stats/stats_utils.h>
-#include <data_filters/clamp.h>
-#include <time/timer.h>
-#include "kinect/user_image_to_rgb.h"
+#include "vision_utils/utils/stats_utils.h"
+#include "vision_utils/utils/clamp.h"
+#include "vision_utils/utils/timer.h"
+#include "vision_utils/user_image_to_rgb.h"
 #include "vision_utils/voronoi.h"
 #include "vision_utils/ellipse_utils.h"
 

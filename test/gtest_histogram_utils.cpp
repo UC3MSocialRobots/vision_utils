@@ -28,11 +28,11 @@ Tests for the histogram_utils namespace.
 #include <opencv2/highgui/highgui.hpp>
 // AD
 #include "vision_utils/histogram_utils.h"
-#include <time/timer.h>
+#include "vision_utils/utils/timer.h"
 #include <test/matrix_testing.h>
 #include <vision_utils/img_path.h>
 // kinect
-#include "kinect/user_image_to_rgb.h"
+#include "vision_utils/user_image_to_rgb.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////

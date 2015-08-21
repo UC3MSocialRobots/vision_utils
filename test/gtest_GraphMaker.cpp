@@ -9,7 +9,7 @@
 //#define DISPLAY
 #include <gtest/gtest.h>
 #include "vision_utils/GraphMaker.h"
-#include "debug/debug_utils.h"
+#include "vision_utils/utils/debug_utils.h"
 #include "highgui.h"
 
 int main(int argc, char** argv) {

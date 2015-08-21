@@ -1,7 +1,7 @@
 #ifndef BORDER_REMOVER_H
 #define BORDER_REMOVER_H
 
-#include "debug/debug_utils.h"
+#include "vision_utils/utils/debug_utils.h"
 #include <opencv2/core/core.hpp>
 
 namespace image_utils {

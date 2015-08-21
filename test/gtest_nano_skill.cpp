@@ -24,7 +24,7 @@ Some simple tests for the NanoSkill skill template.
  */
 #include <gtest/gtest.h>
 #include "vision_utils/nano_skill.h"
-#include <time/timer.h>
+#include "vision_utils/utils/timer.h"
 #include <ros_utils/rosmaster_alive.h>
 #define ASSERT_TRUE_TIMEOUT(cond, timeout) { Timer timer; while (timer.getTimeSeconds() < timeout && !(cond)) usleep(50 * 1000); } ASSERT_TRUE(cond)
 

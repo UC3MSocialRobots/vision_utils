@@ -31,7 +31,7 @@ ________________________________________________________________________________
 #include <numeric>
 #include <opencv2/highgui/highgui.hpp>
 #include "vision_utils/colormaps.h"
-#include "geom/geometry_utils.h"
+#include "vision_utils/utils/geometry_utils.h"
 
 namespace chart_pie_utils {
 

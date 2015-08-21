@@ -27,7 +27,7 @@ ________________________________________________________________________________
 
 #include "vision_utils/database_player.h"
 #include "vision_utils/io.h"
-#include <string/find_and_replace.h>
+#include "vision_utils/utils/find_and_replace.h"
 
 class FilenamePrefix2Imgs : public DatabasePlayer {
 public:

@@ -1,10 +1,10 @@
 // opencv
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
-#include "debug/error.h"
-#include "time/timer.h"
-#include "system/system_utils.h"
-#include "string/string_casts.h"
+#include "vision_utils/utils/error.h"
+#include "vision_utils/utils/timer.h"
+#include "vision_utils/utils/system_utils.h"
+#include "vision_utils/utils/string_casts.h"
 #include "vision_utils/opencv_face_detector.h"
 #include <iomanip>
 

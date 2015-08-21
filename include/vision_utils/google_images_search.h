@@ -33,9 +33,9 @@ retrieve similar images, etc.
 // CURL
 #include <curl/curl.h>
 // utils
-#include <system/system_utils.h>
-#include <string/StringUtils.h>
-#include <time///timer.h>
+#include "vision_utils/utils/system_utils.h"
+#include "vision_utils/utils/StringUtils.h"
+#include "vision_utils/utils/timer.h"
 
 namespace image_utils {
 
