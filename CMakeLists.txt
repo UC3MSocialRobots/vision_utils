@@ -1,5 +1,5 @@
 add_executable(pplp_benchmarker.exe pplp_benchmarker.cpp)
-target_link_libraries(pplp_benchmarker.exe lap ${catkin_LIBRARIES})
+target_link_libraries(pplp_benchmarker.exe lap_vision_utils ${catkin_LIBRARIES})
 
 add_executable(dgait2ppl.exe dgait2ppl.cpp)
 target_link_libraries(dgait2ppl.exe disjoint_sets2 ${catkin_LIBRARIES})
