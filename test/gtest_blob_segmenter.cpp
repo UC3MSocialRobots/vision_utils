@@ -208,7 +208,7 @@ void generate_user_mask(const std::string & filename_prefix) {
   printf("Found %i users\n", nusers);
   ASSERT_TRUE(nusers > 0);
   user_mask = (user_mask > 0); // normalization
-  // image_utils::imwrite_debug(StringUtils::timestamp()+"_mask.png", user_mask, image_utils::MONOCHROME);
+  // image_utils::imwrite_debug(string_utils::timestamp()+"_mask.png", user_mask, image_utils::MONOCHROME);
 }
 
 TEST(TestSuite, generate_user_mask_juggling1) { generate_user_mask(IMG_DIR "depth/juggling1");}

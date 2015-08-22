@@ -9,10 +9,12 @@
 
 #include "vision_utils/OcrUtils.h"
 #include "vision_utils/io.h"
-#include "vision_utils/utils/StringUtils.h"
 #include "vision_utils/utils/error.h"
 #include "vision_utils/img_path.h"
-
+#include "vision_utils/utils/file_io.h"
+#include "vision_utils/utils/find_and_replace.h"
+#include "vision_utils/utils/string_split.h"
+#include "vision_utils/utils/string_case.h"
 
 //#define USE_API
 
@@ -48,7 +50,7 @@ bool OcrUtils::load_word_dict(const std::string & dict_filename, WordDict & dict
 
   // read the file as a vector of strings
   std::vector<std::string> dict_vector;
-  if (!StringUtils::retrieve_file_split(dict_filename, dict_vector))
+  if (!string_utils::retrieve_file_split(dict_filename, dict_vector))
     return false;
   // push all the words in the set
   for (std::vector<std::string>::const_iterator word = dict_vector.begin();
@@ -161,9 +163,9 @@ bool OcrUtils::analyse_image(const cv::Mat & image,
   }
   // get the file
   //std::vector<std::string> ocr_result_lines;
-  //StringUtils::retrieve_file_split(TEMP_TXT_FILENAME, ocr_result_lines);
+  //string_utils::retrieve_file_split(TEMP_TXT_FILENAME, ocr_result_lines);
   std::string ocr_result_dirty;
-  if (!StringUtils::retrieve_file(TEMP_TXT_FILENAME, ocr_result_dirty))
+  if (!string_utils::retrieve_file(TEMP_TXT_FILENAME, ocr_result_dirty))
     return false;
 #endif
 
@@ -173,8 +175,8 @@ bool OcrUtils::analyse_image(const cv::Mat & image,
     return false;
 
   // put together words cut in two
-  StringUtils::find_and_replace(answer, "-\n", "");
-  StringUtils::find_and_replace(answer, "- \n", "");
+  string_utils::find_and_replace(answer, "-\n", "");
+  string_utils::find_and_replace(answer, "- \n", "");
   return true;
 }
 
@@ -199,7 +201,7 @@ bool OcrUtils::load_letter_dict(const Translator::LanguageId &src_language,
 
   // read the file as a string
   std::string file_str;
-  if (!StringUtils::retrieve_file(dict_filename, file_str))
+  if (!string_utils::retrieve_file(dict_filename, file_str))
     return false;
   // push all the letters in the set
   dict.clear();
@@ -217,7 +219,7 @@ bool OcrUtils::clean_string_from_weird_chars(std::string & sentence_to_clean,
                sentence_to_clean.substr(0, std::min(10, (int) sentence_to_clean.size())).c_str());
 
   // convert to lowercase
-  StringUtils::to_lowercase(sentence_to_clean);
+  string_utils::to_lowercase(sentence_to_clean);
   maggieDebug3("After to_lowercase:'%s'",
                sentence_to_clean.c_str());
 
@@ -229,7 +231,7 @@ bool OcrUtils::clean_string_from_weird_chars(std::string & sentence_to_clean,
 
     // split to lines
     std::vector<std::string> ocr_lines;
-    StringUtils::StringSplit(sentence_to_clean, "\n", &ocr_lines);
+    string_utils::StringSplit(sentence_to_clean, "\n", &ocr_lines);
 
     // check each line
     for (std::vector<std::string>::const_iterator ocr_line = ocr_lines.begin();
@@ -237,7 +239,7 @@ bool OcrUtils::clean_string_from_weird_chars(std::string & sentence_to_clean,
       std::ostringstream ocr_line_clean;
       // split to words
       std::vector<std::string> ocr_words;
-      StringUtils::StringSplit(*ocr_line, " ", &ocr_words);
+      string_utils::StringSplit(*ocr_line, " ", &ocr_words);
 
       // check each word
       for (std::vector<std::string>::const_iterator ocr_word = ocr_words.begin();
@@ -278,13 +280,13 @@ bool OcrUtils::clean_string_from_weird_chars(std::string & sentence_to_clean,
     // split to lines
     std::ostringstream sentence_to_clean_no_empty_lines;
     std::vector<std::string> ocr_lines;
-    StringUtils::StringSplit(sentence_to_clean, "\n", &ocr_lines);
+    string_utils::StringSplit(sentence_to_clean, "\n", &ocr_lines);
 
     // check each line
     for (std::vector<std::string>::const_iterator ocr_line = ocr_lines.begin();
          ocr_line != ocr_lines.end() ; ++ocr_line) {
       bool current_line_contains_any_letters =
-          StringUtils::contains_any_letter(*ocr_line);
+          string_utils::contains_any_letter(*ocr_line);
       if (current_line_contains_any_letters)
         sentence_to_clean_no_empty_lines << *ocr_line << "\n";
     }

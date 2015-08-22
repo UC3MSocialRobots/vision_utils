@@ -79,7 +79,7 @@ void make_pie(const std::vector<_T> & values,
   double sum_values = std::accumulate(values.begin(),values.end(), 0.);
   if (sum_values <= 0) {
     printf("make_pie:%s:sum of values <= 0, impossible to draw chart!\n",
-           StringUtils::accessible_to_string(values).c_str());
+           string_utils::accessible_to_string(values).c_str());
     return;
   }
 

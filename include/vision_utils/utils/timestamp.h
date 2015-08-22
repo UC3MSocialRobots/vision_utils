@@ -31,7 +31,7 @@ Some useful functions for strings bound with time.
 #include <sstream>
 #include <iomanip>      // std::setfill, std::setw
 
-namespace StringUtils {
+namespace string_utils {
 
 /*!
  \return std::string
@@ -66,6 +66,6 @@ inline std::string timestamp() {
 #endif
 } // end timestamp()
 
-} // end namespace StringUtils
+} // end namespace string_utils
 
 #endif // TIMESTAMP_H

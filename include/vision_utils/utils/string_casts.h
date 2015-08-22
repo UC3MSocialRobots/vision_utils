@@ -30,7 +30,7 @@ ________________________________________________________________________________
 #include <string>
 #include <sstream>
 
-namespace StringUtils {
+namespace string_utils {
 
 /*! cast a string to another type
  * \param in the string to cast
@@ -134,6 +134,6 @@ template<> inline std::string cast_type_to_string<const char*>() {
   return "const char*";
 }
 
-} // end namespace StringUtils
+} // end namespace string_utils
 
 #endif // STRING_CASTS_H

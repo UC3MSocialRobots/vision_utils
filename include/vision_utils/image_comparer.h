@@ -43,9 +43,9 @@ public:
                   bool keep_ratio = false) {
     maggieDebug2("set_models('%s')", index_filename.c_str());
     std::vector<std::string> lines, lines_cleaned;
-    StringUtils::retrieve_file_split(index_filename, lines);
+    string_utils::retrieve_file_split(index_filename, lines);
     // add path to each line
-    std::string folder = StringUtils::extract_folder_from_full_path(index_filename);
+    std::string folder = string_utils::extract_folder_from_full_path(index_filename);
     for (unsigned int line_idx = 0; line_idx < lines.size(); ++line_idx) {
       std::string line (lines[line_idx]);
       if (line.length() == 0)
@@ -222,7 +222,7 @@ public:
   }
 
   inline std::string results_to_string() const {
-    return StringUtils::iterable_to_string(_results);
+    return string_utils::iterable_to_string(_results);
   }
 
 private:

@@ -57,7 +57,7 @@ bool set_attribute(people_msgs::PeoplePoseAttributes & attrs,
     return false;
   unsigned int nattrs = attrs.names.size();
   // search the attribute name
-  std::string attr_value_str = StringUtils::cast_to_string(attr_value);
+  std::string attr_value_str = string_utils::cast_to_string(attr_value);
   for (unsigned int attr_idx = 0; attr_idx < nattrs; ++attr_idx) {
     if (attrs.names[attr_idx] == attr_name) {
       attrs.values[attr_idx] = attr_value_str;
@@ -104,7 +104,7 @@ bool get_attribute_readonly(const people_msgs::PeoplePose & pose,
     if (pose.attributes.names[attr_idx] != attr_name)
       continue;
     bool success;
-    attr_value = StringUtils::cast_from_string<T>(pose.attributes.values[attr_idx], success);
+    attr_value = string_utils::cast_from_string<T>(pose.attributes.values[attr_idx], success);
     return success;
   } // end loop attr_idx
   return false;

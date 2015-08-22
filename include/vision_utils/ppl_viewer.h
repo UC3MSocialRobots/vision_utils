@@ -195,7 +195,7 @@ protected:
   void save_images_and_display() {
     if (_save_images) {
       std::ostringstream filename;
-      filename << "/tmp/PPLViewer_" << StringUtils::timestamp() << ".png";
+      filename << "/tmp/PPLViewer_" << string_utils::timestamp() << ".png";
       if (!cv::imwrite(filename.str(), _ms.get_viz()))
         printf("/!\\ Could not write file '%s'\n", filename.str().c_str());
       printf("Succesfully written file '%s'\n", filename.str().c_str());

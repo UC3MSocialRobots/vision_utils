@@ -53,7 +53,7 @@ void test(const std::string & filename, const std::string & exp_guesses) {
 
   bool guess_match = false;
   std::vector<std::string> exp_guesses_vec;
-  StringUtils::StringSplit(exp_guesses, ";", &exp_guesses_vec);
+  string_utils::StringSplit(exp_guesses, ";", &exp_guesses_vec);
   for (unsigned int word_idx = 0; word_idx < exp_guesses_vec.size(); ++word_idx) {
     if (best_guess.find(exp_guesses[word_idx]) != std::string::npos) {
       guess_match = true;

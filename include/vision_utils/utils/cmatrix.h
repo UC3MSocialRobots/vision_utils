@@ -189,7 +189,7 @@ public:
   std::string to_string(const int cell_width = 10) const {
     // printf("to_string()\n");
     std::ostringstream out;
-    out << "(" << StringUtils::cast_type_to_string<Elem>()
+    out << "(" << string_utils::cast_type_to_string<Elem>()
         << ", " << _dim1 << "x" << _dim2 << "):" << std::endl;
     for (unsigned int i1 = 0; i1 < _dim1; ++i1) {
       for (unsigned int i2 = 0; i2 < _dim2; ++i2) {

@@ -301,7 +301,7 @@ class OrderedCombination : public std::vector<unsigned int> {
       return false;
 
     //  maggiePrint("occurrences:'%s'",
-    //              StringUtils::accessible_to_string(occurrences).c_str());
+    //              string_utils::accessible_to_string(occurrences).c_str());
 
     // check for combinations with a repeatition
     for (unsigned int i = 0; i < _n; ++i) {

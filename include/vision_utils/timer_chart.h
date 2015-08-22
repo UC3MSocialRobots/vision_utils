@@ -74,7 +74,7 @@ public:
     else { // the label already existed
       _times[it->second] = getTimeMilliseconds();
     }
-      // printf("labelled_times:'%s'\n", StringUtils::map_to_string(_times).c_str());
+      // printf("labelled_times:'%s'\n", string_utils::map_to_string(_times).c_str());
   }
 
   //! display chart, but not for each call

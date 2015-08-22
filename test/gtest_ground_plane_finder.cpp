@@ -72,7 +72,7 @@ void test_prefix(const std::string & filename_prefix) {
   cv::imshow("mask", mask);
   cv::waitKey(0);
 #endif // DISPLAY
-  //image_utils::imwrite_debug(StringUtils::timestamp()+"_mask.png", mask, image_utils::MONOCHROME);
+  //image_utils::imwrite_debug(string_utils::timestamp()+"_mask.png", mask, image_utils::MONOCHROME);
   ASSERT_TRUE(mask.size() == depth.size());
   double ratio = 1.*cv::countNonZero(mask)/(mask.cols*mask.rows);
   ASSERT_TRUE(ratio > .05) << "ratio:" << ratio; // 5%

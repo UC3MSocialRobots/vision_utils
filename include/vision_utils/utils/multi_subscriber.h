@@ -114,7 +114,7 @@ public:
    */
     inline std::string getTopics(bool resolved = true) const {
         if (!resolved)
-            return StringUtils::accessible_to_string(_topics);
+            return string_utils::accessible_to_string(_topics);
         std::ostringstream topics_str;
         topics_str << "[";
         for (unsigned int topic_idx = 0; topic_idx < _subs.size(); ++topic_idx)
@@ -172,10 +172,10 @@ public:
                                          std::vector<std::string> & topics) {
         // first just split, keeping repetitions
         std::vector<std::string> topics_with_repetitions;
-        StringUtils::StringSplit(topics_list, ";", &topics_with_repetitions);
+        string_utils::StringSplit(topics_list, ";", &topics_with_repetitions);
         // remove spaces, in case of
         for (unsigned int topic_idx = 0; topic_idx < topics_with_repetitions.size(); ++topic_idx)
-            StringUtils::find_and_replace(topics_with_repetitions[topic_idx], " ", "");
+            string_utils::find_and_replace(topics_with_repetitions[topic_idx], " ", "");
         // convert it into a set for removing repetiions
         std::set<std::string> topics_set;
         topics_set.insert(topics_with_repetitions.begin(), topics_with_repetitions.end());

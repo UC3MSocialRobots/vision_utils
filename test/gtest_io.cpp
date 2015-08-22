@@ -72,8 +72,8 @@ TEST(TestSuite, test1) {
   image_utils::to_yaml_vector(pts1, "/tmp/foo", "FooPointIoVector");
   image_utils::from_yaml_vector(pts2, "/tmp/foo", "FooPointIoVector");
   printf("pts1:%s, pts2:%s\n",
-         StringUtils::accessible_to_string(pts1).c_str(),
-         StringUtils::accessible_to_string(pts2).c_str());
+         string_utils::accessible_to_string(pts1).c_str(),
+         string_utils::accessible_to_string(pts2).c_str());
 }
 
 ////////////////////////////////////////////////////////////////////////////////

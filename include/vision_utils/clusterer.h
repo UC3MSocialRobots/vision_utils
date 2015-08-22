@@ -88,7 +88,7 @@ public:
     ec.setInputCloud (data_pcl);
     ec.extract (cluster_indices_pcl);
     //  ROS_INFO("cluster_indices_pcl:'%s'",
-    //           StringUtils::accessible_to_string(cluster_indices_pcl).c_str());
+    //           string_utils::accessible_to_string(cluster_indices_pcl).c_str());
     return true; // success
   } // end cluster()
 
@@ -117,7 +117,7 @@ public:
     const std::vector<int32_t>* biggest_indices_pcl =
         &(cluster_indices_pcl.front().indices);
     //  ROS_INFO("biggest_indices_pcl:'%s'",
-    //           StringUtils::accessible_to_string(*biggest_indices_pcl).c_str());
+    //           string_utils::accessible_to_string(*biggest_indices_pcl).c_str());
 
     // copy cluster_indices_pcl -> cluster_indices
     std::copy(biggest_indices_pcl->begin(), biggest_indices_pcl->end(),

@@ -35,7 +35,7 @@ on the hard drive.
 #include <stdint.h>
 #include <stdlib.h>
 
-namespace StringUtils {
+namespace string_utils {
 
 inline std::string replace_home(const std::string & filepath) {
   std::string filepath_replaced = filepath;
@@ -179,6 +179,6 @@ inline void save_file_split(const std::string & filepath,
   maggieDebug2("save_file_vec('%s')", filepath.c_str());
   save_file(filepath, concatenate_vector(content));
 }
-} // end namespace StringUtils
+} // end namespace string_utils
 
 #endif // FILE_IO_H

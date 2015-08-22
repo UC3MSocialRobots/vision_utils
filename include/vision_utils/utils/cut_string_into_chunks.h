@@ -28,7 +28,7 @@ ________________________________________________________________________________
 #include <string>
 #include <vector>
 
-namespace StringUtils {
+namespace string_utils {
 static inline bool cut_with_string_at_maxpos(const std::string & text,
                                              const std::string & delimiter,
                                              const std::string::size_type & max_size,
@@ -81,7 +81,7 @@ static bool cut_string_into_chunks(const std::string & text,
         text_left = minichunks.back();
     } // end while true
 } // end cut_string_into_chunks
-} // end namespace StringUtils
+} // end namespace string_utils
 
 #endif // CUT_STRING_INTO_CHUNKS_H
 

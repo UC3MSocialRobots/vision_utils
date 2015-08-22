@@ -70,7 +70,7 @@ TEST(TestSuite, empty_ppl) {
 
   // check the PPLViewer got the emitted PPL
   ASSERT_TRUE_TIMEOUT(viewer.get_nb_received_methods() == 1, MYTIMEOUT)
-      << "methods:" << StringUtils::iterable_to_string(viewer.get_all_received_methods());
+      << "methods:" << string_utils::iterable_to_string(viewer.get_all_received_methods());
   ASSERT_TRUE(viewer.get_nb_total_received_tracks() == 0);
 }
 
@@ -114,7 +114,7 @@ void test_publish(std::string filename_prefix = IMG_DIR "depth/juggling1",
 
   // check the PPLViewer got the emitted PPL
   ASSERT_TRUE_TIMEOUT(viewer.get_nb_received_methods() == 1, MYTIMEOUT)
-      << "methods:" << StringUtils::iterable_to_string(viewer.get_all_received_methods());
+      << "methods:" << string_utils::iterable_to_string(viewer.get_all_received_methods());
   ASSERT_TRUE(viewer.get_nb_total_received_tracks() == nusers);
   std::vector<PPLViewer::MethodName> methods = viewer.get_all_received_methods();
   ASSERT_TRUE(methods.size() == 1);
@@ -207,7 +207,7 @@ void test_image_no_image(std::string filename_prefix = IMG_DIR "depth/juggling1"
 
     // check the PPLViewer got the emitted PPL
     ASSERT_TRUE_TIMEOUT(viewer.get_nb_received_methods() == 1, MYTIMEOUT)
-        << "methods:" << StringUtils::iterable_to_string(viewer.get_all_received_methods());
+        << "methods:" << string_utils::iterable_to_string(viewer.get_all_received_methods());
     ASSERT_TRUE(viewer.get_nb_total_received_tracks() == nusers);
     std::vector<PPLViewer::MethodName> methods = viewer.get_all_received_methods();
     ASSERT_TRUE(methods.size() == 1);

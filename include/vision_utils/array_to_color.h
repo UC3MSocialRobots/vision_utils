@@ -230,7 +230,7 @@ bool colormap_to_caption_image(cv::Mat & out,
     // Careful, y_upper corresponds to the upper bound of the COLOR cell
     int y_lower = padding + height_inner * (1.f - (value - min) / max);
     image_utils::draw_text_centered
-        (out, StringUtils::cast_to_string(value),
+        (out, string_utils::cast_to_string(value),
          cv::Point(padding + width_inner  / 4, y_lower),
          CV_FONT_HERSHEY_COMPLEX_SMALL, 1, CV_RGB(0, 0, 0));
     value+=caption_step;

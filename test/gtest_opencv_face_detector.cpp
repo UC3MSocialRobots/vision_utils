@@ -134,11 +134,11 @@ int main(int argc, char** argv) {
       detect_one_pic(argv[2]);
     else
       detect_one_pic(argv[2],
-          StringUtils::cast_from_string<int>(argv[3]),
-          StringUtils::cast_from_string<int>(argv[4]),
-          StringUtils::cast_from_string<double>(argv[5]),
-          StringUtils::cast_from_string<int>(argv[6]),
-          StringUtils::cast_from_string<int>(argv[7]));
+          string_utils::cast_from_string<int>(argv[3]),
+          string_utils::cast_from_string<int>(argv[4]),
+          string_utils::cast_from_string<double>(argv[5]),
+          string_utils::cast_from_string<int>(argv[6]),
+          string_utils::cast_from_string<int>(argv[7]));
   }
   else if (choice == idx++)
     detect_one_pic(IMG_DIR "depth/albertopng");

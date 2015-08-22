@@ -258,7 +258,7 @@ bool brute_force_assign(CMatrix<Cost> & costs,
       best_cost = curr_cost;
       best_comb = curr_comb;
       debugPrintf("new best_comb:'%s' (%g)",
-                  StringUtils::accessible_to_string(best_comb).c_str(), best_cost);
+                  string_utils::accessible_to_string(best_comb).c_str(), best_cost);
     }
 
     // increment combination
@@ -349,8 +349,8 @@ class LapDistance2D {
 public:
   inline float distance(const std::vector<Pt2> & A,
                         const std::vector<Pt2> & B) {
-    debugStream("A:" << StringUtils::iterable_to_string(A)
-                << "\nB:" << StringUtils::iterable_to_string(B) << std::endl);
+    debugStream("A:" << string_utils::iterable_to_string(A)
+                << "\nB:" << string_utils::iterable_to_string(B) << std::endl);
     assignment_utils::assign_and_dists<Pt2, Pt2>
         (A, B, _costs_buffer, _assign, _dist_AB,
          //&geometry_utils::distance_points_squared

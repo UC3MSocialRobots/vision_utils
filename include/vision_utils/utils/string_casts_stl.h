@@ -29,7 +29,7 @@ Some useful functions for casting STL objects to strings.
 #include <string>
 #include <sstream>
 
-namespace StringUtils {
+namespace string_utils {
 
 /*! Convert a vector to a fancy string
  \param vector
@@ -157,6 +157,6 @@ std::string map_keys_to_string(const MapType & m) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-} // end namespace StringUtils
+} // end namespace string_utils
 
 #endif // STRING_CASTS_STL_H

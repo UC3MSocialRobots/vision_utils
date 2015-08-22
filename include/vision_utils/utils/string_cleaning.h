@@ -27,7 +27,7 @@ Useful functions to get rid of some characters in a string.
 #define STRING_CLEANING_H
 #include "vision_utils/utils/find_and_replace.h"
 
-namespace StringUtils {
+namespace string_utils {
 
 /*! remove all the spanish characters in a string, that is
  * ¿ -> "", ¡ -> "",
@@ -81,5 +81,5 @@ inline std::string remove_accents(const std::string & str) {
   find_and_replace(ans, "Ü", "U");
   return ans;
 }
-} // end namespace StringUtils
+} // end namespace string_utils
 #endif // STRING_CLEANING_H

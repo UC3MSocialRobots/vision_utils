@@ -51,13 +51,13 @@ public:
   bool from_file(const std::string & filename_regex,
                  bool want_repeat_playlist_ = true) {
     printf("DatabasePlayer::from_file('%s')\n", filename_regex.c_str());
-    StringUtils::resolve_file_regex(filename_regex, _playlist, true);
+    string_utils::resolve_file_regex(filename_regex, _playlist, true);
     if (_playlist.size() == 0) {
       printf("DatabasePlayer: regex '%s' corresponds to no existing file\n",
              filename_regex.c_str());
       return false;
     }
-    printf("DatabasePlayer: playlist %s\n", StringUtils::iterable_to_string(_playlist).c_str());
+    printf("DatabasePlayer: playlist %s\n", string_utils::iterable_to_string(_playlist).c_str());
     set_repeat_playlist(want_repeat_playlist_);
     _playlist_idx = 0;
     return load_single_video(_playlist[_playlist_idx]);
@@ -116,7 +116,7 @@ public:
     }
     char c = cv::waitKey(5);
     if (c == 's') { // save images
-      std::string timestamp = StringUtils::timestamp();
+      std::string timestamp = string_utils::timestamp();
       std::ostringstream filename;
       filename << "rgb_" << timestamp << ".png";
       image_utils::imwrite_debug(filename.str(), _bgr, image_utils::COLOR_24BITS);

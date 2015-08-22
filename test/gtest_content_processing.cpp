@@ -55,24 +55,24 @@ TEST(TestSuite, get_all_different_values) {
   Timer timer;
   image_utils::get_all_different_values(query, out_set, false);
   timer.printTime("get_all_different_values(set with zeros)");
-  ASSERT_TRUE(out_set == correct_set) << "out_set:" << StringUtils::iterable_to_string(out_set);
+  ASSERT_TRUE(out_set == correct_set) << "out_set:" << string_utils::iterable_to_string(out_set);
 
   correct_set = make_struct<std::set<uchar> >(1, 3);
   timer.reset();
   image_utils::get_all_different_values(query, out_set, true);
   timer.printTime("get_all_different_values(set without zeros)");
-  ASSERT_TRUE(out_set == correct_set) << "out_set:" << StringUtils::iterable_to_string(out_set);
+  ASSERT_TRUE(out_set == correct_set) << "out_set:" << string_utils::iterable_to_string(out_set);
 
   std::vector<uchar> out_vec, correct_vec = make_struct<std::vector<uchar> >(0, 3);
   image_utils::get_all_different_values(query, out_vec, false);
   timer.printTime("get_all_different_values(set with zeros)");
-  ASSERT_TRUE(out_vec == correct_vec) << "out_vec:" << StringUtils::iterable_to_string(out_vec);
+  ASSERT_TRUE(out_vec == correct_vec) << "out_vec:" << string_utils::iterable_to_string(out_vec);
 
   correct_vec = make_struct<std::vector<uchar> >(1, 3);
   timer.reset();
   image_utils::get_all_different_values(query, out_vec, true);
   timer.printTime("get_all_different_values(vec without zeros)");
-  ASSERT_TRUE(out_vec == correct_vec) << "out_vec:" << StringUtils::iterable_to_string(out_vec);
+  ASSERT_TRUE(out_vec == correct_vec) << "out_vec:" << string_utils::iterable_to_string(out_vec);
 }
 
 
@@ -84,13 +84,13 @@ TEST(TestSuite, get_all_different_values2) {
   Timer timer;
   image_utils::get_all_different_values(query, out_set, false);
   timer.printTime("get_all_different_values(set with zeros)");
-  ASSERT_TRUE(out_set == correct_set) << "out_set:" << StringUtils::iterable_to_string(out_set);
+  ASSERT_TRUE(out_set == correct_set) << "out_set:" << string_utils::iterable_to_string(out_set);
 
   correct_set = make_struct<std::set<uchar> >(1, 2);
   timer.reset();
   image_utils::get_all_different_values(query, out_set, true);
   timer.printTime("get_all_different_values(set without zeros)");
-  ASSERT_TRUE(out_set == correct_set) << "out_set:" << StringUtils::iterable_to_string(out_set);
+  ASSERT_TRUE(out_set == correct_set) << "out_set:" << string_utils::iterable_to_string(out_set);
 }
 
 
@@ -114,15 +114,15 @@ void test_get_all_different_values_and_com(const cv::Mat1b & query,
                use_fast, ignore_zeros, ensure_com_on_mask, timer.time());
 
         ASSERT_TRUE(out_map.size() == maxblobidx - minblobidx+ (ignore_zeros ? 1: 2))
-            << "out_map:" << StringUtils::map_to_string(out_map);
+            << "out_map:" << string_utils::map_to_string(out_map);
         std::vector<uchar> out_keys,
             correct_keys = make_struct<std::vector<uchar> >(minblobidx, maxblobidx);
         if (!ignore_zeros)
           correct_keys.insert(correct_keys.begin(), (uchar) 0);
         map_utils::map_keys_to_container(out_map, out_keys);
         ASSERT_TRUE(out_keys == correct_keys)
-            << "out_keys:" << StringUtils::iterable_to_int_string(out_keys)
-            << "correct_keys:" << StringUtils::iterable_to_int_string(correct_keys);
+            << "out_keys:" << string_utils::iterable_to_int_string(out_keys)
+            << "correct_keys:" << string_utils::iterable_to_int_string(correct_keys);
 
         // check the COM are on the masks
         std::map<uchar, cv::Point>::const_iterator out_it = out_map.begin();
@@ -530,10 +530,10 @@ void test_ShortestPathFinder(const cv::Mat1b & in,
   for (unsigned int time = 0; time < ntimes; ++time)
     ok = spf.find(in, begin, end, pts);
   timer.printTime_factor("spf.find()", ntimes);
-  // std::cout << "pts:" << StringUtils::iterable_to_string(pts) << std::endl;
+  // std::cout << "pts:" << string_utils::iterable_to_string(pts) << std::endl;
   ASSERT_TRUE(ok == true);
-  ASSERT_TRUE(pts.front() == begin) << "pts:" << StringUtils::iterable_to_string(pts);
-  ASSERT_TRUE(pts.back() == end) << "pts:" << StringUtils::iterable_to_string(pts);
+  ASSERT_TRUE(pts.front() == begin) << "pts:" << string_utils::iterable_to_string(pts);
+  ASSERT_TRUE(pts.back() == end) << "pts:" << string_utils::iterable_to_string(pts);
 
   // check pts = in (only one path)
   cv::Mat1b out(in.size(), (uchar) 0);
@@ -622,8 +622,8 @@ void test_EndFinder(const cv::Mat1b & mask,
   ASSERT_TRUE(end_pts_sorted == correct_end_pts_sorted)
       << "mask:" << image_utils::img2string(mask)
          //<< ", has_no_neigh2string:" << finder.has_no_neigh2string()
-      << ", correct_end_pts_sorted:" << StringUtils::iterable_to_string(correct_end_pts_sorted)
-      << ", end_pts_sorted:" << StringUtils::iterable_to_string(end_pts_sorted);
+      << ", correct_end_pts_sorted:" << string_utils::iterable_to_string(correct_end_pts_sorted)
+      << ", end_pts_sorted:" << string_utils::iterable_to_string(end_pts_sorted);
 }
 
 TEST(TestSuite, EndFinder_empty_img) {
@@ -719,7 +719,7 @@ TEST(TestSuite, EndFinder_skeleton) {
   timer.printTime("image_utils::detect_end_points()");
   ASSERT_TRUE(ok);
   ASSERT_TRUE(end_pts.size() == 10)
-      << "end_pts:" << StringUtils::iterable_to_string(end_pts);
+      << "end_pts:" << string_utils::iterable_to_string(end_pts);
 
   //  cv::Mat3b viz;
   //  cv::cvtColor(mask, viz, CV_GRAY2BGR);

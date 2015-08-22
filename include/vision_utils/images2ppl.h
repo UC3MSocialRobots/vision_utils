@@ -222,7 +222,7 @@ public:
       // shape a PeoplePose
       people_msgs::PeoplePose* pp = &(_ppl.poses[user_idx]);
       pp->header = _ppl.header;
-      pp->person_name = StringUtils::cast_to_string((int) coms_it->first);
+      pp->person_name = string_utils::cast_to_string((int) coms_it->first);
       // keep NiTE name in "user_multimap_name" attribute
       ppl_utils::set_attribute(*pp, "user_multimap_name", pp->person_name);
       // pose

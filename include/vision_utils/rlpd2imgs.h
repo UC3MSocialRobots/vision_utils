@@ -63,9 +63,9 @@ public:
   virtual bool load_single_video(const std::string & filename) {
     // read rgb and depth
     std::string filename_prefix(filename);
-    StringUtils::find_and_replace(filename_prefix, "_depth.png", "");
-    StringUtils::find_and_replace(filename_prefix, "_rgb.png", "");
-    StringUtils::find_and_replace(filename_prefix, "_rgb.jpg", "");
+    string_utils::find_and_replace(filename_prefix, "_depth.png", "");
+    string_utils::find_and_replace(filename_prefix, "_rgb.png", "");
+    string_utils::find_and_replace(filename_prefix, "_rgb.jpg", "");
     if (!image_utils::read_rgb_and_depth_image_from_image_file
         (filename_prefix, &_bgr, &_depth32f))
       return false;

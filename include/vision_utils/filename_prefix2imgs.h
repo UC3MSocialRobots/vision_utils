@@ -46,10 +46,10 @@ public:
   //! parse a possible xml file, etc.
   virtual bool load_single_video(const std::string & filename) {
     _curr_prefix = filename;
-    StringUtils::find_and_replace(_curr_prefix, "_depth.png", "");
-    StringUtils::find_and_replace(_curr_prefix, "_depth_params.yaml", "");
-    StringUtils::find_and_replace(_curr_prefix, "_rgb.png", "");
-    StringUtils::find_and_replace(_curr_prefix, "_user_mask.png", "");
+    string_utils::find_and_replace(_curr_prefix, "_depth.png", "");
+    string_utils::find_and_replace(_curr_prefix, "_depth_params.yaml", "");
+    string_utils::find_and_replace(_curr_prefix, "_rgb.png", "");
+    string_utils::find_and_replace(_curr_prefix, "_user_mask.png", "");
     if (!image_utils::read_rgb_depth_user_image_from_image_file
         (_curr_prefix, &_bgr, &_depth32f, &_user8))
       return false;

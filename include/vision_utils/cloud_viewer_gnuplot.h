@@ -50,7 +50,7 @@ public:
       data << pointcloud[sample_idx].x << ' '
            << pointcloud[sample_idx].y << ' '
            << pointcloud[sample_idx].z << ' '<< std::endl;
-    StringUtils::save_file(data_filename, data.str());
+    string_utils::save_file(data_filename, data.str());
     script_content << "gnuplot -e \""
                       // << "set xyplane at 1e-6; "
                    << "set grid; "
@@ -86,7 +86,7 @@ public:
            << (int) pointcloud_RGB[sample_idx][1] << ' '
            << (int) pointcloud_RGB[sample_idx][2] << ' '
            << std::endl;
-    StringUtils::save_file(data_filename, data.str());
+    string_utils::save_file(data_filename, data.str());
     script_content // << "set xyplane at 1e-6; "
         << "set grid; "
         << "set view equal xyz; "
@@ -100,7 +100,7 @@ public:
                      << caption << "'; ";
     else
       script_content << "splot 0 ; ";
-    StringUtils::save_file(script_filename, script_content.str());
+    string_utils::save_file(script_filename, script_content.str());
     std::ostringstream command;
     command << " gnuplot -e \"load '" << script_filename << "'\"";
     if (blocking) // http://www.gnuplot.info/faq/faq.html#SECTION00094000000000000000

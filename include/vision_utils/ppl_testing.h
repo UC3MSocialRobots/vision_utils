@@ -50,7 +50,7 @@ inline void ppl_factory(people_msgs::PeoplePoseList & ppl,
   for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx) {
     people_msgs::PeoplePose pp;
     pp.header = ppl.header;
-    pp.person_name = StringUtils::cast_to_string(user_idx);
+    pp.person_name = string_utils::cast_to_string(user_idx);
     pp.std_dev = .1;
     pt_utils::copy3(exp_users_pos[user_idx], pp.head_pose.position);
     combinatorics_utils::add_gaussian_noise(pp.head_pose.position, pos_error_std_dev);

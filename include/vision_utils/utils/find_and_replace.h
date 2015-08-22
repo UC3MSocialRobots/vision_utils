@@ -27,8 +27,9 @@ Find and replace a given string into another string.
 #define FIND_AND_REPLACE_H
 
 #include <string>
+#include <ros/io.h>
 
-namespace StringUtils {
+namespace string_utils {
 /*! find all the iterations of a pattern in a string and replace
  * them with another pattern
  * \param stringToReplace the string to change
@@ -74,5 +75,47 @@ inline void remove_beginning_spaces(std::string & content) {
     content = content.substr(1);
 }
 
-} // end namespace StringUtils
+////////////////////////////////////////////////////////////////////////////////
+
+/*! extract an info from some tags
+ * \param content
+ * \param block_begin
+ * \param block_end
+ * \param initial_search_pos
+ * \return "" if not found
+ */
+std::string extract_from_tags(const std::string & content,
+                              const std::string & block_begin,
+                              const std::string & block_end,
+                              int & initial_search_pos) {
+  // find the beginning
+  size_t pos_begin = content.find(block_begin, initial_search_pos);
+  if (pos_begin == std::string::npos) {
+      ROS_DEBUG("block_begin '%s' could not be found", block_begin.c_str());
+      return "";
+    }
+  // remove the block at the beginning
+  pos_begin += block_begin.length();
+  // find the end
+  size_t pos_end = content.find(block_end, pos_begin);
+  if (pos_end == std::string::npos) {
+      ROS_DEBUG("block_end '%s' could not be found", block_end.c_str());
+      return "";
+    }
+  // update the index
+  initial_search_pos = pos_end + block_end.length();
+  // extract the substring
+  //maggieDebug2("value:'%s'", content.substr(pos_begin, pos_end - pos_begin).c_str());
+  std::string ans = content.substr(pos_begin, pos_end - pos_begin);
+  //cout << ans << endl;
+  /*
+     * clean the string
+     */
+  string_utils::find_and_replace(ans, "&nbsp;", " ");
+  string_utils::remove_beginning_spaces(ans);
+  string_utils::remove_trailing_spaces(ans);
+  return ans;
+}
+
+} // end namespace string_utils
 #endif // FIND_AND_REPLACE_H

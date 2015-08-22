@@ -13,6 +13,11 @@
 #define XML_IMPLEMENTATION_RAPID_XML  2
 #define XML_USED_IMPLEMENTATION       XML_IMPLEMENTATION_RAPID_XML
 
+#include "vision_utils/utils/debug_utils.h"
+#include "vision_utils/utils/string_split.h"
+#include "vision_utils/utils/extract_utils.h"
+#include "vision_utils/utils/file_io.h"
+
 /*
  * include the wanted implementation file
  */
@@ -26,8 +31,6 @@
 // std
 #include <string>
 #include <vector>
-
-#include "vision_utils/utils/StringUtils.h"
 
 class XmlDocument {
 public:
@@ -131,7 +134,7 @@ public:
 
     // load file
     std::string file_content;
-    bool success = StringUtils::retrieve_file(filename, file_content);
+    bool success = string_utils::retrieve_file(filename, file_content);
     if (!success) {
       maggiePrint("Error while retrieving file '%s'. Aborting.",
                   filename.c_str());
@@ -144,7 +147,7 @@ public:
 
   void write_to_file(const std::string & filename) const {
     maggieDebug3("write_to_file('%s')", filename.c_str());
-    StringUtils::save_file(filename, to_string());
+    string_utils::save_file(filename, to_string());
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -238,7 +241,7 @@ public:
 
     // cut the path into words
     std::vector<std::string> words;
-    StringUtils::StringSplit(path, ".", &words);
+    string_utils::StringSplit(path, ".", &words);
 
     Node *current_node = (Node*) start;
     for (std::vector<std::string>::const_iterator word = words.begin(); word
@@ -367,7 +370,7 @@ public:
                         _T default_value) const {
     std::string ans_string = get_node_attribute(node, attribute);
     bool success;
-    _T ans = StringUtils::cast_from_string<_T>(ans_string, success);
+    _T ans = string_utils::cast_from_string<_T>(ans_string, success);
     return (success ? ans : default_value);
   }
 
@@ -402,7 +405,7 @@ public:
 
     // find the last word
     std::vector<std::string> words;
-    StringUtils::StringSplit(path, ".", &words);
+    string_utils::StringSplit(path, ".", &words);
     std::string last_word = words.back();
 
     while (sibling != NULL) {
@@ -444,7 +447,7 @@ public:
         //        // get the value
         //        bool success;
         //        _T value =
-        //                StringUtils::cast_from_string<_T>(son->value.text.string, success);
+        //                string_utils::cast_from_string<_T>(son->value.text.string, success);
         //        if (success)
         //            ans.push_back(value);
 
@@ -453,7 +456,7 @@ public:
         //#endif
         std::string value_str = get_value(*node, "");
         if (value_str != "")
-          ans.push_back(StringUtils::cast_from_string<_T>(value_str));
+          ans.push_back(string_utils::cast_from_string<_T>(value_str));
       } // end loop node
   }
 
@@ -603,7 +606,7 @@ public:
 
   template<class _T>
   void set_node_attribute(Node* node, const std::string & attr_name, const _T & value) {
-    std::string value_str = StringUtils::cast_to_string<_T>(value);
+    std::string value_str = string_utils::cast_to_string<_T>(value);
     set_node_attribute(node, attr_name, value_str);
   }
 

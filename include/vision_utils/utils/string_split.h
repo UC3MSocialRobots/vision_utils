@@ -27,8 +27,9 @@ ________________________________________________________________________________
 #define STRING_SPLIT_H
 
 #include "vision_utils/utils/string_casts.h"
+#include <vector>
 
-namespace StringUtils {
+namespace string_utils {
 
 /*! \brief   split a string
  * \param   str the long string
@@ -82,6 +83,6 @@ void StringSplit_(const std::string & str, const std::string & delim,
     // quit if we reached the end of the string or string empty
   }
 } //end StringSplit_()
-} // end namespace StringUtils
+} // end namespace string_utils
 
 #endif // STRING_SPLIT_H

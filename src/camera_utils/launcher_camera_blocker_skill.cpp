@@ -80,7 +80,7 @@ public:
     nh_private.param("events_list", events_list, events_list);
     // split the event list
     std::vector<std::string> events_words_list;
-    StringUtils::StringSplit(events_list, ",", &events_words_list);
+    string_utils::StringSplit(events_list, ",", &events_words_list);
     if (events_words_list.size() % 2 != 0) {
       ROS_ERROR("The event list '%s' does not respect the format "
                 "[event_name,event_param]* ! Cannot use it", events_list.c_str());
@@ -90,7 +90,7 @@ public:
     for (unsigned int event_idx = 0; event_idx < events_words_list.size() / 2;
          ++event_idx) {
       std::string topic = events_words_list[event_idx * 2];
-      int param = StringUtils::cast_from_string<int>(events_words_list[event_idx * 2 + 1]);
+      int param = string_utils::cast_from_string<int>(events_words_list[event_idx * 2 + 1]);
       events_pubs.push_back(_nh_public.advertise<std_msgs::Int16>(topic, 1));
       std_msgs::Int16 msg; msg.data = param;
       events_msgs.push_back(msg);

@@ -35,21 +35,21 @@ typedef std::string (*Map)(const uint);
 
 //! \example 0->"A", 1->"B", etc.
 inline std::string int_to_uppercase_letter(const uint idx) {
-  return StringUtils::cast_to_string((char) ('A' + idx));
+  return string_utils::cast_to_string((char) ('A' + idx));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 //! \example 0->"a", 1->"b", etc.
 inline std::string int_to_lowercase_letter(const uint idx) {
-  return StringUtils::cast_to_string((char) ('a' + idx));
+  return string_utils::cast_to_string((char) ('a' + idx));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 //! \example 0->"1", 1->"2", etc.
 inline std::string int_to_number(const uint idx) {
-  return StringUtils::cast_to_string(1 + idx);
+  return string_utils::cast_to_string(1 + idx);
 }
 
 } // end namespace titlemaps

@@ -1,5 +1,5 @@
 add_library(OcrUtils OcrUtils.cpp)
-target_link_libraries(OcrUtils string_utils ${catkin_LIBRARIES})
+target_link_libraries(OcrUtils  ${catkin_LIBRARIES})
 
 install(TARGETS OcrUtils
         ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}

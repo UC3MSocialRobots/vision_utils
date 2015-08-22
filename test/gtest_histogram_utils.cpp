@@ -294,10 +294,10 @@ void test_get_vector_of_histograms_illus
 #ifdef DISPLAY
   // show everything
   for (unsigned int i = 0; i < hues.size(); ++i)
-    cv::imshow(std::string("hue #") + StringUtils::cast_to_string(i),
+    cv::imshow(std::string("hue #") + string_utils::cast_to_string(i),
                color_utils::hue2rgb(hues[i]));
   for (unsigned int i = 0; i < masks.size(); ++i)
-    cv::imshow(std::string("mask #") + StringUtils::cast_to_string(i), masks[i]);
+    cv::imshow(std::string("mask #") + string_utils::cast_to_string(i), masks[i]);
   cv::imwrite("hists_img.png", hists_img); printf("'hists_img.png' saved.\n");
   cv::imshow("hists_img", hists_img);
   cv::waitKey(0);

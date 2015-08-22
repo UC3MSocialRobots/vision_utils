@@ -597,7 +597,7 @@ inline float distance_patterns(const std::vector<_Pt2> & A,
                                  ) {
   std::vector<_Pt2> B_rot;
   align_polygons(A, B, B_rot);
-  //printf("B_rot:%s\n", StringUtils::accessible_to_string(B_rot).c_str());
+  //printf("B_rot:%s\n", string_utils::accessible_to_string(B_rot).c_str());
 
   // compare A and B_rot
   float sum_dist = hausdorff_distances::D22_with_min<_Pt2, std::vector<_Pt2> >

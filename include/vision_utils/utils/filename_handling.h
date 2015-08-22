@@ -33,7 +33,7 @@ changing extensions, extracting folder, etc.
 #include "vision_utils/utils/system_utils.h"
 #include "vision_utils/utils/string_split.h"
 
-namespace StringUtils {
+namespace string_utils {
 typedef std::set<std::string> StringSet;
 
 /*!
@@ -150,6 +150,42 @@ inline std::string add_suffix_before_filename_extension
 
 ////////////////////////////////////////////////////////////////////////////////
 
+/*! \brief   returns the absolute path from a relative path.
+ * For instance, absolutePath("../3", "C:/1/2/") = "C:/1/3"
+ *
+ * \param   filename the relative filename, after prefix
+ * \param   prefix the beginning of the path
+ * \return  the absolute path
+ */
+std::string absolutePath(const char* filename,
+                         const std::string prefix) {
+  std::string abs_path = prefix + filename;
+  std::vector<std::string> folders;
+  StringSplit(abs_path, "/", &folders);
+
+  /* eliminate the ".." from the vector 'folders' */
+  std::vector<std::string> foldersLeft;
+  for (unsigned int i = 0; i < folders.size(); i++) {
+      //cout << "current word:" << folders.at(i) << endl;
+      if (folders.at(i) == "..")
+        foldersLeft.pop_back();
+      else
+        foldersLeft.push_back(folders.at(i));
+    }
+
+  /* copy the result in a std::string */
+  std::ostringstream rep;
+  for (unsigned int i = 0; i < foldersLeft.size(); i++)
+    rep << "/" << foldersLeft.at(i);
+  //cout << "abs path:" << abs_path << "\t path:" << rep.str() << endl;
+  //maggieDebug2("absolutePath('%s', '%s') = '%s'", filename, prefix.c_str(), rep.str().c_str());
+
+  return (char*) rep.str().c_str();
+}
+//inline std::string absolutePath(const char* filename);
+
+////////////////////////////////////////////////////////////////////////////////
+
 /*!
  * Transform a regular expression into a list of files
  * \param files semicolor-separated list
@@ -161,7 +197,7 @@ inline bool resolve_file_regex(const std::string & files_regex,
                                bool check_file_exists = true) {
   // split with ';'
   std::vector<std::string> regex_words;
-  StringUtils::StringSplit(files_regex, ";", &regex_words);
+  string_utils::StringSplit(files_regex, ";", &regex_words);
   // convert it into a set for removing repetiions
   StringSet files_set;
   files_set.insert(regex_words.begin(), regex_words.end());
@@ -180,7 +216,7 @@ inline bool resolve_file_regex(const std::string & files_regex,
     std::ostringstream cmd; cmd << "ls -1 " << regex;// << " 2> /dev/null"; // quiet
     std::string ls = system_utils::exec_system_get_output(cmd.str().c_str());
     std::vector<std::string> ls_files;
-    StringUtils::StringSplit(ls, "\n", &ls_files);
+    string_utils::StringSplit(ls, "\n", &ls_files);
     to_insert.insert(ls_files.begin(), ls_files.end());
     ++files_it;
   } // end while (files_it)
@@ -208,6 +244,6 @@ inline bool resolve_file_regex(const std::string & files_regex,
   return true;
 } // end resolve_file_regex()
 
-} // end namespace StringUtils
+} // end namespace string_utils
 
 #endif // FILENAME_HANDLING_H

@@ -8,7 +8,7 @@ catkin_add_gtest     (gtest_blob_segmenter
   gtest_blob_segmenter.cpp
   ../include/vision_utils/blob_segmenter.h
   ../include/vision_utils/ground_plane_finder.h)
-TARGET_LINK_LIBRARIES(gtest_blob_segmenter string_utils disjoint_sets2 ${catkin_LIBRARIES})
+TARGET_LINK_LIBRARIES(gtest_blob_segmenter  disjoint_sets2 ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_border_remover
   gtest_border_remover.cpp
@@ -18,12 +18,12 @@ target_link_libraries(gtest_border_remover ${catkin_LIBRARIES})
 catkin_add_gtest     (gtest_cloud_tilter
   gtest_cloud_tilter.cpp
   ../include/vision_utils/cloud_tilter.h)
-TARGET_LINK_LIBRARIES(gtest_cloud_tilter string_utils ${catkin_LIBRARIES})
+TARGET_LINK_LIBRARIES(gtest_cloud_tilter  ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_cloud_viewer_gnuplot
   gtest_cloud_viewer_gnuplot.cpp
   ../include/vision_utils/cloud_viewer_gnuplot.h)
-TARGET_LINK_LIBRARIES(gtest_cloud_viewer_gnuplot string_utils ${catkin_LIBRARIES})
+TARGET_LINK_LIBRARIES(gtest_cloud_viewer_gnuplot  ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_cloud_viewer
   gtest_cloud_viewer.cpp
@@ -53,7 +53,7 @@ target_link_libraries(gtest_drawing_utils ${catkin_LIBRARIES})
 catkin_add_gtest     (gtest_ellipse_utils
   gtest_ellipse_utils.cpp
   ../include/vision_utils/ellipse_utils.h)
-TARGET_LINK_LIBRARIES(gtest_ellipse_utils string_utils ${catkin_LIBRARIES})
+TARGET_LINK_LIBRARIES(gtest_ellipse_utils  ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_filename_prefix2imgs
   gtest_filename_prefix2imgs.cpp
@@ -66,7 +66,7 @@ catkin_add_gtest     (gtest_google_images_search
   gtest_google_images_search.cpp
   ../include/vision_utils/google_images_search.h
   TIMEOUT 300.0) # 3 minutes
-TARGET_LINK_LIBRARIES(gtest_google_images_search string_utils ${catkin_LIBRARIES})
+TARGET_LINK_LIBRARIES(gtest_google_images_search  ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_GraphMaker  gtest_GraphMaker.cpp)
 TARGET_LINK_LIBRARIES(gtest_GraphMaker  ${catkin_LIBRARIES})
@@ -74,7 +74,7 @@ TARGET_LINK_LIBRARIES(gtest_GraphMaker  ${catkin_LIBRARIES})
 catkin_add_gtest     (gtest_ground_plane_finder
   gtest_ground_plane_finder.cpp
   ../include/vision_utils/ground_plane_finder.h)
-TARGET_LINK_LIBRARIES(gtest_ground_plane_finder string_utils ${catkin_LIBRARIES})
+TARGET_LINK_LIBRARIES(gtest_ground_plane_finder  ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_head_finder
   gtest_head_finder.cpp
@@ -94,7 +94,7 @@ target_link_libraries(gtest_image_clusterer ${catkin_LIBRARIES})
 catkin_add_gtest     (gtest_image_comparer
   gtest_image_comparer.cpp
   ../include/vision_utils/image_comparer.h)
-TARGET_LINK_LIBRARIES(gtest_image_comparer string_utils ${catkin_LIBRARIES})
+TARGET_LINK_LIBRARIES(gtest_image_comparer  ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_image_contour
   gtest_image_contour.cpp
@@ -122,7 +122,7 @@ catkin_add_gtest     (gtest_mask_acceleration
 TARGET_LINK_LIBRARIES(gtest_mask_acceleration ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_mini_stage  gtest_mini_stage.cpp)
-TARGET_LINK_LIBRARIES(gtest_mini_stage string_utils ${catkin_LIBRARIES})
+TARGET_LINK_LIBRARIES(gtest_mini_stage  ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_nano_skill
   gtest_nano_skill.cpp
@@ -144,14 +144,14 @@ TARGET_LINK_LIBRARIES(gtest_pie_chart_utils  ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_ppl_matcher gtest_ppl_matcher.cpp  )
 target_link_libraries(gtest_ppl_matcher  ${catkin_LIBRARIES}
-  lap gsl)
+  lap_vision_utils gsl)
 
 catkin_add_gtest     (gtest_pplp_template gtest_pplp_template.cpp )
 target_link_libraries(gtest_pplp_template  ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_ppl_utils gtest_ppl_utils.cpp )
 target_link_libraries(gtest_ppl_utils ${catkin_LIBRARIES}
-  string_utils)
+  )
 
 catkin_add_gtest     (gtest_ppl_viewer gtest_ppl_viewer.cpp  )
 target_link_libraries(gtest_ppl_viewer  ${catkin_LIBRARIES})
