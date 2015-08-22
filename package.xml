@@ -4,7 +4,8 @@
   <name>vision_utils</name>
   <version>0.0.0</version>
   <description>
-    vision_utils
+    vision_utils supplies a variety of tools and utilities to
+    manipulate color images, depth images, user masks, and more.
   </description>
   <maintainer email="arnaud.a.ramey@gmail.com">Arnaud Ramey</maintainer>
   <license>LGPLv3</license>
