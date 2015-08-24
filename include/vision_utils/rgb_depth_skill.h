@@ -92,6 +92,8 @@ public:
     std::string _depth_topic = "depth";
     _nh_private.param("depth_topic", _depth_topic, _depth_topic);
     _resolved_depth_topic = _nh_public.resolveName(_depth_topic);
+    // check display param
+    _nh_private.param("display", _display, _display);
     // get camera model
     kinect_openni_utils::read_camera_model_files
         (DEFAULT_KINECT_SERIAL(), _default_depth_camera_model, _default_rgb_camera_model);
@@ -110,7 +112,7 @@ public:
       return;
     }
     _status = RUNNING;
-    // check display param
+    // check display param - again, in case it changed
     _nh_private.param("display", _display, _display);
 
     // subscribe to the image message
@@ -202,7 +204,7 @@ protected:
   image_geometry::PinholeCameraModel _default_depth_camera_model,
   _default_rgb_camera_model;
 
-private:
+protected:
 
   //////////////////////////////////////////////////////////////////////////////
 
