@@ -223,7 +223,7 @@ public:
   //////////////////////////////////////////////////////////////////////////////
 
   static inline void mouse_move_callback_static
-  (int event, int x, int y, int flags, void* param) {
+  (int event, int x, int y, int , void* param) {
     ((MiniStage*) param)->mouse_move_callback(event, x, y);
   } // end mouse_move_callback_static();
 

@@ -118,7 +118,7 @@ double lap(int dim,
       for (j = 1; j < dim; j++)
       {
         h = assigncost[i][j] - v[j];
-        if (h < usubmin)
+        if (h < usubmin) {
           if (h >= umin)
           {
             usubmin = h;
@@ -131,6 +131,7 @@ double lap(int dim,
             j2 = j1;
             j1 = j;
           }
+        }
       }
 
       i0 = colsol[j1];
@@ -150,7 +151,7 @@ double lap(int dim,
       rowsol[i] = j1;
       colsol[j1] = i;
 
-      if (i0 >= 0)           // minimum column j1 assigned earlier.
+      if (i0 >= 0) {          // minimum column j1 assigned earlier.
         if (umin < usubmin)
           // put in current k, and go back to that k.
           // continue augmenting path i - j1 with i0.
@@ -159,6 +160,7 @@ double lap(int dim,
           // no further augmenting reduction possible.
           // store i0 in list of free rows for next phase.
           free[numfree++] = i0;
+      }
     }
   }
   while (loopcnt < 2);       // repeat once.
@@ -234,7 +236,7 @@ double lap(int dim,
           if (v2 < d[j])
           {
             pred[j] = i;
-            if (v2 == min)   // new column found at same minimum value
+            if (v2 == min) {  // new column found at same minimum value
               if (colsol[j] < 0)
               {
                 // if unassigned, shortest augmenting path is complete.
@@ -248,6 +250,7 @@ double lap(int dim,
                 collist[k] = collist[up];
                 collist[up++] = j;
               }
+            }
             d[j] = v2;
           }
         }
@@ -298,9 +301,9 @@ void checklap(int dim, cost **assigncost,
 {
   row  i;
   col  j;
-  cost lapcost = 0, redcost = 0;
+  cost /*lapcost = 0,*/ redcost = 0;
   boolean *matched;
-  char wait;
+//  char wait;
 
   matched = new boolean[dim];
 

@@ -37,7 +37,7 @@ void draw_rectangles(cv::Mat1b & dst, const std::vector<cv::Rect> & recs,
 
 ////////////////////////////////////////////////////////////////////////////////
 
-int main(int argc, char** argv) {
+int main() {
   srand(time(NULL));
 
   unsigned int w = 400, h = 400;

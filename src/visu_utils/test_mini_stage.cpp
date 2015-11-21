@@ -65,7 +65,7 @@ void test_mouse_move_callback() {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-static inline void test_custom_mouse_callback_mouse_cb(int event, int x, int y, int flags, void* param) {
+static inline void test_custom_mouse_callback_mouse_cb(int event, int x, int y, int , void* param) {
   MiniStage* ms_ptr = ((MiniStage*) param);
   ms_ptr->mouse_move_callback(event, x, y);
   // convert to 3D
@@ -167,7 +167,7 @@ void test_brownian_motion() {
 nav_msgs::GridCells test_costmap_map;
 std::vector<cv::Point3f> test_costmap_map_to_corners;
 
-static inline void test_costmap_mouse_cb(int event, int x, int y, int flags, void* param) {
+static inline void test_costmap_mouse_cb(int event, int x, int y, int , void* param) {
   MiniStage* ms_ptr = ((MiniStage*) param);
   bool need_to_redraw = ms_ptr->mouse_move_callback(event, x, y);
   // convert to 3D

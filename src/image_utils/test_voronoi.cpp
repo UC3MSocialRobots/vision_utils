@@ -333,7 +333,7 @@ void benchmark_logs(const cv::Mat1b & query) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-inline int CLI_help(int argc, char** argv) {
+inline int CLI_help(int, char** argv) {
   printf("Usage: %s <command> <implementation_name> <files>\n", argv[0]);
   printf(" * command: [ thin | video | video_bright | video_comparer | benchmark ]\n");
   printf("   If command =  video_comparer or benchmark, no implementation must be specified.\n");

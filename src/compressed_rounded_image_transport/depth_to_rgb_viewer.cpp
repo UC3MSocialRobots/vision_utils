@@ -54,7 +54,8 @@ image_utils::DepthViewerColorMode _color_mode;
 //! true for saving images
 bool display_images = true, save_images = false;
 float min_value = 0, max_value = 10;
-int img_counter = 1;
+int img_counter = 1, mouse_x = -1, mouse_y = -1;
+Timer last_mouse_move;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -77,6 +78,17 @@ void depth_image_callback(const sensor_msgs::ImageConstPtr& received_float_img_m
       (received_float_img_ref, uchar_rgb_img, _color_mode, min_value, max_value);
   // timer.printTime("depth_image_to_vizualisation_color_image()");
 
+  if (last_mouse_move.getTimeSeconds() < 2
+      && mouse_x >= 0 && mouse_x <= uchar_rgb_img.cols
+      && mouse_y >= 0 && mouse_y <= uchar_rgb_img.rows) {
+    float dist = received_float_img_ref.at<float>(mouse_y, mouse_x);
+    std::ostringstream text; text << std::setprecision(3) << dist << " m";
+    cv::rectangle(uchar_rgb_img, cv::Point(mouse_x-2, mouse_y-2),
+                  cv::Point(mouse_x+2, mouse_y+2), CV_RGB(255,255,255), -1);
+    cv::putText(uchar_rgb_img, text.str(), cv::Point(mouse_x + 10, mouse_y),
+                CV_FONT_HERSHEY_PLAIN, 2, CV_RGB(255, 255, 255), 2);
+  }
+
   if (save_images) {
     std::ostringstream filename;
     filename << "depth" << std::setw(6) << std::setfill('0') << img_counter++ << ".jpg";
@@ -98,6 +110,14 @@ void depth_image_callback(const sensor_msgs::ImageConstPtr& received_float_img_m
     else if (key == 'q')
       ros::shutdown();
   } // end if (display_images)
+} // end depth_image_callback();
+
+////////////////////////////////////////////////////////////////////////////////
+
+void mouse_cb(int, int x, int y, int, void*) {
+  mouse_x = x;
+  mouse_y = y;
+  last_mouse_move.reset();;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -117,15 +137,16 @@ int main(int argc, char** argv) {
                                                  depth_image_callback);
 
   // create the window
-  int _color_mode_int, save_images_int, display_images_int;
+  int _color_mode_int;
   nh_private.param<std::string>("window_title", window_title,
                                 sub.getTopic());
-  nh_private.param<int>("display_images", display_images_int, 1);
-  display_images = (display_images_int > 0);
-  if (display_images)
+  nh_private.param<bool>("display_images", display_images, true);
+  if (display_images) {
     cv::namedWindow(window_title);
-  nh_private.param<int>("save_images", save_images_int, 0);
-  save_images = (save_images_int > 0);
+    cv::setMouseCallback(window_title, mouse_cb);
+  }
+  nh_private.param<bool>("save_images", save_images, false);
+  save_images = (save_images > 0);
 
   // determine if a color version is needed
   nh_private.param<int>("color_mode", _color_mode_int, image_utils::FULL_RGB_SCALED);

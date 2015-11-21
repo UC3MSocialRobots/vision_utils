@@ -315,9 +315,9 @@ private:
                                 const int TYPE) const {
     out.clear();
     out.reserve(type_size(TYPE));
-    for (unsigned int row = 0; row < rows; ++row) {
+    for (int row = 0; row < rows; ++row) {
       const uchar* in_ptr = ptr<uchar>(row);
-      for (unsigned int col = 0; col < cols; ++col) {
+      for (int col = 0; col < cols; ++col) {
         if (in_ptr[col] == TYPE)
           out.push_back(cv::Point(col, row));
       } // end loop col
