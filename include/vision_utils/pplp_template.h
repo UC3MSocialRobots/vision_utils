@@ -107,6 +107,7 @@ public:
   //////////////////////////////////////////////////////////////////////////////
 
   inline unsigned int get_ppl_published_nb() const { return _ppl_sent_nb; }
+  inline unsigned int get_ppl_num_subscribers() const { return _ppl_pub.getNumSubscribers(); }
   inline std::string get_ppl_topic()  const { return _ppl_resolved_topic; }
   inline const PPL & get_last_PPL()  const { return _last_ppl; }
 
