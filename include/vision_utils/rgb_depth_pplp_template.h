@@ -70,7 +70,7 @@ public:
   // use of message filters - inspiration available at
   // http://answers.ros.org/question/9705/synchronizer-and-image_transportsubscriber/
   typedef image_transport::SubscriberFilter ImgSub;
-  static const unsigned int QUEUE_SIZE = 3;
+  static const unsigned int QUEUE_SIZE = 10;
 
   RgbDepthPPLPublisherTemplate(const std::string & start_topic,
                        const std::string & stop_topic)

@@ -8,7 +8,7 @@
 <arg name="display" default="false"/>
 
 <!-- display -->
-<include if="$(arg display)" file="$(find people_utils)/launch/database_viewer.launch">
+<include if="$(arg display)" file="$(find vision_utils)/launch/database_viewer.launch">
   <arg name="robot" value="$(arg robot)" />
 </include>
 
