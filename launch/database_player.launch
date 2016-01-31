@@ -14,7 +14,7 @@
 
 <!-- player -->
 <group ns="$(arg robot)">
-  <node pkg="people_detection_vision" type="rlpd2ppl.exe"
+  <node pkg="vision_utils" type="rlpd2ppl.exe"
     name="rlpd2ppl"  output="screen" required="true"
     args="_rate:=$(arg rate) $(arg rgbfiles)" />
 </group>

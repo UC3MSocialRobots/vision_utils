@@ -22,7 +22,7 @@ ________________________________________________________________________________
 
 A simple launcher for a PPLBenchmarker.
  */
-#include "people_detection_vision/pplp_benchmarker.h"
+#include "vision_utils/pplp_benchmarker.h"
 #include <ros/ros.h>
 
 int main(int argc, char** argv) {
