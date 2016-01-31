@@ -63,8 +63,10 @@ int rlpd2ppl(int argc, char **argv) {
     files << argv[argi]<< ";";
   RLPD2Imgs reader;
   bool repeat = false;
-  if (!reader.from_file(files.str(), repeat))
+  if (!reader.from_file(files.str(), repeat)) {
+    ROS_ERROR("Could not parse files '%s'", files.str().c_str());
     return -1;
+  }
 
   // get params
   ros::NodeHandle nh_public, nh_private("~");
