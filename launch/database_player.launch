@@ -3,7 +3,7 @@
 <!-- default rate for the playback - 5 fps = real recording speed -->
 <arg name="rate" default="2"/>
 <!-- the RGB files to be played - the folder is, by default, ~/.ros/ -->
-<arg name="rgbfiles" default="/home/arnaud/Datasets/rlpd/frames/*rgb*"/>
+<arg name="rgbfiles" default="/media/disk/Datasets/rlpd/frames/*rgb*"/>
 <!-- true to see all images and rviz -->
 <arg name="display" default="false"/>
 

@@ -14,7 +14,7 @@
 namespace color_utils {
 //typedef AD::Point3<double> Color;
 
-static const int NB_PREDEFINED_COLORS = 22;
+static const int NB_PREDEFINED_COLORS = 24;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -25,33 +25,35 @@ inline void _indexed_color_templated
  const _T & MAX, const _T & HIGH, const _T & MED, const _T & LOW, const _T & ZERO) {
 
   switch (index % NB_PREDEFINED_COLORS) {
-  case 0: r = MAX; g = ZERO; b = ZERO; break;
-  case 1: r = ZERO; g = ZERO; b = MAX; break;
-  case 2: r = MAX; g = MAX; b = ZERO; break;
-  case 3: r = MAX; g = ZERO; b = MAX; break;
+    case 0:  r = MAX;  g = ZERO; b = ZERO; break;
+    case 1:  r = ZERO; g = MAX;  b = ZERO; break;
+    case 2:  r = ZERO; g = ZERO; b = MAX; break;
+    case 3:  r = MAX;  g = MAX;  b = ZERO; break;
+    case 4:  r = MAX;  g = ZERO; b = MAX; break;
+    case 5:  r = ZERO; g = MAX;  b = MAX; break;
 
-  case 4: r = MAX; g = MED; b = ZERO; break;
-  case 5: r = MED; g = MAX; b = ZERO; break;
-  case 6: r = MED; g = ZERO; b = MAX; break;
-  case 7: r = MAX; g = ZERO; b = MED; break;
-  case 8: r = ZERO; g = MED; b = MAX; break;
-  case 9: r = ZERO; g = MAX; b = MED; break;
+    case 6:  r = MAX; g = MED; b = ZERO; break;
+    case 7:  r = MED; g = MAX; b = ZERO; break;
+    case 8:  r = MED; g = ZERO; b = MAX; break;
+    case 9:  r = MAX; g = ZERO; b = MED; break;
+    case 10: r = ZERO; g = MED; b = MAX; break;
+    case 11: r = ZERO; g = MAX; b = MED; break;
 
-  case 10: r = HIGH; g = ZERO; b = ZERO; break;
-  case 11: r = ZERO; g = HIGH; b = ZERO; break;
-  case 12: r = ZERO; g = ZERO; b = HIGH; break;
+    case 12: r = HIGH; g = ZERO; b = ZERO; break;
+    case 13: r = ZERO; g = HIGH; b = ZERO; break;
+    case 14: r = ZERO; g = ZERO; b = HIGH; break;
 
-  case 13: r = HIGH; g = HIGH; b = ZERO; break;
-  case 14: r = HIGH; g = ZERO; b = HIGH; break;
-  case 15: r = ZERO; g = HIGH; b = HIGH; break;
+    case 15: r = HIGH; g = HIGH; b = ZERO; break;
+    case 16: r = HIGH; g = ZERO; b = HIGH; break;
+    case 17: r = ZERO; g = HIGH; b = HIGH; break;
 
-  case 16: r = HIGH; g = LOW; b = ZERO; break;
-  case 17: r = LOW; g = HIGH; b = ZERO; break;
-  case 18: r = LOW; g = ZERO; b = HIGH; break;
-  case 19: r = HIGH; g = ZERO; b = LOW; break;
-  case 20: r = ZERO; g = LOW; b = HIGH; break;
-  default:
-  case 21: r = ZERO; g = HIGH; b = LOW; break;
+    case 18: r = HIGH; g =  LOW; b = ZERO; break;
+    case 19: r =  LOW; g = HIGH; b = ZERO; break;
+    case 20: r =  LOW; g = ZERO; b = HIGH; break;
+    case 21: r = HIGH; g = ZERO; b =  LOW; break;
+    case 22: r = ZERO; g =  LOW; b = HIGH; break;
+    default:
+    case 23: r = ZERO; g = HIGH; b = LOW; break;
   } // end switch
 } // end _indexed_color_templated
 

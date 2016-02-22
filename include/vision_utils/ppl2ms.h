@@ -45,6 +45,11 @@ on a MiniStage visualizer.
         [bool] (default: true)
         True for drawing the RGB images associated with trails.
 
+  - \b "~method2trail_color"
+        [bool] (default: true)
+        If true, the color of a user trail is determined by PP method.
+        Otherwise, determined by PP name.
+
   - \b "~track_history_size"
         [int] (default: DEFAULT_TRACK_HISTORY_SIZE)
         If ~draw_track_images activated, number of points for the trail length.
@@ -96,6 +101,7 @@ public:
     nh_private.param("ymax", ymax, ymax);
     nh_private.param("draw_track_trails", _draw_track_trails, true);
     nh_private.param("draw_track_images", _draw_track_images, true);
+    nh_private.param("method2trail_color", _method2trail_color, true);
     const int DEFAULT_TRACK_HISTORY_SIZE_auxConst = DEFAULT_TRACK_HISTORY_SIZE;
     nh_private.param("track_history_size", _track_history_size, DEFAULT_TRACK_HISTORY_SIZE_auxConst);
   }
@@ -252,15 +258,15 @@ private:
 
     // find color
     MethodName method  = new_measure.method;
-    cv::Scalar method_color = method2color(method);
-    // insert method in the list of seen methods
 
     for (unsigned int detec_idx = 0; detec_idx < new_measure.poses.size(); ++detec_idx) {
       const PP* pp = &(new_measure.poses[detec_idx]);
+      std::string key = (_method2trail_color ? method : pp->person_name);
+      cv::Scalar color = pp2color(key);
       cv::Point user_center = world2pixel(ms, pp->head_pose.position);
       UserName user_name = pp->person_name;
       cv::circle(ms.get_viz(), user_center, 15, cv::Scalar::all(0), -1);
-      cv::circle(ms.get_viz(), user_center, 15, method_color, 5);
+      cv::circle(ms.get_viz(), user_center, 15, color, 5);
 
       // add the image
       if (_draw_track_images
@@ -295,10 +301,10 @@ private:
       if (ppl_utils::get_attribute_readonly(*pp, "face_name", face_name))
         label << "='" << face_name << "'";
       cv::putText(ms.get_viz(), label.str(), user_center + cv::Point(10, -10),
-                  CV_FONT_HERSHEY_PLAIN, 1, method_color, 1);
+                  CV_FONT_HERSHEY_PLAIN, 1, color, 1);
 
       // draw detections
-      //image_utils::drawCross(ms.get_viz(), world2pixel(ms, user_pos), 5, method_color, 2);
+      //image_utils::drawCross(ms.get_viz(), world2pixel(ms, user_pos), 5, pp_color, 2);
     } // end loop detec_idx
   } // end draw_one_ppl();
 
@@ -316,8 +322,9 @@ private:
       Track3d* user_track3d = &(curr_track->track3d);
       Track2d* user_track2d = &(curr_track->track2d);
 
-      cv::Scalar method_color = method2color(method);
-      cv::Vec3b method_color3d(method_color[0], method_color[1], method_color[2]);
+      std::string key = (_method2trail_color ? method : user_name);
+      cv::Scalar pp_color = pp2color(key);
+      cv::Vec3b pp_color3d(pp_color[0], pp_color[1], pp_color[2]);
       // draw track2d
       unsigned int npts = user_track3d->size();
       if (user_track2d->size() != npts) { // reconvert 3D -> 2D if needed
@@ -328,7 +335,7 @@ private:
         for (unsigned int pt_idx = 0; pt_idx < npts; ++pt_idx)
           user_track2d->push_back(world2pixel(ms, (*user_track3d)[pt_idx]));
       }
-      image_utils::drawPolygon(ms.get_viz(), *user_track2d, false, method_color, 2);
+      image_utils::drawPolygon(ms.get_viz(), *user_track2d, false, pp_color, 2);
     } // end loop (track_idx)
 
 
@@ -342,7 +349,7 @@ private:
       cv::line(ms.get_viz(),
                world2pixel(ms, new_measure.poses[detec_idx].head_pose.position),
                world2pixel(ms, track_pos),
-               method_color, 1);
+               pp_color, 1);
     } // end loop affec_idx
 
     // draw unassociated_poses
@@ -350,7 +357,7 @@ private:
       geometrymsgs::Point head_position =
           _unassociated_poses[uap_idx].head_pose.position;
       cv::circle(ms.get_viz(), world2pixel(ms, head_position.x, head_position.y),
-                 3, method_color, 2);
+                 3, pp_color, 2);
     } // end loop uap_idx
 #endif
   } // end redraw_track_trails()
@@ -382,18 +389,18 @@ private:
 
   //////////////////////////////////////////////////////////////////////////////
 
-  inline cv::Scalar method2color(const MethodName & method) {
+  inline cv::Scalar pp2color(const std::string & key) {
     cv::Scalar color;
-    if (map_utils::direct_search(_method2color, method, color))
+    if (map_utils::direct_search(_pp2color, key, color))
       return color;
-    color = color_utils::color_scalar<cv::Scalar>();//(_method2color.size());
-    _method2color[method] = color;
+    color = color_utils::color_scalar<cv::Scalar>(_pp2color.size());
+    _pp2color[key] = color;
     return color;
   } // end
 
   //////////////////////////////////////////////////////////////////////////////
 
-  std::map<MethodName, cv::Scalar> _method2color;
+  std::map<MethodName, cv::Scalar> _pp2color;
   cv::Mat3b _rgb_buffer;
   cv::Mat1b _user_buffer;
   std::vector<UserTrack> _user_tracks;
@@ -403,6 +410,7 @@ private:
   double width, height, xmin, xmax, ymin, ymax;
   bool _draw_track_trails, _draw_track_images;
   int _track_history_size;
+  bool _method2trail_color;
 }; // end PPL2MS
 
 #endif // PPL2MS_H
