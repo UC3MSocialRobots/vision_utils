@@ -50,8 +50,8 @@ on a MiniStage visualizer.
         If true, the color of a user trail is determined by PP method.
         Otherwise, determined by PP name.
 
-  - \b "~track_history_size"
-        [int] (default: DEFAULT_TRACK_HISTORY_SIZE)
+  - \b "~trail_history_size"
+        [int] (default: DEFAULT_TRAIL_HISTORY_SIZE)
         If ~draw_track_images activated, number of points for the trail length.
  */
 #ifndef PPL2MS_H
@@ -87,7 +87,7 @@ public:
   };
 
   static const unsigned int MAX_PERSON_HEIGHT = 100; // pixels
-  static const int DEFAULT_TRACK_HISTORY_SIZE = 100; // vector size
+  static const int DEFAULT_TRAIL_HISTORY_SIZE = 100; // vector size
 
   PPL2MS() {
     ros::NodeHandle nh_private("~");
@@ -102,8 +102,8 @@ public:
     nh_private.param("draw_track_trails", _draw_track_trails, true);
     nh_private.param("draw_track_images", _draw_track_images, true);
     nh_private.param("method2trail_color", _method2trail_color, true);
-    const int DEFAULT_TRACK_HISTORY_SIZE_auxConst = DEFAULT_TRACK_HISTORY_SIZE;
-    nh_private.param("track_history_size", _track_history_size, DEFAULT_TRACK_HISTORY_SIZE_auxConst);
+    const int DEFAULT_TRAIL_HISTORY_SIZE_auxConst = DEFAULT_TRAIL_HISTORY_SIZE;
+    nh_private.param("trail_history_size", _trail_history_size, DEFAULT_TRAIL_HISTORY_SIZE_auxConst);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -155,7 +155,7 @@ public:
       user_track2d->push_back(world2pixel(ms, user_pos));
 
       // clean old points
-      int nelems_to_delete = user_track3d->size() - DEFAULT_TRACK_HISTORY_SIZE;
+      int nelems_to_delete = user_track3d->size() - DEFAULT_TRAIL_HISTORY_SIZE;
       if (nelems_to_delete > 0) {
         user_track3d->erase(user_track3d->begin(), user_track3d->begin() + nelems_to_delete);
         user_track2d->erase(user_track2d->begin(), user_track2d->begin() + nelems_to_delete);
@@ -409,7 +409,7 @@ private:
   bool params_applied_to_ms;
   double width, height, xmin, xmax, ymin, ymax;
   bool _draw_track_trails, _draw_track_images;
-  int _track_history_size;
+  int _trail_history_size;
   bool _method2trail_color;
 }; // end PPL2MS
 

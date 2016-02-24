@@ -50,9 +50,9 @@ ________________________________________________________________________________
         [bool] (default: true)
         False for only drawing detections and not their trails.
 
-  - \b "~track_history_size"
-        [int] (default: DEFAULT_TRACK_HISTORY_SIZE)
-        If ~draw_track_images activated, number of points for the trail length.
+  - \b "~trail_history_size"
+        [int] (default: DEFAULT_TRAIL_HISTORY_SIZE)
+        If ~draw_track_trails activated, number of points for the trail length.
 
   - \b "~draw_track_images"
         [bool] (default: true)
@@ -193,18 +193,18 @@ protected:
   //////////////////////////////////////////////////////////////////////////////
 
   void save_images_and_display() {
-    if (_save_images) {
+    // show stuff
+    if (!_display)
+      return;
+    cv::imshow(_window_name, _ms.get_viz());
+    char c = cv::waitKey(50);
+    if (c == 's' || _save_images) {
       std::ostringstream filename;
       filename << "/tmp/PPLViewer_" << string_utils::timestamp() << ".png";
       if (!cv::imwrite(filename.str(), _ms.get_viz()))
         printf("/!\\ Could not write file '%s'\n", filename.str().c_str());
       printf("Succesfully written file '%s'\n", filename.str().c_str());
      }
-    // show stuff
-    if (!_display)
-      return;
-    cv::imshow(_window_name, _ms.get_viz());
-    cv::waitKey(50);
   }
 
   //////////////////////////////////////////////////////////////////////////////
