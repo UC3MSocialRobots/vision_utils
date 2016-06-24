@@ -18,7 +18,7 @@ before_install:
   # fix a bug with catkin_pkg - cf. http://answers.ros.org/question/56873/problem-with-catkin_make/
   - export PYTHONPATH="$PYTHONPATH:/usr/lib/python2.7/dist-packages"
 
-before_script: # Use this to prepare your build for testing e.g. copy database configurations, environment variables, etc.
+before_script: #  Use this to prepare your build for testing e.g. copy database configurations, environment variables, etc.
   # Create catkin workspace
   - export CI_SOURCE_PATH=$(pwd)
   - mkdir -p ~/catkin_ws/src
