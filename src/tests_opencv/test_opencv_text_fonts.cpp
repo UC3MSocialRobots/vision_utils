@@ -25,6 +25,9 @@ A basic rendering example for all fonts of OpenCV.
  */
 
 #include <opencv2/highgui/highgui.hpp>
+#if CV_MAJOR_VERSION > 2
+#include "opencv2/imgproc/imgproc.hpp" // for versions 2.4 and +
+#endif // CV_MAJOR_VERSION == 2 && CV_MINOR_VERSION >= 4
 
 int main() {
   cv::Mat3b img(600, 800);

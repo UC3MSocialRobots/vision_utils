@@ -1,5 +1,6 @@
 
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include "vision_utils/utils/timer.h"
 #include "vision_utils/utils/cmatrix.h"
 #include <vision_utils/img_path.h>
