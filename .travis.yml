@@ -25,6 +25,8 @@ before_script: #  Use this to prepare your build for testing e.g. copy database 
   - cd ~/catkin_ws/src
   - catkin_init_workspace
   - ln -s $CI_SOURCE_PATH . # Link the repo we are testing to the new workspace
+  # AD dependencies
+  - git clone https://github.com/UC3MSocialRobots/people_msgs.git
 
 script: # compile
   - cd ~/catkin_ws
