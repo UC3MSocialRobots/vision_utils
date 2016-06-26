@@ -1,0 +1,4 @@
+- git:
+    local-name: people_msgs
+    uri: https://github.com/UC3MSocialRobots/people_msgs.git
+
