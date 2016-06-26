@@ -4,11 +4,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra") # add extra warnings
 ### 2- Package Name
 project(vision_utils)
 ### 3 - Find other CMake/Catkin packages needed for build
-SET(ROSDEPS cv_bridge image_geometry image_transport pcl_ros rosbag)
-find_package(catkin REQUIRED COMPONENTS ${ROSDEPS}
+SET(ROSDEPS cv_bridge image_geometry image_transport pcl_ros rosbag
   # AD
-  people_msgs
-)
+  people_msgs)
+find_package(catkin REQUIRED COMPONENTS ${ROSDEPS})
 find_package(PCL REQUIRED)
 ### 4 - Message/Service/Action Generators (add_message_files(), add_service_files(), add_action_files())
 add_message_files(
@@ -23,7 +22,7 @@ install(FILES ${devel_pkg_inc}/img_path.h DESTINATION ${devel_pkg_inc})
 ### 6 - Specify package build info export (catkin_package())
 catkin_package(
   INCLUDE_DIRS include third_parties
-  #CATKIN_DEPENDS ${ROSDEPS}
+  CATKIN_DEPENDS ${ROSDEPS}
   DEPENDS
   CFG_EXTRAS img_path.h
 )
