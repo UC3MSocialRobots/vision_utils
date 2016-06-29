@@ -9,17 +9,7 @@ manipulate color images, depth images, user masks, and more.
 How to install
 ==============
 
-## 1. Dependencies included in the Ubuntu packages
-
-Please run the [rosdep](http://docs.ros.org/independent/api/rosdep/html/) utility:
-
-```bash
-$ sudo apt-get install python-rosdep
-$ sudo rosdep init
-$ rosdep install vision_utils --ignore-src
-```
-
-## 2. Dependencies from sources
+## 1. Dependencies from sources
 
 Dependencies handling is based on the [wstool](http://wiki.ros.org/wstool) tool.
 Run the following instructions:
@@ -30,4 +20,13 @@ $ wstool init
 $ wstool merge `rospack find vision_utils`/dependencies.rosinstall
 $ roscd ; cd src
 $ wstool update
+```
+## 2. Dependencies included in the Ubuntu packages
+
+Please run the [rosdep](http://docs.ros.org/independent/api/rosdep/html/) utility:
+
+```bash
+$ sudo apt-get install python-rosdep
+$ sudo rosdep init
+$ rosdep install vision_utils --ignore-src
 ```
