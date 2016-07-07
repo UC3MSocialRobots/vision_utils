@@ -1,2 +1,2 @@
-add_library(translator Translator.cpp)
-target_link_libraries(translator boost_system curl)
+add_library(visionutils_translator Translator.cpp)
+target_link_libraries(visionutils_translator boost_system curl)
