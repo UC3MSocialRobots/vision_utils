@@ -30,10 +30,10 @@ catkin_add_gtest     (gtest_cloud_viewer
   ../include/vision_utils/cloud_viewer.h)
 target_link_libraries(gtest_cloud_viewer ${PCL_LIBRARIES} )
 
-catkin_add_gtest     (gtest_clusterer
+catkin_add_gtest     (gtest_clusterer_vision_utils
   gtest_clusterer.cpp
   ../include/vision_utils/clusterer.h)
-target_link_libraries(gtest_clusterer ${catkin_LIBRARIES})
+target_link_libraries(gtest_clusterer_vision_utils ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_color_utils  gtest_color_utils.cpp)
 TARGET_LINK_LIBRARIES(gtest_color_utils  ${catkin_LIBRARIES})
