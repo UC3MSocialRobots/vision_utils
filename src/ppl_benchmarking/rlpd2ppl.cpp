@@ -38,18 +38,18 @@ and a ground truth PPL.
         The image
 
   - \b "ground_truth_ppl"
-        [people_msgs::PeoplePoseList]
+        [people_msgs_rl::PeoplePoseList]
         The ground truth positions
  */
 
 #include "vision_utils/rlpd2imgs.h"
 #include <image_transport/image_transport.h>
-// people_msgs
+// people_msgs_rl
 #include "vision_utils/images2ppl.h"
 #include "vision_utils/utils/timer.h"
 
-typedef people_msgs::PeoplePose PP;
-typedef people_msgs::PeoplePoseList PPL;
+typedef people_msgs_rl::PeoplePose PP;
+typedef people_msgs_rl::PeoplePoseList PPL;
 static const int QUEUE_SIZE = 10;
 
 int rlpd2ppl(int argc, char **argv) {

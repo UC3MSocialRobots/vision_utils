@@ -39,7 +39,7 @@ that subscribes to a stream of RGB and depth data.
 
 \section Publications
   - \b "~ppl"
-        [people_msgs::PeoplePoseList]
+        [people_msgs_rl::PeoplePoseList]
         The detected users, \see PPLPublisherTemplate.
  */
 #ifndef RGB_DEPTH_TEMPLATE2PPL_H
@@ -47,7 +47,7 @@ that subscribes to a stream of RGB and depth data.
 
 // utils
 #include "vision_utils/utils/timer.h"
-// people_msgs
+// people_msgs_rl
 #include "vision_utils/pplp_template.h"
 // ROS
 #include <image_transport/image_transport.h>

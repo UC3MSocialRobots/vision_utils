@@ -30,8 +30,8 @@ public:
   FooPPLMatcher() : PPLMatcherTemplate("FOO_PPLM_START", "FOO_PPLM_STOP") {
   }
   bool match(const PPL & new_ppl, const PPL & tracks, std::vector<double> & costs,
-             std::vector<people_msgs::PeoplePoseAttributes> & new_ppl_added_attributes,
-             std::vector<people_msgs::PeoplePoseAttributes> & tracks_added_attributes) {
+             std::vector<people_msgs_rl::PeoplePoseAttributes> & new_ppl_added_attributes,
+             std::vector<people_msgs_rl::PeoplePoseAttributes> & tracks_added_attributes) {
     unsigned int ntracks = tracks.poses.size(),
         ncurr_users = new_ppl.poses.size();
     costs.resize(ntracks * ncurr_users, 1);

@@ -40,7 +40,7 @@ public:
 
   inline void rgb_cb(const sensor_msgs::ImageConstPtr &) {
     printf("rgb_cb()\n");
-    people_msgs::PeoplePoseList ppl;
+    people_msgs_rl::PeoplePoseList ppl;
     ppl.header.stamp = ros::Time::now();
     ppl.poses.clear();
     publish_PPL(ppl);

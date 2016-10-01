@@ -43,7 +43,7 @@ public:
   virtual void process_rgb_depth(const cv::Mat3b & rgb,
                                  const cv::Mat1f & depth) {
     // build PPL message
-    people_msgs::PeoplePoseList ppl;
+    people_msgs_rl::PeoplePoseList ppl;
     ppl.header = _images_header; // reuse the header of the last frame
     _rgb_copy = rgb;
     publish_PPL(ppl);

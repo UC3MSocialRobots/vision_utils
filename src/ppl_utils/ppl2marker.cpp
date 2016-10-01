@@ -33,7 +33,7 @@ ________________________________________________________________________________
 
 \section Subscriptions
   - \b {input_topic}
-        [people_msgs/PeoplePoseList]
+        [people_msgs_rl/PeoplePoseList]
         The people list
 
 \section Publications
@@ -44,7 +44,7 @@ ________________________________________________________________________________
  */
 
 #include <ros/ros.h>
-#include <people_msgs/PeoplePoseList.h>
+#include <people_msgs_rl/PeoplePoseList.h>
 #include "vision_utils/utils/marker_utils.h"
 #include "vision_utils/utils/geometry_utils.h"
 #include "vision_utils/utils/pt_utils.h"
@@ -58,7 +58,7 @@ double red = 1, green = 0, blue = 0;
 ////////////////////////////////////////////////////////////////////////////////
 
 //! the callback when a user is detected
-void ppl_cb(const people_msgs::PeoplePoseListConstPtr & ppl) {
+void ppl_cb(const people_msgs_rl::PeoplePoseListConstPtr & ppl) {
   unsigned int n_people = ppl->poses.size();
   marker.header = ppl->header;
   //ROS_INFO_THROTTLE(5, "ppl_cb(method.'%s')", ppl->method.c_str());
@@ -128,7 +128,7 @@ int main(int argc, char** argv) {
   nh_private.param("blue", blue, blue);
   std::string input_topic = "ppl";
   nh_private.param("input_topic", input_topic, input_topic);
-  ppl_sub = nh_public.subscribe<people_msgs::PeoplePoseList>
+  ppl_sub = nh_public.subscribe<people_msgs_rl::PeoplePoseList>
       (input_topic, 1, ppl_cb);
 
   marker_pub = nh_public.advertise<visualization_msgs::Marker>

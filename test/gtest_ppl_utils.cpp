@@ -3,7 +3,7 @@
 #include "vision_utils/ppl_attributes.h"
 
 TEST(TestSuite, get_attribute) {
-  people_msgs::PeoplePose pose;
+  people_msgs_rl::PeoplePose pose;
   bool foo;
   EXPECT_TRUE(ppl_utils::get_attribute_readonly(pose, "foo", foo));
 }
@@ -12,7 +12,7 @@ TEST(TestSuite, get_attribute) {
 
 template<class _T>
 void test_get_set_attribute(_T value1, _T value2) {
-  people_msgs::PeoplePose pose;
+  people_msgs_rl::PeoplePose pose;
   _T value_read;
   EXPECT_FALSE(ppl_utils::has_attribute(pose, "attr1"));
   EXPECT_FALSE(ppl_utils::get_attribute_readonly(pose, "attr1", value_read));
@@ -55,7 +55,7 @@ TEST(TestSuite, get_set_attribute) {
 }
 
 TEST(TestSuite, copy_attribute) {
-  people_msgs::PeoplePose src, dst;
+  people_msgs_rl::PeoplePose src, dst;
   EXPECT_TRUE(ppl_utils::set_attribute(src, "i1", 1));
   EXPECT_TRUE(ppl_utils::set_attribute(src, "i2", 2));
   EXPECT_TRUE(ppl_utils::set_attribute(src, "f1", 1.5));

@@ -27,14 +27,14 @@ ________________________________________________________________________________
 #define PPL_TF_UTILS_H
 
 // msg
-#include <people_msgs/PeoplePoseList.h>
+#include <people_msgs_rl/PeoplePoseList.h>
 // ROS
 #include <tf/transform_listener.h>
 #include <tf/exceptions.h>
 
 namespace ppl_utils {
 /*!
- * Convert a people_msgs::PeoplePose from one frame to another.
+ * Convert a people_msgs_rl::PeoplePose from one frame to another.
  * \param pose
  *   [IN+OUT] The pose to be converted.
  * \param target_frame
@@ -44,7 +44,7 @@ namespace ppl_utils {
  * \return
  *    true if success
  */
-bool convert_people_pose_tf(people_msgs::PeoplePose & pose,
+bool convert_people_pose_tf(people_msgs_rl::PeoplePose & pose,
                             const std::string & target_frame,
                             const tf::TransformListener & transform_listener) {
   // do nothing if same frame
@@ -74,7 +74,7 @@ bool convert_people_pose_tf(people_msgs::PeoplePose & pose,
 //////////////////////////////////////////////////////////////////////////////
 
 /*!
- * Convert a list of people_msgs::PeoplePose from one frame to another.
+ * Convert a list of people_msgs_rl::PeoplePose from one frame to another.
  * \param list
  *   The list of poses to convert.
  * \param target_frame
@@ -84,7 +84,7 @@ bool convert_people_pose_tf(people_msgs::PeoplePose & pose,
  * \return
  *    true if success
  */
-bool convert_ppl_tf(people_msgs::PeoplePoseList & list,
+bool convert_ppl_tf(people_msgs_rl::PeoplePoseList & list,
                     const std::string & target_frame,
                     tf::TransformListener & transform_listener) {
   for (unsigned int pose_idx = 0; pose_idx < list.poses.size(); ++pose_idx) {
@@ -101,7 +101,7 @@ bool convert_ppl_tf(people_msgs::PeoplePoseList & list,
 ////////////////////////////////////////////////////////////////////////////////
 
 //! set a new header for both the PPL and its sons
-inline void set_ppl_header(people_msgs::PeoplePoseList & ppl,
+inline void set_ppl_header(people_msgs_rl::PeoplePoseList & ppl,
                            const std::string & frame,
                            const ros::Time & stamp) {
   ppl.header.frame_id = frame;

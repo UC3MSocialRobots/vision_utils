@@ -64,7 +64,7 @@ ________________________________________________________________________________
 
 \section Subscriptions
   - \b {ppl_topics}
-        [people_msgs::PeoplePoseList]
+        [people_msgs_rl::PeoplePoseList]
         One or several computed PPL, see above.
 
 \section Publications
@@ -87,8 +87,8 @@ ________________________________________________________________________________
 
 class PPLViewer {
 public:
-  typedef people_msgs::PeoplePose PP;
-  typedef people_msgs::PeoplePoseList PPL;
+  typedef people_msgs_rl::PeoplePose PP;
+  typedef people_msgs_rl::PeoplePoseList PPL;
   typedef std::string MethodName;
 
   PPLViewer() {

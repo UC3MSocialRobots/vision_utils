@@ -34,7 +34,7 @@ making life easier.
 #define IMAGES2PPL_H
 
 // msg
-#include <people_msgs/PeoplePoseList.h>
+#include <people_msgs_rl/PeoplePoseList.h>
 // AD
 #include "vision_utils/content_processing.h"
 #include "vision_utils/kinect_openni_utils.h"
@@ -65,7 +65,7 @@ public:
    * \return
    *    true if success
    */
-  bool convert(people_msgs::PeoplePose & pp_out,
+  bool convert(people_msgs_rl::PeoplePose & pp_out,
                const cv::Mat3b* rgb = NULL,
                const cv::Mat1f* depth = NULL,
                const cv::Mat1b* user = NULL,
@@ -155,7 +155,7 @@ public:
 
   //////////////////////////////////////////////////////////////////////////////
 
-  inline bool rgb2user_and_convert(people_msgs::PeoplePose & pp,
+  inline bool rgb2user_and_convert(people_msgs_rl::PeoplePose & pp,
                                    const cv::Mat3b* rgb = NULL,
                                    const cv::Mat1f* depth = NULL,
                                    bool need_crop_with_userbbox = false) {
@@ -179,7 +179,7 @@ protected:
 
 class Images2PPL {
 public:
-  typedef people_msgs::PeoplePoseList PPL;
+  typedef people_msgs_rl::PeoplePoseList PPL;
 
   Images2PPL() {
     // get camera model
@@ -220,7 +220,7 @@ public:
           kinect_openni_utils::pixel2world_depth<cv::Point3d>
           (coms_it->second, *depth_cam_model_safe, depth);
       // shape a PeoplePose
-      people_msgs::PeoplePose* pp = &(_ppl.poses[user_idx]);
+      people_msgs_rl::PeoplePose* pp = &(_ppl.poses[user_idx]);
       pp->header = _ppl.header;
       pp->person_name = string_utils::cast_to_string((int) coms_it->first);
       // keep NiTE name in "user_multimap_name"
@@ -287,15 +287,15 @@ namespace PP2Images {
    *   true to discard PP that have no name data, or NO_RECOGNITION_MADE, or RECOGNITION_FAILED
    * \return
    */
-bool convert(const people_msgs::PeoplePose* curr_pose,
+bool convert(const people_msgs_rl::PeoplePose* curr_pose,
              cv::Mat3b* rgb = NULL,
              cv::Mat1f* depth = NULL,
              cv::Mat1b* user_mask = NULL,
              bool discarded_unnammed_poses = false) {
   if (discarded_unnammed_poses
       & (curr_pose->person_name == ""
-         || curr_pose->person_name == people_msgs::PeoplePose::NO_RECOGNITION_MADE
-         || curr_pose->person_name == people_msgs::PeoplePose::RECOGNITION_FAILED) ){
+         || curr_pose->person_name == people_msgs_rl::PeoplePose::NO_RECOGNITION_MADE
+         || curr_pose->person_name == people_msgs_rl::PeoplePose::RECOGNITION_FAILED) ){
     //USUARIO NO RECONOCIDO... OOOPS!
     printf("PP2Images: user has no name!\n");
     return false;
@@ -344,7 +344,7 @@ namespace PPL2Images {
    *   true to discard PP that have no name data, or NO_RECOGNITION_MADE, or RECOGNITION_FAILED
    * \return true if success
    */
-bool convert(const people_msgs::PeoplePoseList& ppl,
+bool convert(const people_msgs_rl::PeoplePoseList& ppl,
              std::vector<cv::Mat3b>* rgbs = NULL,
              std::vector<cv::Mat1f>* depths = NULL,
              std::vector<cv::Mat1b>* user_masks = NULL,
@@ -391,7 +391,7 @@ bool convert(const people_msgs::PeoplePoseList& ppl,
 //////////////////////////////////////////////////////////////////////////////
 
 //! retrieve names from the PPL using the indices given back by convert()
-inline bool indices2names(const people_msgs::PeoplePoseList& ppl,
+inline bool indices2names(const people_msgs_rl::PeoplePoseList& ppl,
                           const std::vector<unsigned int>& pp_indices,
                           std::vector<std::string>& names) {
   unsigned int npps = pp_indices.size();

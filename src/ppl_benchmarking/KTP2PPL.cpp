@@ -32,7 +32,7 @@ ________________________________________________________________________________
         The image
 
   - \b "ground_truth_ppl"
-        [people_msgs::PeoplePoseList]
+        [people_msgs_rl::PeoplePoseList]
         The ground truth positions
  */
 #include <image_transport/image_transport.h>
@@ -43,12 +43,12 @@ ________________________________________________________________________________
 #include "vision_utils/blob_segmenter.h"
 #include "vision_utils/color_utils.h"
 #include "vision_utils/database_player.h"
-// people_msgs
+// people_msgs_rl
 #include "vision_utils/images2ppl.h"
 #include "vision_utils/ppl_attributes.h"
 
-typedef people_msgs::PeoplePose PP;
-typedef people_msgs::PeoplePoseList PPL;
+typedef people_msgs_rl::PeoplePose PP;
+typedef people_msgs_rl::PeoplePoseList PPL;
 typedef cv::Point3d Pt3d;
 static const std::string CAMFRAME = "/openni_rgb_optical_frame", BASEFRAME = "/base_link";
 
@@ -272,7 +272,7 @@ protected:
     for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx) {
       PP* curr_pp = &(_anonymous_ppl.poses[user_idx]);
       ppl_utils::set_attribute(*curr_pp, "ground_truth_label", curr_pp->person_name);
-      curr_pp->person_name = people_msgs::PeoplePose::NO_RECOGNITION_MADE;
+      curr_pp->person_name = people_msgs_rl::PeoplePose::NO_RECOGNITION_MADE;
     } // end loop user_idx
     return true;
   } // end load_current_frame()

@@ -70,8 +70,8 @@ on a MiniStage visualizer.
 
 class PPL2MS {
 public:
-  typedef people_msgs::PeoplePose PP;
-  typedef people_msgs::PeoplePoseList PPL;
+  typedef people_msgs_rl::PeoplePose PP;
+  typedef people_msgs_rl::PeoplePoseList PPL;
   typedef std::string UserName;
   typedef std::string MethodName;
   typedef cv::Point3d Pt3d;

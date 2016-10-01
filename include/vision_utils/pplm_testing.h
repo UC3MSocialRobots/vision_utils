@@ -47,7 +47,7 @@ namespace pplm_testing {
  *  any positive number: the existing users will be cloned
  */
 inline bool create_ppl
-(people_msgs::PeoplePoseList & ppl,
+(people_msgs_rl::PeoplePoseList & ppl,
  const int nusers,
  const std::string & filename_prefix = IMG_DIR "depth/juggling1")
 {
@@ -84,9 +84,9 @@ void test_sizes(PPLMatcherTemplate & skill,
   spinner.start();
   skill.start();
 
-  people_msgs::MatchPPLRequest req;
-  people_msgs::MatchPPLResponse res;
-  ros::ServiceClient client = nh_public.serviceClient<people_msgs::MatchPPL>
+  people_msgs_rl::MatchPPLRequest req;
+  people_msgs_rl::MatchPPLResponse res;
+  ros::ServiceClient client = nh_public.serviceClient<people_msgs_rl::MatchPPL>
                               (skill.get_match_service_name());
   ASSERT_TRUE_TIMEOUT(client.exists(), 1);
   unsigned int ntimes = 10;
@@ -119,9 +119,9 @@ void test_same_msg(PPLMatcherTemplate & skill,
   skill.start();
 
   // prepair request
-  people_msgs::MatchPPLRequest req;
-  people_msgs::MatchPPLResponse res;
-  ros::ServiceClient client = nh_public.serviceClient<people_msgs::MatchPPL>
+  people_msgs_rl::MatchPPLRequest req;
+  people_msgs_rl::MatchPPLResponse res;
+  ros::ServiceClient client = nh_public.serviceClient<people_msgs_rl::MatchPPL>
                               (skill.get_match_service_name());
   ASSERT_TRUE_TIMEOUT(client.exists(), 1);
   ASSERT_TRUE(create_ppl(req.tracks, nusers, filename_prefix));
@@ -157,9 +157,9 @@ void test_two_frames_matching
   skill.start();
 
   // prepair request
-  people_msgs::MatchPPLRequest req;
-  people_msgs::MatchPPLResponse res;
-  ros::ServiceClient client = nh_public.serviceClient<people_msgs::MatchPPL>
+  people_msgs_rl::MatchPPLRequest req;
+  people_msgs_rl::MatchPPLResponse res;
+  ros::ServiceClient client = nh_public.serviceClient<people_msgs_rl::MatchPPL>
                               (skill.get_match_service_name());
   ASSERT_TRUE_TIMEOUT(client.exists(), 1);
   ASSERT_TRUE(create_ppl(req.tracks, -1, filename_prefix1));
@@ -190,9 +190,9 @@ void test_two_frames_matching
 typedef DatabasePlayer::UserIdx UserIdx;
 
 void pplm_benchmark(PPLMatcherTemplate & skill,
-                    people_msgs::PeoplePoseList & ref_ppl,
+                    people_msgs_rl::PeoplePoseList & ref_ppl,
                     const std::vector<UserIdx> & ref_indices,
-                    people_msgs::PeoplePoseList & test_ppl,
+                    people_msgs_rl::PeoplePoseList & test_ppl,
                     const std::vector<UserIdx> & exp_test_indices) {
   unsigned int nusers_ref = ref_ppl.poses.size();
   unsigned int nusers_test = test_ppl.poses.size();
@@ -204,12 +204,12 @@ void pplm_benchmark(PPLMatcherTemplate & skill,
   for (unsigned int user_test_idx = 0; user_test_idx < nusers_test; ++user_test_idx) {
     if (user_test_idx % 100 == 0)
       printf("pplm_benchmark(already %i/%i tested users)...\n", user_test_idx, nusers_test);
-    people_msgs::PeoplePoseList curr_ppl;
+    people_msgs_rl::PeoplePoseList curr_ppl;
     curr_ppl.header.stamp = ros::Time::now();
     curr_ppl.method = "pplm_benchmark";
     curr_ppl.poses.push_back(test_ppl.poses[user_test_idx]);
     std::vector<double> costs;
-    std::vector<people_msgs::PeoplePoseAttributes>
+    std::vector<people_msgs_rl::PeoplePoseAttributes>
         new_ppl_added_attributes,tracks_added_attributes;
     if (!skill.match(curr_ppl, ref_ppl, costs,
                      new_ppl_added_attributes, tracks_added_attributes)) {
@@ -232,7 +232,7 @@ void pplm_benchmark(PPLMatcherTemplate & skill,
 void pplm_benchmark(PPLMatcherTemplate & skill,
                     DatabasePlayer & db_player,
                     const unsigned int pp_per_ref_user = 1) {
-  people_msgs::PeoplePoseList ref_ppl, test_ppl;
+  people_msgs_rl::PeoplePoseList ref_ppl, test_ppl;
   std::map<UserIdx, unsigned int> user2ref_nb;
   std::vector<UserIdx> ref_indices, exp_test_indices;
   ppl_utils::Images2PPL ppl_conv;
@@ -247,7 +247,7 @@ void pplm_benchmark(PPLMatcherTemplate & skill,
       continue;
     unsigned int npps = ppl_conv.get_ppl().poses.size();
     // add randomly to ref or test
-    std::vector<people_msgs::PeoplePose>* target_ppv = &ref_ppl.poses;
+    std::vector<people_msgs_rl::PeoplePose>* target_ppv = &ref_ppl.poses;
     std::vector<UserIdx>* target_indexv = &ref_indices;
     UserIdx curr_user_idx = db_player.get_user_idx();
     if ((user2ref_nb[curr_user_idx]++) >= pp_per_ref_user) {

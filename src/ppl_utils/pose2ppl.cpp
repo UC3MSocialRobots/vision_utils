@@ -20,16 +20,16 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
 
-A class to convert stamped poses or points into people_msgs/PeoplePoseList.
+A class to convert stamped poses or points into people_msgs_rl/PeoplePoseList.
 
 \section Parameters
   - \b "pose_topic"
         [string] (default: "")
-        If non empty, the PoseStamped topic we will convert to people_msgs/PeoplePoseList.
+        If non empty, the PoseStamped topic we will convert to people_msgs_rl/PeoplePoseList.
 
   - \b "point_topic"
         [string] (default: "")
-        If non empty, the PointStamped topic we will convert to people_msgs/PeoplepointList.
+        If non empty, the PointStamped topic we will convert to people_msgs_rl/PeoplepointList.
         Note both "pose_topic" and "point_topic" can be used at the same time.
 
 \section Subscriptions
@@ -49,7 +49,7 @@ A class to convert stamped poses or points into people_msgs/PeoplePoseList.
 
 #include <geometry_msgs/PoseStamped.h>
 #include <geometry_msgs/PointStamped.h>
-#include <people_msgs/PeoplePoseList.h>
+#include <people_msgs_rl/PeoplePoseList.h>
 #include <ros/ros.h>
 #include <tf/transform_datatypes.h>
 
@@ -60,13 +60,13 @@ std::string method_name = "pose2ppl";
 
 void pose_cb(const geometry_msgs::PoseStamped & msg) {
   ROS_INFO_THROTTLE(1, "pose2ppl:point_cb()");
-  people_msgs::PeoplePoseList ppl;
+  people_msgs_rl::PeoplePoseList ppl;
   ppl.method = method_name;
   ppl.header = msg.header;
   ppl.poses.resize(1);
-  people_msgs::PeoplePose* pp = &(ppl.poses.front());
+  people_msgs_rl::PeoplePose* pp = &(ppl.poses.front());
   pp->header = ppl.header;
-  pp->person_name = people_msgs::PeoplePose::NO_RECOGNITION_MADE;
+  pp->person_name = people_msgs_rl::PeoplePose::NO_RECOGNITION_MADE;
   // pose
   pp->head_pose = msg.pose;
   pp->confidence = 1;
@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
   nh_private.param("point_topic", point_topic, point_topic);
   nh_private.param("method_name", method_name, method_name);
   // make subscribers and publishers
-  ppl_pub = nh_private.advertise<people_msgs::PeoplePoseList>("ppl", 1);
+  ppl_pub = nh_private.advertise<people_msgs_rl::PeoplePoseList>("ppl", 1);
   ros::Subscriber point_sub, pose_sub;
   if (point_topic.size() > 0) {
     point_sub = nh_public.subscribe(point_topic, 1, point_cb);

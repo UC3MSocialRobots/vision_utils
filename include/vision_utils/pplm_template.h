@@ -27,14 +27,14 @@ PeoplePoseListMatcher, also known under the sweet name of PPLM:
 
 \section Services
   - \b "~match_ppl"
-        [people_msgs/MatchPPL]
+        [people_msgs_rl/MatchPPL]
         Match a detected PPL against a reference one.
  */
 #ifndef PPL_MATCHER_H
 #define PPL_MATCHER_H
 
 #include "vision_utils/nano_skill.h"
-#include <people_msgs/MatchPPL.h>
+#include <people_msgs_rl/MatchPPL.h>
 #include <ros/service_server.h>
 #include "vision_utils/ppl_attributes.h"
 
@@ -47,8 +47,8 @@ PeoplePoseListMatcher, also known under the sweet name of PPLM:
 
 class PPLMatcherTemplate : public NanoSkill {
 public:
-  typedef people_msgs::PeoplePose PP;
-  typedef people_msgs::PeoplePoseList PPL;
+  typedef people_msgs_rl::PeoplePose PP;
+  typedef people_msgs_rl::PeoplePoseList PPL;
 
   PPLMatcherTemplate (const std::string & start_topic,
                       const std::string & stop_topic)
@@ -72,8 +72,8 @@ public:
    */
   virtual bool match(const PPL & new_ppl, const PPL & tracks,
                      std::vector<double> & costs,
-                     std::vector<people_msgs::PeoplePoseAttributes> & new_ppl_added_attributes,
-                     std::vector<people_msgs::PeoplePoseAttributes> & tracks_added_attributes) = 0;
+                     std::vector<people_msgs_rl::PeoplePoseAttributes> & new_ppl_added_attributes,
+                     std::vector<people_msgs_rl::PeoplePoseAttributes> & tracks_added_attributes) = 0;
 
   //////////////////////////////////////////////////////////////////////////////
 
@@ -117,8 +117,8 @@ private:
   //////////////////////////////////////////////////////////////////////////////
 
   //! callback for the service
-  virtual bool match_cb(people_msgs::MatchPPL::Request& request,
-                        people_msgs::MatchPPL::Response& response) {
+  virtual bool match_cb(people_msgs_rl::MatchPPL::Request& request,
+                        people_msgs_rl::MatchPPL::Response& response) {
     unsigned int npps = request.new_ppl.poses.size(),
         ntracks = request.tracks.poses.size();
     response.new_ppl_added_attributes.resize(npps);

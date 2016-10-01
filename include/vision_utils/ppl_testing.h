@@ -28,7 +28,7 @@ ________________________________________________________________________________
 
 #include <gtest/gtest.h>
 // AD
-#include <people_msgs/PeoplePoseList.h>
+#include <people_msgs_rl/PeoplePoseList.h>
 #include "vision_utils/utils/string_casts_stl.h"
 #include "vision_utils/utils/pt_utils.h"
 #include "vision_utils/utils/assignment_utils.h"
@@ -40,7 +40,7 @@ namespace ppl_utils {
 
 
 template<class Pt3>
-inline void ppl_factory(people_msgs::PeoplePoseList & ppl,
+inline void ppl_factory(people_msgs_rl::PeoplePoseList & ppl,
                         const std::vector<Pt3> & exp_users_pos,
                         double pos_error_std_dev = 0,
                         ros::Time stamp = ros::Time::now()) {
@@ -48,7 +48,7 @@ inline void ppl_factory(people_msgs::PeoplePoseList & ppl,
   ppl.header.stamp = stamp;
   ppl.poses.clear();
   for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx) {
-    people_msgs::PeoplePose pp;
+    people_msgs_rl::PeoplePose pp;
     pp.header = ppl.header;
     pp.person_name = string_utils::cast_to_string(user_idx);
     pp.std_dev = .1;
@@ -61,8 +61,8 @@ inline void ppl_factory(people_msgs::PeoplePoseList & ppl,
 
 ////////////////////////////////////////////////////////////////////////////////
 
-inline void check_ppl_equals(const people_msgs::PeoplePoseList & truth_ppl,
-                             const people_msgs::PeoplePoseList & tracks_ppl,
+inline void check_ppl_equals(const people_msgs_rl::PeoplePoseList & truth_ppl,
+                             const people_msgs_rl::PeoplePoseList & tracks_ppl,
                              double pos_error_std_dev = 0) {
   unsigned int ntracks = tracks_ppl.poses.size();
   ASSERT_TRUE(truth_ppl.poses.size() == ntracks);
@@ -80,7 +80,7 @@ inline void check_ppl_equals(const people_msgs::PeoplePoseList & truth_ppl,
   for (unsigned int match_idx = 0; match_idx < matchlist_truth2track.size(); ++match_idx) {
     assignment_utils::Match match = matchlist_truth2track[match_idx];
     int truth_idx = match.first, track_idx = match.second;
-    const people_msgs::PeoplePose *truth_pp = &(truth_ppl.poses[truth_idx]),
+    const people_msgs_rl::PeoplePose *truth_pp = &(truth_ppl.poses[truth_idx]),
         *track_pp = &(tracks_ppl.poses[track_idx]);
     // check 3D position
     double dist = geometry_utils::distance_points3

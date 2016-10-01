@@ -53,22 +53,22 @@ and evaluates the mean error of each PPL method.
 
 \section Subscriptions
   - \b {ground_truth_ppl_topic}
-        [people_msgs::PeoplePoseList]
+        [people_msgs_rl::PeoplePoseList]
         The truth PPL, see above.
 
   - \b {ppl_topics}
-        [people_msgs::PeoplePoseList]
+        [people_msgs_rl::PeoplePoseList]
         One or several computed PPL, see above.
 
 \section Publications
   - \b "~ppl"
-        [people_msgs::PeoplePoseList]
+        [people_msgs_rl::PeoplePoseList]
         The detected users in the mask
  */
 #ifndef PPL_BENCHMARKER_H
 #define PPL_BENCHMARKER_H
 
-#include <people_msgs/PeoplePoseList.h>
+#include <people_msgs_rl/PeoplePoseList.h>
 #include "vision_utils/utils/multi_subscriber.h"
 #include "vision_utils/utils/pt_utils.h"
 #include "vision_utils/utils/timer.h"
@@ -79,8 +79,8 @@ and evaluates the mean error of each PPL method.
 
 class PPLBenchmarker {
 public:
-  typedef people_msgs::PeoplePose PP;
-  typedef people_msgs::PeoplePoseList PPL;
+  typedef people_msgs_rl::PeoplePose PP;
+  typedef people_msgs_rl::PeoplePoseList PPL;
   typedef std::string MethodName;
   typedef std::string UserName;
   typedef geometry_utils::FooPoint3f Pt3f;
@@ -195,7 +195,7 @@ public:
       e->true_positive++;
       // printf("%s: Checking labels...\n", method_name.c_str());
       UserName curr_label = msg->poses[detec_idx].person_name;
-      if (curr_label == people_msgs::PeoplePose::NO_RECOGNITION_MADE)
+      if (curr_label == people_msgs_rl::PeoplePose::NO_RECOGNITION_MADE)
         continue;
       UserName real_label = _last_ground_truth_ppl.poses[truth_idx].person_name;
       // determine expected label

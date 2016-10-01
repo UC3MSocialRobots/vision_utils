@@ -28,13 +28,13 @@ Some useful functions for processing PeoplePoseList messages.
 #define ppl_utils_H
 
 // msg
-#include <people_msgs/PeoplePoseList.h>
+#include <people_msgs_rl/PeoplePoseList.h>
 #include <sstream>
 
 namespace ppl_utils {
 
 template<class Pt3>
-inline std::vector<Pt3> ppvec2points(const std::vector<people_msgs::PeoplePose> & ppvec) {
+inline std::vector<Pt3> ppvec2points(const std::vector<people_msgs_rl::PeoplePose> & ppvec) {
   unsigned int nusers = ppvec.size();
   std::vector<Pt3> ans(nusers);
   for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx) {
@@ -50,13 +50,13 @@ inline std::vector<Pt3> ppvec2points(const std::vector<people_msgs::PeoplePose> 
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class Pt3>
-inline std::vector<Pt3> ppl2points(const people_msgs::PeoplePoseList & ppl) {
+inline std::vector<Pt3> ppl2points(const people_msgs_rl::PeoplePoseList & ppl) {
   return ppvec2points<Pt3>(ppl.poses);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-inline std::vector<std::string> ppl2names(const people_msgs::PeoplePoseList & ppl) {
+inline std::vector<std::string> ppl2names(const people_msgs_rl::PeoplePoseList & ppl) {
   unsigned int nusers = ppl.poses.size();
   std::vector<std::string> ans(nusers);
   for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx)
@@ -66,7 +66,7 @@ inline std::vector<std::string> ppl2names(const people_msgs::PeoplePoseList & pp
 
 ////////////////////////////////////////////////////////////////////////////////
 
-std::string pp2string(const people_msgs::PeoplePose & pp,
+std::string pp2string(const people_msgs_rl::PeoplePose & pp,
                       unsigned int precision = 3,
                       bool print_last_update = true) {
   std::ostringstream out;
@@ -92,7 +92,7 @@ std::string pp2string(const people_msgs::PeoplePose & pp,
 
 ////////////////////////////////////////////////////////////////////////////////
 
-std::string ppl2string(const people_msgs::PeoplePoseList & ppl,
+std::string ppl2string(const people_msgs_rl::PeoplePoseList & ppl,
                        unsigned int precision = 3,
                        bool print_last_update = true) {
   if (ppl.poses.empty())

@@ -46,7 +46,7 @@ Both start and stop topics are parameters given to the constructor of the class.
 
 \section Publications
   - \b "~ppl"
-        [people_msgs::PeoplePoseList]
+        [people_msgs_rl::PeoplePoseList]
         The detected users in the mask
  */
 #ifndef TEMPLATE2PPL_H
@@ -54,7 +54,7 @@ Both start and stop topics are parameters given to the constructor of the class.
 
 // msg
 #include "vision_utils/nano_skill.h"
-#include <people_msgs/PeoplePoseList.h>
+#include <people_msgs_rl/PeoplePoseList.h>
 #include <std_msgs/Int16.h>
 
 #ifndef DEBUG_PRINT
@@ -66,7 +66,7 @@ Both start and stop topics are parameters given to the constructor of the class.
 
 class PPLPublisherTemplate : public NanoSkill {
 public:
-  typedef people_msgs::PeoplePoseList PPL;
+  typedef people_msgs_rl::PeoplePoseList PPL;
 
   PPLPublisherTemplate(const std::string & start_topic,
                        const std::string & stop_topic) :

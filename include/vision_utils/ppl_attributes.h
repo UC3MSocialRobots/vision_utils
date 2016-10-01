@@ -27,14 +27,14 @@ ________________________________________________________________________________
 #define PPL_ATTRIBUTES_H
 
 // msg
-#include <people_msgs/PeoplePoseList.h>
+#include <people_msgs_rl/PeoplePoseList.h>
 // AD
 #include "vision_utils/utils/string_casts.h"
 
 namespace ppl_utils {
 
 //! \return false if the number of attribute names and values are different
-bool check_attributes_not_corrupted(const people_msgs::PeoplePoseAttributes & attrs) {
+bool check_attributes_not_corrupted(const people_msgs_rl::PeoplePoseAttributes & attrs) {
   if (attrs.names.size() == attrs.values.size())
     return true;
   printf("Pose attributes corrupted, %i names, %i values!\n",
@@ -43,14 +43,14 @@ bool check_attributes_not_corrupted(const people_msgs::PeoplePoseAttributes & at
 }
 
 //! \return false if the number of attribute names and values are different
-bool check_attributes_not_corrupted(const people_msgs::PeoplePose & pose) {
+bool check_attributes_not_corrupted(const people_msgs_rl::PeoplePose & pose) {
   return check_attributes_not_corrupted(pose.attributes);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class T>
-bool set_attribute(people_msgs::PeoplePoseAttributes & attrs,
+bool set_attribute(people_msgs_rl::PeoplePoseAttributes & attrs,
                    const std::string & attr_name,
                    const T & attr_value) {
   if (!check_attributes_not_corrupted(attrs))
@@ -73,7 +73,7 @@ bool set_attribute(people_msgs::PeoplePoseAttributes & attrs,
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class T>
-bool set_attribute(people_msgs::PeoplePose & pose,
+bool set_attribute(people_msgs_rl::PeoplePose & pose,
                    const std::string & attr_name, const T & attr_value) {
   return set_attribute<T>(pose.attributes, attr_name, attr_value);
 }
@@ -81,7 +81,7 @@ bool set_attribute(people_msgs::PeoplePose & pose,
 ////////////////////////////////////////////////////////////////////////////////
 
 //! \return true if the pose has a valid attribute with name \arg attr_name
-bool has_attribute(const people_msgs::PeoplePose & pose,
+bool has_attribute(const people_msgs_rl::PeoplePose & pose,
                    const std::string & attr_name) {
   if (!check_attributes_not_corrupted(pose))
     return false;
@@ -93,7 +93,7 @@ bool has_attribute(const people_msgs::PeoplePose & pose,
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class T>
-bool get_attribute_readonly(const people_msgs::PeoplePose & pose,
+bool get_attribute_readonly(const people_msgs_rl::PeoplePose & pose,
                             const std::string & attr_name,
                             T & attr_value) {
   if (!check_attributes_not_corrupted(pose))
@@ -112,8 +112,8 @@ bool get_attribute_readonly(const people_msgs::PeoplePose & pose,
 
 ////////////////////////////////////////////////////////////////////////////////
 
-bool copy_attributes(const people_msgs::PeoplePoseAttributes & src,
-                     people_msgs::PeoplePoseAttributes & dst) {
+bool copy_attributes(const people_msgs_rl::PeoplePoseAttributes & src,
+                     people_msgs_rl::PeoplePoseAttributes & dst) {
   if (!check_attributes_not_corrupted(src) || !check_attributes_not_corrupted(dst))
     return false;
   // copy all other attributes
@@ -129,13 +129,13 @@ bool copy_attributes(const people_msgs::PeoplePoseAttributes & src,
 
 ////////////////////////////////////////////////////////////////////////////////
 
-bool copy_attributes(const people_msgs::PeoplePose & pp_src,
-                     people_msgs::PeoplePose & pp_dst) {
+bool copy_attributes(const people_msgs_rl::PeoplePose & pp_src,
+                     people_msgs_rl::PeoplePose & pp_dst) {
   return copy_attributes(pp_src.attributes, pp_dst.attributes);
 } // end copy_attributes()
 
-bool copy_attributes(const std::vector<people_msgs::PeoplePoseAttributes> & attrs_src,
-                     people_msgs::PeoplePoseList & ppl_dst) {
+bool copy_attributes(const std::vector<people_msgs_rl::PeoplePoseAttributes> & attrs_src,
+                     people_msgs_rl::PeoplePoseList & ppl_dst) {
   unsigned int nppls = attrs_src.size();
   if (ppl_dst.poses.size() != nppls) {
     printf("copy_attributes(): cannot copy, attributes vector of size %i,"

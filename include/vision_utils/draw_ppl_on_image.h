@@ -27,7 +27,7 @@ ________________________________________________________________________________
 #define DRAW_PPL_ON_IMAGE_H
 
 // msg
-#include <people_msgs/PeoplePoseList.h>
+#include <people_msgs_rl/PeoplePoseList.h>
 #include "vision_utils/drawing_utils.h"
 #include "vision_utils/utils/pt_utils.h"
 
@@ -45,7 +45,7 @@ namespace ppl_utils {
  * \param color
  * \param thickness
  */
-void draw_ppl_on_image(const people_msgs::PeoplePoseList & list,
+void draw_ppl_on_image(const people_msgs_rl::PeoplePoseList & list,
                        const image_geometry::PinholeCameraModel rgb_camera_model,
                        cv::Mat & out,
                        cv::Scalar color = CV_RGB(0, 255, 0),

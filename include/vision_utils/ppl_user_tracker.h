@@ -31,7 +31,7 @@ at any time.
 #define PPL_USER_TRACKER_H
 
 // msg
-#include <people_msgs/PeoplePoseList.h>
+#include <people_msgs_rl/PeoplePoseList.h>
 #include "vision_utils/utils/foo_point.h"
 
 namespace ppl_utils {
@@ -46,7 +46,7 @@ inline double dist3sq(const P3a & a, const P3b & b) {
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class Pt3>
-int get_closest_pp(const people_msgs::PeoplePoseList & ppl,
+int get_closest_pp(const people_msgs_rl::PeoplePoseList & ppl,
                    const Pt3 & center) {
   unsigned int npeople = ppl.poses.size();
   if (!npeople) {
@@ -70,7 +70,7 @@ int get_closest_pp(const people_msgs::PeoplePoseList & ppl,
 class PPLUserTracker {
 public:
   typedef geometry_utils::FooPoint3d Pt3;
-  typedef people_msgs::PeoplePoseList PPL;
+  typedef people_msgs_rl::PeoplePoseList PPL;
 
   PPLUserTracker() {}
 

@@ -28,7 +28,7 @@ Some useful functions for testing PPLPublisherTemplate-based classes.
 
 // Bring in gtest
 #include <gtest/gtest.h>
-// people_msgs
+// people_msgs_rl
 #include "vision_utils/pplp_template.h"
 #include "vision_utils/images2ppl.h"
 #include "vision_utils/kinect_openni_utils.h"
@@ -228,7 +228,7 @@ void ppl_vs_user_benchmark(MyPPLPublisherTemplate & skill,
 
     // check the new PPL has the same header
     ASSERT_TRUE_TIMEOUT(skill.get_ppl_published_nb() == n_ppl_before+1, max_time_alloted);
-    const people_msgs::PeoplePoseList* ppl = &(skill.get_last_PPL());
+    const people_msgs_rl::PeoplePoseList* ppl = &(skill.get_last_PPL());
     ASSERT_TRUE(header.stamp == ppl->header.stamp && header.frame_id == ppl->header.frame_id)
         << "header:" << header << ", ppl->header:" << ppl->header;
 

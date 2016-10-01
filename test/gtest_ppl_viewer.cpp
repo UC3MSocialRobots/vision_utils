@@ -124,7 +124,7 @@ void test_publish(std::string filename_prefix = IMG_DIR "depth/juggling1",
     unsigned int nmethods = (use_2_ppl_methods ? 2 : 1),
         nppls_per_method = (generate_path ? 12 : 1),
         theta_incr = 360/nppls_per_method;
-    people_msgs::PeoplePoseList ppl = ppl_conv.get_ppl();
+    people_msgs_rl::PeoplePoseList ppl = ppl_conv.get_ppl();
     std::string method1 = ppl.method, method2 = "new_method";
     for (unsigned int theta = 0; theta < 360; theta += theta_incr) {
       for (unsigned int method = 1; method <= nmethods; ++method) {
@@ -202,7 +202,7 @@ void test_image_no_image(std::string filename_prefix = IMG_DIR "depth/juggling1"
   for (unsigned int time_idx = 0; time_idx < 5; ++time_idx) {
     printf("test_image_no_image(): time_idx:%i\n", time_idx);
     ASSERT_TRUE(ppl_conv.convert(rgb, depth, exp_masks));
-    people_msgs::PeoplePoseList ppl = ppl_conv.get_ppl();
+    people_msgs_rl::PeoplePoseList ppl = ppl_conv.get_ppl();
     ppl_pub.publish(ppl);
 
     // check the PPLViewer got the emitted PPL
@@ -218,7 +218,7 @@ void test_image_no_image(std::string filename_prefix = IMG_DIR "depth/juggling1"
 
     // now re-emit without image
     for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx) {
-      people_msgs::PeoplePose* pp = &(ppl.poses[user_idx]);
+      people_msgs_rl::PeoplePose* pp = &(ppl.poses[user_idx]);
       pp->rgb.height = pp->rgb.width = 0;
       pp->depth.height = pp->depth.width = 0;
       pp->user.height = pp->user.width = 0;
