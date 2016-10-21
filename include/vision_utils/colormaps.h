@@ -39,7 +39,7 @@ typedef cv::Scalar (*RatioColormap)(const double &);
 
 //! \return always black
 template<class Color4_255>
-Color4_255 ratio2black_(const double & ratio) {
+Color4_255 ratio2black_(const double & /*ratio*/) {
   return Color4_255(0, 0, 0, 0);
 }
 //! template specialization for cv::Scalar

@@ -30,7 +30,7 @@ and \b mini_stage_plugins namespace.
 #include <vision_utils/img_path.h>
 #include "vision_utils/utils/timer.h"
 #include "vision_utils/utils/map_utils.h"
-#include "test/matrix_testing.h"
+#include "vision_utils/utils/matrix_testing.h"
 #include "vision_utils/user_image_to_rgb.h"
 
 #define GRAYSCALE CV_LOAD_IMAGE_GRAYSCALE

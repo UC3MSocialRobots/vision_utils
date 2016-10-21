@@ -87,7 +87,8 @@ protected:
     XnStatus nRetVal;
     nRetVal = context.Init();
     CHECK_RC(nRetVal, "Init");
-    nRetVal = context.OpenFileRecording(filename.c_str());
+    xn::ProductionNode node;
+    nRetVal = context.OpenFileRecording(filename.c_str(), node);
     //nRetVal = xnContextOpenFileRecordingEx(&context, filename.c_str());
     CHECK_RC(nRetVal, "Open input file");
 

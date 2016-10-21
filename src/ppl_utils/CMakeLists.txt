@@ -18,7 +18,6 @@ add_executable(ppl_viewer.exe
   ppl_viewer.cpp
   ../../include/vision_utils/ppl_viewer.h
   ../../include/vision_utils/ppl2ms.h
-  ../../include/vision_utils/mini_stage_plugins.h
 )
 target_link_libraries(ppl_viewer.exe
   ${catkin_LIBRARIES})

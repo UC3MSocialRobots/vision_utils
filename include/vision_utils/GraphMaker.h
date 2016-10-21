@@ -13,6 +13,7 @@
 // openCV
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 // std
 #include <vector>
 
@@ -201,7 +202,7 @@ inline void GraphMaker<Xtype, Ytype>::draw_axes(const cv::Scalar & axes_color) {
      * x axis
      */
     int x_axe_y = convert_coord_y(0);
-    line(image, cv::Point(0, x_axe_y), cv::Point(image.cols, x_axe_y),
+    cv::line(image, cv::Point(0, x_axe_y), cv::Point(image.cols, x_axe_y),
          axes_color);
     // ticks
     int x_tick_y = (x_axe_y < 0 || x_axe_y > image.rows - 50 ? 0 : x_axe_y);

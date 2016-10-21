@@ -25,7 +25,7 @@ Some simple tests for the NanoSkill skill template.
 #include <gtest/gtest.h>
 #include "vision_utils/nano_skill.h"
 #include "vision_utils/utils/timer.h"
-#include <ros_utils/rosmaster_alive.h>
+#include <vision_utils/utils/rosmaster_alive.h>
 #define ASSERT_TRUE_TIMEOUT(cond, timeout) { Timer timer; while (timer.getTimeSeconds() < timeout && !(cond)) usleep(50 * 1000); } ASSERT_TRUE(cond)
 
 class FooNanoSkill : public NanoSkill {
@@ -48,7 +48,7 @@ public:
 
   //////////////////////////////////////////////////////////////////////////////
 
-  inline void tacto_cb(const std_msgs::Int16ConstPtr & msg) {
+  inline void tacto_cb(const std_msgs::Int16ConstPtr & /*msg*/) {
     ++_ntacto_received;
   }
 

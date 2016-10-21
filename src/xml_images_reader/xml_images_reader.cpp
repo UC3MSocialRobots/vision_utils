@@ -77,7 +77,7 @@ bool XmlImagesReader::parse_doc() {
   // get the images nodes
   _file_nodes.clear(); // clear previous data
   _doc.get_all_nodes_at_direction(_doc.root(), "images.image", _file_nodes);
-  printf("Found %i files\n", get_nb_files());
+  printf("Found %li files\n", get_nb_files());
 
   // init the current file
   _current_file_idx  = 0;

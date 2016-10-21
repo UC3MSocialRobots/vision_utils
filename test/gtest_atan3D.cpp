@@ -25,7 +25,7 @@ ________________________________________________________________________________
 // Bring in gtest
 #include <gtest/gtest.h>
 #include "vision_utils/atan3D.h"
-#include <ros_utils/rosmaster_alive.h>
+#include <vision_utils/utils/rosmaster_alive.h>
 
 void test_convert3Dto2D(ros::NodeHandle & nh_private,
                         ReprojectionMode & mode,

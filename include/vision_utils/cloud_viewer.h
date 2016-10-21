@@ -27,7 +27,7 @@ Some useful functions for visualizing point clouds
 #ifndef CLOUD_VIEWER_H
 #define CLOUD_VIEWER_H
 
-#include "vision_utils/cloud_viewer.h"
+#include "pcl/visualization/pcl_visualizer.h"
 #include <opencv2/core/core.hpp>
 
 namespace cloud_viewer {

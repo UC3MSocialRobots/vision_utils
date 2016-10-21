@@ -86,7 +86,7 @@ public:
   template<class Vec>
   bool apply_on_vec(Vec & v) {
     if (v.size() != size()) {
-      printf("Order:apply_on_vec(): incorrect sizes:%i != %i!\n", v.size(), size());
+      printf("Order:apply_on_vec(): incorrect sizes:%li != %li!\n", v.size(), size());
       return false;
     }
     reorder(this->begin(), this->end(), v.begin());

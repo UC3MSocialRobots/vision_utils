@@ -4,6 +4,7 @@
 #include "vision_utils/color_utils.h"
 #include "vision_utils/utils/error.h"
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 ////////////////////////////////////////////////////////////////////////////////
 

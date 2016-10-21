@@ -113,7 +113,7 @@ inline void test_paste_image(const cv::Mat & bg, const cv::Mat & fg) {
 
 template<class _T>
 inline void test_paste_images(const std::vector<cv::Mat_<_T> > & imgs) {
-  printf("test_paste_images(%i images)\n", imgs.size());
+  printf("test_paste_images(%li images)\n", imgs.size());
   const int width1 = 100;
   const int height1 = 100;
   for (unsigned int horiz_idx = 0; horiz_idx < 2; ++horiz_idx) {

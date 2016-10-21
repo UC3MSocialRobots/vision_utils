@@ -439,7 +439,7 @@ inline void test_vector() {
   for (unsigned int col = 0; col < 10000; ++col) {
     vec.push_back(1.f * col);
   } // end loop col
-  printf("\ntest_vector(size:%i)\n", vec.size());
+  printf("\ntest_vector(size:%li)\n", vec.size());
 
 
   Timer timer;

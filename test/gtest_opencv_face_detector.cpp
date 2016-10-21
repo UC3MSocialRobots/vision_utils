@@ -32,7 +32,7 @@ void detect_one_pic(const std::string filename,
          resize_max_width, resize_max_height, scale_factor, min_neighbors, min_width);
   timer.printTime_factor("detect_with_opencv", ntimes);
   // draw them
-  printf("Found %i faces!\n", res.size());
+  printf("Found %li faces!\n", res.size());
   for (unsigned int idx = 0; idx < res.size(); ++idx) {
     cv::Rect* curr_elt = &(res[idx]);
     cv::rectangle(img_gp, *curr_elt, CV_RGB(255, 0, 0), 2);
@@ -54,7 +54,7 @@ void detect_save_all_files_in_folder(const std::string & folder) {
 
   for (unsigned int file_idx = 0; file_idx < files.size(); ++file_idx) {
     if (file_idx % 50 == 0)
-      printf("detect_save_all_files_in_folder(): read %i files out of %i\n",
+      printf("detect_save_all_files_in_folder(): read %i files out of %li\n",
              file_idx, files.size());
 
     cv::Mat3b frame = cv::imread(files[file_idx]);

@@ -29,7 +29,8 @@ Tests for the histogram_utils namespace.
 // AD
 #include "vision_utils/histogram_utils.h"
 #include "vision_utils/utils/timer.h"
-#include <test/matrix_testing.h>
+#include "vision_utils/utils/matrix_testing.h"
+
 #include <vision_utils/img_path.h>
 // kinect
 #include "vision_utils/user_image_to_rgb.h"

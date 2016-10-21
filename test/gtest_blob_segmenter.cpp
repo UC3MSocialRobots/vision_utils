@@ -26,7 +26,7 @@ ________________________________________________________________________________
 // Bring in gtest
 #include <gtest/gtest.h>
 #include "vision_utils/utils/timer.h"
-#include "test/matrix_testing.h"
+#include "vision_utils/utils/matrix_testing.h"
 #include "vision_utils/blob_segmenter.h"
 #include "vision_utils/user_image_to_rgb.h"
 #include <vision_utils/img_path.h>

@@ -74,14 +74,14 @@ ________________________________________________________________________________
 #ifndef PPL_VIEWER_H
 #define PPL_VIEWER_H
 
-#include "vision_utils/utils/multi_subscriber.h"
-#include "vision_utils/utils/pt_utils.h"
-#include "vision_utils/utils/laser_utils.h"
-#include "vision_utils/utils/timestamp.h"
-#include "vision_utils/utils/map_utils.h"
 #include "vision_utils/color_utils.h"
 #include "vision_utils/ppl2ms.h"
-#include "vision_utils/mini_stage_plugins.h"
+#include "vision_utils/utils/laser_utils.h"
+#include "vision_utils/utils/map_utils.h"
+#include "vision_utils/utils/multi_subscriber.h"
+#include "vision_utils/utils/pt_utils.h"
+#include "vision_utils/utils/timestamp.h"
+#include "cvstage/plugins/draw_xy_lines.h"
 // ROS
 #include <sensor_msgs/LaserScan.h>
 
@@ -173,7 +173,7 @@ protected:
       //                                           _frame,
       //                                           _pts_dst_frame,
       //                                           scan_z_dst_frame)) {
-      mini_stage_plugins::plot_xy_pts(_ms, _pts_src_frame, CV_RGB(255,0,0), 2);
+      cvstage_plugins::plot_xy_pts(_ms, _pts_src_frame, CV_RGB(255,0,0), 2);
     }
     save_images_and_display();
   } // end draw_new_ppl();

@@ -27,7 +27,8 @@ ________________________________________________________________________________
 #include <gtest/gtest.h>
 // AD
 #include <vision_utils/img_path.h>
-#include "test/matrix_testing.h"
+#include "vision_utils/utils/matrix_testing.h"
+
 #include "vision_utils/drawing_utils.h"
 #include "vision_utils/utils/timer.h"
 
@@ -156,9 +157,9 @@ TEST(TestSuite, resize_constrain_proportions) {
 
 inline void test_paste_image(const cv::Mat & bg, const cv::Mat & fg) {
   printf("test_paste_image() - use keys to move foreground image\n");
-  int fg_x = (bg.cols - fg.cols) / 2, fg_y = (bg.rows - fg.rows) / 2;
-  cv::Mat pasted;
 #ifdef DISPLAY
+  cv::Mat pasted;
+  int fg_x = (bg.cols - fg.cols) / 2, fg_y = (bg.rows - fg.rows) / 2;
   while (true) {
     bg.copyTo(pasted);
     image_utils::paste_img(fg, pasted, fg_x, fg_y);

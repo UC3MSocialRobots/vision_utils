@@ -24,7 +24,7 @@ Tests for PPLPublisherTemplate
 
  */
 #include "vision_utils/pplp_testing.h"
-#include <ros_utils/rosmaster_alive.h>
+#include <vision_utils/utils/rosmaster_alive.h>
 
 class Foo2PPL : public PPLPublisherTemplate {
 public:

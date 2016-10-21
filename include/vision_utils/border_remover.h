@@ -3,6 +3,7 @@
 
 #include "vision_utils/utils/debug_utils.h"
 #include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 namespace image_utils {
 

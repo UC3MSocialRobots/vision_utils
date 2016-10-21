@@ -33,7 +33,7 @@ Some useful classes for benchmarking PPLMatcherTemplate children classes.
 #include "vision_utils/utils/assignment_utils.h"
 #include "vision_utils/images2ppl.h"
 #include "vision_utils/utils/timer.h"
-#include <ros_utils/rosmaster_alive.h>
+#include <vision_utils/utils/rosmaster_alive.h>
 #include <vision_utils/img_path.h>
 
 #define ASSERT_TRUE_TIMEOUT(cond, timeout) { Timer timer; while (timer.getTimeSeconds() < timeout && !(cond)) usleep(50 * 1000); } ASSERT_TRUE(cond)

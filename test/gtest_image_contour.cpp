@@ -25,6 +25,7 @@ Some tests for class \b Imagecontour
  */
 // Bring in gtest
 #include <gtest/gtest.h>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include "vision_utils/image_contour.h"
 #include "vision_utils/utils/timer.h"
@@ -40,8 +41,8 @@ void check_sizes(ImageContour & contour,
 }
 
 void set_point_empty_C4(ImageContour & contour, int row, int col,
-                        unsigned int expected_contour_size,
-                        unsigned int expected_inner_size)
+                        unsigned int /*expected_contour_size*/,
+                        unsigned int /*expected_inner_size*/)
 {
   contour.set_point_empty_C4(row, col); // up left
   ASSERT_TRUE(contour(row, col) == ImageContour::EMPTY) << "contour" << contour.to_string();

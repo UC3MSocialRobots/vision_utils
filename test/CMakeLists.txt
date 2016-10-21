@@ -50,11 +50,6 @@ catkin_add_gtest     (gtest_drawing_utils
   ../include/vision_utils/drawing_utils.h)
 target_link_libraries(gtest_drawing_utils ${catkin_LIBRARIES})
 
-catkin_add_gtest     (gtest_ellipse_utils
-  gtest_ellipse_utils.cpp
-  ../include/vision_utils/ellipse_utils.h)
-TARGET_LINK_LIBRARIES(gtest_ellipse_utils  ${catkin_LIBRARIES})
-
 catkin_add_gtest     (gtest_filename_prefix2imgs
   gtest_filename_prefix2imgs.cpp
   ../include/vision_utils/filename_prefix2imgs.h
@@ -66,7 +61,7 @@ catkin_add_gtest     (gtest_google_images_search
   gtest_google_images_search.cpp
   ../include/vision_utils/google_images_search.h
   TIMEOUT 300.0) # 3 minutes
-TARGET_LINK_LIBRARIES(gtest_google_images_search  ${catkin_LIBRARIES})
+TARGET_LINK_LIBRARIES(gtest_google_images_search  ${catkin_LIBRARIES} visionutils_translator)
 
 catkin_add_gtest     (gtest_GraphMaker  gtest_GraphMaker.cpp)
 TARGET_LINK_LIBRARIES(gtest_GraphMaker  ${catkin_LIBRARIES})
@@ -121,9 +116,6 @@ catkin_add_gtest     (gtest_mask_acceleration
   ../include/vision_utils/mask_acceleration.h)
 TARGET_LINK_LIBRARIES(gtest_mask_acceleration ${catkin_LIBRARIES})
 
-catkin_add_gtest     (gtest_mini_stage  gtest_mini_stage.cpp)
-TARGET_LINK_LIBRARIES(gtest_mini_stage  ${catkin_LIBRARIES})
-
 catkin_add_gtest     (gtest_nano_skill
   gtest_nano_skill.cpp
   ../include/vision_utils/nano_skill.h)
@@ -131,7 +123,7 @@ target_link_libraries(gtest_nano_skill ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_ocr_utils
   gtest_ocr_utils.cpp)
-TARGET_LINK_LIBRARIES(gtest_ocr_utils  OcrUtils translator ${catkin_LIBRARIES})
+TARGET_LINK_LIBRARIES(gtest_ocr_utils  OcrUtils ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_opencv_face_detector  gtest_opencv_face_detector.cpp)
 TARGET_LINK_LIBRARIES(gtest_opencv_face_detector  ${catkin_LIBRARIES})

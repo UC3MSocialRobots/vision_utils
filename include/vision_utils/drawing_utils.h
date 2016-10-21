@@ -549,7 +549,7 @@ void paste_images(const std::vector<cv::Mat_<_T> > & imgs,
 
   bool use_masks = (masks.size() > 0);
   if (use_masks && nimgs != masks.size()) {
-    printf("paste_images(): Wrong number of masks: %i != %i\n", nimgs, masks.size());
+    printf("paste_images(): Wrong number of masks: %i != %li\n", nimgs, masks.size());
     return;
   }
 

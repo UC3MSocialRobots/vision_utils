@@ -25,7 +25,7 @@ Tests for PPLPublisherTemplate
  */
 #include "vision_utils/rgb_depth_pplp_template.h"
 #include "vision_utils/pplp_testing.h"
-#include <ros_utils/rosmaster_alive.h>
+#include <vision_utils/utils/rosmaster_alive.h>
 
 class RgbDepthFoo2PPL : public RgbDepthPPLPublisherTemplate {
 public:

@@ -33,8 +33,10 @@ retrieve similar images, etc.
 // CURL
 #include <curl/curl.h>
 // utils
+#include "vision_utils/utils/string_web_retrieve.h"
 #include "vision_utils/utils/system_utils.h"
 #include "vision_utils/utils/timer.h"
+#include "vision_utils/utils/timestamp.h"
 
 namespace image_utils {
 

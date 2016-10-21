@@ -98,7 +98,7 @@ protected:
                                              unsigned int ntracks) {
     if (costs.size() != ncurr_users * ntracks) {
       printf("PPLMatcherTemplate::costs_vec2string(): "
-             "costs of incorrect size %i (should be %i)!\n",
+             "costs of incorrect size %li (should be %i)!\n",
              costs.size(), ncurr_users * ntracks);
       return "";
     }

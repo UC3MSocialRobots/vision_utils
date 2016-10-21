@@ -37,7 +37,7 @@ namespace ppl_utils {
 bool check_attributes_not_corrupted(const people_msgs_rl::PeoplePoseAttributes & attrs) {
   if (attrs.names.size() == attrs.values.size())
     return true;
-  printf("Pose attributes corrupted, %i names, %i values!\n",
+  printf("Pose attributes corrupted, %li names, %li values!\n",
          attrs.names.size(), attrs.values.size());
   return false;
 }
@@ -139,7 +139,7 @@ bool copy_attributes(const std::vector<people_msgs_rl::PeoplePoseAttributes> & a
   unsigned int nppls = attrs_src.size();
   if (ppl_dst.poses.size() != nppls) {
     printf("copy_attributes(): cannot copy, attributes vector of size %i,"
-           "dest PPL of size %i\n", nppls, ppl_dst.poses.size());
+           "dest PPL of size %li\n", nppls, ppl_dst.poses.size());
   }
   for (unsigned int i = 0; i < nppls; ++i) {
     if (!copy_attributes(attrs_src[i], ppl_dst.poses[i].attributes))

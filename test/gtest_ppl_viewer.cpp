@@ -31,7 +31,7 @@ Some tests for PPLViewer
 #include "vision_utils/images2ppl.h"
 #include "vision_utils/utils/timer.h"
 #include <vision_utils/img_path.h>
-#include <ros_utils/rosmaster_alive.h>
+#include <vision_utils/utils/rosmaster_alive.h>
 
 #define MYTIMEOUT 5 // seconds
 #define WAIT_WHILE(cond, timeout) { Timer timer; while (timer.getTimeSeconds() < timeout && (cond)) usleep(50 * 1000); }

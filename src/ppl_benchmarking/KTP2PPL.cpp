@@ -163,7 +163,7 @@ protected:
           std::sort(_files[currfile].usersdata.begin(),_files[currfile].usersdata.end());
 
       } // end loop line_idx
-      printf("KTP2Imgs: %i files after reading '%s' \n", _files.size(), filename.c_str());
+      printf("KTP2Imgs: %li files after reading '%s' \n", _files.size(), filename.c_str());
     } // end loop file
 
     // print first example

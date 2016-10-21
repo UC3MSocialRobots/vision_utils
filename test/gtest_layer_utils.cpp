@@ -26,7 +26,7 @@ ________________________________________________________________________________
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
 #include "vision_utils/layer_utils.h"
-#include "test/matrix_testing.h"
+#include "vision_utils/utils/matrix_testing.h"
 #include "vision_utils/utils/timer.h"
 #include <vision_utils/img_path.h>
 

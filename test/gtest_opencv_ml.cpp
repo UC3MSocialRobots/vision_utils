@@ -25,7 +25,7 @@ Some tests with OpenCV machine learning algos.
  */
 #include <gtest/gtest.h>
 #include <opencv2/ml/ml.hpp>
-
+#if 0 // TODO
 TEST(TestSuite, SVM_regression) {
   unsigned int nsamples = 50;
   cv::Mat1f training(nsamples, 2), truth_labels(nsamples, 1); // rows, cols
@@ -97,7 +97,7 @@ TEST(TestSuite, RandomTrees_regression) {
   test_RandomTrees_regression(5, 10);
   test_RandomTrees_regression(5, 1);
 }
-
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 
