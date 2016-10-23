@@ -239,7 +239,7 @@ public:
                    const unsigned int dim1, const unsigned int dim2) {
     if (v.size() != dim1 * dim2) {
       printf("CMatrix::from_vector(): uncorrect size of the input vec, "
-             "should be %i elements, is %i", dim1 * dim2, v.size());
+             "should be %i elements, is %li", dim1 * dim2, v.size());
       return false;
     }
     resize(dim1, dim2);

@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
 
 Some tests for \b MiniStage class
-and \b mini_stage_plugins namespace.
+and \b cvstage_plugins namespace.
 
  */
 // Bring in gtest

@@ -964,7 +964,7 @@ static inline double find_closest_points_brute_force(
 
   // size check
   if (set1.size() != set2.size()) {
-    maggieError("the two sets have a different size (%i != %i",
+    maggieError("the two sets have a different size (%li != %li",
                 set1.size(), set2.size());
   }
 
