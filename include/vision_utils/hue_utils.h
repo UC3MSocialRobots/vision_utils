@@ -30,53 +30,10 @@ Some utils to play with hue
 #include <math.h>
 #include <vector>
 #include <string>
+#include <vision_utils/HSVtoRGB.h>
 
-namespace color_utils {
-
-/*! from http://www.cs.rit.edu/~ncs/color/t_convert.html#RGB%20to%20HSV%20&%20HSV%20to%20RGB
-  \param The hue value H runs from 0 to 360º.
-  \param The saturation S is the degree of strength or purity and is from 0 to 1.
-  Purity is how much white is added to the color, so S=1 makes the purest color (no white).
-  \param Brightness V also ranges from 0 to 1, where 0 is the black.
-*/
-template<class Float>
-inline void HSVtoRGB( const Float h, const Float s, const Float v,
-                      Float & r, Float & g, Float & b) {
-  if( s == 0 ) {
-    // achromatic (grey)
-    r = g = b = v;
-    return;
-  }
-  float h2 = h / 60;   // sector 0 to 5
-  int i = floor( h2 );
-  float f = h2 - i;   // factorial part of h
-  float p = v * ( 1 - s );
-  float q = v * ( 1 - s * f );
-  float t = v * ( 1 - s * ( 1 - f ) );
-  switch( i ) {
-    case 0:
-      r = v; g = t; b = p;
-      break;
-    case 1:
-      r = q; g = v; b = p;
-      break;
-    case 2:
-      r = p; g = v; b = t;
-      break;
-    case 3:
-      r = p; g = q; b = v;
-      break;
-    case 4:
-      r = t; g = p; b = v;
-      break;
-    default:  // case 5:
-      r = v; g = p; b = q;
-      break;
-  } // end switch i
-} // end HSVtoRGB
-
-////////////////////////////////////////////////////////////////////////////////
-
+namespace vision_utils {
+//cut:hue2rgb
 /*!
  * \brief   color conversion function
  * \param hue
@@ -91,7 +48,7 @@ inline Color3_255 hue2rgb(const unsigned char hue) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:hue2rgb_make_lookup_table
 template<class Color3_255>
 inline void hue2rgb_make_lookup_table(std::vector<Color3_255> & lut,
                                       const unsigned int lut_size = 255) {
@@ -104,7 +61,7 @@ inline void hue2rgb_make_lookup_table(std::vector<Color3_255> & lut,
 } // end hue2rgb_make_lookup_table()
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:hue_to_string
 /*!
  * Converts a hue value into a string representation
  * \param hue
@@ -133,6 +90,6 @@ inline std::string hue_to_string(const unsigned char hue) {
     return "red";
 }
 
-} // end namespace color_utils
+} // end namespace vision_utils
 
 #endif // HUE_UTILS_H

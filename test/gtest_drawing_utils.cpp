@@ -27,17 +27,17 @@ ________________________________________________________________________________
 #include <gtest/gtest.h>
 // AD
 #include <vision_utils/img_path.h>
-#include "vision_utils/utils/matrix_testing.h"
+#include "vision_utils/matrix_testing.h"
 
 #include "vision_utils/drawing_utils.h"
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 
 //#define DISPLAY
 
 TEST(TestSuite, paste_images_gallery_empty) {
   std::vector<cv::Mat1b> ims;
   cv::Mat1b out;
-  image_utils::paste_images_gallery(ims, out, 2, (uchar) 0, true, CV_RGB(255, 255, 255));
+  vision_utils::paste_images_gallery(ims, out, 2, (uchar) 0, true, CV_RGB(255, 255, 255));
   ASSERT_TRUE(out.empty());
 }
 
@@ -48,7 +48,7 @@ void check_imgs(const std::vector<cv::Mat_<T> > & ims,
                 unsigned int gallerycols,
                 T background_color) {
   cv::Mat_<T> out;
-  image_utils::paste_images_gallery(ims, out, gallerycols, background_color, false); // no border
+  vision_utils::paste_images_gallery(ims, out, gallerycols, background_color, false); // no border
 #ifdef DISPLAY
   cv::imshow("out", out);
   cv::waitKey(0);
@@ -60,8 +60,8 @@ void check_imgs(const std::vector<cv::Mat_<T> > & ims,
   ASSERT_TRUE(out.rows == (int) neededgalrows * rows1);
   for (unsigned int i = 0; i < ims.size(); ++i) {
     cv::Rect roi((i%gallerycols) * cols1, (i/gallerycols) * rows1, cols1, rows1);
-    ASSERT_TRUE(matrix_testing::matrices_equal(out(roi), ims[i]));
-    // printf("out:%ix%i, roi %i:'%s'\n", out.cols, out.rows, i, geometry_utils::print_rect(roi).c_str());
+    ASSERT_TRUE(vision_utils::matrices_equal(out(roi), ims[i]));
+    // printf("out:%ix%i, roi %i:'%s'\n", out.cols, out.rows, i, vision_utils::print_rect(roi).c_str());
   }
 }
 
@@ -96,7 +96,7 @@ TEST(TestSuite, text_rotated) {
   cv::Mat1b buffer1, buffer2;
   for (unsigned int i = 0; i <= 10; ++i) {
     std::ostringstream text; text << "text" << i;
-    image_utils::draw_text_rotated(img, buffer1, buffer2, text.str(),
+    vision_utils::draw_text_rotated(img, buffer1, buffer2, text.str(),
                                    cv::Point(50 * i, 100), 0.2 * i,
                                    CV_FONT_HERSHEY_DUPLEX, 1, CV_RGB(255, 0, 0));
 #ifdef DISPLAY
@@ -116,11 +116,11 @@ TEST(TestSuite, text_rotated) {
 TEST(TestSuite, text_rotated2) {
   cv::Mat3b img = cv::imread(IMG_DIR "balloon.png");
   cv::Mat1b buffer1, buffer2;
-  Timer timer;
+  vision_utils::Timer timer;
   unsigned int n_times = 1000;
   for (unsigned int i = 0; i <= n_times; ++i) {
     std::ostringstream text; text << "t" << i;
-    image_utils::draw_text_rotated(img, buffer1, buffer2, text.str(),
+    vision_utils::draw_text_rotated(img, buffer1, buffer2, text.str(),
                                    cv::Point(rand()%img.cols, rand()%img.rows), drand48() * 2 * M_PI,
                                    CV_FONT_HERSHEY_DUPLEX, 1, CV_RGB(255, 0, 0));
     //  cv::putText(img, text.str(), cv::Point(rand()%img.cols, rand()%img.rows),
@@ -140,9 +140,9 @@ TEST(TestSuite, text_rotated2) {
 TEST(TestSuite, resize_constrain_proportions) {
   cv::Mat3b img = cv::imread(IMG_DIR "balloon.png");
   cv::Mat3b img_resize_if_bigger, img_resize_if_bigger2, img_resize_constrain_proportions;
-  image_utils::resize_if_bigger(img, img_resize_if_bigger, 100, 200);
-  image_utils::resize_if_bigger(img, img_resize_if_bigger2, 200, 100);
-  image_utils::resize_constrain_proportions(img, img_resize_constrain_proportions, 100, 200);
+  vision_utils::resize_if_bigger(img, img_resize_if_bigger, 100, 200);
+  vision_utils::resize_if_bigger(img, img_resize_if_bigger2, 200, 100);
+  vision_utils::resize_constrain_proportions(img, img_resize_constrain_proportions, 100, 200);
 
 #ifdef DISPLAY
   cv::imshow("img_resize_if_bigger", img_resize_if_bigger);
@@ -162,7 +162,7 @@ inline void test_paste_image(const cv::Mat & bg, const cv::Mat & fg) {
   int fg_x = (bg.cols - fg.cols) / 2, fg_y = (bg.rows - fg.rows) / 2;
   while (true) {
     bg.copyTo(pasted);
-    image_utils::paste_img(fg, pasted, fg_x, fg_y);
+    vision_utils::paste_img(fg, pasted, fg_x, fg_y);
     cv::imshow("test_paste_image", pasted);
     char c = cv::waitKey(25);
     if ((int) c == 27)
@@ -197,17 +197,17 @@ inline void test_paste_images(const std::vector<cv::Mat_<_T> > & imgs) {
   for (unsigned int horiz_idx = 0; horiz_idx < 2; ++horiz_idx) {
     bool horiz = (horiz_idx == 0);
     cv::Mat_<_T> out1;
-    image_utils::paste_images(imgs, out1, horiz, width1, height1, 5, false,
-                              &titlemaps::int_to_number, std::vector<cv::Mat1b>(), false);
+    vision_utils::paste_images(imgs, out1, horiz, width1, height1, 5, false,
+                              &vision_utils::int_to_number, std::vector<cv::Mat1b>(), false);
     cv::Mat_<_T> out2;
-    image_utils::paste_images(imgs, out2, horiz, width1, height1, 5, true,
-                              &titlemaps::int_to_number, std::vector<cv::Mat1b>(), false);
+    vision_utils::paste_images(imgs, out2, horiz, width1, height1, 5, true,
+                              &vision_utils::int_to_number, std::vector<cv::Mat1b>(), false);
     cv::Mat_<_T> out3;
-    image_utils::paste_images(imgs, out3, horiz, width1, height1, 5, false,
-                              &titlemaps::int_to_number, std::vector<cv::Mat1b>(), true);
+    vision_utils::paste_images(imgs, out3, horiz, width1, height1, 5, false,
+                              &vision_utils::int_to_number, std::vector<cv::Mat1b>(), true);
     cv::Mat_<_T> out4;
-    image_utils::paste_images(imgs, out4, horiz, width1, height1, 5, true,
-                              &titlemaps::int_to_number, std::vector<cv::Mat1b>(), true);
+    vision_utils::paste_images(imgs, out4, horiz, width1, height1, 5, true,
+                              &vision_utils::int_to_number, std::vector<cv::Mat1b>(), true);
 #ifdef DISPLAY
     cv::imshow("no headers, constrained width", out1);
     cv::imshow("headers, constrained width", out2);

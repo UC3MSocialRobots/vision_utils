@@ -29,7 +29,7 @@ Some tests for class \a ImageClusterer
 // Bring in gtest
 #include <gtest/gtest.h>
 // utils
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 #include "vision_utils/io.h"
 #include "vision_utils/image_clusterer.h"
 #include <vision_utils/img_path.h>
@@ -38,12 +38,12 @@ void test_image_roi(const std::string & rgb_depth_filename_prefix,
                     const std::string & kinect_serial_number) {
   // get camera model
   image_geometry::PinholeCameraModel depth_camera_model, rgb_camera_model;
-  ASSERT_TRUE(kinect_openni_utils::read_camera_model_files
+  ASSERT_TRUE(vision_utils::read_camera_model_files
               (kinect_serial_number, depth_camera_model, rgb_camera_model));
 
   // read depth and rgb files
   cv::Mat rgb, depth_img;
-  ASSERT_TRUE(image_utils::read_rgb_and_depth_image_from_image_file
+  ASSERT_TRUE(vision_utils::read_rgb_and_depth_image_from_image_file
               (rgb_depth_filename_prefix, &rgb, &depth_img));
 
   // get ROI
@@ -51,9 +51,9 @@ void test_image_roi(const std::string & rgb_depth_filename_prefix,
   unsigned int npts_roi = roi.width * roi.height;
 
   // reproject
-  ImageClusterer clusterer;
+  vision_utils::ImageClusterer clusterer;
   unsigned int data_step = 5;
-  Timer timer;
+  vision_utils::Timer timer;
   ASSERT_TRUE(clusterer.cluster(rgb(roi), depth_img(roi), depth_camera_model, data_step));
   timer.printTime("clusterer.cluster()");
 

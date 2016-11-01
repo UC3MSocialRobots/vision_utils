@@ -41,7 +41,7 @@ ________________________________________________________________________________
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 #include <vision_utils/img_path.h>
 
 #define NTIMES 100
@@ -49,42 +49,42 @@ ________________________________________________________________________________
 ////////////////////////////////////////////////////////////////////////////////
 
 void process_image(cv::Mat3b & image, double scale) {
-  maggiePrint("process_image()");
+  printf("process_image()");
   cv::Mat3b image_resized;
-  Timer timer;
+  vision_utils::Timer timer;
 
   timer.reset();
   for (int time = 0; time < NTIMES; ++time)
     cv::resize(image, image_resized, cv::Size(), scale, scale, cv::INTER_NEAREST);
-  maggiePrint("scale:%g, INTER_NEAREST (%i times) : %g ms.",
+  printf("scale:%g, INTER_NEAREST (%i times) : %g ms.",
               scale, NTIMES, timer.getTimeMilliseconds() / NTIMES);
   cv::imshow("INTER_NEAREST", image_resized);
 
   timer.reset();
   for (int time = 0; time < NTIMES; ++time)
     cv::resize(image, image_resized, cv::Size(), scale, scale, cv::INTER_LINEAR);
-  maggiePrint("scale:%g, INTER_LINEAR (%i times) : %g ms.",
+  printf("scale:%g, INTER_LINEAR (%i times) : %g ms.",
               scale, NTIMES, timer.getTimeMilliseconds() / NTIMES);
   cv::imshow("INTER_LINEAR", image_resized);
 
   timer.reset();
   for (int time = 0; time < NTIMES; ++time)
     cv::resize(image, image_resized, cv::Size(), scale, scale, cv::INTER_CUBIC);
-  maggiePrint("scale:%g, INTER_CUBIC (%i times) : %g ms.",
+  printf("scale:%g, INTER_CUBIC (%i times) : %g ms.",
               scale, NTIMES, timer.getTimeMilliseconds() / NTIMES);
   cv::imshow("INTER_CUBIC", image_resized);
 
   timer.reset();
   for (int time = 0; time < NTIMES; ++time)
     cv::resize(image, image_resized, cv::Size(), scale, scale, cv::INTER_AREA);
-  maggiePrint("scale:%g, INTER_AREA (%i times) : %g ms.",
+  printf("scale:%g, INTER_AREA (%i times) : %g ms.",
               scale, NTIMES, timer.getTimeMilliseconds() / NTIMES);
   cv::imshow("INTER_AREA", image_resized);
 
   timer.reset();
   for (int time = 0; time < NTIMES; ++time)
     cv::resize(image, image_resized, cv::Size(), scale, scale, cv::INTER_LANCZOS4);
-  maggiePrint("scale:%g, INTER_LANCZOS4 (%i times) : %g ms.",
+  printf("scale:%g, INTER_LANCZOS4 (%i times) : %g ms.",
               scale, NTIMES, timer.getTimeMilliseconds() / NTIMES);
   cv::imshow("INTER_LANCZOS4", image_resized);
 
@@ -96,7 +96,7 @@ void process_image(cv::Mat3b & image, double scale) {
 int main() {
     cv::Mat3b image = cv::imread(IMG_DIR "pz/pz01.jpg", CV_LOAD_IMAGE_COLOR);
     process_image(image, 0.6);
-    maggiePrint("\n");
+    printf("\n");
     process_image(image, 1.6);
 }
 

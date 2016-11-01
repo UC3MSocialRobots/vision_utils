@@ -6,7 +6,7 @@ project(vision_utils)
 ### 3 - Find other CMake/Catkin packages needed for build
 SET(ROSDEPS cv_bridge image_geometry image_transport pcl_ros rosbag
   # AD
-  cvstage  people_msgs_rl)
+  cvstage  people_msgs)
 find_package(catkin REQUIRED COMPONENTS ${ROSDEPS})
 find_package(PCL REQUIRED common visualization)
 ### 4 - Message/Service/Action Generators (add_message_files(), add_service_files(), add_action_files())

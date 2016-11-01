@@ -24,7 +24,7 @@ ________________________________________________________________________________
  */
 // Bring in gtest
 #include <gtest/gtest.h>
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 #include "vision_utils/ground_plane_finder.h"
 #include "vision_utils/io.h"
 #include <vision_utils/img_path.h>
@@ -32,13 +32,13 @@ ________________________________________________________________________________
 //#define DISPLAY
 
 TEST(TestSuite, empty) {
-  GroundPlaneFinder finder;
+  vision_utils::GroundPlaneFinder finder;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, empty_img) {
-  GroundPlaneFinder finder;
+  vision_utils::GroundPlaneFinder finder;
   cv::Mat1f depth;
   bool ok = finder.compute_plane(depth);
   ASSERT_TRUE(!ok);
@@ -47,7 +47,7 @@ TEST(TestSuite, empty_img) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, nan_img) {
-  GroundPlaneFinder finder;
+  vision_utils::GroundPlaneFinder finder;
   cv::Mat1f depth(50, 50, std::numeric_limits<float>::quiet_NaN());
   bool ok = finder.compute_plane(depth);
   ASSERT_TRUE(!ok);
@@ -56,23 +56,23 @@ TEST(TestSuite, nan_img) {
 ////////////////////////////////////////////////////////////////////////////////
 
 void test_prefix(const std::string & filename_prefix) {
-  GroundPlaneFinder finder;
+  vision_utils::GroundPlaneFinder finder;
   cv::Mat3b rgb;
   cv::Mat1f depth;
-  ASSERT_TRUE(image_utils::read_rgb_and_depth_image_from_image_file
+  ASSERT_TRUE(vision_utils::read_rgb_and_depth_image_from_image_file
               (filename_prefix, &rgb, &depth));
-  Timer timer;
+  vision_utils::Timer timer;
   ASSERT_TRUE(finder.compute_plane(depth));
   timer.printTime("find");
   cv::Mat1b mask;
   ASSERT_TRUE(finder.to_img(depth, mask));
 #ifdef DISPLAY
   cv::imshow("rgb", rgb);
-  cv::imshow("depth", image_utils::depth2viz(depth));
+  cv::imshow("depth", vision_utils::depth2viz(depth));
   cv::imshow("mask", mask);
   cv::waitKey(0);
 #endif // DISPLAY
-  //image_utils::imwrite_debug(string_utils::timestamp()+"_mask.png", mask, image_utils::MONOCHROME);
+  //vision_utils::imwrite_debug(vision_utils::timestamp()+"_mask.png", mask, vision_utils::MONOCHROME);
   ASSERT_TRUE(mask.size() == depth.size());
   double ratio = 1.*cv::countNonZero(mask)/(mask.cols*mask.rows);
   ASSERT_TRUE(ratio > .05) << "ratio:" << ratio; // 5%

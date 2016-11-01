@@ -28,26 +28,26 @@ Some tests for MaskAcceleration
 //#define DISPLAY
 
 TEST(TestSuite, empty_img) {
-  MaskAcceleration acc;
+  vision_utils::MaskAcceleration acc;
   ASSERT_FALSE(acc.from_mask(cv::Mat1b()));
 }
 
 TEST(TestSuite, black_img) {
-  MaskAcceleration acc;
+  vision_utils::MaskAcceleration acc;
   ASSERT_FALSE(acc.from_mask(cv::Mat1b(100, 100, (uchar)0)));
 }
 
 TEST(TestSuite, white_img) {
-  MaskAcceleration acc;
+  vision_utils::MaskAcceleration acc;
   ASSERT_TRUE(acc.from_mask(cv::Mat1b(100, 100, (uchar)255)));
 }
 
 TEST(TestSuite, still_circle) {
-  MaskAcceleration acc;
+  vision_utils::MaskAcceleration acc;
   cv::Mat1b mask(100, 100, (uchar)0);
   cv::circle(mask, cv::Point(50, 50), 25, CV_RGB(255, 255, 255), -1);
   ASSERT_TRUE(acc.from_mask(mask));
-  std::vector<MaskAcceleration::PixelAcceleration> accs
+  std::vector<vision_utils::MaskAcceleration::PixelAcceleration> accs
       = acc.get_pixel_accelerations();
   ASSERT_TRUE(accs.empty());
 
@@ -57,10 +57,10 @@ TEST(TestSuite, still_circle) {
 }
 
 TEST(TestSuite, octogon_at_border) {
-  MaskAcceleration acc;
+  vision_utils::MaskAcceleration acc;
   cv::Mat3b illus;
   unsigned int npasses = 5;
-  for (int pass = 0; pass < npasses; ++pass) {
+  for (  unsigned int pass = 0; pass < npasses; ++pass) {
     unsigned int w = 80 + 50 * pass, h = w;
     cv::Mat1b mask(h, w, (uchar)0);
     int off = 25 * (npasses - pass - 1);
@@ -84,7 +84,7 @@ TEST(TestSuite, octogon_at_border) {
     cv::imshow("illus", illus);
     cv::waitKey(0);
 #endif // DISPLAY
-    std::vector<MaskAcceleration::PixelAcceleration> accs
+    std::vector<vision_utils::MaskAcceleration::PixelAcceleration> accs
         = acc.get_pixel_accelerations();
     if (pass == 0)
       ASSERT_TRUE(accs.empty()); // first pass -> no accel
@@ -94,7 +94,7 @@ TEST(TestSuite, octogon_at_border) {
 }
 
 void test_growing_circle(const cv::Point & offset) {
-  MaskAcceleration acc;
+  vision_utils::MaskAcceleration acc;
   unsigned int start_radius = 15, radius_step = 2;
   cv::Mat1b mask(100, 100);
   cv::Point circle_center(50, 50);
@@ -106,7 +106,7 @@ void test_growing_circle(const cv::Point & offset) {
     if (curr_radius == start_radius)
       continue;
     // check PixelAccelerations
-    std::vector<MaskAcceleration::PixelAcceleration> accs
+    std::vector<vision_utils::MaskAcceleration::PixelAcceleration> accs
         = acc.get_pixel_accelerations();
     unsigned int naccs = accs.size();
     ASSERT_TRUE(naccs > 0);
@@ -118,18 +118,18 @@ void test_growing_circle(const cv::Point & offset) {
     cv::waitKey(0);
 #endif // DISPLAY
     for (unsigned int i = 0; i < naccs; ++i) {
-      MaskAcceleration::PixelAcceleration acc = accs[i];
+      vision_utils::MaskAcceleration::PixelAcceleration acc = accs[i];
       ASSERT_TRUE(acc.norm > 0 && acc.norm <= 4 * radius_step)
           << "radius:" << curr_radius << ", acc:" << acc.to_string() << ", norm:" << acc.norm;
       // check origin on the curr circle
-      double dist_origin2center = geometry_utils::distance_points
+      double dist_origin2center = vision_utils::distance_points
                                   (acc.origin - offset, circle_center);
       ASSERT_TRUE(fabs(dist_origin2center - curr_radius) < 1)
           << "radius:" << curr_radius << ", acc:" << acc.to_string() << ", dist_origin2center:" << dist_origin2center;
       // check end on the prev circle
       cv::Point end = acc.origin - offset
                       - acc.norm * cv::Point(cos(acc.orien), sin(acc.orien));
-      double dist_end2center = geometry_utils::distance_points(end, circle_center);
+      double dist_end2center = vision_utils::distance_points(end, circle_center);
       ASSERT_TRUE(fabs(dist_end2center - curr_radius + radius_step) <= 2 * radius_step)
           << "radius:" << curr_radius << ", acc:" << acc.to_string() << ", dist_end2center:" << dist_end2center;
     } // end for i

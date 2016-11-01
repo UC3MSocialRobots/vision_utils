@@ -25,8 +25,8 @@ ________________________________________________________________________________
  */
 //#define DISPLAY
 #include <gtest/gtest.h>
-#include "vision_utils/utils/combinatorics_utils.h"
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/combinatorics_utils.h"
+#include "vision_utils/timer.h"
 #include "vision_utils/pie_chart_utils.h"
 
 template<class _T>
@@ -35,20 +35,20 @@ void test_pie1(const std::vector<_T> & values,
   cv::Mat3b pie_img, pie_caption, pie_chart;
 
   unsigned int ntimes = 100;
-  Timer timer;
+  vision_utils::Timer timer;
   for (unsigned int time_idx = 0; time_idx < ntimes; ++time_idx)
-    pie_chart_utils::make_pie(values, pie_img);
+    vision_utils::make_pie(values, pie_img);
   timer.printTime_factor("make_pie()", ntimes);
 
   timer.reset();
   for (unsigned int time_idx = 0; time_idx < ntimes; ++time_idx)
-    pie_chart_utils::make_caption(labels, pie_caption);
+    vision_utils::make_caption(labels, pie_caption);
   timer.printTime_factor("make_caption()", ntimes);
 
   timer.reset();
   for (unsigned int time_idx = 0; time_idx < ntimes; ++time_idx)
-    pie_chart_utils::make_pie_and_caption
-        (values, labels, pie_chart, 500, 500, 1, 1, colormaps::index2grey_washed);
+    vision_utils::make_pie_and_caption
+        (values, labels, pie_chart, 500, 500, 1, 1, vision_utils::index2grey_washed);
   timer.printTime_factor("make_pie_and_caption()", ntimes);
 
   // display generated images
@@ -72,12 +72,12 @@ void test_pie2(std::vector<_T> & values,
     // randomly change values
     for (unsigned int value_idx = 0; value_idx < values.size(); ++value_idx)
       values[value_idx] =
-          std::max(values[value_idx] + combinatorics_utils::rand_gaussian() / 10, 0.);
+          std::max(values[value_idx] + vision_utils::rand_gaussian() / 10, 0.);
 
     // draw and display generated images
-    pie_chart_utils::make_pie(values, pie_img);
-    pie_chart_utils::make_caption(labels, pie_caption);
-    pie_chart_utils::make_pie_and_caption(values, labels, pie_chart);
+    vision_utils::make_pie(values, pie_img);
+    vision_utils::make_caption(labels, pie_caption);
+    vision_utils::make_pie_and_caption(values, labels, pie_chart);
 #ifdef DISPLAY
     cv::imshow("pie_img", pie_img);
     cv::imshow("pie_caption", pie_caption);

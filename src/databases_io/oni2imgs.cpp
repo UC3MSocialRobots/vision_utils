@@ -26,6 +26,6 @@ ________________________________________________________________________________
 #include "vision_utils/oni2imgs.h"
 
 int main(int argc, char **argv) {
-  Oni2Imgs player;
-  return Oni2Imgs::static_player(player, argc, argv);
+  vision_utils::Oni2Imgs player;
+  return vision_utils::Oni2Imgs::static_player(player, argc, argv);
 }

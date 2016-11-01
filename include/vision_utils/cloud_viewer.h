@@ -30,7 +30,7 @@ Some useful functions for visualizing point clouds
 #include "pcl/visualization/pcl_visualizer.h"
 #include <opencv2/core/core.hpp>
 
-namespace cloud_viewer {
+namespace vision_utils {
 
 //typedef pcl::visualization::CloudViewer Viewer;
 typedef pcl::visualization::PCLVisualizer Viewer;
@@ -181,6 +181,6 @@ void view_rgb_cloud(const std::vector<Pt3>& pointcloud,
 
 ////////////////////////////////////////////////////////////////////////////////
 
-} // end namespace cloud_viewer
+} // end namespace vision_utils
 
 #endif // CLOUD_VIEWER_H

@@ -25,10 +25,12 @@ ________________________________________________________________________________
 #ifndef RLPD2IMGS_H
 #define RLPD2IMGS_H
 
-#include "vision_utils/utils/find_and_replace.h"
+#include "vision_utils/find_and_replace.h"
 #include "vision_utils/database_player.h"
 #include "vision_utils/mask.h"
 #include "vision_utils/opencv_safe_image_io.h"
+
+namespace vision_utils {
 
 static const unsigned int NCOLORS_NITE = 7;
 static const cv::Scalar COLORS_NITE[NCOLORS_NITE] = {
@@ -63,25 +65,25 @@ public:
   virtual bool load_single_video(const std::string & filename) {
     // read rgb and depth
     std::string filename_prefix(filename);
-    string_utils::find_and_replace(filename_prefix, "_depth.png", "");
-    string_utils::find_and_replace(filename_prefix, "_rgb.png", "");
-    string_utils::find_and_replace(filename_prefix, "_rgb.jpg", "");
-    if (!image_utils::read_rgb_and_depth_image_from_image_file
+    find_and_replace(filename_prefix, "_depth.png", "");
+    find_and_replace(filename_prefix, "_rgb.png", "");
+    find_and_replace(filename_prefix, "_rgb.jpg", "");
+    if (!read_rgb_and_depth_image_from_image_file
         (filename_prefix, &_bgr, &_depth32f))
       return false;
     // read NiTE user
     std::ostringstream filename_user;
     filename_user << filename_prefix << "_user_mask_illus.png";
-    if (!image_utils::imread_safe(_user_color, filename_user.str(), CV_LOAD_IMAGE_COLOR)
-        || !image_utils::color_mask_ncolors(_user_color, NCOLORS_NITE, COLORS_NITE, _user8)) {
+    if (!imread_safe(_user_color, filename_user.str(), CV_LOAD_IMAGE_COLOR)
+        || !color_mask_ncolors(_user_color, NCOLORS_NITE, COLORS_NITE, _user8)) {
       printf("Problem with user image '%s'\n", filename_user.str().c_str());
       return false;
     }
     // read NiTE user
     filename_user.str("");
     filename_user << filename_prefix << "_ground_truth_user.png";
-    if (!image_utils::imread_safe(_user_color_ground_truth, filename_user.str(), CV_LOAD_IMAGE_COLOR)
-        || !image_utils::color_mask_ncolors
+    if (!imread_safe(_user_color_ground_truth, filename_user.str(), CV_LOAD_IMAGE_COLOR)
+        || !color_mask_ncolors
         (_user_color_ground_truth, NCOLORS_GROUND_TRUTH, COLORS_GROUND_TRUTH, _user8_ground_truth)) {
       printf("Problem with ground truth user image '%s'\n", filename_user.str().c_str());
       return false;
@@ -104,5 +106,7 @@ private:
   cv::Mat3b _user_color, _user_color_ground_truth, _user8_ground_truth_illus;
   cv::Mat1b _user8_ground_truth;
 };
+
+} // end namespace vision_utils
 
 #endif // RLPD2IMGS_H

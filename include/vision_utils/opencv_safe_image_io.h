@@ -27,7 +27,7 @@ ________________________________________________________________________________
 
 #include <opencv2/highgui/highgui.hpp>
 
-namespace image_utils {
+namespace vision_utils {
 
 bool imread_safe(cv::Mat & ans,
                  const std::string& filename,
@@ -54,6 +54,6 @@ bool imread_safe(cv::Mat & ans,
   }
   return true;
 } // end imread_safe()
-} // end namespace image_utils
+} // end namespace vision_utils
 
 #endif // OPENCV_SAFE_IMAGE_IO_H

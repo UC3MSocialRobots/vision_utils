@@ -26,8 +26,8 @@ ________________________________________________________________________________
 #include <gtest/gtest.h>
 #include <opencv2/core/core.hpp>
 #include "vision_utils/kinect_openni_utils.h"
-#include "vision_utils/utils/combinatorics_utils.h"
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/combinatorics_utils.h"
+#include "vision_utils/timer.h"
 // vision_utils
 #include "vision_utils/cloud_viewer_gnuplot.h"
 #include "vision_utils/cloud_tilter.h"
@@ -40,7 +40,7 @@ ________________________________________________________________________________
 typedef cv::Point3f Pt3f;
 
 TEST(TestSuite, empty) {
-  CloudTilter tilter;
+  vision_utils::CloudTilter tilter;
 }
 
 void test_straighten_picture(const std::string & filename_prefix,
@@ -49,24 +49,24 @@ void test_straighten_picture(const std::string & filename_prefix,
   cv::Mat1b user_mask;
   cv::Mat3b rgb;
   cv::Mat1f depth;
-  ASSERT_TRUE(image_utils::read_rgb_depth_user_image_from_image_file
+  ASSERT_TRUE(vision_utils::read_rgb_depth_user_image_from_image_file
       (filename_prefix, &rgb, &depth, &user_mask));
   user_mask = (user_mask == user_idx);
   ASSERT_TRUE(cv::countNonZero(user_mask) > 0);
   // load default camera model
   image_geometry::PinholeCameraModel depth_camera_model, rgb_camera_model;
-  ASSERT_TRUE(kinect_openni_utils::read_camera_model_files
+  ASSERT_TRUE(vision_utils::read_camera_model_files
               (kinect_serial_number, depth_camera_model, rgb_camera_model));
   // transform in 3D
   std::vector<Pt3f> pts;
-  ASSERT_TRUE(kinect_openni_utils::pixel2world_depth(depth, depth_camera_model, pts, 2,
+  ASSERT_TRUE(vision_utils::pixel2world_depth(depth, depth_camera_model, pts, 2,
                                          user_mask));
   // view cloud
-  CloudViewerGnuPlot viewer;
+  vision_utils::CloudViewerGnuPlot viewer;
   //viewer.view_cloud(pts);
   // tilt
-  CloudTilter tilter;
-  Timer timer;
+  vision_utils::CloudTilter tilter;
+  vision_utils::Timer timer;
   ASSERT_TRUE(tilter.straighten(pts));
   timer.printTime("straighten()");
 #ifdef DISPLAY
@@ -76,7 +76,7 @@ void test_straighten_picture(const std::string & filename_prefix,
 
 void test_straighten_picture(int dgaitdb_index) {
   // load user mask and depth
-  DGaitDBFilename f("/home/user/Downloads/0datasets/DGaitDB_imgs/");
+  vision_utils::DGaitDBFilename f("/home/user/Downloads/0datasets/DGaitDB_imgs/");
   if (!f.directory_exists())
     return;
   std::vector<std::string> files = f.all_filenames_test();
@@ -85,10 +85,10 @@ void test_straighten_picture(int dgaitdb_index) {
 }
 
 TEST(TestSuite, dgaitdb_picture_user0) { test_straighten_picture(0); }
-TEST(TestSuite, dgaitdb_picture_user1) { test_straighten_picture(DGaitDBFilename::NFILES_TEST+1); }
+TEST(TestSuite, dgaitdb_picture_user1) { test_straighten_picture(vision_utils::DGaitDBFilename::NFILES_TEST+1); }
 TEST(TestSuite, dgaitdb_all_users) {
-  for (unsigned int oni_idx = 0; oni_idx < DGaitDBFilename::ONI_FILES; ++oni_idx)
-    test_straighten_picture(DGaitDBFilename::NFILES_TEST*oni_idx + 1);
+  for (unsigned int oni_idx = 0; oni_idx < vision_utils::DGaitDBFilename::ONI_FILES; ++oni_idx)
+    test_straighten_picture(vision_utils::DGaitDBFilename::NFILES_TEST*oni_idx + 1);
 }
 
 TEST(TestSuite, dgaitdb_ltm_depth) {

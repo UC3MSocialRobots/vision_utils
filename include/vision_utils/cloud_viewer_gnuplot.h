@@ -29,8 +29,11 @@ ________________________________________________________________________________
 
 #include <vector>
 #include <opencv2/core/core.hpp>
-#include "vision_utils/utils/file_io.h"
-#include "vision_utils/utils/system_utils.h"
+#include "vision_utils/file_io.h"
+#include "vision_utils/system_utils.h"
+#include "vision_utils/exec_system.h"
+
+namespace vision_utils {
 
 class CloudViewerGnuPlot {
 public:
@@ -50,7 +53,7 @@ public:
       data << pointcloud[sample_idx].x << ' '
            << pointcloud[sample_idx].y << ' '
            << pointcloud[sample_idx].z << ' '<< std::endl;
-    string_utils::save_file(data_filename, data.str());
+    save_file(data_filename, data.str());
     script_content << "gnuplot -e \""
                       // << "set xyplane at 1e-6; "
                    << "set grid; "
@@ -67,7 +70,7 @@ public:
     script_content  << "\"";
     if (blocking) // http://www.gnuplot.info/faq/faq.html#SECTION00094000000000000000
       script_content  << " -persist";
-    system_utils::exec_system(script_content.str());
+    exec_system(script_content.str());
   }
 
   template<class Pt3>
@@ -86,7 +89,7 @@ public:
            << (int) pointcloud_RGB[sample_idx][1] << ' '
            << (int) pointcloud_RGB[sample_idx][2] << ' '
            << std::endl;
-    string_utils::save_file(data_filename, data.str());
+    save_file(data_filename, data.str());
     script_content // << "set xyplane at 1e-6; "
         << "set grid; "
         << "set view equal xyz; "
@@ -100,15 +103,17 @@ public:
                      << caption << "'; ";
     else
       script_content << "splot 0 ; ";
-    string_utils::save_file(script_filename, script_content.str());
+    save_file(script_filename, script_content.str());
     std::ostringstream command;
     command << " gnuplot -e \"load '" << script_filename << "'\"";
     if (blocking) // http://www.gnuplot.info/faq/faq.html#SECTION00094000000000000000
       command  << " -persist";
-    system_utils::exec_system(command.str());
+    exec_system(command.str());
   }
 
   std::string data_filename, script_filename;
 }; // end class CloudViewer
+
+} // end namespace vision_utils
 
 #endif // CLOUD_VIEWER_GNUPLOT_H

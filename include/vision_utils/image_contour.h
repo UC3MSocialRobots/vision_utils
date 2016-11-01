@@ -32,6 +32,8 @@ A class for fast computing image contours and updating them.
 #include <numeric>      // std::accumulate
 #include <opencv2/core/core.hpp>
 
+namespace vision_utils {
+
 ////////////////////////////////////////////////////////////////////////////////
 
 class ImageContour : public cv::Mat1b {
@@ -215,7 +217,7 @@ private:
   ////////////////////////////////////////////////////////////////////////////////
 
   inline bool from_image(const cv::Mat1b & img, bool C8 = false) {
-    // printf("from_image(cols:%i, rows:%i)\n", img.cols, img.rows);
+    //printf("from_image(cols:%i, rows:%i)\n", img.cols, img.rows);
     create(img.rows, img.cols) ;
     if (cols * rows == 0) {
       printf("Empty image\n");
@@ -249,7 +251,7 @@ private:
               || (row            && *img_ptr != img_data[key - cols]) // up
               || (row < rowsm    && *img_ptr != img_data[key + cols])) // down
           { // contour
-            // printf("row:%i, col:%i is contour!\n", row, col);
+            //printf("row:%i, col:%i is contour!\n", row, col);
             *out_ptr = CONTOUR;
             //out_ptr[key] = CONTOUR;
           } // end if real contour
@@ -286,7 +288,7 @@ private:
               || (right_ok && down_ok  && *img_ptr != img_data[key + cols + 1]) // RD
               )
           { // contour
-            // printf("row:%i, col:%i is contour!\n", row, col);
+            //printf("row:%i, col:%i is contour!\n", row, col);
             *out_ptr = CONTOUR;
           } // end if real contour
           else // inner point
@@ -330,5 +332,7 @@ private:
   int rowsm, colsm;
   cv::Mat3b _illus;
 }; // end class Imagecontour
+
+} // end namespace vision_utils
 
 #endif // IMAGE_CONTOUR_H

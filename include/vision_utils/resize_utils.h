@@ -26,11 +26,11 @@ ________________________________________________________________________________
 #ifndef RESIZE_UTILS_H
 #define RESIZE_UTILS_H
 
-#include "vision_utils/utils/rect_utils.h"
+#include "vision_utils/rect_utils.h"
 #include <opencv2/imgproc/imgproc.hpp>
 
-namespace image_utils {
-
+namespace vision_utils {
+//cut:resize_if_bigger
 /*!
   Resize an image if it is bigger than the given limit dimensions
  \param big_img
@@ -54,7 +54,7 @@ inline float resize_if_bigger(const Img & big_img,
                               int interpolation = cv::INTER_NEAREST,
                               bool resize_if_smaller = false,
                               bool force_resize = false) {
-  //maggieDebug2("resize_if_bigger()");
+  //printf("resize_if_bigger()");
 
   // foolproof for empty images
   if (big_img.empty() || big_img.cols <= 0 || big_img.rows <= 0) {
@@ -69,12 +69,12 @@ inline float resize_if_bigger(const Img & big_img,
   if (big_img.cols > max_width || resize_if_smaller) {
     need_resize = true;
     scale = 1.f * max_width / big_img.cols;
-    // printf("scale:%g\n", scale);
+    //printf("scale:%g\n", scale);
   }
   if (big_img.rows > max_height || resize_if_smaller) {
     need_resize = true;
     scale = std::min(scale, 1.f * max_height / big_img.rows);
-    // printf("scale:%g\n", scale);
+    //printf("scale:%g\n", scale);
   }
 
   // resize if needed or wanted
@@ -93,7 +93,7 @@ inline float resize_if_bigger(const Img & big_img,
 
 ////////////////////////////////////////////////////////////////////////////////
 
-
+//cut:resize_constrain_proportions
 /*!
  Just a ROI of the image will be kept,
  such as it fits in (dst_width, dst_height)
@@ -120,14 +120,14 @@ inline void resize_constrain_proportions(const Img & src,
                             +-----+      */
   cv::Rect ROI;
   if (ratio_src < ratio_dst) { // case 1
-    // printf("case 1\n");
+    //printf("case 1\n");
     ROI.width = src.cols;
     ROI.height = ROI.width / ratio_dst;
     ROI.x = 0;
     ROI.y = (src.rows - ROI.height) / 2;
   }
   else {
-    // printf("case 2\n");
+    //printf("case 2\n");
     ROI.height = src.rows;
     ROI.width = ROI.height * ratio_dst;
     ROI.y = 0;
@@ -139,7 +139,7 @@ inline void resize_constrain_proportions(const Img & src,
 } // end resize_if_bigger()
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:scale_img_forward_backward
 template<class _T>
 void scale_img_forward_backward(const cv::Mat_<_T> & in, cv::Mat_<_T> & out,
                                 const float & xscale = 1, const int & xoffset = 0,
@@ -151,13 +151,13 @@ void scale_img_forward_backward(const cv::Mat_<_T> & in, cv::Mat_<_T> & out,
     return;
   if (xscale == 1 && yscale == 1) {
     cv::Rect r1(xoffset, yoffset, in.cols, in.rows);
-    cv::Rect r1_inter_out = geometry_utils::rectangle_intersection_img(out, r1);
+    cv::Rect r1_inter_out = rectangle_intersection_img(out, r1);
     cv::Rect r1_inter_in (r1_inter_out.x - xoffset, r1_inter_out.y - yoffset,
                           r1_inter_out.width, r1_inter_out.height);
     //    printf("r1:%s, r1_inter_in:%s, r1_inter_out:%s\n",
-    //           geometry_utils::print_rect(r1).c_str(),
-    //           geometry_utils::print_rect(r1_inter_in).c_str(),
-    //           geometry_utils::print_rect(r1_inter_out).c_str());
+    //           print_rect(r1).c_str(),
+    //           print_rect(r1_inter_in).c_str(),
+    //           print_rect(r1_inter_out).c_str());
     in(r1_inter_in).copyTo(out(r1_inter_out));
     return;
   }
@@ -191,7 +191,7 @@ void scale_img_forward_backward(const cv::Mat_<_T> & in, cv::Mat_<_T> & out,
     } // end loop row
   } // end if (backward)
 }
-
+//cut:scale_img_warp
 template<class _T>
 void scale_img_warp(const cv::Mat_<_T> & in, cv::Mat_<_T> & out,
                     const float & xscale = 1, const int & xoffset = 0,
@@ -205,7 +205,7 @@ void scale_img_warp(const cv::Mat_<_T> & in, cv::Mat_<_T> & out,
   M(1, 2) = yoffset;
   cv::warpAffine(in, out, M, in.size(), cv::INTER_NEAREST);
 }
-
-} // end namespace image_utils
+//cut
+} // end namespace vision_utils
 
 #endif // RESIZE_UTILS_H

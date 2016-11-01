@@ -66,9 +66,11 @@ A template skill to subscribe to a synchronized stream of RGB and depth images.
 #include <opencv2/highgui/highgui.hpp>
 
 #define DEBUG_PRINT(...)   {}
-//#define DEBUG_PRINT(...)   ROS_INFO_THROTTLE(5, __VA_ARGS__)
-//#define DEBUG_PRINT(...)   ROS_WARN(__VA_ARGS__)
+//#define DEBUG_PRINT(...)   //printf_THROTTLE(5, __VA_ARGS__)
 //#define DEBUG_PRINT(...)   printf(__VA_ARGS__)
+//#define DEBUG_PRINT(...)   printf(__VA_ARGS__)
+
+namespace vision_utils {
 
 class RgbDepthSkill : public NanoSkill {
 public:
@@ -95,7 +97,7 @@ public:
     // check display param
     _nh_private.param("display", _display, _display);
     // get camera model
-    kinect_openni_utils::read_camera_model_files
+    read_camera_model_files
         (DEFAULT_KINECT_SERIAL(), _default_depth_camera_model, _default_rgb_camera_model);
   }
 
@@ -169,7 +171,7 @@ public:
 
   //! conversion functions between image pixels and 3D points
   inline cv::Point3f pixel2world_depth(const cv::Point & p2d) const {
-    return kinect_openni_utils::pixel2world_depth<cv::Point3d>
+    return pixel2world_depth<cv::Point3d>
     (p2d, _default_depth_camera_model, _depth_bridge->image);
   }
   inline cv::Point3f pixel2world_rgb(const cv::Point & p2d) const {
@@ -180,7 +182,7 @@ public:
   }
 
   inline cv::Point2d world2pixel_depth(const cv::Point3d & p3d) const {
-    return kinect_openni_utils::world2pixel<cv::Point2d>
+    return world2pixel<cv::Point2d>
     (p3d, _default_depth_camera_model);
   }
   inline cv::Point2d world2pixel_rgb(const cv::Point3d & p3d) const {
@@ -245,5 +247,7 @@ protected:
   cv_bridge::CvImageConstPtr _rgb_bridge, _depth_bridge;
 
 }; // end class RgbDepthSkill
+
+} // end namespace vision_utils
 
 #endif // RGB_DEPTH_SKILL_H

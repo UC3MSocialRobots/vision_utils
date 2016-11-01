@@ -24,11 +24,11 @@ Some simple tests for the NanoSkill skill template.
  */
 #include <gtest/gtest.h>
 #include "vision_utils/nano_skill.h"
-#include "vision_utils/utils/timer.h"
-#include <vision_utils/utils/rosmaster_alive.h>
-#define ASSERT_TRUE_TIMEOUT(cond, timeout) { Timer timer; while (timer.getTimeSeconds() < timeout && !(cond)) usleep(50 * 1000); } ASSERT_TRUE(cond)
+#include "vision_utils/timer.h"
+#include <vision_utils/rosmaster_alive.h>
+#define ASSERT_TRUE_TIMEOUT(cond, timeout) { vision_utils::Timer timer; while (timer.getTimeSeconds() < timeout && !(cond)) usleep(50 * 1000); } ASSERT_TRUE(cond)
 
-class FooNanoSkill : public NanoSkill {
+class FooNanoSkill : public vision_utils::NanoSkill {
 public:
   FooNanoSkill() : NanoSkill("FOO_NANO_SKILL_START", "FOO_NANO_SKILL_STOP"){
     _ntacto_received = 0;
@@ -61,7 +61,7 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, start_stop) {
-  if (!rosmaster_alive()) return;
+  if (!vision_utils::rosmaster_alive()) return;
   ros::AsyncSpinner spinner(0);
   spinner.start();
   // create skill

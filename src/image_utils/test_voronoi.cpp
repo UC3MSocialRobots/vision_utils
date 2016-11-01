@@ -3,7 +3,7 @@
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
   \date        2013/9/19
-  
+
 ________________________________________________________________________________
 
 This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ Some tests for VoronoiThinner
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp> // for erode
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 #include <vision_utils/img_path.h>
 #include "vision_utils/voronoi.h"
 
@@ -46,9 +46,9 @@ public:
     _implementation_name = implementation_name_;
     _crop_img_before = crop_img_before_;
     _first_img = query.clone();
-    VoronoiThinner::copy_bounding_box_plusone(query, _first_img, true);
+    vision_utils::VoronoiThinner::copy_bounding_box_plusone(query, _first_img, true);
     _curr_skel = _first_img.clone();
-    // printf("first_img:%s\n", image_utils::infosImage(_first_img).c_str());
+    // printf("first_img:%s\n", vision_utils::infosImage(_first_img).c_str());
     _curr_iter = 1;
     _nframes = 0;
   }
@@ -98,8 +98,8 @@ public:
   int _curr_iter;
   cv::Mat1b _first_img;
   cv::Mat1b _curr_skel;
-  VoronoiThinner _thinner;
-  ImageContour _contour_viz;
+  vision_utils::VoronoiThinner _thinner;
+  vision_utils::ImageContour _contour_viz;
 }; // end class VoronoiIterator
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -160,7 +160,7 @@ void paste_images_gallery(const std::vector<cv::Mat_<T> > & in,
   for (int img_idx = 0; img_idx < nimgs; ++img_idx) {
     int galleryx = img_idx % gallerycols, galleryy = img_idx / gallerycols;
     cv::Rect roi(galleryx * cols1, galleryy * rows1, cols1, rows1);
-    // printf("### out:%ix%i, roi %i:'%s'\n", out.cols, out.rows, img_idx, geometry_utils::print_rect(roi).c_str());
+    // printf("### out:%ix%i, roi %i:'%s'\n", out.cols, out.rows, img_idx, vision_utils::print_rect(roi).c_str());
     if (cols1 != in[img_idx].cols || rows1 != in[img_idx].rows) {
       printf("Image %i of size (%ix%i), different from (%ix%i), skipping it.\n",
              img_idx, in[img_idx].cols, in[img_idx].rows, cols1, rows1);
@@ -192,7 +192,7 @@ void generate_video_comparer(const cv::Mat1b & query,
   cv::cvtColor(its[0].first_img(), first_img_color, CV_GRAY2BGR);
   int /*cols1 = first_img_color.cols, */ rows1 = first_img_color.rows;
   //cv::Point text_pos(cols1 / 2, rows1 - 10);
-  // image_utils::draw_text_centered
+  // vision_utils::draw_text_centered
   cv::Point text_pos(10, rows1 - 10);
   cv::putText(first_img_color, "query",
               text_pos, CV_FONT_HERSHEY_PLAIN, 1, CV_RGB(0, 255, 0));
@@ -220,7 +220,7 @@ void generate_video_comparer(const cv::Mat1b & query,
         its[impl_idx].iter();
       cv::Mat3b curr_img_color = its[impl_idx].contour_color(its[impl_idx].current_skel());
       cv::dilate(curr_img_color, curr_img_color, cv::Mat());
-      //image_utils::draw_text_centered
+      //vision_utils::draw_text_centered
       cv::putText
           (curr_img_color, impls[impl_idx],
            text_pos, CV_FONT_HERSHEY_PLAIN, 1, CV_RGB(0, 255, 0));
@@ -263,14 +263,14 @@ void generate_video_comparer(const cv::Mat1b & query,
 
 void benchmark(const cv::Mat1b & query,
                bool display_imgs = true) {
-  VoronoiThinner thinner;
+  vision_utils::VoronoiThinner thinner;
   unsigned int ntimes = 10;
-  Timer timer;
-  std::vector<std::string> impls = VoronoiThinner::all_implementations();
+  vision_utils::Timer timer;
+  std::vector<std::string> impls = vision_utils::VoronoiThinner::all_implementations();
   std::vector<cv::Mat1b> skels_no_crop;
   std::vector<cv::Mat1b> skels_crop;
   printf("Running benchmark with implementations [%s]...\n",
-         VoronoiThinner::all_implementations_as_string().c_str());
+         vision_utils::VoronoiThinner::all_implementations_as_string().c_str());
   for (unsigned int i = 0; i < impls.size(); ++i) {
     for (unsigned int crop = 0; crop <= 1; ++crop) {
       timer.reset();
@@ -301,7 +301,7 @@ void benchmark(const cv::Mat1b & query,
 
 void benchmark_logs(const cv::Mat1b & query) {
   unsigned int npixels_curr = query.cols * query.rows;
-  VoronoiThinner thinner;
+  vision_utils::VoronoiThinner thinner;
   std::vector<std::string> implementation_names;
   implementation_names.push_back(IMPL_ZHANG_SUEN);
   implementation_names.push_back(IMPL_ZHANG_SUEN_FAST);
@@ -322,7 +322,7 @@ void benchmark_logs(const cv::Mat1b & query) {
     unsigned int ntimes = 1;
     std::cout << npixels << " \t";
     for (unsigned int imp_idx = 0; imp_idx < implementation_names.size(); ++imp_idx) {
-      Timer timer;
+      vision_utils::Timer timer;
       for (unsigned int i = 0; i < ntimes; ++i)
         thinner.thin(query_resized, implementation_names[imp_idx], true);
       std::cout << timer.getTimeMilliseconds() / ntimes << " \t";
@@ -338,7 +338,7 @@ inline int CLI_help(int, char** argv) {
   printf(" * command: [ thin | video | video_bright | video_comparer | benchmark ]\n");
   printf("   If command =  video_comparer or benchmark, no implementation must be specified.\n");
   printf(" * implementation_name: [%s]\n",
-         VoronoiThinner::all_implementations_as_string().c_str());
+         vision_utils::VoronoiThinner::all_implementations_as_string().c_str());
   printf("\nExamples:\n");
   printf("  %s video           morph            horse.png\n", argv[0]);
   printf("  %s thin            zhang_suen_fast  *.png\n", argv[0]);
@@ -374,7 +374,7 @@ int CLI(int argc, char** argv) {
   int first_file_idx = 2;
   if (order != VIDEO_COMPARER && order != BENCHMARK) {
     first_file_idx = 3;
-    if (!VoronoiThinner::is_implementation_valid(implementation_name)) {
+    if (!vision_utils::VoronoiThinner::is_implementation_valid(implementation_name)) {
       printf("Unknown implementation '%s'\n", implementation_name.c_str());
       return CLI_help(argc, argv);
     }
@@ -382,7 +382,7 @@ int CLI(int argc, char** argv) {
   if (argc < first_file_idx + 1) // [exename] [order] [file(s)]
     return CLI_help(argc, argv);
 
-  VoronoiThinner thinner;
+  vision_utils::VoronoiThinner thinner;
   // load files
   std::vector<cv::Mat1b> files;
   for (int argi = first_file_idx; argi < argc; ++argi) {
@@ -396,7 +396,7 @@ int CLI(int argc, char** argv) {
   // process
   if (order == THIN) {
     for (unsigned int file_idx = 0; file_idx < files.size(); ++file_idx) {
-      Timer timer;
+      vision_utils::Timer timer;
       bool ok = thinner.thin(files[file_idx], implementation_name, true);
       if (!ok) {
         printf("Failed thinning with implementation '%s'\n", implementation_name.c_str());

@@ -36,7 +36,7 @@ ________________________________________________________________________________
 #define DEPTH_DIR  IMG_DIR "depth/"
 #define BREAST_DIR  IMG_DIR "breast/"
 
-namespace test_person_histogram_set_variables {
+namespace vision_utils {
 
 ////////////////////////////////////////////////////////////////////////////////
 /// images with one user
@@ -224,6 +224,6 @@ inline std::vector<int> all_labels_struct() {
 }
 
 
-} // end namespace test_person_histogram_set_variables
+} // end namespace vision_utils
 
 #endif // TEST_PERSON_HISTOGRAM_SET_VARIABLES_H

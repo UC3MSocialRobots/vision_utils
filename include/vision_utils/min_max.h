@@ -29,6 +29,8 @@ ________________________________________________________________________________
 
 #include <opencv2/core/core.hpp>
 
+namespace vision_utils {
+
 /*!
   Simultaneous min & max using only 3*N/2 comparisons
 
@@ -87,7 +89,7 @@ inline void minmax(const _T * a, // input array
       n_start = 2;
     } // end if arr_size even
   } // end smart init
-  // printf("min_et:%g, max_et:%g\n", min_et, max_et);
+  //printf("min_et:%g, max_et:%g\n", min_et, max_et);
 
   for (i = n_start; i < arr_size; i += 2) {
     // a comparison with NaN always return false
@@ -170,7 +172,7 @@ inline void minmax_nans(const _T * a, // input array
   } else { // arr size even (multiple of 2) -> check it as others
     n_start = 0;
   }
-  // printf("min_et:%g, max_et:%g\n", min_et, max_et);
+  //printf("min_et:%g, max_et:%g\n", min_et, max_et);
 
   for (i = n_start; i < arr_size; i += 2) {
     // check NAN_VALUE cases
@@ -229,5 +231,7 @@ inline void min_max_loc_nans(const cv::Mat & float_in, _T & minVal, _T & maxVal,
   minmax_nans(float_in.ptr<_T>(), float_in.cols * float_in.rows * float_in.channels(),
               &minVal, &maxVal, NAN_VALUE);
 }
+
+} // end namespace vision_utils
 
 #endif // MIN_MAX_H

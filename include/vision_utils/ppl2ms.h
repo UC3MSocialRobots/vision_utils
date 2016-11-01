@@ -20,7 +20,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
 
-A class for drawing peoplemsgs::PeoplePoseList
+A class for drawing peoplemsgs::People
 on a MiniStage visualizer.
 
 \section Parameters
@@ -64,16 +64,18 @@ on a MiniStage visualizer.
 #include "vision_utils/drawing_utils.h"
 #include "vision_utils/ppl_attributes.h"
 #include "vision_utils/resize_utils.h"
-#include "vision_utils/utils/map_utils.h"
-#include "vision_utils/utils/pt_utils.h"
+#include "vision_utils/map_utils.h"
+#include "vision_utils/pt_utils.h"
 
 #define DEBUG_PRINT(...)   {}
 //#define DEBUG_PRINT(...)   printf(__VA_ARGS__)
 
+namespace vision_utils {
+
 class PPL2MS {
 public:
-  typedef people_msgs_rl::PeoplePose PP;
-  typedef people_msgs_rl::PeoplePoseList PPL;
+  typedef people_msgs::Person PP;
+  typedef people_msgs::People PPL;
   typedef std::string UserName;
   typedef std::string MethodName;
   typedef cv::Point3d Pt3d;
@@ -138,19 +140,19 @@ public:
   void add_ppl_and_redraw_all(MiniStage & ms,
                               const PPL & new_measure,
                               bool want_clear_before = true) {
-    MethodName method  = new_measure.method;
+    MethodName method  = get_method(new_measure);
     if (method.empty()) {
       printf("PPLViewer:PPL with no method specified, cant process it!\n");
       return;
     }
     DEBUG_PRINT("PPLViewer::add_ppl_and_redraw_all('%s')\n", method.c_str());
     // insert method in the list of seen methods
-    for (unsigned int detec_idx = 0; detec_idx < new_measure.poses.size(); ++detec_idx) {
-      const PP* pp = &(new_measure.poses[detec_idx]);
-      UserTrack* curr_track = get_track(method, pp->person_name);
+    for (unsigned int detec_idx = 0; detec_idx < new_measure.people.size(); ++detec_idx) {
+      const PP* pp = &(new_measure.people[detec_idx]);
+      UserTrack* curr_track = get_track(method, pp->name);
       // add detections 3D points to tracks
       Pt3d user_pos;
-      pt_utils::copy3(pp->head_pose.position, user_pos);
+      copy3(pp->position, user_pos);
       Track3d* user_track3d = &(curr_track->track3d);
       Track2d* user_track2d = &(curr_track->track2d);
       user_track3d->push_back(user_pos);
@@ -189,11 +191,11 @@ public:
   void redraw_blobs(MiniStage & ms,
                     const PPL::ConstPtr & ppl) {
     // draw blobs
-    unsigned int n_blobs = ppl->poses.size();
+    unsigned int n_blobs = ppl->people.size();
     for (unsigned int blob_idx = 0; blob_idx < n_blobs; ++blob_idx) {
-      const PP* pp = &(ppl->poses[blob_idx]);
-      geometry_msgs::Point blob_position = pp->head_pose.position;
-      double blob_confidence = pp->confidence;
+      const PP* pp = &(ppl->people[blob_idx]);
+      geometry_msgs::Point blob_position = pp->position;
+      double blob_confidence = pp->reliability;
       // draw blob center
       cv::circle(ms.get_viz(), world2pixel(ms, blob_position),
                  3, CV_RGB(0, 0, 255), -1);
@@ -212,7 +214,7 @@ public:
            ++assign_id) {
         int uap_idx = unassociated_poses_to_blobs_assignments[blob_idx][assign_id];
         geometrymsgs::Point head_position =
-            unassociated_poses[uap_idx].head_pose.position;
+            unassociated_poses[uap_idx].position.position;
         cv::line(ms.get_viz(),
                  world2pixel(blob_position.x, blob_position.y),
                  world2pixel(head_position.x, head_position.y),
@@ -230,7 +232,7 @@ public:
   //! \return the name of all unique PPL methods received
   inline std::vector<MethodName> get_all_received_methods() const {
     std::vector<MethodName> ans;
-    map_utils::map_keys_to_container(_method2ppl, ans);
+    map_keys_to_container(_method2ppl, ans);
     return ans;
   }
 
@@ -238,7 +240,7 @@ public:
   inline unsigned int get_nb_received_tracks(const MethodName & method) const {
     int ans = 0;
     for (unsigned int track_idx = 0; track_idx < _user_tracks.size(); ++track_idx)
-      if (_user_tracks[track_idx].method_name  == method)
+      if (_user_tracks[track_idx].method_name == method)
         ++ans;
     return ans;
   }
@@ -256,20 +258,21 @@ private:
 
   void draw_one_ppl(MiniStage & ms,
                     const PPL & new_measure) {
-    DEBUG_PRINT("PPL2MS::draw_one_ppl('%s')\n", new_measure.method.c_str());
+    DEBUG_PRINT("PPL2MS::draw_one_ppl('%s')\n", get_method(new_measure).c_str());
 
     // find color
-    MethodName method  = new_measure.method;
+    MethodName method  = get_method(new_measure);
 
-    for (unsigned int detec_idx = 0; detec_idx < new_measure.poses.size(); ++detec_idx) {
-      const PP* pp = &(new_measure.poses[detec_idx]);
-      std::string key = (_method2trail_color ? method : pp->person_name);
+    for (unsigned int detec_idx = 0; detec_idx < new_measure.people.size(); ++detec_idx) {
+      const PP* pp = &(new_measure.people[detec_idx]);
+      std::string key = (_method2trail_color ? method : pp->name);
       cv::Scalar color = pp2color(key);
-      cv::Point user_center = world2pixel(ms, pp->head_pose.position);
-      UserName user_name = pp->person_name;
+      cv::Point user_center = world2pixel(ms, pp->position);
+      UserName user_name = pp->name;
       cv::circle(ms.get_viz(), user_center, 15, cv::Scalar::all(0), -1);
       cv::circle(ms.get_viz(), user_center, 15, color, 5);
 
+#if 0 // TODO images
       // add the image
       if (_draw_track_images
           && pp->rgb.width > 0
@@ -288,25 +291,26 @@ private:
           printf("PPL2MS: exception in cv_bridge: '%s'\n", e.what());
           return;
         }
-        image_utils::resize_if_bigger(_rgb_buffer, _rgb_buffer,
+        resize_if_bigger(_rgb_buffer, _rgb_buffer,
                                       MAX_PERSON_HEIGHT, MAX_PERSON_HEIGHT);
-        image_utils::resize_if_bigger(_user_buffer, _user_buffer,
+        resize_if_bigger(_user_buffer, _user_buffer,
                                       MAX_PERSON_HEIGHT, MAX_PERSON_HEIGHT);
         int x = user_center.x + 10, y = user_center.y + 10;
-        image_utils::paste_img(_rgb_buffer, ms.get_viz(), x, y, &_user_buffer);
+        paste_img(_rgb_buffer, ms.get_viz(), x, y, &_user_buffer);
       }
+#endif
 
       // draw method name
       std::ostringstream label;
       label << method << ":" << user_name;
       std::string face_name;
-      if (ppl_utils::get_attribute_readonly(*pp, "face_name", face_name))
+      if (get_tag(*pp, "face_name", face_name))
         label << "='" << face_name << "'";
       cv::putText(ms.get_viz(), label.str(), user_center + cv::Point(10, -10),
                   CV_FONT_HERSHEY_PLAIN, 1, color, 1);
 
       // draw detections
-      //image_utils::drawCross(ms.get_viz(), world2pixel(ms, user_pos), 5, pp_color, 2);
+      //drawCross(ms.get_viz(), world2pixel(ms, user_pos), 5, pp_color, 2);
     } // end loop detec_idx
   } // end draw_one_ppl();
 
@@ -337,7 +341,7 @@ private:
         for (unsigned int pt_idx = 0; pt_idx < npts; ++pt_idx)
           user_track2d->push_back(world2pixel(ms, (*user_track3d)[pt_idx]));
       }
-      image_utils::drawPolygon(ms.get_viz(), *user_track2d, false, pp_color, 2);
+      drawPolygon(ms.get_viz(), *user_track2d, false, pp_color, 2);
     } // end loop (track_idx)
 
 
@@ -349,7 +353,7 @@ private:
       Pt3d track_pos;
       _method2user2data[track_idx].get_position(track_pos);
       cv::line(ms.get_viz(),
-               world2pixel(ms, new_measure.poses[detec_idx].head_pose.position),
+               world2pixel(ms, new_measure.people[detec_idx].position.position),
                world2pixel(ms, track_pos),
                pp_color, 1);
     } // end loop affec_idx
@@ -357,7 +361,7 @@ private:
     // draw unassociated_poses
     for (unsigned int uap_idx = 0; uap_idx < _unassociated_poses.size(); ++uap_idx) {
       geometrymsgs::Point head_position =
-          _unassociated_poses[uap_idx].head_pose.position;
+          _unassociated_poses[uap_idx].position.position;
       cv::circle(ms.get_viz(), world2pixel(ms, head_position.x, head_position.y),
                  3, pp_color, 2);
     } // end loop uap_idx
@@ -393,9 +397,9 @@ private:
 
   inline cv::Scalar pp2color(const std::string & key) {
     cv::Scalar color;
-    if (map_utils::direct_search(_pp2color, key, color))
+    if (direct_search(_pp2color, key, color))
       return color;
-    color = color_utils::color_scalar<cv::Scalar>(_pp2color.size());
+    color = color_scalar<cv::Scalar>(_pp2color.size());
     _pp2color[key] = color;
     return color;
   } // end
@@ -414,5 +418,7 @@ private:
   int _trail_history_size;
   bool _method2trail_color;
 }; // end PPL2MS
+
+} // end namespace vision_utils
 
 #endif // PPL2MS_H

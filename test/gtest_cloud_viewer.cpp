@@ -26,7 +26,7 @@ Some tests for clouds viewing.
 
 // Bring in my package's API, which is what I'm testing
 #include "vision_utils/cloud_viewer.h"
-#include "vision_utils/utils/combinatorics_utils.h"
+#include "vision_utils/combinatorics_utils.h"
 // Bring in gtest
 #include <gtest/gtest.h>
 
@@ -37,8 +37,8 @@ typedef cv::Point3f Pt3f;
 TEST(TestSuite, emtpy) {
   std::vector<Pt3f> pointcloud;
   std::vector<cv::Vec3b> pointcloud_RGB;
-  cloud_viewer::Viewer viewer("Simple Cloud Viewer");
-  cloud_viewer::view_rgb_cloud(pointcloud, pointcloud_RGB, viewer);
+  vision_utils::Viewer viewer("Simple Cloud Viewer");
+  vision_utils::view_rgb_cloud(pointcloud, pointcloud_RGB, viewer);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -47,19 +47,19 @@ void test_gaussian(bool use_rgb) {
   std::vector<Pt3f> pointcloud;
   std::vector<cv::Vec3b> pointcloud_RGB;
   for (unsigned int pt = 0; pt < 100; ++pt) {
-    pointcloud.push_back(Pt3f(combinatorics_utils::rand_gaussian() / 10.f,
-                              combinatorics_utils::rand_gaussian() / 10.f,
-                              combinatorics_utils::rand_gaussian() / 10.f));
+    pointcloud.push_back(Pt3f(vision_utils::rand_gaussian() / 10.f,
+                              vision_utils::rand_gaussian() / 10.f,
+                              vision_utils::rand_gaussian() / 10.f));
     pointcloud_RGB.push_back(cv::Vec3b(50 + rand() % 200,
                                        50 + rand() % 200,
                                        50 + rand() % 200));
   } // end for pt
-  //cloud_viewer::Viewer viewer = cloud_viewer::get_viewer(pointcloud, pointcloud_RGB);
+  //vision_utils::Viewer viewer = vision_utils::get_viewer(pointcloud, pointcloud_RGB);
   printf("Press + to makes points more visible\n");
   if (use_rgb)
-    cloud_viewer::view_rgb_cloud(pointcloud, pointcloud_RGB, BLOCKING);
+    vision_utils::view_rgb_cloud(pointcloud, pointcloud_RGB, BLOCKING);
   else
-    cloud_viewer::view_cloud(pointcloud, BLOCKING);
+    vision_utils::view_cloud(pointcloud, BLOCKING);
 }
 
 TEST(TestSuite, gaussian_bw) {

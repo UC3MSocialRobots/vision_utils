@@ -24,8 +24,8 @@ Some speed tests for OpenCV imread, imwrite functions
  */
 
 #include <opencv2/highgui/highgui.hpp>
-#include "vision_utils/utils/timer.h"
-#include "vision_utils/utils/system_utils.h"
+#include "vision_utils/timer.h"
+#include "vision_utils/system_utils.h"
 #include <vision_utils/img_path.h>
 #include "vision_utils/float_image_generator.h"
 #include "vision_utils/content_processing.h"
@@ -33,7 +33,7 @@ Some speed tests for OpenCV imread, imwrite functions
 inline std::string file_size(const std::string & filename) {
   std::ostringstream command;
   command << "du -h " << filename << " | cut -f 1";
-  return system_utils::exec_system_get_output(command.str().c_str());
+  return vision_utils::exec_system_get_output(command.str().c_str());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@ void test_color_image(const cv::Mat & rgb) {
   printf("test_color_image(%i x %i)\n", rgb.cols, rgb.rows);
   unsigned int ntimes = 10;
   std::vector<int> compression_params;
-  Timer timer;
+  vision_utils::Timer timer;
 
   compression_params.clear();
   compression_params.push_back(CV_IMWRITE_PNG_COMPRESSION);
@@ -50,7 +50,7 @@ void test_color_image(const cv::Mat & rgb) {
   timer.reset();
   for (unsigned int time = 0; time < ntimes; ++time)
     cv::imwrite("/tmp/foo.png", rgb, compression_params);
-  maggiePrint("PNG writing, compression 0: \t\t%g ms, %s", timer.time() / ntimes,
+  printf("PNG writing, compression 0: \t\t%g ms, %s", timer.time() / ntimes,
               file_size("/tmp/foo.png").c_str());
 
   compression_params.clear();
@@ -59,7 +59,7 @@ void test_color_image(const cv::Mat & rgb) {
   timer.reset();
   for (unsigned int time = 0; time < ntimes; ++time)
     cv::imwrite("/tmp/foo.png", rgb, compression_params);
-  maggiePrint("PNG writing, compression 3 (default): \t%g ms, %s", timer.time() / ntimes,
+  printf("PNG writing, compression 3 (default): \t%g ms, %s", timer.time() / ntimes,
               file_size("/tmp/foo.png").c_str());
 
   compression_params.clear();
@@ -68,7 +68,7 @@ void test_color_image(const cv::Mat & rgb) {
   timer.reset();
   for (unsigned int time = 0; time < ntimes; ++time)
     cv::imwrite("/tmp/foo.png", rgb, compression_params);
-  maggiePrint("PNG writing, compression 9: \t\t%g ms, %s", timer.time() / ntimes,
+  printf("PNG writing, compression 9: \t\t%g ms, %s", timer.time() / ntimes,
               file_size("/tmp/foo.png").c_str());
 
   //  PBM is for bitmaps (black and white, no grays)[3]
@@ -81,7 +81,7 @@ void test_color_image(const cv::Mat & rgb) {
     timer.reset();
     for (unsigned int time = 0; time < ntimes; ++time)
       cv::imwrite("/tmp/foo.ppm", rgb, compression_params);
-    maggiePrint("PPM writing, binary:%i: \t\t\t%g ms, %s", binary, timer.time() / ntimes,
+    printf("PPM writing, binary:%i: \t\t\t%g ms, %s", binary, timer.time() / ntimes,
                 file_size("/tmp/foo.ppm").c_str());
   } // end loop binary
 
@@ -92,7 +92,7 @@ void test_color_image(const cv::Mat & rgb) {
     timer.reset();
     for (unsigned int time = 0; time < ntimes; ++time)
       cv::imwrite("/tmp/foo.jpg", rgb, compression_params);
-    maggiePrint("JPG writing, quality %i: \t\t\t%g ms, %s", quality, timer.time() / ntimes,
+    printf("JPG writing, quality %i: \t\t\t%g ms, %s", quality, timer.time() / ntimes,
                 file_size("/tmp/foo.jpg").c_str());
   } // end loop quality
 
@@ -103,20 +103,20 @@ void test_color_image(const cv::Mat & rgb) {
     timer.reset();
     for (unsigned int time = 0; time < ntimes; ++time)
       cv::imwrite("/tmp/foo.jp2", rgb, compression_params);
-    maggiePrint("JPG2000 writing, quality %i: \t\t\t%g ms, %s", quality, timer.time() / ntimes,
+    printf("JPG2000 writing, quality %i: \t\t\t%g ms, %s", quality, timer.time() / ntimes,
                 file_size("/tmp/foo.jp2").c_str());
   } // end loop quality
 
   timer.reset();
   for (unsigned int time = 0; time < ntimes; ++time)
     cv::imwrite("/tmp/foo.bmp", rgb);
-  maggiePrint("bmp writing: \t\t\t\t%g ms, %s", timer.time() / ntimes,
+  printf("bmp writing: \t\t\t\t%g ms, %s", timer.time() / ntimes,
               file_size("/tmp/foo.bmp").c_str());
 
   timer.reset();
   for (unsigned int time = 0; time < ntimes; ++time)
     cv::imwrite("/tmp/foo.tiff", rgb);
-  maggiePrint("tiff writing: \t\t\t\t%g ms, %s", timer.time() / ntimes,
+  printf("tiff writing: \t\t\t\t%g ms, %s", timer.time() / ntimes,
               file_size("/tmp/foo.tiff").c_str());
 }
 
@@ -126,7 +126,7 @@ void test_depth_image(const cv::Mat & depth) {
   printf("test_depth_image(%i x %i)\n", depth.cols, depth.rows);
   unsigned int ntimes = 10;
   std::vector<int> compression_params;
-  Timer timer;
+  vision_utils::Timer timer;
 
   compression_params.clear();
   compression_params.push_back(CV_IMWRITE_PNG_COMPRESSION);
@@ -134,7 +134,7 @@ void test_depth_image(const cv::Mat & depth) {
   timer.reset();
   for (unsigned int time = 0; time < ntimes; ++time)
     cv::imwrite("/tmp/foo.png", depth, compression_params);
-  maggiePrint("PNG writing, compression 0: \t\t%g ms, %s", timer.time() / ntimes,
+  printf("PNG writing, compression 0: \t\t%g ms, %s", timer.time() / ntimes,
               file_size("/tmp/foo.png").c_str());
 
   cv::Mat depth1000;
@@ -142,7 +142,7 @@ void test_depth_image(const cv::Mat & depth) {
   timer.reset();
   for (unsigned int time = 0; time < ntimes; ++time)
     cv::imwrite("/tmp/foo.png", depth1000, compression_params);
-  maggiePrint("scaling & PNG writing, compression 0: \t\t%g ms, %s", timer.time() / ntimes,
+  printf("scaling & PNG writing, compression 0: \t\t%g ms, %s", timer.time() / ntimes,
               file_size("/tmp/foo.png").c_str());
 }
 

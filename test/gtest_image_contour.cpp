@@ -28,10 +28,10 @@ Some tests for class \b Imagecontour
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include "vision_utils/image_contour.h"
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 #include <vision_utils/img_path.h>
 
-void check_sizes(ImageContour & contour,
+void check_sizes(vision_utils::ImageContour & contour,
                  unsigned int expected_contour_size,
                  unsigned int expected_inner_size) {
   ASSERT_TRUE(contour.contour_size() == expected_contour_size)
@@ -40,18 +40,18 @@ void check_sizes(ImageContour & contour,
       << "contour:" << contour.to_string();
 }
 
-void set_point_empty_C4(ImageContour & contour, int row, int col,
+void set_point_empty_C4(vision_utils::ImageContour & contour, int row, int col,
                         unsigned int /*expected_contour_size*/,
                         unsigned int /*expected_inner_size*/)
 {
   contour.set_point_empty_C4(row, col); // up left
-  ASSERT_TRUE(contour(row, col) == ImageContour::EMPTY) << "contour" << contour.to_string();
+  ASSERT_TRUE(contour(row, col) == vision_utils::ImageContour::EMPTY) << "contour" << contour.to_string();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, empty_contour) {
-  ImageContour contour;
+  vision_utils::ImageContour contour;
   ASSERT_TRUE(contour.cols == 0);
   ASSERT_TRUE(contour.rows == 0);
   check_sizes(contour, 0, 0);
@@ -60,7 +60,7 @@ TEST(TestSuite, empty_contour) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, empty_img) {
-  ImageContour contour;
+  vision_utils::ImageContour contour;
   cv::Mat1b img;
   contour.from_image_C4(img);
   ASSERT_TRUE(contour.cols == 0);
@@ -81,7 +81,7 @@ TEST(TestSuite, empty_img) {
 TEST(TestSuite, rect_img) {
   int cols = 10;
   cv::Mat1b img(cols, cols, (uchar) 0);
-  ImageContour contour;
+  vision_utils::ImageContour contour;
 
   for (int col = 0; col < cols; ++col) {
     for (int row = 0; row < cols; ++row) {
@@ -94,7 +94,7 @@ TEST(TestSuite, rect_img) {
           << "(" << col << "," << row << "): contour:" << contour.to_string();
       ASSERT_TRUE(contour.inside_size() == 0)
           << "(" << col << "," << row << "): contour:" << contour.to_string();
-      ASSERT_TRUE(contour(row, col) == ImageContour::CONTOUR)
+      ASSERT_TRUE(contour(row, col) == vision_utils::ImageContour::CONTOUR)
           << "(" << col << "," << row << "): contour:" << contour.to_string();
 
       // make hole
@@ -111,7 +111,7 @@ TEST(TestSuite, rect_img) {
 
 void test_rect(bool C8 = false) {
   int cols = 100, rows = 80, ntimes = 100;
-  ImageContour contour;
+  vision_utils::ImageContour contour;
   cv::Mat1b img(rows, cols, (uchar) 255), correct_ans = img.clone();
   correct_ans.setTo(0);
   cv::rectangle(correct_ans, cv::Rect(0, 0, cols, rows), cv::Scalar::all(255), 1);
@@ -122,7 +122,7 @@ void test_rect(bool C8 = false) {
       contour.from_image_C4(img);
     ASSERT_TRUE(cv::countNonZero(contour.contour_image() - correct_ans) == 0)
         << "contour:" << contour.to_string()
-        << "correct_ans:" << ImageContour::to_string(correct_ans);
+        << "correct_ans:" << vision_utils::ImageContour::to_string(correct_ans);
   } // end loop time
 }
 
@@ -133,7 +133,7 @@ TEST(TestSuite, test_rect_C8) {  test_rect(true); }
 
 void test_circle(bool C8 = false) {
   int cols = 100, rows = 80, ntimes = 100;
-  ImageContour contour;
+  vision_utils::ImageContour contour;
   cv::Mat1b img(rows, cols, (uchar) 0), correct_ans = img.clone();
   for (int time = 0; time < ntimes; ++time) {
     img.setTo(0);
@@ -153,7 +153,7 @@ void test_circle(bool C8 = false) {
       contour.from_image_C4(img);
     ASSERT_TRUE(cv::countNonZero(contour.contour_image() - correct_ans) == 0)
         << "contour:" << contour.to_string()
-        << "correct_ans:" << ImageContour::to_string(correct_ans);
+        << "correct_ans:" << vision_utils::ImageContour::to_string(correct_ans);
   } // end loop time
 }
 
@@ -169,7 +169,7 @@ TEST(TestSuite, circleC8) {
 
 TEST(TestSuite, rectangle) {
   int cols = 100, ntimes = 100;
-  ImageContour contour;
+  vision_utils::ImageContour contour;
   cv::Mat1b img(cols, cols, (uchar) 0), correct_ans = img.clone();
   for (int time = 0; time < ntimes; ++time) {
     img.setTo(0);
@@ -187,7 +187,7 @@ TEST(TestSuite, rectangle) {
 TEST(TestSuite, eat_rectangle) {
   cv::Mat1b img(4, 4, (uchar) 0);
   cv::rectangle(img, cv::Point(1, 1), cv::Point(3, 3), cv::Scalar::all(255), -1);
-  ImageContour contour;
+  vision_utils::ImageContour contour;
   contour.from_image_C4(img);
   //XXX
   //XOX
@@ -243,8 +243,8 @@ TEST(TestSuite, benchmark) {
   cv::Mat1b img = cv::imread(IMG_DIR "depth/juggling1_user_mask.png",
                              CV_LOAD_IMAGE_GRAYSCALE);
   unsigned int ntimes = 1000;
-  ImageContour contour;
-  Timer timer;
+  vision_utils::ImageContour contour;
+  vision_utils::Timer timer;
   for (unsigned int time = 0; time < ntimes; ++time)
     contour.from_image_C4(img);
   timer.printTime_factor("from_image_C4()", ntimes);

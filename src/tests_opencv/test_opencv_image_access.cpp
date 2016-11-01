@@ -1,8 +1,8 @@
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include "vision_utils/utils/timer.h"
-#include "vision_utils/utils/cmatrix.h"
+#include "vision_utils/timer.h"
+#include "vision_utils/cmatrix.h"
 #include <vision_utils/img_path.h>
 #include <set>
 
@@ -25,7 +25,7 @@ void iterate_whole_image_bw(cv::Mat1b & image) {
   int cols = image.cols, rows = image.rows;
   printf("\niterate_whole_image_bw(%i x %i)\n", cols, rows);
 
-  Timer timer;
+  vision_utils::Timer timer;
 
   timer.reset();
   for (int time = 0; time < NTIMES; ++time)
@@ -128,7 +128,7 @@ void iterate_whole_image_bw(cv::Mat1b & image) {
 
 void iterate_whole_image_color(cv::Mat3b & image) {
   int cols = image.cols, rows = image.rows;
-  Timer timer;
+  vision_utils::Timer timer;
   printf("\niterate_whole_image_color(%i x %i)\n", cols,  rows);
 
   timer.reset();
@@ -238,7 +238,7 @@ void iterate_whole_image_multidimensional() {
   int dim[] = {SIZE, SIZE, SIZE};
   cv::Mat mat(3, dim, CV_8U);
   printf("process_mat_multidimensional(%i x %i x %i)\n", SIZE, SIZE, SIZE);
-  Timer timer;
+  vision_utils::Timer timer;
 
   timer.reset();
   for (int time = 0; time < NTIMES; ++time)
@@ -271,7 +271,7 @@ void iterate_whole_image_multidimensional() {
     // iterate through the matrix. on each iteration
     uchar* data = it.planes[0].ptr<uchar>(0);
     //    printf("it.planes[0]:'%s'\n",
-    //           image_utils::infosImage(it.planes[0]).c_str());
+    //           vision_utils::infosImage(it.planes[0]).c_str());
     for(unsigned int dim1 = 0; dim1 < SIZE; ++dim1) {
       for (unsigned int dim2 = 0; dim2 < SIZE; ++dim2) {
         for (unsigned int dim3 = 0; dim3 < SIZE; ++dim3) {
@@ -324,7 +324,7 @@ void random_read_buffer(int cols, int rows, double ratio_read_wanted) {
   printf("\nrandom_read_buffer(%i x %i, %i%%)\n", cols, rows,
          (int) (100 * ratio_read_wanted));
 
-  Timer timer;
+  vision_utils::Timer timer;
 
   timer.reset();
   for (int time = 0; time < NTIMES_RANDOM_READ; ++time) {
@@ -383,7 +383,7 @@ void random_read_buffer(int cols, int rows, double ratio_read_wanted) {
   // CMatrix
   timer.reset();
   for (int time = 0; time < NTIMES_RANDOM_READ; ++time) {
-    CMatrix<bool> prev_reads(rows, cols);
+    vision_utils::CMatrix<bool> prev_reads(rows, cols);
     prev_reads.set_to_zero();
     int nreads = 0;
     while (nreads < nreads_wanted) {
@@ -442,7 +442,7 @@ inline void test_vector() {
   printf("\ntest_vector(size:%li)\n", vec.size());
 
 
-  Timer timer;
+  vision_utils::Timer timer;
   for (int time = 0; time < NTIMES; ++time) {
     for (unsigned int col = 0; col < vec.size(); ++col) {
       vec.at(col) = VALUE_NB;
@@ -482,7 +482,7 @@ inline void test_vector() {
 template<class _Elem>
 inline void test_fill_img(int w, int h, const _Elem & value) {
   printf("\ntest_fill_img(%i x %i)\n", w, h);
-  Timer timer;
+  vision_utils::Timer timer;
   cv::Mat_<_Elem> img(h, w); // rows, cols
 
   timer.reset();

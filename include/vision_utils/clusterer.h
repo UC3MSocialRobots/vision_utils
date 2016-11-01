@@ -3,7 +3,7 @@
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
   \date        2013/4/19
-  
+
 ________________________________________________________________________________
 
 This program is free software: you can redistribute it and/or modify
@@ -35,10 +35,10 @@ Some useful functions for manipulating point clouds.
 // utils
 #undef RAD2DEG // defined in both "pcl_macros.h" and "geometry_utils.h"
 #undef DEG2RAD // defined in both "pcl_macros.h" and "geometry_utils.h"
-#include "vision_utils/utils/Rect3.h"
-#include "vision_utils/utils/pt_utils.h"
+#include "vision_utils/Rect3.h"
+#include "vision_utils/pt_utils.h"
 
-namespace geometry_utils {
+namespace vision_utils {
 
 /*!
  * \class Clusterer
@@ -71,14 +71,14 @@ public:
     cluster_indices_pcl.clear();
 
     if (data.size() == 0) {
-      maggieDebug2("Clustering an empty cloud.");
+      //printf("Clustering an empty cloud.");
       return true; // no error needed
     }
 
     // convert to pcl point cloud
     data_pcl->resize(data.size());
     for (unsigned int data_idx = 0; data_idx < data.size(); ++data_idx)
-      pt_utils::copy3(data[data_idx], (*data_pcl)[data_idx]);
+      copy3(data[data_idx], (*data_pcl)[data_idx]);
 
     // Creating the KdTree object for the search method of the extraction
     tree->setInputCloud (data_pcl);
@@ -87,8 +87,8 @@ public:
     ec.setSearchMethod (tree);
     ec.setInputCloud (data_pcl);
     ec.extract (cluster_indices_pcl);
-    //  ROS_INFO("cluster_indices_pcl:'%s'",
-    //           string_utils::accessible_to_string(cluster_indices_pcl).c_str());
+    //  //printf("cluster_indices_pcl:'%s'",
+    //           accessible_to_string(cluster_indices_pcl).c_str());
     return true; // success
   } // end cluster()
 
@@ -111,13 +111,13 @@ public:
   bool get_biggest_cluster_indices(std::vector<int> & cluster_indices) const {
     cluster_indices.clear();
     if (cluster_indices_pcl.size() == 0) {
-      ROS_WARN("No cluster found by PCL EuclideanClusterExtraction");
+      printf("No cluster found by PCL EuclideanClusterExtraction\n");
       return false;
     }
     const std::vector<int32_t>* biggest_indices_pcl =
         &(cluster_indices_pcl.front().indices);
-    //  ROS_INFO("biggest_indices_pcl:'%s'",
-    //           string_utils::accessible_to_string(*biggest_indices_pcl).c_str());
+    //  //printf("biggest_indices_pcl:'%s'",
+    //           accessible_to_string(*biggest_indices_pcl).c_str());
 
     // copy cluster_indices_pcl -> cluster_indices
     std::copy(biggest_indices_pcl->begin(), biggest_indices_pcl->end(),
@@ -134,10 +134,10 @@ public:
    *    [OUT] The 3D bounding box of the main cluster.
    * \return true if success
    */
-  bool get_biggest_cluster_bbox(geometry_utils::Rect3d & bbox) const {
-    bbox = geometry_utils::Rect3d();
+  bool get_biggest_cluster_bbox(Rect3d & bbox) const {
+    bbox = Rect3d();
     if (cluster_indices_pcl.size() == 0) {
-      ROS_WARN("No cluster found by PCL EuclideanClusterExtraction");
+      printf("No cluster found by PCL EuclideanClusterExtraction\n");
       return false;
     }
     // now compute bbox
@@ -160,6 +160,6 @@ protected:
 
 ////////////////////////////////////////////////////////////////////////////////
 
-} // end namespace geometry_utils
+} // end namespace vision_utils
 
 #endif // POINT_CLOUDS_H

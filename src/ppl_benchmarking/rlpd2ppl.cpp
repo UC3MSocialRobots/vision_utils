@@ -38,18 +38,18 @@ and a ground truth PPL.
         The image
 
   - \b "ground_truth_ppl"
-        [people_msgs_rl::PeoplePoseList]
+        [people_msgs::People]
         The ground truth positions
  */
 
 #include "vision_utils/rlpd2imgs.h"
 #include <image_transport/image_transport.h>
-// people_msgs_rl
+// people_msgs
 #include "vision_utils/images2ppl.h"
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 
-typedef people_msgs_rl::PeoplePose PP;
-typedef people_msgs_rl::PeoplePoseList PPL;
+typedef people_msgs::Person PP;
+typedef people_msgs::People PPL;
 static const int QUEUE_SIZE = 10;
 
 int rlpd2ppl(int argc, char **argv) {
@@ -61,7 +61,7 @@ int rlpd2ppl(int argc, char **argv) {
   std::ostringstream files;
   for (int argi = 1; argi < argc; ++argi) // 0 is the name of the exe
     files << argv[argi]<< ";";
-  RLPD2Imgs reader;
+  vision_utils::RLPD2Imgs reader;
   bool repeat = false;
   if (!reader.from_file(files.str(), repeat)) {
     ROS_ERROR("Could not parse files '%s'", files.str().c_str());
@@ -85,7 +85,7 @@ int rlpd2ppl(int argc, char **argv) {
   ros::Publisher ground_truth_ppl_pub = nh_public.advertise<PPL>("ground_truth_ppl", 1);
   // PPL stuff
   cv_bridge::CvImage depth_bridge, user_bridge, rgb_bridge;
-  ppl_utils::Images2PPL _ground_truth_ppl_conv;
+  vision_utils::Images2PPL _ground_truth_ppl_conv;
 
   printf("rlpd2ppl: publishing rgb on '%s', depth on '%s', user on '%s', "
          "ground truth PPL on '%s', every %g s\n",
@@ -94,7 +94,7 @@ int rlpd2ppl(int argc, char **argv) {
          rate.expectedCycleTime().toSec());
 
   while (ros::ok()) {
-    Timer timer;
+    vision_utils::Timer timer;
     if (!reader.go_to_next_frame()) {
       printf("rlpd2ppl: couldn't go_to_next_frame()!\n");
       break;
@@ -122,7 +122,8 @@ int rlpd2ppl(int argc, char **argv) {
 
     // transform to PPL
     if (_ground_truth_ppl_conv.convert(bgr, depth, user_ground_truth, NULL, &curr_header)) {
-      _ground_truth_ppl_conv.get_ppl().method = "ground_truth";
+      vision_utils::set_tag_people(_ground_truth_ppl_conv.get_ppl(),
+                               "method", "ground_truth");
       ground_truth_ppl_pub.publish(_ground_truth_ppl_conv.get_ppl());
     }
 

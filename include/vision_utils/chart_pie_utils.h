@@ -31,14 +31,14 @@ ________________________________________________________________________________
 #include <numeric>
 #include <opencv2/highgui/highgui.hpp>
 #include "vision_utils/colormaps.h"
-#include "vision_utils/utils/geometry_utils.h"
+#include "vision_utils/geometry_utils.h"
 
-namespace chart_pie_utils {
+namespace vision_utils {
 
 void make_pie(const std::vector<double> & values,
               cv::Mat3b & out, int width = 400, int height = 400,
               bool draw_edges = true,
-              colormaps::IndexColormap colormap = colormaps::index2predefined_color) {
+              IndexColormap colormap = index2predefined_color) {
   // dimensions check
   if (out.cols < width || out.rows < height)
     out.create(height, width); // rows, cols
@@ -61,7 +61,7 @@ void make_pie(const std::vector<double> & values,
 
     // draw right edge in curr_color
     cv::Scalar curr_color = colormap(value_idx);
-    printf("prev_angle:%g, curr_angle:%g, curr_color:(%g, %g, %g, %g)",
+    printf("prev_angle:%g, curr_angle:%g, curr_color:(%g, %g, %g, %g)\n",
            prev_angle_deg, curr_angle_deg,
            curr_color[0], curr_color[1], curr_color[2], curr_color[3]);
     cv::ellipse(out, circle_center, cv::Size(circle_radius, circle_radius),
@@ -80,6 +80,6 @@ void make_pie(const std::vector<double> & values,
     cv::circle(out, circle_center, circle_radius, CV_RGB(255, 255, 255), 1);
 } // end make_pie();
 
-} // end namespace chart_pie_utils
+} // end namespace vision_utils
 
-#endif // CHART_PIE_UTILS_H
+#endif // vision_utils_H

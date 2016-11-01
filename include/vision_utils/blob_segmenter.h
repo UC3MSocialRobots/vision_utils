@@ -31,6 +31,9 @@ ________________________________________________________________________________
 #include "vision_utils/content_processing.h"
 #include "vision_utils/disjoint_sets2.h"
 #include "vision_utils/ground_plane_finder.h"
+#include "vision_utils/infosimage.h"
+
+namespace vision_utils {
 
 class BlobSegmenter {
 public:
@@ -59,11 +62,11 @@ public:
    * \param depth_cam_model
    *    the model of the camera that generated the depth map
    * \param canny_thres1, canny_thres2
-   *    \see DepthCanny::set_canny_thresholds()
+   *    \see vision_utils::DepthCanny::set_canny_thresholds()
    * \param ground_distance_threshold_m, ground_lower_ratio_to_use, data_skip
    *    \see GroundPlaneFinder::compute_plane()
    * \param prev_line_diff_thres, src_width_ratio_thres
-   *    \see image_utils::FloodFillEdgeCloser::close()
+   *    \see FloodFillEdgeCloser::close()
    * \return true if success
    */
   bool find_blob(const cv::Mat1f & depth,
@@ -72,18 +75,18 @@ public:
                  CleaningMethod method = NONE,
                  const image_geometry::PinholeCameraModel* depth_cam_model = NULL,
                  bool ground_recompute_plane = true,
-                 double canny_thres1 = DepthCanny::DEFAULT_CANNY_THRES1,
-                 double canny_thres2 = DepthCanny::DEFAULT_CANNY_THRES2,
+                 double canny_thres1 = vision_utils::DepthCanny::DEFAULT_CANNY_THRES1,
+                 double canny_thres2 = vision_utils::DepthCanny::DEFAULT_CANNY_THRES2,
                  double ground_distance_threshold_m = GroundPlaneFinder::DEFAULT_DISTANCE_THRESHOLD_M,
                  double ground_lower_ratio_to_use = GroundPlaneFinder::DEFAULT_LOWER_RATIO_TO_USE,
                  int data_skip = GroundPlaneFinder::DEFAULT_DATA_SKIP,
-                 double prev_line_diff_thres = image_utils::FloodFillEdgeCloser::DEFAULT_PREV_LINE_DIFF_THRES,
-                 double src_width_ratio_thres = image_utils::FloodFillEdgeCloser::DEFAULT_SRC_WIDTH_RATIO_THRES)
+                 double prev_line_diff_thres = FloodFillEdgeCloser::DEFAULT_PREV_LINE_DIFF_THRES,
+                 double src_width_ratio_thres = FloodFillEdgeCloser::DEFAULT_SRC_WIDTH_RATIO_THRES)
   {
 
-    if (!image_utils::bbox_full(depth).contains(seed)) {
+    if (!bbox_full(depth).contains(seed)) {
       printf("BlobSegmenter: seed(%i, %i) out of depth image '%s'!\n",
-             seed.x, seed.y, image_utils::infosImage(depth).c_str());
+             seed.x, seed.y, infosImage(depth).c_str());
       return false;
     }
 
@@ -101,7 +104,7 @@ public:
 
     // try to close contour with a dirty floodfill, if wanted
     if (method == FLOODFILL_EDGE_CLOSER
-        && image_utils::bbox_full(depth).contains(seed)
+        && bbox_full(depth).contains(seed)
         && !_closer.close(_final_mask, seed, true, false, (uchar) 0,
                           prev_line_diff_thres, src_width_ratio_thres))
       return false;
@@ -167,7 +170,7 @@ public:
    *    to the lower half of the depth map.
    *    If false, the previous ground plane estimation by GroundPlaneFinder will be skipt.
    * \param canny_thres1, canny_thres2
-   *    \see DepthCanny::set_canny_thresholds()
+   *    \see vision_utils::DepthCanny::set_canny_thresholds()
    * \param ground_distance_threshold_m, ground_lower_ratio_to_use, data_skip
    *    \see GroundPlaneFinder::compute_plane()
    * \return true if success
@@ -180,8 +183,8 @@ public:
                       double min_dist_m = -1, double max_dist_m = -1,
                       int max_blobs_nb = -1, int min_blob_size_pix = -1,
                       bool ground_recompute_plane = true,
-                      double canny_thres1 = DepthCanny::DEFAULT_CANNY_THRES1,
-                      double canny_thres2 = DepthCanny::DEFAULT_CANNY_THRES2,
+                      double canny_thres1 = vision_utils::DepthCanny::DEFAULT_CANNY_THRES1,
+                      double canny_thres2 = vision_utils::DepthCanny::DEFAULT_CANNY_THRES2,
                       double ground_distance_threshold_m = GroundPlaneFinder::DEFAULT_DISTANCE_THRESHOLD_M,
                       double ground_lower_ratio_to_use = GroundPlaneFinder::DEFAULT_LOWER_RATIO_TO_USE,
                       int data_skip = GroundPlaneFinder::DEFAULT_DATA_SKIP) {
@@ -224,7 +227,7 @@ public:
           const float* depth_ptr = depth.ptr<float>(row);
           uchar* mask_ptr = _final_mask.ptr(row);
           for (int col = 0; col < cols; ++col) {
-            if (!std_utils::is_nan_depth(depth_ptr[col])
+            if (!is_nan_depth(depth_ptr[col])
                 && ((use_min_dist && depth_ptr[col] < min_dist_m)
                     || (use_max_dist && depth_ptr[col] > max_dist_m)))
               mask_ptr[col] = 0;
@@ -298,12 +301,15 @@ public:
   //////////////////////////////////////////////////////////////////////////////
 
 private:
-  DepthCanny _depth_canny;
+  vision_utils::DepthCanny _depth_canny;
   cv::Mat1b _final_mask;
-  image_utils::FloodFillEdgeCloser _closer;
+  FloodFillEdgeCloser _closer;
   GroundPlaneFinder _ground_finder;
   cv::Mat1b _not_ground_mask;
   DisjointSets2 _set;
 
 }; // end class BlobSegmenter
+
+} // end namespace vision_utils
+
 #endif // BLOB_SEGMENTER_H

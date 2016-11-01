@@ -32,11 +32,11 @@ int video_reader(int argc, char **argv) {
     return -1;
   }
   std::string filename = argv[1];
-  DGaitDB reader;
+  vision_utils::DGaitDB reader;
   if (!reader.from_file(filename))
     return -1;
   while(true) {
-    Timer timer;
+    vision_utils::Timer timer;
     if (!reader.go_to_next_frame())
       break;
     timer.printTime("go_to_next_frame()");
@@ -50,12 +50,13 @@ int video_reader(int argc, char **argv) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int generate_training_data() {
-  DGaitDBFilename f("/home/user/Downloads/0datasets/DGaitDB_imgs/");
+  vision_utils::DGaitDBFilename f("/home/user/Downloads/0datasets/DGaitDB_imgs/");
   assert(f.directory_exists());
-  DGaitDB reader;
+  vision_utils::DGaitDB reader;
   cv::Mat3b user_illus;
 
-  for (unsigned int file_idx = 1; file_idx <= DGaitDBFilename::ONI_FILES; ++file_idx) {
+  for (unsigned int file_idx = 1; file_idx <= vision_utils::DGaitDBFilename::ONI_FILES;
+       ++file_idx) {
     std::ostringstream oni_filename;
     oni_filename << "/home/user/Downloads/0datasets/DGaitDB/" << file_idx << ".oni";;
     printf("generate_training_data():current file: '%s'\n", oni_filename.str().c_str());
@@ -69,15 +70,15 @@ int generate_training_data() {
         continue;
       }
       // determine if write test or training
-      bool write_test = (nfiles_test_written < DGaitDBFilename::NFILES_TEST
+      bool write_test = (nfiles_test_written < vision_utils::DGaitDBFilename::NFILES_TEST
                          && nfiles_total_written % 2 == 0);
       // write the wanted files
       std::string img_prefix = (write_test ? f.filename_test(file_idx, nfiles_test_written+1)
                                            : f.filename_train(file_idx, nfiles_train_written+1));
       printf("Writing '%s'...\n", img_prefix.c_str());
-      if (!image_utils::write_rgb_depth_user_to_image_file
+      if (!vision_utils::write_rgb_depth_user_to_image_file
           (img_prefix, &reader.get_bgr(), &reader.get_depth(), &reader.get_user(),
-           &user_illus, image_utils::FILE_PNG, false))
+           &user_illus, vision_utils::FILE_PNG, false))
         return false;
       if (write_test)
         nfiles_test_written++;
@@ -85,8 +86,8 @@ int generate_training_data() {
         nfiles_train_written++;
       ++nfiles_total_written;
       // check if we need to go to next file
-      if (nfiles_test_written >= DGaitDBFilename::NFILES_TEST
-          && nfiles_train_written >= DGaitDBFilename::NFILES_TRAIN)
+      if (nfiles_test_written >= vision_utils::DGaitDBFilename::NFILES_TEST
+          && nfiles_train_written >= vision_utils::DGaitDBFilename::NFILES_TRAIN)
         break;
     } // end while(reader.go_to_next_frame())
   } // end loop file_idx

@@ -23,7 +23,7 @@
   <depend>rosbag</depend>
   <!-- AD -->
   <depend>cvstage</depend>
-  <depend>people_msgs_rl</depend>
+  <depend>people_msgs</depend>
 
   <export>
     <rosdoc config="rosdoc.yaml" /> <!-- http://wiki.ros.org/rosdoc_lite -->

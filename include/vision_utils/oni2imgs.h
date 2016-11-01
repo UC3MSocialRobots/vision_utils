@@ -42,7 +42,10 @@ ________________________________________________________________________________
   return false; \
   }
 
-class Oni2Imgs : public DatabasePlayer {
+namespace vision_utils {
+
+
+class Oni2Imgs : public vision_utils::DatabasePlayer {
 public:
   Oni2Imgs() {}
 
@@ -149,5 +152,7 @@ protected:
   xn::DepthGenerator g_depth_generator;
   xn::UserGenerator g_user_generator;
 }; // end class Oni2Imgs
+
+} // end namespace vision_utils
 
 #endif // ONI2IMGS_H

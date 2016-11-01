@@ -3,7 +3,7 @@
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
   \date        2013/10/17
-  
+
 ________________________________________________________________________________
 
 This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ Some tests for HeadFinder
  */
 // Bring in gtest
 #include <gtest/gtest.h>
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 #include <vision_utils/img_path.h>
 #include "vision_utils/head_finder.h"
 
@@ -32,10 +32,10 @@ Some tests for HeadFinder
 
 void test_find(const cv::Mat1b & user_mask, bool expect_success = true,
                cv::Point expected_head_pos = cv::Point(), bool has_answer_in_white = false) {
-  HeadFinder finder;
+  vision_utils::HeadFinder finder;
   cv::Point head_pos;
   cv::Mat1b user_mask_255 = (user_mask > 0);
-  Timer timer;
+  vision_utils::Timer timer;
   bool retval = finder.find(user_mask_255, head_pos);
   ASSERT_TRUE(retval == expect_success);
   timer.printTime("find()");
@@ -49,11 +49,11 @@ void test_find(const cv::Mat1b & user_mask, bool expect_success = true,
   if (has_answer_in_white) {
     cv::Mat1b user_mask_white = (user_mask == 255);
     std::vector<cv::Point> pts;
-    image_utils::nonNulPoints(user_mask_white, pts);
+    vision_utils::nonNulPoints(user_mask_white, pts);
     if (pts.size() == 1)
       expected_head_pos = pts.front();
   }
-  double dist = geometry_utils::distance_points(head_pos, expected_head_pos);
+  double dist = vision_utils::distance_points(head_pos, expected_head_pos);
   printf("dist:%g\n", dist);
   ASSERT_TRUE(dist < 50)
       << "head_pos:" << head_pos
@@ -70,7 +70,7 @@ void test_find(const std::string & filename, bool expect_success = true,
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, ctor) {
-  HeadFinder finder;
+  vision_utils::HeadFinder finder;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -78,7 +78,7 @@ TEST(TestSuite, ctor) {
 TEST(TestSuite, empty_mask) {
   cv::Point head_pos;
   cv::Mat1b user_mask;
-  HeadFinder finder;
+  vision_utils::HeadFinder finder;
   bool retval = finder.find(user_mask, head_pos);
   ASSERT_TRUE(!retval);
 }

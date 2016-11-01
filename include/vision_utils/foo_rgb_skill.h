@@ -49,6 +49,8 @@ T4: rostopic pub /FOO_RGB_SKILL_START std_msgs/Int16 {}
 
 #include "vision_utils/rgb_skill.h"
 
+namespace vision_utils {
+
 class FooRgbSkill : public RgbSkill {
 public:
   FooRgbSkill() : RgbSkill("FOO_RGB_SKILL_START", "FOO_RGB_SKILL_STOP"){
@@ -101,5 +103,7 @@ public:
 protected:
   cv::Mat3b frame_out;
 }; // end class FooRgbSkill
+
+} // end namespace vision_utils
 
 #endif // FOO_RGB_SKILL_H

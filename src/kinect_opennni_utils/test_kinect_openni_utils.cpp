@@ -24,7 +24,7 @@ Some tests for the utils with Kinect images.
  */
 
 #include "vision_utils/kinect_openni_utils.h"
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 // opencv
 #include <opencv2/highgui/highgui.hpp>
 
@@ -40,8 +40,8 @@ Some tests for the utils with Kinect images.
 */
 //#if ( ROS_VERSION_MINIMUM(1, 7, 0) ) // fuerte code
 #if 0
-#include "vision_utils/utils/marker_utils.h"
-#include "vision_utils/utils/pt_utils.h"
+#include "vision_utils/marker_utils.h"
+#include "vision_utils/pt_utils.h"
 #include "vision_utils/cv_conversion_float_uchar.h"
 
 void reproject_image_ros(const std::string & rgb_depth_filename_prefix,
@@ -51,32 +51,32 @@ void reproject_image_ros(const std::string & rgb_depth_filename_prefix,
 
   int argc = 0;
   ros::init(argc, NULL, "reproject_image_ros");
-  Timer timer;
+  vision_utils::Timer timer;
 
   // get camera model
   image_geometry::PinholeCameraModel depth_camera_model, rgb_camera_model;
-  kinect_openni_utils::read_camera_model_files
+  vision_utils::read_camera_model_files
       (kinect_serial_number, depth_camera_model, rgb_camera_model);
 
   // read depth and rgb files
   cv::Mat rgb_img, depth_img;
-  image_utils::read_rgb_and_depth_image_from_image_file
+  vision_utils::read_rgb_and_depth_image_from_image_file
       (rgb_depth_filename_prefix, &rgb_img, &depth_img);
   timer.printTime("read_rgb_and_depth_image_from_image_file()");
 
   // kinect viewer
   std::vector<cv::Point3f> pointcloud;
   std::vector<cv::Vec3b> pointcloud_RGB;
-  kinect_openni_utils::pixel2world_rgb_color255
+  vision_utils::pixel2world_rgb_color255
       (rgb_img, depth_img, depth_camera_model,
        pointcloud, pointcloud_RGB,
        data_step, cv::Mat(), true);
-  //cloud_viewer::view_rgb_cloud(pointcloud, pointcloud_RGB);
+  //vision_utils::view_rgb_cloud(pointcloud, pointcloud_RGB);
 
   // create markers
   ros::NodeHandle nh_public;
   visualization_msgs::Marker marker;
-  marker_utils::make_header(marker, visualization_msgs::Marker::POINTS,
+  vision_utils::make_header(marker, visualization_msgs::Marker::POINTS,
                             "reproject_image_ros", pt_size, 1, 0, 0, 1,
                             rgb_camera_model.tfFrame());
   ros::Publisher marker_pub =
@@ -84,14 +84,14 @@ void reproject_image_ros(const std::string & rgb_depth_filename_prefix,
   ROS_INFO("Publishing markers on '%s'", marker_pub.getTopic().c_str());
 
   // reproject depth and colors
-  kinect_openni_utils::pixel2world_rgb_color_rgba
+  vision_utils::pixel2world_rgb_color_rgba
       (rgb_img, depth_img, depth_camera_model,
        marker.points, marker.colors,
        data_step, cv::Mat(), true);
   printf("%i 3D points, %i colors\n",
          marker.points.size(), marker.colors.size());
   cv::imshow("rgb_img", rgb_img);
-  cv::imshow("depth_img_illus", image_utils::depth_image_to_vizualisation_color_image(depth_img));
+  cv::imshow("depth_img_illus", vision_utils::depth_image_to_vizualisation_color_image(depth_img));
 
   // publish marker periodically
   while (true) {
@@ -124,18 +124,18 @@ bool are_camera_infos_equal(const sensor_msgs::CameraInfo & i1,
 
 void camera_info_bag_to_binary_file(const std::string & kinect_serial_number) {
   sensor_msgs::CameraInfo depth_camera_info, rgb_camera_info;
-  kinect_openni_utils::read_camera_info_bag_files
+  vision_utils::read_camera_info_bag_files
       (kinect_serial_number, depth_camera_info, rgb_camera_info);
   sensor_msgs::CameraInfo depth_camera_info2, rgb_camera_info2;
 
-  std::string depth_str = std_utils::ros_object_to_string(depth_camera_info);
-  std_utils::ros_object_from_string(depth_str, depth_camera_info2);
+  std::string depth_str = vision_utils::ros_object_to_string(depth_camera_info);
+  vision_utils::ros_object_from_string(depth_str, depth_camera_info2);
 
   for (unsigned int i = 0; i < 100; ++i) {
-    std_utils::ros_object_to_file("depth_camera_info.dat", depth_camera_info);
-    std_utils::ros_object_to_file("rgb_camera_info.dat", rgb_camera_info);
-    std_utils::ros_object_from_file("depth_camera_info.dat", depth_camera_info2);
-    std_utils::ros_object_from_file("rgb_camera_info.dat", rgb_camera_info2);
+    vision_utils::ros_object_to_file("depth_camera_info.dat", depth_camera_info);
+    vision_utils::ros_object_to_file("rgb_camera_info.dat", rgb_camera_info);
+    vision_utils::ros_object_from_file("depth_camera_info.dat", depth_camera_info2);
+    vision_utils::ros_object_from_file("rgb_camera_info.dat", rgb_camera_info2);
   } // end loop i
 
   printf("depth_camera_info=== depth_camera_info2? %i\n",
@@ -159,10 +159,10 @@ inline void test_reproject
 {
   std::cout << std::endl;
   ROS_WARN("test_reproject(A3d:(%g,%g,%g)", A3d.x, A3d.y, A3d.z);
-  cv::Point2d A2d = kinect_openni_utils::world2pixel<cv::Point2d>
+  cv::Point2d A2d = vision_utils::world2pixel<cv::Point2d>
       (A3d, depth_camera_model);
   ROS_WARN("A2d:(%g,%g)", A2d.x, A2d.y);
-  cv::Point3d A3d_back = kinect_openni_utils::pixel2world_depth<cv::Point3d>
+  cv::Point3d A3d_back = vision_utils::pixel2world_depth<cv::Point3d>
       (A2d, depth_camera_model, A3d.z);
   double dist = distance_points3(A3d, A3d_back);
   ROS_WARN("A3d_back:(%g,%g,%g), dist %g < 0.1:%i",
@@ -172,7 +172,7 @@ inline void test_reproject
 void test_reproject(const std::string & kinect_serial_number) {
   // get camera model
   image_geometry::PinholeCameraModel depth_camera_model, rgb_camera_model;
-  kinect_openni_utils::read_camera_model_files
+  vision_utils::read_camera_model_files
       (kinect_serial_number, depth_camera_model, rgb_camera_model);
   test_reproject(cv::Point3d(0, 0, 0), depth_camera_model);
   test_reproject(cv::Point3d(0, 0, 1), depth_camera_model);

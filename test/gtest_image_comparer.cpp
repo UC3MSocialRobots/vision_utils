@@ -27,7 +27,7 @@ Some tests for ImageComparer
 #include <gtest/gtest.h>
 #include "vision_utils/image_comparer.h"
 #include <vision_utils/img_path.h>
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 
 typedef std::vector<cv::Point> Pt2Vec;
 typedef std::list<cv::Point>   Pt2List;
@@ -35,7 +35,7 @@ typedef std::deque<cv::Point>  Pt2Deque;
 typedef std::queue<cv::Point>  Pt2Queue;
 
 TEST(TestSuite, constructor) {
-  ImageComparer_<Pt2Vec> comparer;
+  vision_utils::ImageComparer_<Pt2Vec> comparer;
   ASSERT_TRUE(comparer.get_models_nb() == 0);
 
   bool ok = comparer.compareFile(cv::Mat1b());
@@ -48,7 +48,7 @@ TEST(TestSuite, constructor) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, constructor_empty_files) {
-  ImageComparer_<Pt2Vec> comparer;
+  vision_utils::ImageComparer_<Pt2Vec> comparer;
   comparer.set_models("", cv::Size(32, 32));
   ASSERT_TRUE(comparer.get_models_nb() == 0);
 
@@ -62,7 +62,7 @@ TEST(TestSuite, constructor_empty_files) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, constructor_empty_model) {
-  ImageComparer_<Pt2Vec> comparer;
+  vision_utils::ImageComparer_<Pt2Vec> comparer;
   std::vector<cv::Mat> models;
   comparer.set_models(models, cv::Size(32, 32));
   ASSERT_TRUE(comparer.get_models_nb() == 0);
@@ -77,7 +77,7 @@ TEST(TestSuite, constructor_empty_model) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, constructor_one_file) {
-  ImageComparer_<Pt2Vec> comparer;
+  vision_utils::ImageComparer_<Pt2Vec> comparer;
   std::vector<std::string> models;
   models.push_back(IMG_DIR "comparer/1.png");
   comparer.set_models(models, cv::Size(10, 10));
@@ -104,7 +104,7 @@ TEST(TestSuite, constructor_one_file) {
 
 template<class Pt2Iterable>
 void test_four_files() {
-  ImageComparer_<Pt2Iterable> comparer;
+  vision_utils::ImageComparer_<Pt2Iterable> comparer;
   std::vector<std::string> models;
   models.push_back(IMG_DIR "comparer/1.png");
   models.push_back(IMG_DIR "comparer/2.png");
@@ -126,7 +126,7 @@ void test_four_files() {
 }
 
 TEST(TestSuite, constructor_four_files) {
-  Timer timer;
+  vision_utils::Timer timer;
   test_four_files<Pt2Vec>();
   timer.printTime("test_four_files<Pt2Vec>()");
 
@@ -146,13 +146,13 @@ TEST(TestSuite, constructor_four_files) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, test_comparer) {
-  ImageComparer im;
+  vision_utils::ImageComparer im;
   im.set_models(IMG_DIR "paintRecognizer/index.txt", cv::Size(32, 32));
 
   cv::Mat img = cv::imread(IMG_DIR "paintRecognizer/inputs/m.png",
                            CV_LOAD_IMAGE_GRAYSCALE);
   int nbTimes = 5;
-  Timer timer;
+  vision_utils::Timer timer;
   for (int i = 0; i < nbTimes; ++i)
     im.compareFile(img);
   timer.printTime_factor("compareFile", nbTimes);
@@ -163,7 +163,7 @@ TEST(TestSuite, test_comparer) {
 
 TEST(TestSuite, test_comparer2) {
   printf("test_comparer()\n");
-  ImageComparer im;
+  vision_utils::ImageComparer im;
   im.set_models(IMG_DIR "comparer/index.txt", cv::Size(32, 32));
 
   std::vector<std::string> filenames;

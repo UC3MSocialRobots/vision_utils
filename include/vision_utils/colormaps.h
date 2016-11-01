@@ -28,9 +28,9 @@ ________________________________________________________________________________
 #define COLORMAPS_H
 
 #include "vision_utils/color_utils.h"
-#include "vision_utils/utils/clamp.h"
+#include "vision_utils/clamp.h"
 
-namespace colormaps {
+namespace vision_utils {
 
 //template<class Color4_255>
 //typedef Color4_255 (*RatioColormap_)(const double &);
@@ -73,7 +73,7 @@ RatioColormap ratio2grey_inv = &ratio2grey_inv_<cv::Scalar>;
 //! \return 0:red -> 0.5:blue -> 1:magenta
 template<class Color4_255>
 Color4_255 ratio2hue_(const double & ratio) {
-  return color_utils::hue2rgb<Color4_255>(ratio * 180);
+  return hue2rgb<Color4_255>(ratio * 180);
 }
 
 //! template specialization for cv::Scalar
@@ -87,7 +87,7 @@ Color4_255 ratio2red_green_(const double & ratio) {
   // ratio=1-> red=0 degrees , ratio=0 -> green=120 degrees=60 for hue2rgb()
   int ratio_inv = 60 * (1. - ratio);
   ratio_inv = (ratio_inv < 0 ? 0 : (ratio_inv > 60 ? 60 : ratio_inv));
-  return color_utils::hue2rgb<Color4_255>(ratio_inv);
+  return hue2rgb<Color4_255>(ratio_inv);
 }
 
 //! template specialization for cv::Scalar
@@ -118,7 +118,7 @@ typedef cv::Scalar (*IndexColormap)(const int &);
 //! \return one of the predefined colors
 template<class Color4_255>
 Color4_255 index2predefined_color_(const int & index) {
-  Color4_255 ans = color_utils::color<Color4_255>(index, -1);
+  Color4_255 ans = color<Color4_255>(index, -1);
   // set fourth value to 0
   ans[3] = 0;
   return ans;
@@ -132,7 +132,7 @@ IndexColormap index2predefined_color = &index2predefined_color_<cv::Scalar>;
 //! \return one of the predefined colors, but much brighter (ok for black texts on top)
 template<class Color4_255>
 Color4_255 index2predefined_color_washed_(const int & index) {
-  Color4_255 ans = color_utils::color<Color4_255>(index, -1);
+  Color4_255 ans = color<Color4_255>(index, -1);
   ans[0] = (ans[0] + 255) / 2;
   ans[1] = (ans[1] + 255) / 2;
   ans[2] = (ans[2] + 255) / 2;
@@ -172,6 +172,6 @@ IndexColormap index2grey_washed = &index2grey_washed_<cv::Scalar>;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-} // end namespace colormaps
+} // end namespace vision_utils
 
 #endif // COLORMAPS_H

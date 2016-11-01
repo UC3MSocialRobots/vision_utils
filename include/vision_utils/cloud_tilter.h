@@ -28,7 +28,9 @@ ________________________________________________________________________________
 #define CLOUD_TILTER_H
 
 #include <opencv2/core/core.hpp>
-#include "vision_utils/utils/stats_utils.h"
+#include "vision_utils/stats_utils.h"
+
+namespace vision_utils {
 
 class CloudTilter {
 public:
@@ -169,5 +171,7 @@ private:
   std::vector<double> X, Y, Z;
   double _yaw, _pitch, _roll;
 }; // end class CloudTilter
+
+} // end namespace vision_utils
 
 #endif // CLOUD_TILTER_H

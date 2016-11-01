@@ -27,7 +27,9 @@ ________________________________________________________________________________
 
 #include "vision_utils/database_player.h"
 #include "vision_utils/io.h"
-#include "vision_utils/utils/find_and_replace.h"
+#include "vision_utils/find_and_replace.h"
+
+namespace vision_utils {
 
 class FilenamePrefix2Imgs : public DatabasePlayer {
 public:
@@ -46,11 +48,11 @@ public:
   //! parse a possible xml file, etc.
   virtual bool load_single_video(const std::string & filename) {
     _curr_prefix = filename;
-    string_utils::find_and_replace(_curr_prefix, "_depth.png", "");
-    string_utils::find_and_replace(_curr_prefix, "_depth_params.yaml", "");
-    string_utils::find_and_replace(_curr_prefix, "_rgb.png", "");
-    string_utils::find_and_replace(_curr_prefix, "_user_mask.png", "");
-    if (!image_utils::read_rgb_depth_user_image_from_image_file
+    find_and_replace(_curr_prefix, "_depth.png", "");
+    find_and_replace(_curr_prefix, "_depth_params.yaml", "");
+    find_and_replace(_curr_prefix, "_rgb.png", "");
+    find_and_replace(_curr_prefix, "_user_mask.png", "");
+    if (!read_rgb_depth_user_image_from_image_file
         (_curr_prefix, &_bgr, &_depth32f, &_user8))
       return false;
     _has_rgb = _has_depth = _has_user = true;
@@ -78,5 +80,7 @@ public:
 private:
   std::string _curr_prefix;
 }; // end class FilenamePrefix2Imgs
+
+} // end namespace vision_utils
 
 #endif // _curr_prefix2IMGS_H

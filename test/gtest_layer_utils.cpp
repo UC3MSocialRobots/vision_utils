@@ -26,8 +26,8 @@ ________________________________________________________________________________
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
 #include "vision_utils/layer_utils.h"
-#include "vision_utils/utils/matrix_testing.h"
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/matrix_testing.h"
+#include "vision_utils/timer.h"
 #include <vision_utils/img_path.h>
 
 
@@ -38,7 +38,7 @@ TEST(TestSuite, rgb2hue_four_colors_img) {
   src_bgr.at<cv::Vec3b>(1, 0) = cv::Vec3b(0, 0, 255); // red   => H360 = 0
   src_bgr.at<cv::Vec3b>(1, 1) = cv::Vec3b(255, 255, 0); // cyan=> H360 = 180
   cv::Mat1b dest_hue;
-  color_utils::rgb2hue(src_bgr, temp_hsv, dest_hue);
+  vision_utils::rgb2hue(src_bgr, temp_hsv, dest_hue);
 
   //std::cout << "dest_hue" << dest_hue << std::endl;
   ASSERT_TRUE(dest_hue.at<uchar>(0, 0) == 240/2) << "dest_hue" << dest_hue;
@@ -55,10 +55,10 @@ TEST(TestSuite, rgb_saturate_saturation_value_four_colors_img) {
   src_bgr.at<cv::Vec3b>(0, 1) = cv::Vec3b(0, 255, 0); // green => H360 = 120
   src_bgr.at<cv::Vec3b>(1, 0) = cv::Vec3b(0, 0, 255); // red   => H360 = 0
   src_bgr.at<cv::Vec3b>(1, 1) = cv::Vec3b(255, 255, 0); // cyan=> H360 = 180
-  color_utils::rgb_saturate_saturation_value(src_bgr, img_hsv_viz);
+  vision_utils::rgb_saturate_saturation_value(src_bgr, img_hsv_viz);
 
   //std::cout << "dest_hue" << dest_hue << std::endl;
-  ASSERT_TRUE(matrix_testing::matrices_equal(src_bgr, img_hsv_viz));
+  ASSERT_TRUE(vision_utils::matrices_equal(src_bgr, img_hsv_viz));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -66,18 +66,18 @@ TEST(TestSuite, rgb_saturate_saturation_value_four_colors_img) {
 TEST(TestSuite, rgb_saturate_saturation_value_bench) {
   cv::Mat3b src_bgr = cv::imread(IMG_DIR "balloon.png"), out_bgr, out_bgr2;
   unsigned int ntimes = 10;
-  Timer timer;
+  vision_utils::Timer timer;
   for (unsigned int time = 0; time < ntimes; ++time)
-    color_utils::rgb_saturate_saturation_value_slow(src_bgr, out_bgr);
+    vision_utils::rgb_saturate_saturation_value_slow(src_bgr, out_bgr);
   timer.printTime_factor("rgb_saturate_saturation_value_slow()", ntimes);
 
   timer.reset();
   for (unsigned int time = 0; time < ntimes; ++time)
-    color_utils::rgb_saturate_saturation_value(src_bgr, out_bgr2);
+    vision_utils::rgb_saturate_saturation_value(src_bgr, out_bgr2);
   timer.printTime_factor("rgb_saturate_saturation_value()", ntimes);
 
   //cv::imshow("out_bgr", out_bgr); cv::imshow("out_bgr2", out_bgr2); cv::waitKey(0);
-  ASSERT_TRUE(matrix_testing::matrices_near(out_bgr, out_bgr2, 1));
+  ASSERT_TRUE(vision_utils::matrices_near(out_bgr, out_bgr2, 1));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -85,24 +85,24 @@ TEST(TestSuite, rgb_saturate_saturation_value_bench) {
 TEST(TestSuite, rgb_saturate_saturation_value_img) {
   cv::Mat3b src_bgr = cv::imread(IMG_DIR "balloon.png"), out_bgr;
   std::vector<cv::Mat> layers;
-  color_utils::saturate_saturation_value(src_bgr, layers, out_bgr);
+  vision_utils::saturate_saturation_value(src_bgr, layers, out_bgr);
   ASSERT_TRUE(src_bgr.size() == out_bgr.size());
   // cv::imshow("out", out_bgr); cv::waitKey(0);
 
   cv::Mat3b temp_hsv;
   cv::Mat1b src_hue, out_hue, out_saturation, out_value;
   // hue in src_bgr and out_bgr should match
-  color_utils::rgb2hue(src_bgr, temp_hsv, src_hue);
-  color_utils::rgb2hue(out_bgr, temp_hsv, out_hue);
-  ASSERT_TRUE(matrix_testing::matrices_equal(src_hue, out_hue));
+  vision_utils::rgb2hue(src_bgr, temp_hsv, src_hue);
+  vision_utils::rgb2hue(out_bgr, temp_hsv, out_hue);
+  ASSERT_TRUE(vision_utils::matrices_equal(src_hue, out_hue));
 
 
   // out_saturation should be = 255
-  color_utils::rgb2saturation(out_bgr, temp_hsv, out_saturation);
+  vision_utils::rgb2saturation(out_bgr, temp_hsv, out_saturation);
   ASSERT_TRUE(cv::countNonZero(out_saturation - 255) == 0);
 
   // out_value should be = 255
-  color_utils::rgb2value(out_bgr, temp_hsv, out_value);
+  vision_utils::rgb2value(out_bgr, temp_hsv, out_value);
   ASSERT_TRUE(cv::countNonZero(out_value - 255) == 0);
 }
 

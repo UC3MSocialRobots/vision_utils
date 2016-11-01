@@ -31,7 +31,7 @@ ________________________________________________________________________________
 // vision
 #include "vision_utils/drawing_utils.h"
 
-namespace image_utils {
+namespace vision_utils {
 
 enum InterfacePosition {TOP = 1, BOTTOM = 2, LEFT = 3, RIGHT = 4};
 
@@ -73,14 +73,14 @@ void make_opencv_interface(const cv::Mat3b & src, cv::Mat3b & dst,
   dst.create(dst_rows, dst_cols);
 
   // paste src into dst
-  image_utils::paste_img(src, dst,
+  paste_img(src, dst,
                          (interface_pos == LEFT ? button_size_pixels : 0),
                          (interface_pos == TOP ? button_size_pixels : 0));
 
   // paint the buttons
   unsigned int nbuttons = button_names.size();
   if (nbuttons != button_colors.size()) {
-    printf("nbuttons:%i != button_colors.size():%i",
+    printf("nbuttons:%i != button_colors.size():%i\n",
            nbuttons, button_colors.size());
     return;
   }
@@ -90,7 +90,7 @@ void make_opencv_interface(const cv::Mat3b & src, cv::Mat3b & dst,
         (dst.cols, dst.rows, interface_pos, button_size_pixels, nbuttons, button_idx);
     cv::rectangle(dst, button_bbox, button_colors[button_idx], -1);
     // draw the text
-    image_utils::draw_text_centered
+    draw_text_centered
         (dst, button_names[button_idx],
          cv::Point(button_bbox.x + button_bbox.width / 2,
                    button_bbox.y + button_bbox.height / 2),
@@ -120,5 +120,5 @@ int is_pixel_a_button(cv::Mat3b & dst,
   return -1;
 } // end make_opencv_interface()
 
-} // end namespace image_utils
+} // end namespace vision_utils
 #endif // MAKE_OPENCV_INTERFACE_H

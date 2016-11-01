@@ -1,11 +1,10 @@
 #ifndef BORDER_REMOVER_H
 #define BORDER_REMOVER_H
 
-#include "vision_utils/utils/debug_utils.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
-namespace image_utils {
+namespace vision_utils {
 
 typedef short int Coord;
 
@@ -102,11 +101,10 @@ inline cv::Rect remove_border(const cv::Mat_<_T> & src,
                               cv::Mat_<_T> & dst,
                               const _T & border_value = _T(0),
                               const double & ratio = 0.5) {
-  //maggieDebug2("remove_border()");
+  //printf("remove_border()");
   Coord left, right, up, down;
   evaluate_mean_border(src, left, right, up, down, border_value, ratio);
-  maggieDebug3("left:%i, right:%i, up:%i, down:%i",
-               left, right, up, down);
+  //printf("left:%i, right:%i, up:%i, down:%i", left, right, up, down);
 
   // resize dst
   //dst.create(height, width); // rows, cols
@@ -117,7 +115,7 @@ inline cv::Rect remove_border(const cv::Mat_<_T> & src,
                down - up + 1 // height
                );
   src(roi).copyTo(dst);
-  //maggiePrint("dst.rows:%i, dst.cols:%i", dst.rows, dst.cols);
+  //printf("dst.rows:%i, dst.cols:%i", dst.rows, dst.cols);
   return roi;
 }
 
@@ -166,10 +164,10 @@ inline void compute_average_border_and_paint_into_other_image
  const _T border_value = _T(0),
  const double & ratio = 0.5) {
   Coord left, right, up, down;
-  image_utils::evaluate_mean_border(src, left, right, up, down, border_value, ratio);
+  evaluate_mean_border(src, left, right, up, down, border_value, ratio);
   paint_average_border_into_other_image(dst, left, right, up, down, color);
 } // end compute_average_border_and_paint_into_other_image()
 
-} // end namespace image_utils
+} // end namespace vision_utils
 
 #endif // BORDER_REMOVER_H

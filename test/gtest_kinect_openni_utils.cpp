@@ -40,7 +40,7 @@ TEST(TestSuite, pixel2world_rgb_empty_calls) {
   std::vector<Color> colors;
   bool ret;
   // empty call with no cam model -> should fail
-  ret = kinect_openni_utils::pixel2world_rgb_color255(cv::Mat(), cv::Mat(),
+  ret = vision_utils::pixel2world_rgb_color255(cv::Mat(), cv::Mat(),
                                                       image_geometry::PinholeCameraModel(),
                                                       depth_reprojected, colors,
                                                       1, cv::Mat(), true);
@@ -50,9 +50,9 @@ TEST(TestSuite, pixel2world_rgb_empty_calls) {
   // empty call with cam model -> should succeed
   // get camera model
   image_geometry::PinholeCameraModel depth_camera_model, rgb_camera_model;
-  kinect_openni_utils::read_camera_model_files
+  vision_utils::read_camera_model_files
       (DEFAULT_KINECT_SERIAL(), depth_camera_model, rgb_camera_model);
-  ret = kinect_openni_utils::pixel2world_rgb_color255(cv::Mat(), cv::Mat(),
+  ret = vision_utils::pixel2world_rgb_color255(cv::Mat(), cv::Mat(),
                                                       depth_camera_model,
                                                       depth_reprojected, colors,
                                                       1, cv::Mat(), true);
@@ -60,7 +60,7 @@ TEST(TestSuite, pixel2world_rgb_empty_calls) {
   ASSERT_TRUE(colors.size() == 0) << "colors size:" << colors.size();
 
   // one of the matrices empty -> should fail
-  ret = kinect_openni_utils::pixel2world_rgb_color255(cv::Mat(), cv::Mat(10, 10, CV_8UC3),
+  ret = vision_utils::pixel2world_rgb_color255(cv::Mat(), cv::Mat(10, 10, CV_8UC3),
                                                       image_geometry::PinholeCameraModel(),
                                                       depth_reprojected, colors,
                                                       1, cv::Mat(), false);
@@ -76,7 +76,7 @@ TEST(TestSuite, pixel2world_nan) {
   bool ret;
   // get camera model
   image_geometry::PinholeCameraModel depth_camera_model, rgb_camera_model;
-  kinect_openni_utils::read_camera_model_files
+  vision_utils::read_camera_model_files
       (DEFAULT_KINECT_SERIAL(), depth_camera_model, rgb_camera_model);
   // only NaNs -> should remove all of them
   cv::Mat3b color(10, 10, cv::Vec3b(255, 0, 0));
@@ -86,12 +86,12 @@ TEST(TestSuite, pixel2world_nan) {
       case 0:
         depth = cv::Mat1f(10, 10, (float) 0);
       case 1:
-        depth = cv::Mat1f(10, 10, kinect_openni_utils::NAN_DOUBLE);
+        depth = cv::Mat1f(10, 10, vision_utils::NAN_DOUBLE);
       case 2:
       default:
         depth = cv::Mat1f(10, 10, (double) 0);
     } // end switch (idx)
-    ret = kinect_openni_utils::pixel2world_rgb_color255
+    ret = vision_utils::pixel2world_rgb_color255
           (color, depth, depth_camera_model, depth_reprojected, colors, 1, cv::Mat(), true);
     ASSERT_TRUE(ret == true); // no failure
     ASSERT_TRUE(colors.size() == 0) << "colors size:" << colors.size();
@@ -115,11 +115,11 @@ TEST(TestSuite, pixel2world_rgb) {
   bool ret;
   // get camera model
   image_geometry::PinholeCameraModel depth_camera_model, rgb_camera_model;
-  ASSERT_TRUE(kinect_openni_utils::read_camera_model_files
+  ASSERT_TRUE(vision_utils::read_camera_model_files
               (kinect_serial_number, depth_camera_model, rgb_camera_model));
 
   // rgb and depth sizes no corresponding -> should fail
-  ASSERT_FALSE(kinect_openni_utils::pixel2world_rgb_color255
+  ASSERT_FALSE(vision_utils::pixel2world_rgb_color255
                (rgb_img, depth_img(cv::Rect(10, 10, 10, 10)),
                 image_geometry::PinholeCameraModel(),
                 depth_reprojected, colors,
@@ -127,7 +127,7 @@ TEST(TestSuite, pixel2world_rgb) {
   ASSERT_TRUE(colors.size() == 0) << "colors size:" << colors.size();
 
   // cam model not initialized -> should fail
-  ASSERT_FALSE(kinect_openni_utils::pixel2world_rgb_color255
+  ASSERT_FALSE(vision_utils::pixel2world_rgb_color255
         (rgb_img, depth_img,
          image_geometry::PinholeCameraModel(),
          depth_reprojected, colors,
@@ -135,7 +135,7 @@ TEST(TestSuite, pixel2world_rgb) {
   ASSERT_TRUE(colors.size() == 0) << "colors size:" << colors.size();
 
   // mask size not corresponding -> should not use mask
-  ret = kinect_openni_utils::pixel2world_rgb_color255
+  ret = vision_utils::pixel2world_rgb_color255
         (rgb_img, depth_img,
          depth_camera_model,
          depth_reprojected, colors,
@@ -147,7 +147,7 @@ TEST(TestSuite, pixel2world_rgb) {
   // different data step
   for (unsigned int data_step = 1; data_step <= 5; ++data_step) {
     printf("data_step:%i\n", data_step);
-    ret = kinect_openni_utils::pixel2world_rgb_color255
+    ret = vision_utils::pixel2world_rgb_color255
           (rgb_img, depth_img,
            depth_camera_model,
            depth_reprojected, colors,
@@ -163,7 +163,7 @@ TEST(TestSuite, pixel2world_rgb) {
   for (unsigned int roi_size = 0; roi_size <= 100; roi_size+=10) {
     printf("roi_size:%i\n", roi_size);
     cv::Rect ROI(10, 10, roi_size, roi_size);
-    ret = kinect_openni_utils::pixel2world_rgb_color255
+    ret = vision_utils::pixel2world_rgb_color255
           (rgb_img(ROI), depth_img(ROI),
            depth_camera_model,
            depth_reprojected, colors,

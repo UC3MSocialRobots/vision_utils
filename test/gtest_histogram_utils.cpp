@@ -28,8 +28,8 @@ Tests for the histogram_utils namespace.
 #include <opencv2/highgui/highgui.hpp>
 // AD
 #include "vision_utils/histogram_utils.h"
-#include "vision_utils/utils/timer.h"
-#include "vision_utils/utils/matrix_testing.h"
+#include "vision_utils/timer.h"
+#include "vision_utils/matrix_testing.h"
 
 #include <vision_utils/img_path.h>
 // kinect
@@ -38,20 +38,20 @@ Tests for the histogram_utils namespace.
 
 ////////////////////////////////////////////////////////////////////////////////
 
-namespace HU = histogram_utils;
+namespace VU = vision_utils;
 
 void test_io(const std::string filename) {
   cv::Mat1b img = cv::imread(filename, CV_LOAD_IMAGE_GRAYSCALE);
   // compute histogram
   int nbins = 25, max_value = 255; // grey till 255
-  HU::Histogram hist1 = HU::get_histogram(img, nbins, max_value);
+  VU::Histogram hist1 = VU::get_histogram(img, nbins, max_value);
   // save it
   std::string output_filename = "/tmp/foo.yaml";
-  HU::write_histogram_to_file(hist1, output_filename);
+  VU::write_histogram_to_file(hist1, output_filename);
   // now load it
-  HU::Histogram hist2 = HU::read_histogram_from_file
+  VU::Histogram hist2 = VU::read_histogram_from_file
       (output_filename);
-  double dist = HU::distance_hists(hist1, hist2);
+  double dist = VU::distance_hists(hist1, hist2);
   ASSERT_TRUE(dist < 1E-2) << "dist:" << dist;
 }
 
@@ -66,10 +66,10 @@ void test_mean_std_dev(const std::string & filename,
                        double exp_hue_mean, double exp_std_dev) {
   cv::Mat1b rgb = cv::imread(filename, CV_LOAD_IMAGE_COLOR), hue;
   cv::Mat3b hsv, h_illus;
-  HU::Histogram h = HU::get_hue_histogram(rgb, hsv, hue, 15, 180);
-  HU::histogram_to_image(h, h_illus, 400, 400, colormaps::ratio2hue);
+  VU::Histogram h = VU::get_hue_histogram(rgb, hsv, hue, 15, 180);
+  VU::histogram_to_image(h, h_illus, 400, 400, vision_utils::ratio2hue);
   double mean, std_dev;
-  HU::mean_std_dev_modulo(h, 180, mean, std_dev);
+  VU::mean_std_dev_modulo(h, 180, mean, std_dev);
   ASSERT_NEAR(mean, exp_hue_mean, 1);
   ASSERT_NEAR(std_dev, exp_std_dev, 1);
 
@@ -79,8 +79,8 @@ void test_mean_std_dev(const std::string & filename,
   cv::destroyAllWindows();
   printf("mean:%g, std_dev:%g\n", mean, std_dev);
   //gaussian_pdf2gnuplot(mean, std_dev, false, -50, 230);
-  //HU::histogram2gnuplot(h, 180, -50, 230, mean, std_dev);
-  HU::histogram2gnuplot(h, 180, 0, 180, mean, std_dev);
+  //VU::histogram2gnuplot(h, 180, -50, 230, mean, std_dev);
+  VU::histogram2gnuplot(h, 180, 0, 180, mean, std_dev);
 #endif // DISPLAY
 }
 
@@ -92,25 +92,25 @@ TEST(TestSuite, test_mean_std_dev_paleo) { test_mean_std_dev(IMG_DIR "paleo.png"
 
 void test_hue_roi_mask(const std::string filename) {
   cv::Mat3b img = cv::imread(filename, CV_LOAD_IMAGE_COLOR), img_hsv = img.clone();
-  cv::Mat hue = color_utils::rgb2hue(img_hsv);
+  cv::Mat hue = vision_utils::rgb2hue(img_hsv);
   // compute histogram
   int nbins = 25, max_value = 180; // hue till 180
-  Timer timer;
-  HU::Histogram histo_full;
+  vision_utils::Timer timer;
+  VU::Histogram histo_full;
   for (unsigned int i = 0; i < 100; ++i)
-    histo_full = HU::get_histogram(hue, nbins, max_value);
+    histo_full = VU::get_histogram(hue, nbins, max_value);
   timer.printTime_factor("get_histogram()", 100);
   ASSERT_TRUE(histo_full.rows == nbins);
 
   // just keep a ROI
   unsigned int cols = hue.cols, rows = hue.rows;
   cv::Rect ROI(cv::Point(cols/4, rows/4), cv::Point(cols/2, rows/2));
-  HU::Histogram histo_roi = HU::get_histogram(hue(ROI), nbins, max_value);
+  VU::Histogram histo_roi = VU::get_histogram(hue(ROI), nbins, max_value);
   cv::Mat1b mask(img.size(), 0);
   mask(ROI) = 255;
-  HU::Histogram histo_mask = HU::get_histogram(hue, nbins, max_value, mask);
+  VU::Histogram histo_mask = VU::get_histogram(hue, nbins, max_value, mask);
 
-  ASSERT_TRUE(matrix_testing::matrices_equal(histo_mask, histo_roi));
+  ASSERT_TRUE(vision_utils::matrices_equal(histo_mask, histo_roi));
 }
 
 TEST(TestSuite, test_hue_roi_mask_red_grad) { test_hue_roi_mask(IMG_DIR "red_grad.png"); }
@@ -123,10 +123,10 @@ void test_histo_bw(const std::string filename) {
   cv::Mat1b img = cv::imread(filename, CV_LOAD_IMAGE_GRAYSCALE);
   // compute histogram
   int nbins = 25, max_value = 255; // grey till 255
-  HU::Histogram histo = HU::get_histogram(img, nbins, max_value);
+  VU::Histogram histo = VU::get_histogram(img, nbins, max_value);
   // draw it
   cv::Mat3b histo_illus;
-  HU::histogram_to_image(histo, histo_illus, 800, 600);
+  VU::histogram_to_image(histo, histo_illus, 800, 600);
 #ifdef DISPLAY
   cv::imwrite("histo_illus.png", histo_illus); printf("'histo_illus.png' saved.\n");
   cv::imshow("img", img);
@@ -145,21 +145,21 @@ TEST(TestSuite, histo_bw) {
 void test_histo_hue_mask(const std::string filename,
                          const std::string mask_filename = "") {
   cv::Mat3b img = cv::imread(filename, CV_LOAD_IMAGE_COLOR), img_hsv = img.clone();
-  cv::Mat1b hue = color_utils::rgb2hue(img_hsv);
+  cv::Mat1b hue = vision_utils::rgb2hue(img_hsv);
   // compute histogram
   int nbins = 25, max_value = 180; // hue till 180
-  HU::Histogram histo_full = HU::get_histogram(hue, nbins, max_value);
+  VU::Histogram histo_full = VU::get_histogram(hue, nbins, max_value);
 
   // draw it
   cv::Mat3b histo_full_illus, histo_mask_illus;
   int illus_w = 320, illus_h = 240;
-  HU::histogram_to_image
-      (histo_full, histo_full_illus, illus_w, illus_h, colormaps::ratio2hue);
+  VU::histogram_to_image
+      (histo_full, histo_full_illus, illus_w, illus_h, vision_utils::ratio2hue);
 
 #ifdef DISPLAY
   cv::imshow("img", img);
-  cv::imwrite("hue.png", color_utils::hue2rgb(hue)); printf("'hue.png' saved.\n");
-  cv::imshow("hue", color_utils::hue2rgb(hue));
+  cv::imwrite("hue.png", vision_utils::hue2rgb(hue)); printf("'hue.png' saved.\n");
+  cv::imshow("hue", vision_utils::hue2rgb(hue));
   cv::imshow("histo_full_illus", histo_full_illus);
   cv::imwrite("histo_full_illus.png", histo_full_illus); printf("'histo_full_illus.png' saved.\n");
 #endif // DISPLAY
@@ -167,9 +167,9 @@ void test_histo_hue_mask(const std::string filename,
   if (mask_filename.size() > 0) {
     cv::Mat1b mask = cv::imread(mask_filename, CV_LOAD_IMAGE_GRAYSCALE);
     assert(mask.size() == img.size());
-    HU::Histogram histo_mask = HU::get_histogram(hue, nbins, max_value, mask);
-    HU::histogram_to_image
-        (histo_mask, histo_mask_illus, illus_w, illus_h, colormaps::ratio2hue);
+    VU::Histogram histo_mask = VU::get_histogram(hue, nbins, max_value, mask);
+    VU::histogram_to_image
+        (histo_mask, histo_mask_illus, illus_w, illus_h, vision_utils::ratio2hue);
 #ifdef DISPLAY
     cv::imshow("histo_mask_illus", histo_mask_illus);
     cv::imwrite("histo_mask_illus.png", histo_mask_illus); printf("'histo_mask_illus.png' saved.\n");
@@ -192,23 +192,23 @@ int roi_w = 80, roi_h = 50;
 cv::Rect ROI2(0, 0, roi_w, roi_h);
 bool recompute_hist = true;
 
-void test_dist_roi_moving_mouse_mouse_cb(int event, int x, int y, int flags, void* param) {
+void test_dist_roi_moving_mouse_mouse_cb(int /*event*/, int x, int y, int /*flags*/, void* /*param*/) {
   ROI2 = cv::Rect(x - roi_w / 2, y - roi_h / 2, roi_w, roi_h);
   recompute_hist = true;
 }
 
 void test_dist_roi_moving_mouse(const std::string filename) {
   cv::Mat3b img = cv::imread(filename, CV_LOAD_IMAGE_COLOR), img_hsv = img.clone();
-  cv::Mat hue = color_utils::rgb2hue(img_hsv);
+  cv::Mat hue = vision_utils::rgb2hue(img_hsv);
   cv::Rect img_bbox(0, 0, img.cols, img.rows);
   // compute histogram - just keep a ROI
   int nbins = 25, max_value = 180; // hue till 180
   cv::Rect ROI(rand() % img.cols, rand() % img.rows,
                rand() % (2 * roi_w), rand() % (2 * roi_h));
-  ROI = geometry_utils::rectangle_intersection(ROI, img_bbox);
-  std::vector<HU::Histogram> hists(2);
-  hists[0] = HU::get_histogram(hue(ROI), nbins, max_value);
-  printf("histograms[0]:'%s'\n", HU::hist_to_string(hists[0]).c_str());
+  ROI = vision_utils::rectangle_intersection(ROI, img_bbox);
+  std::vector<VU::Histogram> hists(2);
+  hists[0] = VU::get_histogram(hue(ROI), nbins, max_value);
+  printf("histograms[0]:'%s'\n", VU::hist_to_string(hists[0]).c_str());
 
   std::string window_name = "test_dist_roi_moving_mouse";
   cv::namedWindow(window_name);
@@ -220,8 +220,8 @@ void test_dist_roi_moving_mouse(const std::string filename) {
   cv::Rect text_area_roi(cv::Point(0, 2 * hist_h), cv::Point(hist_img.cols, hist_img.rows));
   cv::Mat3b text_area = hist_img(text_area_roi);
   std::vector<bool> refresh_mask(2, true);
-  HU::vector_of_histograms_to_image
-      (hists, hist_img, hist_w, hist_h, colormaps::ratio2hue, &refresh_mask);
+  VU::vector_of_histograms_to_image
+      (hists, hist_img, hist_w, hist_h, vision_utils::ratio2hue, &refresh_mask);
   refresh_mask[0] = false; // no need to refresh this histogram anymore
 
 #ifdef DISPLAY
@@ -231,12 +231,12 @@ void test_dist_roi_moving_mouse(const std::string filename) {
     if (recompute_hist) {
       recompute_hist = false;
       // check the ROI does not get out of image
-      ROI2 = geometry_utils::rectangle_intersection(ROI2, img_bbox);
+      ROI2 = vision_utils::rectangle_intersection(ROI2, img_bbox);
       // recompute histogram and draw it
-      hists[1] = HU::get_histogram(hue(ROI2), nbins, max_value);
-      // printf("\nhistograms[1]:'%s'\n", HU::hist_to_string(hists[1]).c_str());
-      HU::vector_of_histograms_to_image
-          (hists, hist_img, hist_w, hist_h, colormaps::ratio2hue, &refresh_mask);
+      hists[1] = VU::get_histogram(hue(ROI2), nbins, max_value);
+      // printf("\nhistograms[1]:'%s'\n", VU::hist_to_string(hists[1]).c_str());
+      VU::vector_of_histograms_to_image
+          (hists, hist_img, hist_w, hist_h, vision_utils::ratio2hue, &refresh_mask);
 
       // for each possible dist method, get distance and print it in text area of hist_img
       text_area =  cv::Vec3b(230, 230, 230);
@@ -244,13 +244,13 @@ void test_dist_roi_moving_mouse(const std::string filename) {
       int methods[] = {CV_COMP_INTERSECT, CV_COMP_CHISQR, CV_COMP_BHATTACHARYYA, CV_COMP_CORREL};
       const char* method_str[] = {"INTERSECT", "CHISQR", "BHATTACHARYYA", "CORREL"};
       for (unsigned int method_idx = 0; method_idx < n_methods; ++method_idx) {
-        double dist = HU::distance_hists(hists[0], hists[1], methods[method_idx]);
-        double dist_raw = HU::distance_hists(hists[0], hists[1], methods[method_idx], false);
+        double dist = VU::distance_hists(hists[0], hists[1], methods[method_idx]);
+        double dist_raw = VU::distance_hists(hists[0], hists[1], methods[method_idx], false);
         std::ostringstream text;
         text << method_str[method_idx] << ":" << std::setprecision(3) << dist
              << " (" << std::setprecision(3) << dist_raw << ")";
         //cv::Scalar bg_color = CV_RGB(255, 100, 100)
-        cv::Scalar bg_color = colormaps::ratio2red_green(dist);
+        cv::Scalar bg_color = vision_utils::ratio2red_green(dist);
         cv::rectangle(text_area,
                       cv::Rect(0, method_idx * text_area_roi.height / 4,
                                text_area_roi.width * dist, text_area_roi.height / 4),
@@ -283,22 +283,22 @@ TEST(TestSuite, dist_roi_moving_mouse) {
 ////////////////////////////////////////////////////////////////////////////////
 
 void test_get_vector_of_histograms_illus
-(const std::vector<cv::Mat> & hues,
- const std::vector<cv::Mat> & masks,
- const std::vector<HU::Histogram> & hists,
- const int nbins)
+(const std::vector<cv::Mat> & /*hues*/,
+ const std::vector<cv::Mat> & /*masks*/,
+ const std::vector<VU::Histogram> & hists,
+ const int /*nbins*/)
 {
   // draw the histograms
   cv::Mat3b hists_img;
-  HU::vector_of_histograms_to_image(hists, hists_img, 300, 200,
-                                    colormaps::ratio2hue);
+  VU::vector_of_histograms_to_image(hists, hists_img, 300, 200,
+                                    vision_utils::ratio2hue);
 #ifdef DISPLAY
   // show everything
   for (unsigned int i = 0; i < hues.size(); ++i)
-    cv::imshow(std::string("hue #") + string_utils::cast_to_string(i),
-               color_utils::hue2rgb(hues[i]));
+    cv::imshow(std::string("hue #") + vision_utils::cast_to_string(i),
+               vision_utils::hue2rgb(hues[i]));
   for (unsigned int i = 0; i < masks.size(); ++i)
-    cv::imshow(std::string("mask #") + string_utils::cast_to_string(i), masks[i]);
+    cv::imshow(std::string("mask #") + vision_utils::cast_to_string(i), masks[i]);
   cv::imwrite("hists_img.png", hists_img); printf("'hists_img.png' saved.\n");
   cv::imshow("hists_img", hists_img);
   cv::waitKey(0);
@@ -311,15 +311,15 @@ void test_get_vector_of_histograms_illus
 TEST(TestSuite, get_vector_of_histograms_2_images_2_masks) {
   // read files
   std::vector<cv::Mat> hues;
-  hues.push_back(color_utils::rgb_file2hue(IMG_DIR "depth/juggling1_rgb.png"));
-  hues.push_back(color_utils::rgb_file2hue(IMG_DIR "depth/juggling2_rgb.png"));
+  hues.push_back(vision_utils::rgb_file2hue(IMG_DIR "depth/juggling1_rgb.png"));
+  hues.push_back(vision_utils::rgb_file2hue(IMG_DIR "depth/juggling2_rgb.png"));
   std::vector<cv::Mat> masks;
   masks.push_back(cv::imread(IMG_DIR "depth/juggling1_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE));
   masks.push_back(cv::imread(IMG_DIR "depth/juggling2_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE));
   // compute histograms
   int nbins = 25, max_value = 180; // hue till 180
-  std::vector<HU::Histogram> hists;
-  HU::get_vector_of_histograms(hues, hists, nbins, max_value, masks);
+  std::vector<VU::Histogram> hists;
+  VU::get_vector_of_histograms(hues, hists, nbins, max_value, masks);
   test_get_vector_of_histograms_illus(hues, masks, hists, nbins);
 } // end test_get_vector_of_histograms_2_images_2_masks();
 
@@ -327,15 +327,15 @@ TEST(TestSuite, get_vector_of_histograms_2_images_2_masks) {
 
 TEST(TestSuite, get_vector_of_histograms_1_image_3_masks) {
   // read files
-  cv::Mat hue = color_utils::rgb_file2hue(IMG_DIR "balloon.png");
+  cv::Mat hue = vision_utils::rgb_file2hue(IMG_DIR "balloon.png");
   std::vector<cv::Mat> masks;
   masks.push_back(cv::imread(IMG_DIR "balloon_mask1.png", CV_LOAD_IMAGE_GRAYSCALE));
   masks.push_back(cv::imread(IMG_DIR "balloon_mask2.png", CV_LOAD_IMAGE_GRAYSCALE));
   masks.push_back(cv::imread(IMG_DIR "balloon_mask3.png", CV_LOAD_IMAGE_GRAYSCALE));
   // compute histograms
   int nbins = 25, max_value = 180; // hue till 180
-  std::vector<HU::Histogram> hists;
-  HU::get_vector_of_histograms(hue, hists, nbins, max_value, masks);
+  std::vector<VU::Histogram> hists;
+  VU::get_vector_of_histograms(hue, hists, nbins, max_value, masks);
   test_get_vector_of_histograms_illus
       (std::vector<cv::Mat>(1, hue), masks, hists, nbins);
 } // end test_get_vector_of_histograms_1_image_3_masks();
@@ -344,16 +344,16 @@ TEST(TestSuite, get_vector_of_histograms_1_image_3_masks) {
 
 TEST(TestSuite, get_vector_of_histograms_1_image_1_multimask) {
   // read files
-  cv::Mat hue = color_utils::rgb_file2hue(IMG_DIR "balloon.png");
+  cv::Mat hue = vision_utils::rgb_file2hue(IMG_DIR "balloon.png");
   cv::Mat multimask = cv::imread(IMG_DIR "balloon_masks.png", CV_LOAD_IMAGE_GRAYSCALE);
   unsigned int n_masks = 3;
   // compute histograms
   int nbins = 25, max_value = 180; // hue till 180
-  std::vector<HU::Histogram> hists;
-  HU::get_vector_of_histograms(hue, hists, nbins, max_value, multimask, n_masks);
+  std::vector<VU::Histogram> hists;
+  VU::get_vector_of_histograms(hue, hists, nbins, max_value, multimask, n_masks);
   // paint multimask
   cv::Mat3b multimask_illus;
-  user_image_to_rgb(multimask, multimask_illus);
+  vision_utils::user_image_to_rgb(multimask, multimask_illus);
   cv::imwrite("multimask_illus.png", multimask_illus); printf("'multimask_illus.png' saved.\n");
   cv::imshow("multimask_illus", multimask_illus);
   // paint each mask separately

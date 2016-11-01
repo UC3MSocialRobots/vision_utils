@@ -3,7 +3,7 @@
 
 #include <opencv2/core/core.hpp>
 
-namespace image_utils {
+namespace vision_utils {
 
 template<class _T>
 /*! Use the following pattern for points indexing
@@ -67,6 +67,6 @@ inline void close_borders(cv::Mat_<_T> src,
   } // end loop row
 }
 
-} // end namespace image_utils
+} // end namespace vision_utils
 
 #endif // CV_BORDER_CLOSER_H

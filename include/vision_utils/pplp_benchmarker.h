@@ -53,38 +53,41 @@ and evaluates the mean error of each PPL method.
 
 \section Subscriptions
   - \b {ground_truth_ppl_topic}
-        [people_msgs_rl::PeoplePoseList]
+        [people_msgs::People]
         The truth PPL, see above.
 
   - \b {ppl_topics}
-        [people_msgs_rl::PeoplePoseList]
+        [people_msgs::People]
         One or several computed PPL, see above.
 
 \section Publications
   - \b "~ppl"
-        [people_msgs_rl::PeoplePoseList]
+        [people_msgs::People]
         The detected users in the mask
  */
 #ifndef PPL_BENCHMARKER_H
 #define PPL_BENCHMARKER_H
 
-#include <people_msgs_rl/PeoplePoseList.h>
-#include "vision_utils/utils/multi_subscriber.h"
-#include "vision_utils/utils/pt_utils.h"
-#include "vision_utils/utils/timer.h"
-#include "vision_utils/utils/file_io.h"
-#include "vision_utils/utils/assignment_utils.h"
+#include <people_msgs/People.h>
+#include "vision_utils/multi_subscriber.h"
+#include "vision_utils/ppl_attributes.h"
+#include "vision_utils/pt_utils.h"
+#include "vision_utils/timer.h"
+#include "vision_utils/file_io.h"
+#include "vision_utils/assignment_utils.h"
 // ros
 #include <ros/package.h>
 
+namespace vision_utils {
+
 class PPLBenchmarker {
 public:
-  typedef people_msgs_rl::PeoplePose PP;
-  typedef people_msgs_rl::PeoplePoseList PPL;
+  typedef people_msgs::Person PP;
+  typedef people_msgs::People PPL;
   typedef std::string MethodName;
   typedef std::string UserName;
-  typedef geometry_utils::FooPoint3f Pt3f;
-  static const int UNASSIGNED = assignment_utils::UNASSIGNED;
+  typedef FooPoint3f Pt3f;
+  static const int UNASSIGNED = vision_utils::UNASSIGNED;
 
   PPLBenchmarker() {
     // get the topic names
@@ -99,7 +102,7 @@ public:
     nh_private.param("verbose_output", _verbose_output, true);
 
     // subscribers
-    _ppl_subs = ros::MultiSubscriber::subscribe
+    _ppl_subs = MultiSubscriber::subscribe
         (nh_public, ppl_topics, 1, &PPLBenchmarker::ppl_cb, this);
     _ground_truth_ppl_sub = nh_public.subscribe
         (ground_truth_ppl_topic, 1, &PPLBenchmarker::ground_truth_ppl_cb, this);
@@ -131,7 +134,7 @@ public:
       ++e_it;
     }
     if (!_results_filename.empty())
-      string_utils::save_file(_results_filename, ans.str());
+      save_file(_results_filename, ans.str());
     printf("PPLBenchmarker: results: %s\n", ans.str().c_str());
   } // end save_and_display_results();
 
@@ -142,13 +145,13 @@ public:
       printf("PPLBenchmarker: got a computed PPL but no truth PPL, can't compare!\n");
       return;
     }
-    MethodName method_name = msg->method;
+    MethodName method_name = get_method(*msg);
     if (method_name.size() == 0) {
       printf("PPLBenchmarker: got a computed PPL but the method field is empty, can't compare!\n");
       return;
     }
-    unsigned int detec_people_nb = msg->poses.size();
-    //ROS_INFO_THROTTLE(5, "PPLBenchmarker:ppl_cb(method:'%s', %i people, truth:%i people)",
+    unsigned int detec_people_nb = msg->people.size();
+    //printf_THROTTLE(5, "PPLBenchmarker:ppl_cb(method:'%s', %i people, truth:%i people)",
     //                  method_name.c_str(), detec_people_nb, _truth_people_nb);
     // compute the error
     MethodError* e = &(_errors[method_name]);
@@ -171,17 +174,17 @@ public:
     std::vector<Pt3f> detec_people_pos;
     for (unsigned int people_idx = 0; people_idx < detec_people_nb; ++people_idx) {
       detec_people_pos.push_back(Pt3f());
-      pt_utils::copy3(msg->poses[people_idx].head_pose.position, detec_people_pos.back());
+      copy3(msg->people[people_idx].position, detec_people_pos.back());
     } // end for people_idx
-    assignment_utils::MatchList matchlist_truth2detec;
-    assignment_utils::assign_and_dists(_truth_people_pos, detec_people_pos, _costs,
+    MatchList matchlist_truth2detec;
+    assign_and_dists(_truth_people_pos, detec_people_pos, _costs,
                                        matchlist_truth2detec, dist2truth_per_pp);
 
     // check the MatchList
     NamesMap* method_name_map = &(method2truth2track[method_name]);
     bool has_swapped_ids = false;
     for (unsigned int match_idx = 0; match_idx < matchlist_truth2detec.size(); ++match_idx) {
-      assignment_utils::Match match = matchlist_truth2detec[match_idx];
+      Match match = matchlist_truth2detec[match_idx];
       int truth_idx =match.first, detec_idx = match.second;
       if (truth_idx == UNASSIGNED && detec_idx == UNASSIGNED) // shouldnt occur
         e->true_negative++;
@@ -193,11 +196,11 @@ public:
         continue;
       // both are assigned
       e->true_positive++;
-      // printf("%s: Checking labels...\n", method_name.c_str());
-      UserName curr_label = msg->poses[detec_idx].person_name;
-      if (curr_label == people_msgs_rl::PeoplePose::NO_RECOGNITION_MADE)
+      //printf("%s: Checking labels...\n", method_name.c_str());
+      UserName curr_label = msg->people[detec_idx].name;
+      if (curr_label == "NOREC")
         continue;
-      UserName real_label = _last_ground_truth_ppl.poses[truth_idx].person_name;
+      UserName real_label = _last_ground_truth_ppl.people[truth_idx].name;
       // determine expected label
 
       if (method_name_map->find(real_label) == method_name_map->end()) // never seen this track?
@@ -212,7 +215,7 @@ public:
       }
     } // end loop match_idx
 
-    e->truth2track = string_utils::map_to_string(*method_name_map);
+    e->truth2track = map_to_string(*method_name_map);
     // only count one swap per full match
     if (has_swapped_ids)
       e->id_swaps++;
@@ -228,11 +231,11 @@ public:
   void ground_truth_ppl_cb(const PPL::ConstPtr & msg) {
     _last_ground_truth_ppl = *msg;
     // store the 3D positions of each user
-    _truth_people_nb = msg->poses.size();
+    _truth_people_nb = msg->people.size();
     _truth_people_pos.clear();
     for (unsigned int people_idx = 0; people_idx < _truth_people_nb; ++people_idx) {
       _truth_people_pos.push_back(Pt3f());
-      pt_utils::copy3(msg->poses[people_idx].head_pose.position, _truth_people_pos.back());
+      copy3(msg->people[people_idx].position, _truth_people_pos.back());
     } // end for people_idx
     _last_ground_truth_ppl_was_set = true;
     save_and_display_results();
@@ -242,7 +245,7 @@ public:
 
 private:
   ros::Subscriber _ground_truth_ppl_sub;
-  ros::MultiSubscriber _ppl_subs;
+  MultiSubscriber _ppl_subs;
   PPL _last_ground_truth_ppl;
   bool _last_ground_truth_ppl_was_set;
   std::vector<Pt3f> _truth_people_pos;
@@ -298,7 +301,9 @@ private:
   std::map<MethodName, NamesMap> method2truth2track;
   Timer _errors_timer;
   double _errors_display_timeout;
-  CMatrix<assignment_utils::Cost> _costs;
+  CMatrix<Cost> _costs;
 }; // end class PPLBenchmarker
+
+} // end namespace vision_utils
 
 #endif // PPL_BENCHMARKER_H

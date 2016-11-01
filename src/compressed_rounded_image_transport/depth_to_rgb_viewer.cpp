@@ -10,7 +10,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/highgui/highgui.hpp>
 // compressed_rounded
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 #include "vision_utils/cv_conversion_float_uchar.h"
 
 
@@ -25,7 +25,7 @@
       [string] (default:{input_topic})
       to set the window title
  - \b "~color_mode"
-      [int] (default:image_utils::FULL_RGB_SCALED)
+      [int] (default:vision_utils::FULL_RGB_SCALED)
       to set the color mode
  - \b "~display_images"
       [int] (default:0)
@@ -50,12 +50,12 @@ cv_bridge::CvImageConstPtr bridge_img_ptr;
 //! the name of the window
 std::string window_title;
 //! the way to represent the depth in color
-image_utils::DepthViewerColorMode _color_mode;
+vision_utils::DepthViewerColorMode _color_mode;
 //! true for saving images
 bool display_images = true, save_images = false;
 float min_value = 0, max_value = 10;
 int img_counter = 1, mouse_x = -1, mouse_y = -1;
-Timer last_mouse_move;
+vision_utils::Timer last_mouse_move;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -73,8 +73,8 @@ void depth_image_callback(const sensor_msgs::ImageConstPtr& received_float_img_m
   }
   const cv::Mat & received_float_img_ref = bridge_img_ptr->image;
 
-  // Timer timer;
-  image_utils::depth_image_to_vizualisation_color_image
+  // vision_utils::Timer timer;
+  vision_utils::depth_image_to_vizualisation_color_image
       (received_float_img_ref, uchar_rgb_img, _color_mode, min_value, max_value);
   // timer.printTime("depth_image_to_vizualisation_color_image()");
 
@@ -100,8 +100,8 @@ void depth_image_callback(const sensor_msgs::ImageConstPtr& received_float_img_m
     cv::imshow(window_title, uchar_rgb_img);
     int key = (char) cv::waitKey(1);
     if (key == ' ')
-      _color_mode = (image_utils::DepthViewerColorMode)
-          ((_color_mode + 1) % image_utils::DEPTH_VIEWER_COLOR_NMODES);
+      _color_mode = (vision_utils::DepthViewerColorMode)
+          ((_color_mode + 1) % vision_utils::DEPTH_VIEWER_COLOR_NMODES);
     else if (key == 27) {// esc
       cv::destroyWindow(window_title);
       cv::waitKey(5);
@@ -149,9 +149,9 @@ int main(int argc, char** argv) {
   save_images = (save_images > 0);
 
   // determine if a color version is needed
-  nh_private.param<int>("color_mode", _color_mode_int, image_utils::FULL_RGB_SCALED);
-  _color_mode = (image_utils::DepthViewerColorMode)
-      (_color_mode_int % image_utils::DEPTH_VIEWER_COLOR_NMODES);
+  nh_private.param<int>("color_mode", _color_mode_int, vision_utils::FULL_RGB_SCALED);
+  _color_mode = (vision_utils::DepthViewerColorMode)
+      (_color_mode_int % vision_utils::DEPTH_VIEWER_COLOR_NMODES);
   double min_value_double = min_value, max_value_double = max_value;
   nh_private.param<double>("min_value", min_value_double, min_value_double);
   nh_private.param<double>("max_value", max_value_double, max_value_double);

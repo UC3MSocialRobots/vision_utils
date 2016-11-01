@@ -1,1 +1,0 @@
-ADD_SUBDIRECTORY(foo_rgb_skill)

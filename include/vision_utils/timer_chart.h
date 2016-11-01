@@ -27,15 +27,15 @@ ________________________________________________________________________________
 #ifndef TIMER_CHART_H
 #define TIMER_CHART_H
 
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 #include "vision_utils/pie_chart_utils.h"
-#include "vision_utils/utils/map_utils.h"
+#include "vision_utils/map_utils.h"
 
 // some useful preprocesor functions for TimerCharts.
 // put the line "#define CHART_TIMER_ON" in your code,
 // BEFORE the include of "timer_chart.h", to activate the TimerChart
 #ifdef CHART_TIMER_ON
-#define TIMER_CREATE(t)                     TimerChart t;
+#define TIMER_CREATE(t)                     ::vision_utils::TimerChart t;
 #define TIMER_RESET(t)                      t.reset();
 #define TIMER_PRINT_RESET(t, label)           t.printTime(label); t.reset();
 #define TIMER_DISPLAY_CHART(t, step)        t.display_chart(step);
@@ -45,6 +45,8 @@ ________________________________________________________________________________
 #define TIMER_PRINT_RESET(t, label)           // empty
 #define TIMER_DISPLAY_CHART(t, step)        // empty
 #endif // CHART_TIMER_ON
+
+namespace vision_utils {
 
 class TimerChart : public Timer {
 public:
@@ -74,7 +76,7 @@ public:
     else { // the label already existed
       _times[it->second] = getTimeMilliseconds();
     }
-      // printf("labelled_times:'%s'\n", string_utils::map_to_string(_times).c_str());
+      //printf("labelled_times:'%s'\n", map_to_string(_times).c_str());
   }
 
   //! display chart, but not for each call
@@ -86,8 +88,8 @@ public:
       //        _labels_vector_dump[it -> second] = it->first;
       //      }
 
-      //map_utils::map_keys_to_container(_times, _labels_vector_dump);
-      pie_chart_utils::make_pie_and_caption(_times, _labels_vector_dump,
+      //map_keys_to_container(_times, _labels_vector_dump);
+      make_pie_and_caption(_times, _labels_vector_dump,
                                             _chart, 800, 600, false, .08);
       cv::imshow(_window_name, _chart);
       cv::waitKey(5);
@@ -102,5 +104,7 @@ private:
   int _display_call_counter;
   cv::Mat3b _chart;
 };
+
+} // end namespace vision_utils
 
 #endif // TIMER_CHART_H

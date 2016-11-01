@@ -34,24 +34,24 @@ making life easier.
 #define IMAGES2PPL_H
 
 // msg
-#include <people_msgs_rl/PeoplePoseList.h>
+#include <people_msgs/People.h>
 // AD
 #include "vision_utils/content_processing.h"
 #include "vision_utils/kinect_openni_utils.h"
-#include "vision_utils/utils/pt_utils.h"
+#include "vision_utils/pt_utils.h"
 #include "vision_utils/ppl_attributes.h"
 // ROS
 #include <sensor_msgs/image_encodings.h>
 #include <cv_bridge/cv_bridge.h>
 
-namespace ppl_utils {
+namespace vision_utils {
 
 class Images2PP {
 public:
   /*!
-   * Fill the image fields of a PeoplePose with some OpenCV images.
+   * Fill the image fields of a Person with some OpenCV images.
    *  \warning the header of pp should be set BEFORE calling this function
-   *    as they are copied to the PeoplePose image headers.
+   *    as they are copied to the Person image headers.
    * \param pp
    * \param rgb, depth, user
    *    The optional image fields. Pass NULL if not available.
@@ -65,7 +65,7 @@ public:
    * \return
    *    true if success
    */
-  bool convert(people_msgs_rl::PeoplePose & pp_out,
+  bool convert(people_msgs::Person & pp_out,
                const cv::Mat3b* rgb = NULL,
                const cv::Mat1f* depth = NULL,
                const cv::Mat1b* user = NULL,
@@ -93,7 +93,7 @@ public:
         printf("Images2PP:need_crop_with_userbbox true but user image NULL!\n");
         return false;
       }
-      cv::Rect bbox_user = image_utils::boundingBox(*user);
+      cv::Rect bbox_user = boundingBox(*user);
       if (bbox_user.width < 0) {
         printf("Images2PP:need_crop_with_userbbox true but user image black!\n");
         return false;
@@ -105,8 +105,8 @@ public:
         depth_bridge.image = (*depth)(bbox_user);
       if (has_user)
         user_bridge.image = (*user)(bbox_user);
-      pp_out.images_offsetx = bbox_user.x;
-      pp_out.images_offsety = bbox_user.y;
+      set_tag(pp_out, "images_offsetx", bbox_user.x);
+      set_tag(pp_out, "images_offsety", bbox_user.y);
     }
     else { // it is already a crop
       // locates matrix header within a parent matrix
@@ -134,10 +134,11 @@ public:
         depth_bridge.image = (*depth);
       if (has_user)
         user_bridge.image = (*user);
-      pp_out.images_offsetx = rgb_offset.x;
-      pp_out.images_offsety = rgb_offset.y;
+      set_tag(pp_out, "images_offsetx", rgb_offset.x);
+      set_tag(pp_out, "images_offsety", rgb_offset.y);
     } // end if (!need_crop_with_userbbox)
 
+#if 0 // TODO deal better with the image
     rgb_bridge.header = pp_out.header;
     rgb_bridge.encoding = sensor_msgs::image_encodings::BGR8;
     pp_out.rgb = (has_rgb ? *(rgb_bridge.toImageMsg()) : sensor_msgs::Image());
@@ -149,13 +150,14 @@ public:
     user_bridge.header = pp_out.header;
     user_bridge.encoding = sensor_msgs::image_encodings::TYPE_8UC1;
     pp_out.user = (has_user ? *(user_bridge.toImageMsg()) : sensor_msgs::Image());
+#endif
 
     return true; // success
   } // end convert()
 
   //////////////////////////////////////////////////////////////////////////////
 
-  inline bool rgb2user_and_convert(people_msgs_rl::PeoplePose & pp,
+  inline bool rgb2user_and_convert(people_msgs::Person & pp,
                                    const cv::Mat3b* rgb = NULL,
                                    const cv::Mat1f* depth = NULL,
                                    bool need_crop_with_userbbox = false) {
@@ -163,9 +165,9 @@ public:
       printf("Images2PP:rgb needed for mask generation, but NULL!\n");
       return false;
     }
-    image_utils::mask(*rgb, _rgb2user, image_utils::is_zero_vec3b);
-    //  image_utils::imwrite_debug("rgb.png", *rgb, image_utils::COLORS256);
-    //  image_utils::imwrite_debug("rgb2user.png", _rgb2user, image_utils::MONOCHROME);
+    mask(*rgb, _rgb2user, is_zero_vec3b);
+    //  imwrite_debug("rgb.png", *rgb, COLORS256);
+    //  imwrite_debug("rgb2user.png", _rgb2user, MONOCHROME);
     return convert(pp, rgb, depth, &_rgb2user, need_crop_with_userbbox);
   } // end rgb2user_and_convert()
 
@@ -179,12 +181,12 @@ protected:
 
 class Images2PPL {
 public:
-  typedef people_msgs_rl::PeoplePoseList PPL;
+  typedef people_msgs::People PPL;
 
   Images2PPL() {
     // get camera model
     image_geometry::PinholeCameraModel rgb_camera_model;
-    kinect_openni_utils::read_camera_model_files
+    read_camera_model_files
         (DEFAULT_KINECT_SERIAL(), _default_depth_cam_model, rgb_camera_model);
     _default_frame_id = "camera_frame";
   }
@@ -207,29 +209,28 @@ public:
     }
 
     // generate PPL
-    if (!image_utils::get_all_non_null_values_and_com_fast(user, _coms, true, true))
+    if (!get_all_non_null_values_and_com_fast(user, _coms, true, true))
       return false;
-    _ppl.method = "Images2PPL";
-    _ppl.poses.resize(_coms.size());
+    _ppl.people.resize(_coms.size());
     // convert center of masses to 3D positions
     std::map<uchar, cv::Point>::const_iterator coms_it = _coms.begin();
     int user_idx = 0;
     while (coms_it != _coms.end()) {
       cv::Point3d com3D =
           // pixel2world_depth(coms_it->second);
-          kinect_openni_utils::pixel2world_depth<cv::Point3d>
+          pixel2world_depth<cv::Point3d>
           (coms_it->second, *depth_cam_model_safe, depth);
-      // shape a PeoplePose
-      people_msgs_rl::PeoplePose* pp = &(_ppl.poses[user_idx]);
-      pp->header = _ppl.header;
-      pp->person_name = string_utils::cast_to_string((int) coms_it->first);
+      // shape a Person
+      people_msgs::Person* pp = &(_ppl.people[user_idx]);
+      pp->name = cast_to_string((int) coms_it->first);
       // keep NiTE name in "user_multimap_name"
-      ppl_utils::set_attribute(*pp, "user_multimap_name", pp->person_name);
+      set_method(*pp, "Images2PPL");
+      set_tag(*pp, "user_multimap_name", pp->name);
       // pose
-      pt_utils::copy3(com3D, pp->head_pose.position);
-      pp->head_pose.orientation = tf::createQuaternionMsgFromYaw(0);
-      pp->confidence = 1;
-      pp->std_dev = .1; // foo value
+      copy3(com3D, pp->position);
+      //pp->position.orientation = tf::createQuaternionMsgFromYaw(0);
+      pp->reliability = 1;
+      set_tag(*pp, "std_dev", .1);
       // images
       cv::Mat1b curr_mask = (user == coms_it->first);
       _images2pp.convert(*pp, &bgr, &depth, &curr_mask, true);
@@ -248,7 +249,7 @@ public:
     cv::Mat3b rgb;
     cv::Mat1f depth;
     cv::Mat1b user_mask;
-    if (!image_utils::read_rgb_depth_user_image_from_image_file
+    if (!read_rgb_depth_user_image_from_image_file
         (filename_prefix, &rgb, &depth, &user_mask))
       return false;
     return convert(rgb, depth, user_mask, depth_cam_model, header);
@@ -258,7 +259,7 @@ public:
 
   inline const PPL & get_ppl() const { return _ppl; }
   inline       PPL & get_ppl()       { return _ppl; }
-  inline unsigned int nusers() const { return _ppl.poses.size(); }
+  inline unsigned int nusers() const { return _ppl.people.size(); }
 
   //////////////////////////////////////////////////////////////////////////////
 
@@ -270,14 +271,14 @@ private:
   image_geometry::PinholeCameraModel _default_depth_cam_model;
   PPL _ppl;
   std::string _default_frame_id;
-  ppl_utils::Images2PP _images2pp;
+  Images2PP _images2pp;
   std::map<uchar, cv::Point> _coms;
 }; // end Images2PPL
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-namespace PP2Images {
+namespace vision_utils {
 /*! Convert a PP into a (rgb, depth, user_mask) triplet.
    * \param curr_pose
    * \param rgb, depth, user_mask
@@ -287,20 +288,21 @@ namespace PP2Images {
    *   true to discard PP that have no name data, or NO_RECOGNITION_MADE, or RECOGNITION_FAILED
    * \return
    */
-bool convert(const people_msgs_rl::PeoplePose* curr_pose,
+bool convert(const people_msgs::Person* curr_pose,
              cv::Mat3b* rgb = NULL,
              cv::Mat1f* depth = NULL,
              cv::Mat1b* user_mask = NULL,
              bool discarded_unnammed_poses = false) {
   if (discarded_unnammed_poses
-      & (curr_pose->person_name == ""
-         || curr_pose->person_name == people_msgs_rl::PeoplePose::NO_RECOGNITION_MADE
-         || curr_pose->person_name == people_msgs_rl::PeoplePose::RECOGNITION_FAILED) ){
+      & (curr_pose->name == ""
+         || curr_pose->name == "NOREC"
+         || curr_pose->name == "RECFAIL") ){
     //USUARIO NO RECONOCIDO... OOOPS!
     printf("PP2Images: user has no name!\n");
     return false;
   }
   //Try to convert ros_image to We make a copy of the image because it will be modified afterwards
+#if 0 // TODO
   cv_bridge::CvImageConstPtr rgb_bridge, depth_bridge, user_mask_bridge;
   const boost::shared_ptr<void const> tracked_object;
   try {
@@ -327,14 +329,12 @@ bool convert(const people_msgs_rl::PeoplePose* curr_pose,
     depth_bridge->image.copyTo(*depth);
   if (user_mask)
     user_mask_bridge->image.copyTo(*user_mask);
+#endif
   return true;
 } // end convert()
-} // end namespace PP2Images
 
 ////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
 
-namespace PPL2Images {
 /*! Convert a PPL into a vector of (rgb, depth, user_mask) triplet.
    *  All PPs that can not succesfully be converted are discarded.
    *  To know the original index of the PP that resulted in images #i,
@@ -344,14 +344,14 @@ namespace PPL2Images {
    *   true to discard PP that have no name data, or NO_RECOGNITION_MADE, or RECOGNITION_FAILED
    * \return true if success
    */
-bool convert(const people_msgs_rl::PeoplePoseList& ppl,
+bool convert(const people_msgs::People& ppl,
              std::vector<cv::Mat3b>* rgbs = NULL,
              std::vector<cv::Mat1f>* depths = NULL,
              std::vector<cv::Mat1b>* user_masks = NULL,
              std::vector<cv::Point>* masks_offsets = NULL,
              std::vector<unsigned int>* pp_indices = NULL,
              bool discarded_unnammed_poses = false) {
-  unsigned int nposes = ppl.poses.size();
+  unsigned int nposes = ppl.people.size();
   if (rgbs)
     rgbs->clear();
   if (depths)
@@ -366,7 +366,7 @@ bool convert(const people_msgs_rl::PeoplePoseList& ppl,
   cv::Mat1f depth;
   cv::Mat1b user_mask;
   for (unsigned int idx=0; idx< nposes; idx++) {
-    bool success = PP2Images::convert(&(ppl.poses[idx]),
+    bool success = convert(&(ppl.people[idx]),
                                       (rgbs ? &rgb : NULL),
                                       (depths ? &depth : NULL),
                                       (user_masks ? &user_mask : NULL),
@@ -379,9 +379,12 @@ bool convert(const people_msgs_rl::PeoplePoseList& ppl,
       depths->push_back(depth);
     if (user_masks)
       user_masks->push_back(user_mask);
-    if (masks_offsets)
-      masks_offsets->push_back(cv::Point(ppl.poses[idx].images_offsetx,
-                                         ppl.poses[idx].images_offsety));
+    if (masks_offsets) {
+      int x = 0, y = 0;
+      get_tag(ppl.people[idx], "images_offsetx", x);
+      get_tag(ppl.people[idx], "images_offsety", y);
+      masks_offsets->push_back(cv::Point(x, y));
+    }
     if (pp_indices)
       pp_indices->push_back(idx);
   } // end for idx
@@ -391,17 +394,17 @@ bool convert(const people_msgs_rl::PeoplePoseList& ppl,
 //////////////////////////////////////////////////////////////////////////////
 
 //! retrieve names from the PPL using the indices given back by convert()
-inline bool indices2names(const people_msgs_rl::PeoplePoseList& ppl,
+inline bool indices2names(const people_msgs::People& ppl,
                           const std::vector<unsigned int>& pp_indices,
                           std::vector<std::string>& names) {
   unsigned int npps = pp_indices.size();
   names.clear();
   names.reserve(npps);
   for (unsigned int i = 0; i < npps; ++i)
-    names.push_back(ppl.poses[pp_indices[i]].person_name);
+    names.push_back(ppl.people[pp_indices[i]].name);
   return true;
 } // end indices2names()
-} // end namespace PPL2Images
+} // end namespace vision_utils
 
-} // end namespace ppl_utils
+} // end namespace vision_utils
 #endif // IMAGES2PPL_H

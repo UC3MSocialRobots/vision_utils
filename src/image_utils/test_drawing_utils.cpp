@@ -26,7 +26,7 @@ ________________________________________________________________________________
 #include <opencv2/highgui/highgui.hpp>
 // AD
 #include <vision_utils/img_path.h>
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 // vision
 #include "vision_utils/drawing_utils.h"
 
@@ -38,7 +38,7 @@ inline void test_text_rotated() {
   cv::Mat1b buffer1, buffer2;
   for (unsigned int i = 0; i <= 10; ++i) {
     std::ostringstream text; text << "text" << i;
-    image_utils::draw_text_rotated(img, buffer1, buffer2, text.str(),
+    vision_utils::draw_text_rotated(img, buffer1, buffer2, text.str(),
                                    cv::Point(50 * i, 100), 0.2 * i,
                                    CV_FONT_HERSHEY_DUPLEX, 1, CV_RGB(255, 0, 0));
     cv::imshow("buffer1", buffer1);
@@ -54,11 +54,11 @@ inline void test_text_rotated2() {
   printf("test_text_rotated2()\n");
   cv::Mat3b img = cv::imread(IMG_DIR "balloon.png");
   cv::Mat1b buffer1, buffer2;
-  Timer timer;
+  vision_utils::Timer timer;
   unsigned int n_times = 1000;
   for (unsigned int i = 0; i <= n_times; ++i) {
     std::ostringstream text; text << "t" << i;
-    image_utils::draw_text_rotated(img, buffer1, buffer2, text.str(),
+    vision_utils::draw_text_rotated(img, buffer1, buffer2, text.str(),
                                    cv::Point(rand()%img.cols, rand()%img.rows), drand48() * 2 * M_PI,
                                    CV_FONT_HERSHEY_DUPLEX, 1, CV_RGB(255, 0, 0));
     //  cv::putText(img, text.str(), cv::Point(rand()%img.cols, rand()%img.rows),
@@ -75,9 +75,9 @@ inline void test_resize_constrain_proportions() {
   printf("test_resize_constrain_proportions()\n");
   cv::Mat3b img = cv::imread(IMG_DIR "balloon.png");
   cv::Mat3b img_resize_if_bigger, img_resize_if_bigger2, img_resize_constrain_proportions;
-  image_utils::resize_if_bigger(img, img_resize_if_bigger, 100, 200);
-  image_utils::resize_if_bigger(img, img_resize_if_bigger2, 200, 100);
-  image_utils::resize_constrain_proportions(img, img_resize_constrain_proportions, 100, 200);
+  vision_utils::resize_if_bigger(img, img_resize_if_bigger, 100, 200);
+  vision_utils::resize_if_bigger(img, img_resize_if_bigger2, 200, 100);
+  vision_utils::resize_constrain_proportions(img, img_resize_constrain_proportions, 100, 200);
 
   cv::imshow("img_resize_if_bigger", img_resize_if_bigger);
   cv::imshow("img_resize_if_bigger2", img_resize_if_bigger2);
@@ -93,7 +93,7 @@ inline void test_paste_image(const cv::Mat & bg, const cv::Mat & fg) {
   cv::Mat pasted;
   while (true) {
     bg.copyTo(pasted);
-    image_utils::paste_img(fg, pasted, fg_x, fg_y);
+    vision_utils::paste_img(fg, pasted, fg_x, fg_y);
     cv::imshow("test_paste_image", pasted);
     char c = cv::waitKey(25);
     if ((int) c == 27)
@@ -119,23 +119,23 @@ inline void test_paste_images(const std::vector<cv::Mat_<_T> > & imgs) {
   for (unsigned int horiz_idx = 0; horiz_idx < 2; ++horiz_idx) {
     bool horiz = (horiz_idx == 0);
     cv::Mat_<_T> out1;
-    image_utils::paste_images(imgs, out1, horiz, width1, height1, 5, false,
-                              &titlemaps::int_to_number, std::vector<cv::Mat1b>(), false);
+    vision_utils::paste_images(imgs, out1, horiz, width1, height1, 5, false,
+                              &vision_utils::int_to_number, std::vector<cv::Mat1b>(), false);
     cv::imshow("no headers, constrained width", out1);
 
     cv::Mat_<_T> out2;
-    image_utils::paste_images(imgs, out2, horiz, width1, height1, 5, true,
-                              &titlemaps::int_to_number, std::vector<cv::Mat1b>(), false);
+    vision_utils::paste_images(imgs, out2, horiz, width1, height1, 5, true,
+                              &vision_utils::int_to_number, std::vector<cv::Mat1b>(), false);
     cv::imshow("headers, constrained width", out2);
 
     cv::Mat_<_T> out3;
-    image_utils::paste_images(imgs, out3, horiz, width1, height1, 5, false,
-                              &titlemaps::int_to_number, std::vector<cv::Mat1b>(), true);
+    vision_utils::paste_images(imgs, out3, horiz, width1, height1, 5, false,
+                              &vision_utils::int_to_number, std::vector<cv::Mat1b>(), true);
     cv::imshow("no headers, no constrained width", out3);
 
     cv::Mat_<_T> out4;
-    image_utils::paste_images(imgs, out4, horiz, width1, height1, 5, true,
-                              &titlemaps::int_to_number, std::vector<cv::Mat1b>(), true);
+    vision_utils::paste_images(imgs, out4, horiz, width1, height1, 5, true,
+                              &vision_utils::int_to_number, std::vector<cv::Mat1b>(), true);
     cv::imshow("headers, no constrained width", out4);
 
     cv::waitKey(0);

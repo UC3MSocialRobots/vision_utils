@@ -39,15 +39,15 @@ that subscribes to a stream of RGB and depth data.
 
 \section Publications
   - \b "~ppl"
-        [people_msgs_rl::PeoplePoseList]
+        [people_msgs::People]
         The detected users, \see PPLPublisherTemplate.
  */
 #ifndef RGB_DEPTH_TEMPLATE2PPL_H
 #define RGB_DEPTH_TEMPLATE2PPL_H
 
 // utils
-#include "vision_utils/utils/timer.h"
-// people_msgs_rl
+#include "vision_utils/timer.h"
+// people_msgs
 #include "vision_utils/pplp_template.h"
 // ROS
 #include <image_transport/image_transport.h>
@@ -63,6 +63,8 @@ that subscribes to a stream of RGB and depth data.
 // opencv
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/highgui/highgui.hpp>
+
+namespace vision_utils {
 
 class RgbDepthPPLPublisherTemplate : public PPLPublisherTemplate {
 public:
@@ -134,7 +136,7 @@ private:
     _sync->registerCallback(boost::bind(&RgbDepthPPLPublisherTemplate::rgb_depth_cb, this, _1, _2));
 
     // check publishers
-    Timer timer;
+    ::vision_utils::Timer timer;
     unsigned int npubs_rgb = 0, npubs_depth = 0;
     while(timer.getTimeSeconds() < 1 && (!npubs_rgb || !npubs_depth)) {
       npubs_rgb = _rgb_sub->getNumPublishers();
@@ -144,10 +146,10 @@ private:
     if (npubs_rgb && npubs_depth)
       printf("RgbDepthPPLPublisherTemplate: found rgb and depth publishers :)\n");
     if (!npubs_rgb)
-      ROS_WARN("RgbDepthPPLPublisherTemplate: no rgb publisher at '%s'",
+      printf("RgbDepthPPLPublisherTemplate: no rgb publisher at '%s'\n",
                get_rgb_topic().c_str());
     if (!npubs_depth)
-      ROS_WARN("RgbDepthPPLPublisherTemplate: no depth publisher at '%s'",
+      printf("RgbDepthPPLPublisherTemplate: no depth publisher at '%s'\n",
                get_depth_topic().c_str());
   } // end create_subscribers_and_publishers();
 
@@ -155,7 +157,7 @@ private:
 
   void rgb_depth_cb(const Image::ConstPtr& rgb_msg,
                     const Image::ConstPtr& depth_msg) {
-    ROS_INFO_ONCE("RgbDepthPPLPublisherTemplate::rgb_depth_cb()");
+    //printf_ONCE("RgbDepthPPLPublisherTemplate::rgb_depth_cb()");
     // DEBUG_PRINT("rgb_depth_cb()\n");
     try {
       _depth_bridge = cv_bridge::toCvShare(depth_msg, sensor_msgs::image_encodings::TYPE_32FC1);
@@ -198,5 +200,7 @@ private:
 protected:
   bool _display;
 }; // end class RgdDepthPPLPublisherTemplate
+
+} // end namespace vision_utils
 
 #endif // RGB_DEPTH_TEMPLATE2PPL_H

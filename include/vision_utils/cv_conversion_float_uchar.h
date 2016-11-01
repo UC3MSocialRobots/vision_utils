@@ -13,57 +13,18 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 //#include "vision_utils/hue_utils.h"
-//#include "vision_utils/utils/timer.h"
+//#include "vision_utils/timer.h"
 #include "vision_utils/nan_handling.h"
+#include "vision_utils/system_utils.h"
+#include "vision_utils/file_exists.h"
 #include "vision_utils/min_max.h"
+#include <vision_utils/HSVtoRGB.h>
 
-namespace image_utils {
+namespace vision_utils {
 
 typedef double ScaleFactorType;
 
-////////////////////////////////////////////////////////////////////////////////
-
-/*! from http://www.cs.rit.edu/~ncs/color/t_convert.html#RGB%20to%20HSV%20&%20HSV%20to%20RGB
-  \param The hue value H runs from 0 to 360º.
-  \param The saturation S is the degree of strength or purity and is from 0 to 1.
-  Purity is how much white is added to the color, so S=1 makes the purest color (no white).
-  \param Brightness V also ranges from 0 to 1, where 0 is the black.
-*/
-template<class Float>
-inline void HSVtoRGB( const Float h, const Float s, const Float v,
-                      Float & r, Float & g, Float & b) {
-  if( s == 0 ) {
-    // achromatic (grey)
-    r = g = b = v;
-    return;
-  }
-  float h2 = h / 60;   // sector 0 to 5
-  int i = floor( h2 );
-  float f = h2 - i;   // factorial part of h
-  float p = v * ( 1 - s );
-  float q = v * ( 1 - s * f );
-  float t = v * ( 1 - s * ( 1 - f ) );
-  switch( i ) {
-  case 0:
-    r = v; g = t; b = p;
-    break;
-  case 1:
-    r = q; g = v; b = p;
-    break;
-  case 2:
-    r = p; g = v; b = t;
-    break;
-  case 3:
-    r = p; g = q; b = v;
-    break;
-  case 4:
-    r = t; g = p; b = v;
-    break;
-  default:  // case 5:
-    r = v; g = p; b = q;
-    break;
-  } // end switch i
-} // end HSVtoRGB
+//cut:hue2rgb
 
 /*!
  * \brief   color conversion function
@@ -77,6 +38,8 @@ inline cv::Vec3b hue2rgb(const unsigned char hue) {
   return cv::Vec3b(b * 255, g * 255, r * 255);
 }
 
+//cut:hue2rgb_make_lookup_table
+
 inline void hue2rgb_make_lookup_table(std::vector<cv::Vec3b> & lut,
                                       const unsigned int lut_size = 255) {
   lut.reserve(lut_size);
@@ -86,6 +49,8 @@ inline void hue2rgb_make_lookup_table(std::vector<cv::Vec3b> & lut,
     lut.push_back(hue2rgb(hue));
   }
 } // end hue2rgb_make_lookup_table()
+
+//cut:compute_alpha_beta
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -108,6 +73,8 @@ inline void compute_alpha_beta(const double & minVal, const double & maxVal,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
+//cut:convert_float_to_uchar
 
 /*!
  \param distance
@@ -168,7 +135,7 @@ inline void convert_float_to_uchar(const cv::Mat & src_float, cv::Mat & dst_ucha
                                    ScaleFactorType & alpha_trans,
                                    ScaleFactorType & beta_trans,
                                    std::vector<unsigned int>* src_nan_indices = NULL) {
-  // Timer timer;
+  // ::vision_utils::Timer timer;
   dst_uchar.create(src_float.size(), CV_8UC(src_float.channels()));
   // timer.printTime("create");
 
@@ -224,7 +191,7 @@ inline void convert_float_to_uchar(const cv::Mat & src_float, cv::Mat & dst_ucha
   src_float_clean_ptr = &src_float; // no cleaning
 #endif
 
-  // printf("minVal:%g, maxVal:%g\n", minVal, maxVal);
+  //printf("minVal:%g, maxVal:%g\n", minVal, maxVal);
   // timer.printTime("min_max_loc");
   compute_alpha_beta(minVal, maxVal, alpha_trans, beta_trans);
   // timer.printTime("compute_alpha_beta");
@@ -296,6 +263,7 @@ inline void convert_float_to_uchar(const cv::Mat & src_float, cv::Mat & dst_ucha
 } // end convert_float_to_uchar();
 
 //////////////////////////////////////////////////////////////////////////////
+//cut:convert_uchar_to_float
 
 
 /*!
@@ -324,7 +292,7 @@ inline void convert_uchar_to_float(const cv::Mat & src_uchar, cv::Mat & dst_floa
   unsigned int src_nan_indices_pos = 0, curr_pos_total = 0;
   const unsigned int* src_nan_current_indice =
       (src_nan_indices_given ? &(*src_nan_indices)[0] : NULL);
-  //ROS_INFO("src_nan_indices_given:%i", src_nan_indices_given);
+  //printf("src_nan_indices_given:%i", src_nan_indices_given);
 
   // make a lookup table for faster conversion
   float lookup_table[256];
@@ -386,7 +354,7 @@ enum DepthViewerColorMode {
 static const unsigned int DEPTH_VIEWER_COLOR_NMODES = 6;
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:depth_image_to_vizualisation_color_image
 
 /*!
  Convert a float image to a color image for viewing
@@ -422,7 +390,7 @@ inline void depth_image_to_vizualisation_color_image
       const float* float_img_ptr = float_in.ptr<float>(row);
       cv::Vec3b* out_ptr = uchar_rgb_out.ptr<cv::Vec3b>(row);
       for (unsigned int col = 0; col < ncols; ++col) {
-        //if (float_img_ptr[col] == image_utils::NAN_DEPTH)
+        //if (float_img_ptr[col] == NAN_DEPTH)
         if (is_nan_depth(float_img_ptr[col]))
           (out_ptr[col])[0] = (out_ptr[col])[1] = (out_ptr[col])[2] = 0;
         else
@@ -442,7 +410,7 @@ inline void depth_image_to_vizualisation_color_image
       cv::Vec3b* out_ptr = uchar_rgb_out.ptr<cv::Vec3b>(row);
       for (unsigned int col = 0; col < ncols; ++col) {
         (out_ptr[col])[0] = (out_ptr[col])[1] = 0; // B, G
-        //if (float_img_ptr[col] == image_utils::NAN_DEPTH)
+        //if (float_img_ptr[col] == NAN_DEPTH)
         if (is_nan_depth(float_img_ptr[col]))
           (out_ptr[col])[2] = 0; // R
         else
@@ -462,7 +430,7 @@ inline void depth_image_to_vizualisation_color_image
       const float* float_img_ptr = float_in.ptr<float>(row);
       cv::Vec3b* out_ptr = uchar_rgb_out.ptr<cv::Vec3b>(row);
       for (unsigned int col = 0; col < ncols; ++col) {
-        //if (float_img_ptr[col] == image_utils::NAN_DEPTH)
+        //if (float_img_ptr[col] == NAN_DEPTH)
         if (is_nan_depth(float_img_ptr[col]))
           (out_ptr[col])[0] = (out_ptr[col])[1] = (out_ptr[col])[2] = 0;
         else
@@ -489,7 +457,7 @@ inline void depth_image_to_vizualisation_color_image
       const float* float_img_ptr = float_in.ptr<float>(row);
       cv::Vec3b* out_ptr = uchar_rgb_out.ptr<cv::Vec3b>(row);
       for (unsigned int col = 0; col < ncols; ++col) {
-        //if (float_img_ptr[col] != image_utils::NAN_DEPTH) {
+        //if (float_img_ptr[col] != NAN_DEPTH) {
         (out_ptr[col])[0] = (out_ptr[col])[1] = (out_ptr[col])[2] =
             dist_to_image_val(float_img_ptr[col], alpha_trans, beta_trans);
         //} // end if not NAN_UCHAR
@@ -505,7 +473,7 @@ inline void depth_image_to_vizualisation_color_image
       cv::Vec3b* out_ptr = uchar_rgb_out.ptr<cv::Vec3b>(row);
       for (unsigned int col = 0; col < ncols; ++col) {
         // change red channel
-        //if (float_img_ptr[col] != image_utils::NAN_DEPTH) {
+        //if (float_img_ptr[col] != NAN_DEPTH) {
         (out_ptr[col])[2] = dist_to_image_val
                             (float_img_ptr[col], alpha_trans, beta_trans);
         //} // end if not NAN_UCHAR
@@ -538,7 +506,7 @@ inline cv::Mat3b depth_image_to_vizualisation_color_image
  const DepthViewerColorMode mode = FULL_RGB_STRETCHED,
  double scale = 1) {
   cv::Mat3b float_out_color;
-  image_utils::depth_image_to_vizualisation_color_image
+  depth_image_to_vizualisation_color_image
       (float_in, float_out_color, mode);
   if (scale == 1)
     return float_out_color;
@@ -554,6 +522,7 @@ inline cv::Mat3b depth2viz
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+//cut:write_rgb_and_depth_image_to_image_file
 
 enum FileFormat {
   FILE_PNG = 0,
@@ -696,18 +665,7 @@ inline bool write_rgb_and_depth_image_to_image_file
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
-/*!
- \param filename
-    a relative or absolute filename
- \return true if the file with given filename exists
-*/
-inline bool file_exists(const std::string & filename) {
-  std::ifstream my_file(filename.c_str());
-  return (my_file.good());
-}
-
-////////////////////////////////////////////////////////////////////////////////
+//cut:read_rgb_and_depth_image_from_image_file
 
 /*!
   read depth and rgb files from PNG images.
@@ -779,7 +737,7 @@ inline bool read_rgb_and_depth_image_as_uchar_from_image_file
       }
       *rgb_img = cv::imread(rgb_jpg_img_filename.str());
     }
-    // printf("Read rgb file '%s'.\n", rgb_img_filename.str().c_str());
+    //printf("Read rgb file '%s'.\n", rgb_img_filename.str().c_str());
     if (rgb_img->empty()) {
       printf("rgb_img '%s' is corrupted!\n", rgb_img_filename.str().c_str());
       return false;
@@ -818,8 +776,10 @@ inline bool read_rgb_and_depth_image_from_image_file
       (filename_prefix, rgb_img, NULL, NULL, NULL, format);
 }
 
+//cut
+
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-} // end namespace image_utils
+} // end namespace vision_utils
 
 #endif // CV_CONVERSION_FLOAT_UCHAR_H

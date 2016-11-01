@@ -38,6 +38,9 @@ ________________________________________________________________________________
 // http://docs.pointclouds.org/trunk/classpcl_1_1_range_image.html
 // http://pointclouds.org/documentation/tutorials/range_image_creation.php
 
+namespace vision_utils {
+
+
 class GroundPlaneFinder {
 public:
   typedef cv::Point3f Pt3f;
@@ -173,7 +176,7 @@ public:
       const float* depth_ptr = depth.ptr<float>(row);
       uchar* img_ptr = img.ptr(row);
       for (int col = 0; col < cols; ++col) {
-        //if (std_utils::is_nan_depth(depth_ptr[col]))
+        //if (is_nan_depth(depth_ptr[col]))
         if (depth_ptr[col] == 0)
           continue;
         if (use_min_dist && depth_ptr[col] < min_dist)
@@ -183,7 +186,7 @@ public:
         // TODO
         Pt3f curr_cv = pixel2world(col, row, depth_ptr[col]);
         pcl::PointXYZ curr(curr_cv.x, curr_cv.y, curr_cv.z);
-        // = kinect_openni_utils::pixel2world_depth<pcl::PointXYZ>
+        // = pixel2world_depth<pcl::PointXYZ>
         //        (cv::Point2d(col + offset.x, row + offset.y), model, depth_ptr[col]);
         double dist = fabs(a * curr.x + b * curr.y + c * curr.z + d);
         if ((mark_if_ground && dist < distance_threshold_m) // belongs to ground
@@ -209,5 +212,7 @@ private:
   pcl::ModelCoefficients coefficients;
   pcl::PointIndices inliers;
 }; // en class GroundPlaneFinder
+
+} // end namespace vision_utils
 
 #endif // GROUND_PLANE_FINDER_H

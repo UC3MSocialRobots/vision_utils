@@ -28,22 +28,22 @@ Some useful functions for testing PPLPublisherTemplate-based classes.
 
 // Bring in gtest
 #include <gtest/gtest.h>
-// people_msgs_rl
+// people_msgs
 #include "vision_utils/pplp_template.h"
 #include "vision_utils/images2ppl.h"
 #include "vision_utils/kinect_openni_utils.h"
 #include "vision_utils/io.h"
 #include "vision_utils/content_processing.h"
 #include "vision_utils/drawing_utils.h"
-#include "vision_utils/utils/pt_utils.h"
+#include "vision_utils/pt_utils.h"
 // utils
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 // long_term_memory
 #include <vision_utils/img_path.h>
 
-#define ASSERT_TRUE_TIMEOUT(cond, timeout) { Timer timer; while (timer.getTimeSeconds() < timeout && !(cond)) usleep(50 * 1000); } ASSERT_TRUE(cond)
+#define ASSERT_TRUE_TIMEOUT(cond, timeout) { ::vision_utils::Timer timer; while (timer.getTimeSeconds() < timeout && !(cond)) usleep(50 * 1000); } ASSERT_TRUE(cond)
 
-namespace pplp_testing {
+namespace vision_utils {
 
 void check_nb_pub(PPLPublisherTemplate & skill, unsigned int exp_nb_pub) {
   ASSERT_TRUE(skill.get_ppl_published_nb() == exp_nb_pub)
@@ -80,7 +80,7 @@ void start_stop(PPLPublisherTemplate & skill,
     // read images
     cv::Mat rgb, depth; cv::Mat1b user;
     std::string filename_prefix = IMG_DIR "depth/alberto1";
-    ASSERT_TRUE(image_utils::read_rgb_depth_user_image_from_image_file
+    ASSERT_TRUE(read_rgb_depth_user_image_from_image_file
         (filename_prefix, &rgb, &depth, (publish_user? &user : NULL)));
     if (iter == 2){  // change the size to check we really get the new image
       cv::resize(rgb, rgb, cv::Size(), .5, .5);
@@ -135,7 +135,7 @@ void speed_test(PPLPublisherTemplate & skill,
   // read images
   cv::Mat rgb, depth; cv::Mat1b user;
   std::string filename_prefix = IMG_DIR "depth/juggling1";
-  image_utils::read_rgb_depth_user_image_from_image_file
+  read_rgb_depth_user_image_from_image_file
       (filename_prefix, &rgb, &depth, (publish_user? &user : NULL));
   std_msgs::Header header;
   header.frame_id = "";
@@ -147,7 +147,7 @@ void speed_test(PPLPublisherTemplate & skill,
 
   ros::Rate rate(emit_rate);
   unsigned int images_published = 0;
-  Timer timer;
+  ::vision_utils::Timer timer;
   while(timer.getTimeSeconds() < 1) {
     // publish images
     user_msg.header.stamp = depth_msg.header.stamp = rgb_msg.header.stamp = ros::Time::now();
@@ -199,14 +199,14 @@ void ppl_vs_user_benchmark(MyPPLPublisherTemplate & skill,
   cv::Mat rgb, depth;
   cv::Mat1b exp_masks;
   unsigned int nfiles = filename_prefixes.size(), nb_success = 0;
-  Timer timer;
+  ::vision_utils::Timer timer;
 
   for (unsigned int file_idx = 0; file_idx < nfiles; ++file_idx) {
     const std::string filename_prefix = filename_prefixes[file_idx];
     printf("\nppl_vs_user_benchmark('%s')\n", filename_prefix.c_str());
 
     // read images
-    ASSERT_TRUE(image_utils::read_rgb_depth_user_image_from_image_file
+    ASSERT_TRUE(read_rgb_depth_user_image_from_image_file
                 (filename_prefix, &rgb, &depth, &exp_masks));
 
     // prepair messages and publish images
@@ -228,14 +228,14 @@ void ppl_vs_user_benchmark(MyPPLPublisherTemplate & skill,
 
     // check the new PPL has the same header
     ASSERT_TRUE_TIMEOUT(skill.get_ppl_published_nb() == n_ppl_before+1, max_time_alloted);
-    const people_msgs_rl::PeoplePoseList* ppl = &(skill.get_last_PPL());
+    const people_msgs::People* ppl = &(skill.get_last_PPL());
     ASSERT_TRUE(header.stamp == ppl->header.stamp && header.frame_id == ppl->header.frame_id)
         << "header:" << header << ", ppl->header:" << ppl->header;
 
     // get the real users from the user mask image
     std::map<uchar, cv::Point> coms;
-    image_utils::get_all_non_null_values_and_com_fast(exp_masks, coms, true, true);
-    unsigned int exp_nusers = coms.size(), comp_nusers = ppl->poses.size();
+    get_all_non_null_values_and_com_fast(exp_masks, coms, true, true);
+    unsigned int exp_nusers = coms.size(), comp_nusers = ppl->people.size();
     bool is_success = (comp_nusers >= exp_nusers);
     ASSERT_TRUE(resume_on_fail || comp_nusers >= exp_nusers)
         <<  "exp_nusers:" << exp_nusers << ", comp_nusers:" << comp_nusers;
@@ -254,21 +254,21 @@ void ppl_vs_user_benchmark(MyPPLPublisherTemplate & skill,
 
     // compare expected user masks to computed user masks
     std::vector<cv::Mat1b> comp_masks;
-    ppl_utils::PPL2Images::convert(*ppl, NULL, NULL, &comp_masks, NULL, NULL, false);
-    //ppl_utils::ppl2user_masks(*ppl, exp_masks.size(), comp_masks);
+    vision_utils::convert(*ppl, NULL, NULL, &comp_masks, NULL, NULL, false);
+    //ppl2user_masks(*ppl, exp_masks.size(), comp_masks);
     ASSERT_TRUE(comp_masks.size() == comp_nusers);
     cv::Mat1b comp_masks_collage;
-    image_utils::paste_images(comp_masks, comp_masks_collage, true, 100, 100);
+    paste_images(comp_masks, comp_masks_collage, true, 100, 100);
 
     image_geometry::PinholeCameraModel depth_camera_model, rgb_camera_model;
-    kinect_openni_utils::read_camera_model_files(DEFAULT_KINECT_SERIAL(), depth_camera_model, rgb_camera_model);
+    read_camera_model_files(DEFAULT_KINECT_SERIAL(), depth_camera_model, rgb_camera_model);
     std::map<uchar, cv::Point>::const_iterator exp_user_it = coms.begin();
     while (exp_user_it != coms.end()) {
       // compute current user mask, center2D and 3D
       uchar exp_user = exp_user_it->first;
       cv::Mat3b exp_mask = (exp_masks == exp_user);
       cv::Point2d exp_center2d = exp_user_it->second;
-      cv::Point3f exp_center3d = kinect_openni_utils::pixel2world_depth<cv::Point3f>
+      cv::Point3f exp_center3d = pixel2world_depth<cv::Point3f>
                                  (exp_center2d, depth_camera_model, depth);
       ++exp_user_it;
 
@@ -287,15 +287,15 @@ void ppl_vs_user_benchmark(MyPPLPublisherTemplate & skill,
       // check geometric distance between centers (only using xz, dismissing height y)
       ASSERT_TRUE(match_user_idx < comp_nusers);
       cv::Point3f comp_center3d;
-      pt_utils::copy3(ppl->poses[match_user_idx].head_pose.position, comp_center3d);
+      copy3(ppl->people[match_user_idx].position, comp_center3d);
       double dist_centers = hypot(exp_center3d.x - comp_center3d.x,
                                   exp_center3d.z - comp_center3d.z);
       printf("match exp %i-> comp %i (of %i): "
              "min_diff_ratio:%g%%, exp_center3d:%s, comp_center3d:%s, dist_centers:%g m\n",
              (int) exp_user, match_user_idx, comp_nusers,
              100. * min_diff_ratio,
-             geometry_utils::printP(exp_center3d).c_str(),
-             geometry_utils::printP(comp_center3d).c_str(), dist_centers);
+             printP(exp_center3d).c_str(),
+             printP(comp_center3d).c_str(), dist_centers);
 
       // check distances
       bool distance_success = (dist_centers <= center_thres_m);
@@ -357,6 +357,6 @@ void ppl_vs_user_benchmark(MyPPLPublisherTemplate & skill,
                                center_thres_m, mask_diff_thres, max_time_alloted);
 }
 
-} // end namespace pplp_testing
+} // end namespace vision_utils
 
 #endif // PPLP_TESTING_H

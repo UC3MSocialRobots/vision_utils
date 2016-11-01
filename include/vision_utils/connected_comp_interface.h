@@ -3,7 +3,7 @@
 
 #include "vision_utils/disjoint_sets2.h"
 
-namespace image_utils {
+namespace vision_utils {
 
 /*!
  *\brief   computes the biggest conencted component
@@ -46,24 +46,6 @@ inline cv::Point centroidOfMonochromeImage2(cv::Mat1b & img) {
   return set.centroidOfMonochromeImage(img.cols);
 }
 
-////////////////////////////////////////////////////////////////////////////
-
-/*!
- *\brief   returns all the list of points making all the connected components
- *of the image
-     *
- *\param   img the monochrome image
- *\param   components_pts the vector of vector of points which will
- *contain the results
- *\param   boundingBoxes the bounding boxes of the points
- */
-inline void connectedComponents2(cv::Mat1b & img,
-                                 std::vector< std::vector<cv::Point> > & components_pts,
-                                 std::vector<cv::Rect> & boundingBoxes) {
-  DisjointSets2 set(img);
-  return set.get_connected_components(img.cols, components_pts, boundingBoxes);
-}
-
-} // end namespace image_utils
+} // end namespace vision_utils
 
 #endif // CONNECTED_COMP_INTERFACE_H

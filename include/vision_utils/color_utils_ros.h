@@ -29,8 +29,8 @@ ________________________________________________________________________________
 #include <std_msgs/ColorRGBA.h>
 #include <opencv2/core/core.hpp>
 
-namespace color_utils {
-
+namespace vision_utils {
+//cut:uchar_bgr_color_to_ros_rgba_color
 /*!
  * Converts a 3 fields structure into a ROS std_msgs::ColorRGBA color.
  * \param b, g, r
@@ -50,7 +50,7 @@ std_msgs::ColorRGBA uchar_bgr_color_to_ros_rgba_color
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:uchar_bgr_image_to_ros_rgba_color_vector
 void uchar_bgr_image_to_ros_rgba_color_vector
 (const cv::Mat3b & bgr_image,
  std::vector<std_msgs::ColorRGBA> & out,
@@ -95,6 +95,6 @@ void uchar_bgr_image_to_ros_rgba_color_vector
   } // end loop row
 } // end uchar_bgr_image_to_ros_rgba_color_vector();
 
-} // end namespace color_utils
+} // end namespace vision_utils
 
 #endif // COLOR_UTILS_ROS_H

@@ -13,6 +13,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include "vision_utils/nan_handling.h"
 
+namespace vision_utils {
 
 /*!
  Generates dst(i, j) = i + j + const_value
@@ -83,7 +84,7 @@ inline void generate_full_rand(cv::Mat & dst,
   cv::randu(dst, cv::Scalar::all(min_value), cv::Scalar::all(max_value));
   if (!put_nans)
     return;
-  _T nan_v = _T(image_utils::NAN_DEPTH);
+  _T nan_v = _T(vision_utils::NAN_DEPTH);
   unsigned int nb_nans = width * height * rate_nans;
   for (unsigned int nan_idx = 0; nan_idx < nb_nans; ++nan_idx) {
     int row = rand() % dst.rows, col = rand() % dst.cols;
@@ -91,5 +92,7 @@ inline void generate_full_rand(cv::Mat & dst,
   }
 #endif
 }
+
+} // end namespace vision_utils
 
 #endif // FLOAT_IMAGE_GENERATOR_H

@@ -24,6 +24,6 @@ ________________________________________________________________________________
  */
 #include "vision_utils/rlpd2imgs.h"
 int main(int argc, char **argv) {
-  RLPD2Imgs player;
-  return RLPD2Imgs::static_player(player, argc, argv);
+  vision_utils::RLPD2Imgs player;
+  return vision_utils::RLPD2Imgs::static_player(player, argc, argv);
 }

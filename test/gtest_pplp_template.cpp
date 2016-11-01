@@ -24,9 +24,9 @@ Tests for PPLPublisherTemplate
 
  */
 #include "vision_utils/pplp_testing.h"
-#include <vision_utils/utils/rosmaster_alive.h>
+#include <vision_utils/rosmaster_alive.h>
 
-class Foo2PPL : public PPLPublisherTemplate {
+class Foo2PPL : public vision_utils::PPLPublisherTemplate {
 public:
   Foo2PPL() : PPLPublisherTemplate("FOO_START", "FOO_STOP") {
   }
@@ -40,9 +40,9 @@ public:
 
   inline void rgb_cb(const sensor_msgs::ImageConstPtr &) {
     printf("rgb_cb()\n");
-    people_msgs_rl::PeoplePoseList ppl;
+    people_msgs::People ppl;
     ppl.header.stamp = ros::Time::now();
-    ppl.poses.clear();
+    ppl.people.clear();
     publish_PPL(ppl);
   }
 
@@ -53,7 +53,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, create) {
-  if (!rosmaster_alive()) return;
+  if (!vision_utils::rosmaster_alive()) return;
   Foo2PPL skill;
   ASSERT_FALSE(skill.is_running());
   ASSERT_TRUE(skill.get_ppl_published_nb() == 0);
@@ -62,17 +62,17 @@ TEST(TestSuite, create) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, start_stop) {
-  if (!rosmaster_alive()) return;
+  if (!vision_utils::rosmaster_alive()) return;
   Foo2PPL skill;
-  pplp_testing::start_stop(skill);
+  vision_utils::start_stop(skill);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, speed_test) {
-  if (!rosmaster_alive()) return;
+  if (!vision_utils::rosmaster_alive()) return;
   Foo2PPL skill;
-  pplp_testing::speed_test(skill, false, 10, .8);
+  vision_utils::speed_test(skill, false, 10, .8);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

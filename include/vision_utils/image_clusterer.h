@@ -3,7 +3,7 @@
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
   \date        2013/4/25
-  
+
 ________________________________________________________________________________
 
 This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
 
 \class ImageClusterer
-An extension of \b geometry_utils::Clusterer
+An extension of \b Clusterer
 designed for clustering reprojected images.
  */
 
@@ -31,8 +31,9 @@ designed for clustering reprojected images.
 #include "vision_utils/clusterer.h"
 #include "vision_utils/kinect_openni_utils.h"
 
+namespace vision_utils {
 
-class ImageClusterer : public geometry_utils::Clusterer {
+class ImageClusterer : public Clusterer {
 public:
   ImageClusterer() {}
 
@@ -68,7 +69,7 @@ public:
     cluster_indices_pcl.clear();
 
     // first get the reprojected points
-    bool success = kinect_openni_utils::pixel2world_rgb_color255
+    bool success = pixel2world_rgb_color255
                    (bgr_img, depth_img, depth_cam_model,
                     depth_reprojected, colors,
                     data_step, mask_depth, true);
@@ -76,7 +77,7 @@ public:
       return false;
 
     // now call the cluster() function with the point cloud
-    success = geometry_utils::Clusterer::cluster(depth_reprojected, cluster_tolerance);
+    success = Clusterer::cluster(depth_reprojected, cluster_tolerance);
     return success;
   }
 
@@ -90,11 +91,11 @@ public:
     cluster_pixels.clear();
     cluster_colors.clear();
     if (cluster_indices_pcl.size() == 0) {
-      ROS_WARN("No cluster found by PCL EuclideanClusterExtraction");
+      printf("No cluster found by PCL EuclideanClusterExtraction");
       return false;
     }
     if (data_pcl->size() != depth_reprojected.size()) {
-      ROS_WARN("%i PCL points != %i reprojected points, "
+      printf("%li PCL points != %li reprojected points, "
                "you must have called cluster() with a point cloud and not an image",
                data_pcl->size(), depth_reprojected.size());
       return false;
@@ -107,7 +108,7 @@ public:
     cluster_colors.reserve(biggest_indices_pcl->size());
     for (unsigned int pt_idx = 0; pt_idx < biggest_indices_pcl->size(); ++pt_idx) {
       unsigned int data_index = (*biggest_indices_pcl)[pt_idx];
-      cluster_pixels.push_back(kinect_openni_utils::world2pixel
+      cluster_pixels.push_back(world2pixel
                     <cv::Point2i>(depth_reprojected[data_index], depth_cam_model));
       cluster_colors.push_back(colors[data_index]);
     } // end loop pt_idx
@@ -118,5 +119,7 @@ protected:
   std::vector<cv::Point3d> depth_reprojected;
   std::vector<cv::Scalar> colors;
 }; // end class ImageClusterer
+
+} // end namespace vision_utils
 
 #endif // IMAGE_CLUSTERER_H

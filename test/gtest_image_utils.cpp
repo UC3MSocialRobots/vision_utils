@@ -13,7 +13,7 @@
 #include <iostream>
 // AD
 #include <vision_utils/img_path.h>
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 #include "vision_utils/cv_conversion_float_uchar.h"
 
 // vision_utils
@@ -35,13 +35,13 @@ TEST(TestSuite, bbox) {
   cv::Mat1b test = cv::imread(IMG_DIR "star.png",
                               CV_LOAD_IMAGE_GRAYSCALE);
 
-  Timer timer;
-  cv::Rect bbox = image_utils::boundingBox(test);
+  vision_utils::Timer timer;
+  cv::Rect bbox = vision_utils::boundingBox(test);
   timer.printTime("boundingBox()\n");
-  printf("bbox:'%s'", image_utils::rectangle_to_string(bbox).c_str());
+  printf("bbox:'%s'", vision_utils::rectangle_to_string(bbox).c_str());
 
   std::vector<cv::Point> pts;
-  image_utils::nonNulPoints(test, pts);
+  vision_utils::nonNulPoints(test, pts);
   timer.printTime("nonNulPoints()\n");
   printf("size of pts:%i", (int) pts.size());
 }
@@ -52,13 +52,13 @@ TEST(TestSuite, region_growth) {
   std::vector<cv::Point2i> ans;
 
   cv::Mat1b image = cv::imread(IMG_DIR "region_growth.png", 0);
-  image_utils::region_growth_no_seen_points(
+  vision_utils::region_growth_no_seen_points(
         image, cv::Point2i(47, 70), 50, 150, ans);
 
   // cv::Mat1b image = cv::imread(IMG_DIR "rectangles.png", 0);
-  // image_utils::region_growth(image, cv::Point2i(1, 8), 0, 0, ans);
+  // vision_utils::region_growth(image, cv::Point2i(1, 8), 0, 0, ans);
 
-  image_utils::drawListOfPoints(image, ans, (uchar) 127);
+  vision_utils::drawListOfPoints(image, ans, (uchar) 127);
   printf("nb of points:%i", (int) ans.size());
   cv::imwrite("region_growth.png", image);
 }
@@ -70,17 +70,17 @@ inline void test_string(const std::string & img_filename, int nb_times) {
      * to string
      */
   cv::Mat image = cv::imread(img_filename);
-  Timer timer;
+  vision_utils::Timer timer;
   std::string ans;
   for (int var = 0; var < nb_times; ++var)
-    image_utils::to_string(image, ans);
+    vision_utils::to_string(image, ans);
   printf("time after to_string():%f ms", ((float) timer.time()) / nb_times);
-  printf("image:'%s'", image_utils::infosImage(image).c_str());
-  printf("image_utils::to_string(image):size:%i, '%s...'",
+  printf("image:'%s'", vision_utils::infosImage(image).c_str());
+  printf("vision_utils::to_string(image):size:%i, '%s...'",
          (int) ans.size(), ans.substr(0, 300).c_str());
   /* display */
   // for (size_t var = 0; var < ans.size(); ++var)
-  // maggieDebug2("to_string:var %i=%i", var, ans.at(var));
+  // ROS_INFO("to_string:var %i=%i", var, ans.at(var));
 
   /*
      * from string
@@ -89,15 +89,15 @@ inline void test_string(const std::string & img_filename, int nb_times) {
   timer.reset();
   for (int var = 0; var < nb_times; ++var) {
     image_cp.release();
-    image_utils::from_string(image_cp, ans);
+    vision_utils::from_string(image_cp, ans);
   }
   printf("time after from_string():%f ms", ((float) timer.time()) / nb_times);
-  printf("image_cp:'%s'", image_utils::infosImage(image_cp).c_str());
+  printf("image_cp:'%s'", vision_utils::infosImage(image_cp).c_str());
   /* display */
   // uchar* mat_data_ptr = image_cp.data;
   // for (size_t var = 0; var < image_cp.cols * image_cp.rows
   // * image_cp.elemSize(); ++var)
-  // maggieDebug2("from_string:var %i=%i", var, *mat_data_ptr++);
+  // ROS_INFO("from_string:var %i=%i", var, *mat_data_ptr++);
 #ifdef DISPLAY
   cv::imshow("image_cp", image_cp);
   cv::waitKey(5000);
@@ -134,12 +134,12 @@ TEST(TestSuite, redim_content) {
   /* std::vector version */
   std::vector<cv::Point> comp, comp_resized;
 
-  Timer timer;
-  image_utils::biggestComponent_vector2(test_roi, comp);
+  vision_utils::Timer timer;
+  vision_utils::biggestComponent_vector2(test_roi, comp);
   timer.printTime("biggestComponent_vector2()\n");
 
   timer.reset();
-  image_utils::redimContent_vector_without_repetition
+  vision_utils::redimContent_vector_without_repetition
       (comp, comp_resized, cv::Rect(150, 150, 50, 50));
   timer.printTime("redimContent_vector_without_repetition()\n");
   // for (int i = 0; i < comp.size(); ++i)
@@ -149,8 +149,8 @@ TEST(TestSuite, redim_content) {
 
   cv::Mat3b out (300, 300);
   out.setTo(0);
-  image_utils::drawListOfPoints(out, comp_resized, cv::Vec3b(255, 0 ,0));
-  image_utils::drawListOfPoints(out, comp, cv::Vec3b(0, 255 , 0));
+  vision_utils::drawListOfPoints(out, comp_resized, cv::Vec3b(255, 0 ,0));
+  vision_utils::drawListOfPoints(out, comp, cv::Vec3b(0, 255 , 0));
 #ifdef DISPLAY
   cv::imshow("out", out);
   cv::waitKey(0);
@@ -168,9 +168,9 @@ TEST(TestSuite, redim_content2) {
 
   // get the circle
   std::vector<cv::Point> comp;
-  image_utils::biggestComponent_vector2(test, comp);
+  vision_utils::biggestComponent_vector2(test, comp);
 
-  Timer timer;
+  vision_utils::Timer timer;
   std::vector<cv::Point> comp_resized;
   int occur_max = 8;
   for (int occur = 1; occur <= occur_max; ++occur) {
@@ -178,10 +178,10 @@ TEST(TestSuite, redim_content2) {
     int new_height = new_width / 2;
     int x = test.cols * occur / occur_max - new_width / 2;
     timer.reset();
-    image_utils::redimContent_vector_without_repetition
+    vision_utils::redimContent_vector_without_repetition
         (comp, comp_resized, cv::Rect(x, 50, new_width, new_height));
     timer.printTime("redimContent_vector_without_repetition");
-    image_utils::drawListOfPoints(test, comp_resized,
+    vision_utils::drawListOfPoints(test, comp_resized,
                                   (uchar) (255 * occur / occur_max));
   }
 #ifdef DISPLAY
@@ -195,7 +195,7 @@ TEST(TestSuite, redim_content2) {
 
 inline void test_redim_content3(cv::Mat1b & img_out) {
   std::vector<cv::Point> comp;
-  image_utils::biggestComponent_vector2(img_out, comp);
+  vision_utils::biggestComponent_vector2(img_out, comp);
 
   // resize
   std::vector<cv::Point> comp_resized;
@@ -207,12 +207,12 @@ inline void test_redim_content3(cv::Mat1b & img_out) {
       bbox = cv::Rect(0, 0, 101,  51);
     else if (var == 2)
       bbox = cv::Rect(350, 50, 26, 101);
-    Timer timer;
-    image_utils::redimContent_vector_without_repetition
+    vision_utils::Timer timer;
+    vision_utils::redimContent_vector_without_repetition
         (comp, comp_resized, bbox, (var >= 1));
     timer.printTime("redimContent_vector_without_repetition()\n");
     cv::rectangle(img_out, bbox, CV_RGB(100, 100, 100), 5);
-    image_utils::drawListOfPoints(img_out, comp_resized, (uchar) 255);
+    vision_utils::drawListOfPoints(img_out, comp_resized, (uchar) 255);
 #ifdef DISPLAY
     cv::imshow("img_out", img_out);
 #endif // DISPLAY
@@ -223,7 +223,7 @@ inline void test_redim_content3(cv::Mat1b & img_out) {
 
   for(std::vector<cv::Point>::const_iterator pt = comp_resized.begin();
       pt != comp_resized.end() ; ++pt) {
-    //printf("pt:'%s'", geometry_utils::printP2(*pt).c_str() );
+    //printf("pt:'%s'", vision_utils::printP2(*pt).c_str() );
   } // end loop pt
 }
 
@@ -246,13 +246,13 @@ TEST(TestSuite, redim_content3) {
 
 void test_remove_value(const std::string image_filename) {
   cv::Mat rgb, depth;
-  image_utils::read_rgb_depth_user_image_from_image_file
+  vision_utils::read_rgb_depth_user_image_from_image_file
       (image_filename, &rgb, &depth, NULL);
   cv::Mat1b uchar_greyscale_buffer;
   cv::Mat src_float_clean_buffer;
   cv::Mat3b depth_illus;
-  image_utils::depth_image_to_vizualisation_color_image
-      (depth, depth_illus, image_utils::FULL_RGB_STRETCHED);
+  vision_utils::depth_image_to_vizualisation_color_image
+      (depth, depth_illus, vision_utils::FULL_RGB_STRETCHED);
 #ifdef DISPLAY
   cv::imshow("rgb", rgb);
   cv::imshow("depth_illus", depth_illus);
@@ -263,27 +263,27 @@ void test_remove_value(const std::string image_filename) {
   cv::Mat1b img_uchar_with_no_nan_arr[4];
   cv::Mat1b inpaint_mask;
   double alpha_trans, beta_trans;
-  image_utils::convert_float_to_uchar
+  vision_utils::convert_float_to_uchar
       (depth, uchar_greyscale_buffer, src_float_clean_buffer, alpha_trans, beta_trans);
-  Timer timer;
-  image_utils::remove_value
+  vision_utils::Timer timer;
+  vision_utils::remove_value
       (uchar_greyscale_buffer, img_uchar_with_no_nan_arr[0], (uchar) 0,
-      inpaint_mask, image_utils::VALUE_REMOVAL_METHOD_DO_NOTHING);
+      inpaint_mask, vision_utils::VALUE_REMOVAL_METHOD_DO_NOTHING);
   timer.printTime("VALUE_REMOVAL_METHOD_DO_NOTHING"); timer.reset();
 
-  image_utils::remove_value
+  vision_utils::remove_value
       (uchar_greyscale_buffer, img_uchar_with_no_nan_arr[1], (uchar) 0,
-      inpaint_mask, image_utils::VALUE_REMOVAL_METHOD_DIRECTIONAL_VALUE_PROPAGATION);
+      inpaint_mask, vision_utils::VALUE_REMOVAL_METHOD_DIRECTIONAL_VALUE_PROPAGATION);
   timer.printTime("VALUE_REMOVAL_METHOD_DIRECTIONAL_VALUE_PROPAGATION"); timer.reset();
 
-  image_utils::remove_value
+  vision_utils::remove_value
       (uchar_greyscale_buffer, img_uchar_with_no_nan_arr[2], (uchar) 0,
-      inpaint_mask, image_utils::VALUE_REMOVAL_METHOD_INPAINT);
+      inpaint_mask, vision_utils::VALUE_REMOVAL_METHOD_INPAINT);
   timer.printTime("VALUE_REMOVAL_METHOD_INPAINT"); timer.reset();
 
-  image_utils::remove_value
+  vision_utils::remove_value
       (uchar_greyscale_buffer, img_uchar_with_no_nan_arr[3], (uchar) 0,
-      inpaint_mask, image_utils::VALUE_REMOVAL_METHOD_AVERAGE_BORDER);
+      inpaint_mask, vision_utils::VALUE_REMOVAL_METHOD_AVERAGE_BORDER);
   timer.printTime("VALUE_REMOVAL_METHOD_AVERAGE_BORDER"); timer.reset();
 
 #ifdef DISPLAY
@@ -306,9 +306,9 @@ void test_floodfill_edge_closer(const std::string filename,
                                 bool display_buffer = true) {
   cv::Mat1b img = cv::imread(filename, CV_LOAD_IMAGE_GRAYSCALE),
       img_closed = img.clone();
-  CMatrix<bool> floodfill_buffer;
-  Timer timer;
-  image_utils::FloodFillEdgeCloser closer;
+  vision_utils::CMatrix<bool> floodfill_buffer;
+  vision_utils::Timer timer;
+  vision_utils::FloodFillEdgeCloser closer;
   closer.close(img_closed, seed, (uchar) 0, 1.5f, .8f);
   timer.printTime("floodfill_edge_closer");
   if (display_buffer)
@@ -327,11 +327,11 @@ void test_floodfill_edge_closer(const std::string filename,
 ////////////////////////////////////////////////////////////////////////////////
 
 void test_find_top_point_centered(const cv::Mat1b & img) {
-  Timer timer;
+  vision_utils::Timer timer;
   cv::Rect search_window;
   cv::Point top_point;
   for (unsigned int i = 0; i < 100; ++i)
-    top_point = image_utils::find_top_point_centered(img, true, .4, (uchar) 0, &search_window);
+    top_point = vision_utils::find_top_point_centered(img, true, .4, (uchar) 0, &search_window);
   timer.printTime_factor("find_top_point_centered", 100);
 
   cv::Mat3b img_illus;
@@ -359,17 +359,17 @@ void test_propagative_floodfill(const std::string filename,
                                 const cv::Point & seed) {
   cv::Mat1b img = cv::imread(filename, CV_LOAD_IMAGE_GRAYSCALE);
   SEEN_BUFFER_TYPE seen_buffer_short;
-  Timer timer;
+  vision_utils::Timer timer;
   cv::Point seed_copy = seed;
   unsigned int ntimes = 100;
   for (unsigned int i = 0; i < ntimes; ++i)
-    image_utils::propagative_floodfill(img, seed_copy, seen_buffer_short);
+    vision_utils::propagative_floodfill(img, seed_copy, seen_buffer_short);
   timer.printTime_factor("propagative_floodfill", ntimes);
 
   // paint seen_buffer
   cv::Mat1f seen_buffer_float_buffer;
   cv::Mat3b seen_buffer_illus;
-  image_utils::propagative_floodfill_seen_buffer_to_viz_image
+  vision_utils::propagative_floodfill_seen_buffer_to_viz_image
       (seen_buffer_short, seen_buffer_float_buffer, seen_buffer_illus);
   cv::circle(seen_buffer_illus, seed_copy, 4, CV_RGB(0, 0, 255), 2);
 
@@ -382,7 +382,8 @@ void test_propagative_floodfill(const std::string filename,
 
 ////////////////////////////////////////////////////////////////////////////////
 
-inline float my_lookup_function(const int buffer_val, const int, const int, void* cookie) {
+inline float my_lookup_function(const int buffer_val, const int, const int,
+                                void* /*cookie*/) {
   return (int) (buffer_val / 20);
 }
 
@@ -392,15 +393,15 @@ void test_propagative_floodfill_custom_lookup
   cv::Mat1f lookup_result;
   cv::Point seed_copy = seed;
   SEEN_BUFFER_TYPE seen_buffer_short;
-  Timer timer;
+  vision_utils::Timer timer;
   for (unsigned int i = 0; i < 100; ++i)
-    image_utils::propagative_floodfill(img, seed_copy, seen_buffer_short, true,
+    vision_utils::propagative_floodfill(img, seed_copy, seen_buffer_short, true,
                                        &my_lookup_function, &lookup_result, NULL);
   timer.printTime_factor("propagative_floodfill", 100);
   // paint seen_buffer
   cv::Mat1f seen_buffer_float_buffer;
   cv::Mat3b seen_buffer_illus;
-  image_utils::propagative_floodfill_seen_buffer_to_viz_image
+  vision_utils::propagative_floodfill_seen_buffer_to_viz_image
       (seen_buffer_short, seen_buffer_float_buffer, seen_buffer_illus);
   cv::circle(seen_buffer_illus, seed, 4, CV_RGB(0, 0, 255), 1);
   cv::circle(seen_buffer_illus, seed_copy, 4, CV_RGB(0, 0, 255), 2);
@@ -409,7 +410,7 @@ void test_propagative_floodfill_custom_lookup
   cv::Mat1b lookup_result_uchar;
   cv::Mat3b lookup_result_illus;
   lookup_result.convertTo(lookup_result_uchar, CV_8U);
-  user_image_to_rgb(lookup_result_uchar, lookup_result_illus, 8);
+  vision_utils::user_image_to_rgb(lookup_result_uchar, lookup_result_illus, 8);
 
 #ifdef DISPLAY
   cv::imshow("img", img);
@@ -433,7 +434,7 @@ struct pixel2metersData {
 }; // end struct pixel2metersData
 
 void test_compute_pixel2meters_factor_mouse_cb
-(int event, int x, int y, int flags, void* data_ptr)
+(int /*event*/, int x, int y, int /*flags*/, void* data_ptr)
 {
   // printf("test_compute_pixel2meters_factor_mouse_cb(%i, %i)\n", x, y);
   pixel2metersData* data = (pixel2metersData*) data_ptr;
@@ -441,7 +442,7 @@ void test_compute_pixel2meters_factor_mouse_cb
   data->rgb_img.copyTo(data->illus_img);
 
   // get pixel2meters_factor
-  double pixel2meters_factor = kinect_openni_utils::compute_pixel2meters_factor
+  double pixel2meters_factor = vision_utils::compute_pixel2meters_factor
                                (data->depth_img, data->depth_camera_model, cv::Point(x, y));
 
   // convert a distance of 50 cm to pixel (1 meter circle)
@@ -464,11 +465,11 @@ void test_compute_pixel2meters_factor(const std::string & rgb_depth_filename_pre
   pixel2metersData data;
 
   // get camera model
-  kinect_openni_utils::read_camera_model_files
+  vision_utils::read_camera_model_files
       (kinect_serial_number, data.depth_camera_model, data.rgb_camera_model);
 
   // read depth and rgb files
-  image_utils::read_rgb_and_depth_image_from_image_file
+  vision_utils::read_rgb_and_depth_image_from_image_file
       (rgb_depth_filename_prefix, &data.rgb_img, &data.depth_img);
   data.rgb_img.copyTo(data.illus_img);
 
@@ -478,7 +479,7 @@ void test_compute_pixel2meters_factor(const std::string & rgb_depth_filename_pre
   cv::setMouseCallback(data.window_name, test_compute_pixel2meters_factor_mouse_cb, &data);
   cv::imshow("rgb_img", data.rgb_img);
   cv::imshow("depth_img_illus",
-             image_utils::depth_image_to_vizualisation_color_image(data.depth_img));
+             vision_utils::depth_image_to_vizualisation_color_image(data.depth_img));
   while(true) {
     cv::imshow(data.window_name, data.illus_img);
     char c = cv::waitKey(50);
@@ -492,7 +493,7 @@ void test_compute_pixel2meters_factor(const std::string & rgb_depth_filename_pre
 
 TEST(TestSuite, floodfill_edge_closer) {
   cv::Point juggling1_pt = cv::Point(370, 70),
-      juggling2_pt = cv::Point(400, 70),
+      //juggling2_pt = cv::Point(400, 70),
       juggling3_pt = cv::Point(360, 90);
   test_floodfill_edge_closer(IMG_DIR "broken_edge.png", cv::Point(11, 19));
   test_floodfill_edge_closer(IMG_DIR "broken_edge.png", cv::Point(9, 8));
@@ -504,8 +505,8 @@ TEST(TestSuite, floodfill_edge_closer) {
 
 TEST(TestSuite, find_top_point_centered) {
   cv::Point juggling1_pt = cv::Point(370, 70),
-      juggling2_pt = cv::Point(400, 70),
-      juggling3_pt = cv::Point(360, 90);
+      juggling2_pt = cv::Point(400, 70);
+      //juggling3_pt = cv::Point(360, 90);
   test_find_top_point_centered(IMG_DIR "depth/juggling1_user_mask.png");
   test_find_top_point_centered(IMG_DIR "depth/juggling2_user_mask.png");
   test_propagative_floodfill(IMG_DIR "depth/juggling1_user_mask.png", juggling1_pt);

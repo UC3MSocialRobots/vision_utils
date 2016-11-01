@@ -13,15 +13,16 @@
  *******************************************************************************/
 
 ////// my imports
-#include "vision_utils/utils/hausdorff_distances.h"
-#include "vision_utils/utils/debug_utils.h"
-#include "vision_utils/utils/file_io.h"
-#include "vision_utils/utils/filename_handling.h"
+#include "vision_utils/hausdorff_distances.h"
+#include "vision_utils/file_io.h"
+#include "vision_utils/filename_handling.h"
 #include "vision_utils/content_processing.h"
 
 ///// STL imports
 #include <opencv2/core/core.hpp>
 #include <sstream>          // for std::sstreams
+
+namespace vision_utils {
 
 template<class Pt2Iterable>
 class ImageComparer_ {
@@ -41,11 +42,11 @@ public:
   void set_models(const std::string & index_filename,
                   const cv::Size & default_size,
                   bool keep_ratio = false) {
-    maggieDebug2("set_models('%s')", index_filename.c_str());
+    //printf("set_models('%s')", index_filename.c_str());
     std::vector<std::string> lines, lines_cleaned;
-    string_utils::retrieve_file_split(index_filename, lines);
+    retrieve_file_split(index_filename, lines);
     // add path to each line
-    std::string folder = string_utils::extract_folder_from_full_path(index_filename);
+    std::string folder = extract_folder_from_full_path(index_filename);
     for (unsigned int line_idx = 0; line_idx < lines.size(); ++line_idx) {
       std::string line (lines[line_idx]);
       if (line.length() == 0)
@@ -64,7 +65,7 @@ public:
   void set_models(const std::vector<std::string> & filenames,
                   const cv::Size & default_size,
                   bool keep_ratio = false) {
-    maggieDebug2("set_models(%i files)", filenames.size());
+    //printf("set_models(%li files)", filenames.size());
     std::vector<cv::Mat> imgs;
     unsigned int nimgs = filenames.size();
     for (unsigned int img_idx = 0; img_idx < nimgs; ++img_idx) {
@@ -98,13 +99,13 @@ public:
       }
       /* add the points */
       // get the non nul points
-      image_utils::nonNulPoints(imgs[img_idx], curr_pts);
+      nonNulPoints(imgs[img_idx], curr_pts);
       if (curr_pts.size() == 0) {
         printf("set_modesl(): model #%i does not contain null points!\n", img_idx);
         continue;
       }
       // redim the content
-      image_utils::redimContent_vector_without_repetition_given_resized_array
+      redimContent_vector_without_repetition_given_resized_array
           (curr_pts, curr_pts_resized,
            cv::Rect(0, 0, _default_size.width, _default_size.height),
            _resized_array.data, _keep_ratio);
@@ -132,7 +133,7 @@ public:
    * \param   newForbidden an array of boolean, 0 = allowed, 1 = forbidden
    */
   inline void setMask(const std::vector<bool> & newForbidden) {
-    maggieDebug2("setMask()");
+    //printf("setMask()");
     _forbidden_images = newForbidden;
   }
 
@@ -140,23 +141,23 @@ public:
 
   //! compare a file with all the others
   bool compareFile(const cv::Mat1b & unknown) {
-    // maggieDebug2("compareFile()");
+    // //printf("compareFile()");
     if (get_models_nb() == 0) {
       printf("compareFile(): no model loaded\n");
       return false;
     }
 #if 0
     unknown_image.create(_default_size);
-    bool ok = image_utils::redimContent(unknown, unknown_image);
+    bool ok = redimContent(unknown, unknown_image);
     if (!ok)
       return false;
-    printf("unknown_image:'%s'\n", image_utils::img_to_string(unknown_image).c_str());
+    printf("unknown_image:'%s'\n", img_to_string(unknown_image).c_str());
     _unknown_point_vec.clear();
-    image_utils::nonNulPoints(unknown_image, _unknown_point_vec);
+    nonNulPoints(unknown_image, _unknown_point_vec);
     return compare_internal_data();
 #else
-    image_utils::nonNulPoints(unknown, _unknown_point_vec_unscaled);
-    //printf("_unknown_point_vec_unscaled:'%s'\n", image_utils::img_to_string(_unknown_point_vec_unscaled).c_str());
+    nonNulPoints(unknown, _unknown_point_vec_unscaled);
+    //printf("_unknown_point_vec_unscaled:'%s'\n", img_to_string(_unknown_point_vec_unscaled).c_str());
     return compareVector(_unknown_point_vec_unscaled);
 #endif
   }
@@ -165,7 +166,7 @@ public:
 
   //! compare a vector of white points with the preloaded data
   bool compareVector(const Pt2Iterable & unknown) {
-    // maggieDebug2("compareVector()");
+    // //printf("compareVector()");
     if (get_models_nb() == 0) {
       printf("compareVector(): no model loaded\n");
       return false;
@@ -174,7 +175,7 @@ public:
       printf("compareVector(): empty unknown Pt2Iterable\n");
       return false;
     }
-    image_utils::redimContent_vector_without_repetition_given_resized_array
+    redimContent_vector_without_repetition_given_resized_array
         (unknown, _unknown_point_vec,
          cv::Rect(0, 0, _default_size.width, _default_size.height),
          _resized_array.data, _keep_ratio);
@@ -214,15 +215,15 @@ public:
   inline std::string model_to_string(unsigned int model_idx) const {
     if (model_idx >= get_models_nb())
       return "<bad model_idx>";
-    return image_utils::point_vec_to_string(models_points[model_idx], _default_size);
+    return point_vec_to_string(models_points[model_idx], _default_size);
   }
 
   inline std::string unknown_to_string() const {
-    return image_utils::point_vec_to_string(_unknown_point_vec, _default_size);
+    return point_vec_to_string(_unknown_point_vec, _default_size);
   }
 
   inline std::string results_to_string() const {
-    return string_utils::iterable_to_string(_results);
+    return iterable_to_string(_results);
   }
 
 private:
@@ -230,9 +231,9 @@ private:
 
   //! compare _unknown_point_vec with the preloaded model data
   bool compare_internal_data() {
-    //    maggieDebug2("compare_internal_data(), nb of points in the unknown object:%i",
+    //    //printf("compare_internal_data(), nb of points in the unknown object:%i",
     //                 (int) _unknown_point_vec.size());
-    // printf("unknown_to_string():'%s'\n", unknown_to_string().c_str());
+    //printf("unknown_to_string():'%s'\n", unknown_to_string().c_str());
     _best_result = std::numeric_limits<float>::max();
     _best_index = -1;
     bool using_mask = (_forbidden_images.size() == models_points.size());
@@ -244,13 +245,13 @@ private:
       // skip if we use the model_mask
       if (using_mask && _forbidden_images[i])
         continue;
-      float curr_result = hausdorff_distances::D22_with_min<cv::Point, Pt2Iterable>
+      float curr_result = D22_with_min<cv::Point, Pt2Iterable>
           (_unknown_point_vec, models_points[i], _best_result,
-           hausdorff_distances::dist_L1_int);
+           dist_L1_int);
       _results[i] = curr_result;
 
-      // printf("model_to_string(%i):'%s'\n", i, model_to_string(i).c_str());
-      //    maggieDebug2("-> comparing with model #%i, result of the comparison: %f",
+      //printf("model_to_string(%i):'%s'\n", i, model_to_string(i).c_str());
+      //    //printf("-> comparing with model #%i, result of the comparison: %f",
       //                 i, curr_result);
       if (curr_result < _best_result) { // new best curr_result !
         _best_result = curr_result;
@@ -288,5 +289,7 @@ private:
 }; // end class ImageComparer_
 
 typedef ImageComparer_<std::vector<cv::Point> > ImageComparer;
+
+} // end namespace vision_utils
 
 #endif

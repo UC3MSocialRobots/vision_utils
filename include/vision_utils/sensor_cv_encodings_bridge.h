@@ -11,6 +11,8 @@
 #include <opencv2/core/core.hpp>
 #include <sensor_msgs/image_encodings.h>
 
+namespace vision_utils {
+
 typedef std::string SensorEncoding;
 typedef int CvEncoding;
 
@@ -94,6 +96,6 @@ inline SensorEncoding sensor_encoding_from_cv_encoding(const CvEncoding & src_en
   } // end switch(src_enc)
 } // end sensor_encoding_from_cv_encoding()
 
-////////////////////////////////////////////////////////////////////////////////
+} // end namespace vision_utils
 
 #endif // SENSOR_CV_ENCODINGS_BRIDGE_H

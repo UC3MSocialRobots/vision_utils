@@ -28,9 +28,9 @@ and \b cvstage_plugins namespace.
 #include <gtest/gtest.h>
 #include "vision_utils/content_processing.h"
 #include <vision_utils/img_path.h>
-#include "vision_utils/utils/timer.h"
-#include "vision_utils/utils/map_utils.h"
-#include "vision_utils/utils/matrix_testing.h"
+#include "vision_utils/timer.h"
+#include "vision_utils/map_utils.h"
+#include "vision_utils/matrix_testing.h"
 #include "vision_utils/user_image_to_rgb.h"
 
 #define GRAYSCALE CV_LOAD_IMAGE_GRAYSCALE
@@ -52,27 +52,27 @@ TEST(TestSuite, get_all_different_values) {
   cv::Mat1b query = cv::imread(IMG_DIR "balloon_masks.png", GRAYSCALE);
 
   std::set<uchar> out_set, correct_set = make_struct<std::set<uchar> >(0, 3);
-  Timer timer;
-  image_utils::get_all_different_values(query, out_set, false);
+  vision_utils::Timer timer;
+  vision_utils::get_all_different_values(query, out_set, false);
   timer.printTime("get_all_different_values(set with zeros)");
-  ASSERT_TRUE(out_set == correct_set) << "out_set:" << string_utils::iterable_to_string(out_set);
+  ASSERT_TRUE(out_set == correct_set) << "out_set:" << vision_utils::iterable_to_string(out_set);
 
   correct_set = make_struct<std::set<uchar> >(1, 3);
   timer.reset();
-  image_utils::get_all_different_values(query, out_set, true);
+  vision_utils::get_all_different_values(query, out_set, true);
   timer.printTime("get_all_different_values(set without zeros)");
-  ASSERT_TRUE(out_set == correct_set) << "out_set:" << string_utils::iterable_to_string(out_set);
+  ASSERT_TRUE(out_set == correct_set) << "out_set:" << vision_utils::iterable_to_string(out_set);
 
   std::vector<uchar> out_vec, correct_vec = make_struct<std::vector<uchar> >(0, 3);
-  image_utils::get_all_different_values(query, out_vec, false);
+  vision_utils::get_all_different_values(query, out_vec, false);
   timer.printTime("get_all_different_values(set with zeros)");
-  ASSERT_TRUE(out_vec == correct_vec) << "out_vec:" << string_utils::iterable_to_string(out_vec);
+  ASSERT_TRUE(out_vec == correct_vec) << "out_vec:" << vision_utils::iterable_to_string(out_vec);
 
   correct_vec = make_struct<std::vector<uchar> >(1, 3);
   timer.reset();
-  image_utils::get_all_different_values(query, out_vec, true);
+  vision_utils::get_all_different_values(query, out_vec, true);
   timer.printTime("get_all_different_values(vec without zeros)");
-  ASSERT_TRUE(out_vec == correct_vec) << "out_vec:" << string_utils::iterable_to_string(out_vec);
+  ASSERT_TRUE(out_vec == correct_vec) << "out_vec:" << vision_utils::iterable_to_string(out_vec);
 }
 
 
@@ -81,16 +81,16 @@ TEST(TestSuite, get_all_different_values) {
 TEST(TestSuite, get_all_different_values2) {
   cv::Mat1b query = cv::imread(IMG_DIR "depth/david_arnaud1_user_mask.png", GRAYSCALE);
   std::set<uchar> out_set, correct_set = make_struct<std::set<uchar> >(0, 2);
-  Timer timer;
-  image_utils::get_all_different_values(query, out_set, false);
+  vision_utils::Timer timer;
+  vision_utils::get_all_different_values(query, out_set, false);
   timer.printTime("get_all_different_values(set with zeros)");
-  ASSERT_TRUE(out_set == correct_set) << "out_set:" << string_utils::iterable_to_string(out_set);
+  ASSERT_TRUE(out_set == correct_set) << "out_set:" << vision_utils::iterable_to_string(out_set);
 
   correct_set = make_struct<std::set<uchar> >(1, 2);
   timer.reset();
-  image_utils::get_all_different_values(query, out_set, true);
+  vision_utils::get_all_different_values(query, out_set, true);
   timer.printTime("get_all_different_values(set without zeros)");
-  ASSERT_TRUE(out_set == correct_set) << "out_set:" << string_utils::iterable_to_string(out_set);
+  ASSERT_TRUE(out_set == correct_set) << "out_set:" << vision_utils::iterable_to_string(out_set);
 }
 
 
@@ -102,27 +102,27 @@ void test_get_all_different_values_and_com(const cv::Mat1b & query,
   for (unsigned int use_fast = 0; use_fast <= 1; ++use_fast) {
     for (unsigned int ignore_zeros = 0; ignore_zeros <= 1; ++ignore_zeros) {
       for (unsigned int ensure_com_on_mask = 0; ensure_com_on_mask <= 1; ++ensure_com_on_mask) {
-        Timer timer;
+        vision_utils::Timer timer;
         if (use_fast)
-          image_utils::get_all_non_null_values_and_com_fast
+          vision_utils::get_all_non_null_values_and_com_fast
               (query, out_map, ignore_zeros, ensure_com_on_mask);
         else
-          image_utils::get_all_non_null_values_and_com
+          vision_utils::get_all_non_null_values_and_com
               (query, out_map, ignore_zeros, ensure_com_on_mask);
         printf("Time for get_all_different_values_and_com"
                "(use_fast:%i, ignore_zeros:%i, ensure_com_on_mask:%i): %g ms\n",
                use_fast, ignore_zeros, ensure_com_on_mask, timer.time());
 
         ASSERT_TRUE(out_map.size() == maxblobidx - minblobidx+ (ignore_zeros ? 1: 2))
-            << "out_map:" << string_utils::map_to_string(out_map);
+            << "out_map:" << vision_utils::map_to_string(out_map);
         std::vector<uchar> out_keys,
             correct_keys = make_struct<std::vector<uchar> >(minblobidx, maxblobidx);
         if (!ignore_zeros)
           correct_keys.insert(correct_keys.begin(), (uchar) 0);
-        map_utils::map_keys_to_container(out_map, out_keys);
+        vision_utils::map_keys_to_container(out_map, out_keys);
         ASSERT_TRUE(out_keys == correct_keys)
-            << "out_keys:" << string_utils::iterable_to_int_string(out_keys)
-            << "correct_keys:" << string_utils::iterable_to_int_string(correct_keys);
+            << "out_keys:" << vision_utils::iterable_to_int_string(out_keys)
+            << "correct_keys:" << vision_utils::iterable_to_int_string(correct_keys);
 
         // check the COM are on the masks
         std::map<uchar, cv::Point>::const_iterator out_it = out_map.begin();
@@ -170,7 +170,7 @@ TEST(TestSuite, get_all_different_values_and_com) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, RegionGrower_empty_img) {
-  image_utils::RegionGrower<uchar> rg;
+  vision_utils::RegionGrower<uchar> rg;
   std::vector<cv::Point> pts;
   bool ok = rg.grow(cv::Mat1b(), cv::Point(), 1, 1, pts);
   ASSERT_TRUE(ok == false);
@@ -184,13 +184,13 @@ TEST(TestSuite, RegionGrower_rectangle) {
   cv::rectangle(img, cv::Point(o, o), cv::Point(o+rw, o+rh), cv::Scalar::all(255), -1);
   cv::rectangle(img, cv::Point(o+rw, o), cv::Point(o+2*rw, o+rh), cv::Scalar::all(200), -1);
   // cv::imshow("img", img); cv::waitKey(0);
-  image_utils::RegionGrower<uchar> rg;
+  vision_utils::RegionGrower<uchar> rg;
   std::vector<cv::Point> pts;
   // std::cout << "img:" << std::endl << img << std::endl;
   bool ok;
 
   unsigned int ntimes = 10;
-  Timer timer;
+  vision_utils::Timer timer;
   for (unsigned int time = 0; time < ntimes; ++time)
     ok = rg.grow(img, cv::Point(o + 2, o + 2), 1, 1, pts);
   timer.printTime_factor("rg.grow()", ntimes);
@@ -228,7 +228,7 @@ TEST(TestSuite, propagative_floodfill_line) {
 
     // floodfill
     SEEN_BUFFER_TYPE seen_buffer_short;
-    image_utils::propagative_floodfill(img, center, seen_buffer_short);
+    vision_utils::propagative_floodfill(img, center, seen_buffer_short);
 
     // check it is correct
     ASSERT_TRUE(cv::countNonZero(seen_buffer_short) == length + 1)
@@ -256,9 +256,9 @@ TEST(TestSuite, propagative_floodfill_circle) {
   // floodfill without diagonals
   SEEN_BUFFER_TYPE seen_buffer_short;
   unsigned int ntimes = 10;
-  Timer timer;
+  vision_utils::Timer timer;
   for (unsigned int time = 0; time < ntimes; ++time) {
-    image_utils::propagative_floodfill(img, center, seen_buffer_short,
+    vision_utils::propagative_floodfill(img, center, seen_buffer_short,
                                        false, NULL, NULL, NULL, false);
   } // end for (time)
   timer.printTime_factor("propagative_floodfill()", ntimes);
@@ -267,7 +267,7 @@ TEST(TestSuite, propagative_floodfill_circle) {
   // display buffer
   //  cv::Mat1f seen_buffer_float_buffer;
   //  cv::Mat3b seen_buffer_illus;
-  //  image_utils::propagative_floodfill_seen_buffer_to_viz_image
+  //  vision_utils::propagative_floodfill_seen_buffer_to_viz_image
   //      (seen_buffer_short, seen_buffer_float_buffer, seen_buffer_illus);
   //  cv::imshow("seen_buffer_illus", seen_buffer_illus); cv::waitKey(0);
 
@@ -302,7 +302,7 @@ TEST(TestSuite, PropagativeFloodfiller_line) {
         << "cv::countNonZero(img):" << cv::countNonZero(img);
 
     // floodfill
-    image_utils::PropagativeFloodfiller<uchar> pff;
+    vision_utils::PropagativeFloodfiller<uchar> pff;
     pff.floodfill(img, center, false, true);
 
     // check it is correct
@@ -318,11 +318,11 @@ TEST(TestSuite, PropagativeFloodfiller_line) {
     cv::Mat3b illus_img;
     pff.illus_img(illus_img);
     cv::Mat1b illus_img_bw; // illus_img non null values should be = illus
-    image_utils::mask(illus_img, illus_img_bw, image_utils::is_zero_vec3b);
+    vision_utils::mask(illus_img, illus_img_bw, vision_utils::is_zero_vec3b);
     //cv::imshow("illus_img", illus_img); cv::imshow("illus_img_bw", illus_img_bw);  cv::waitKey(0);
     //cv::imwrite("img.png", img); cv::imwrite("illus_img_bw.png", illus_img_bw);
     illus_img_bw(center) = 255; // dirty fix
-    ASSERT_TRUE(matrix_testing::matrices_equal(illus_img_bw, img));
+    ASSERT_TRUE(vision_utils::matrices_equal(illus_img_bw, img));
   } // end for (direction)
 }
 
@@ -339,9 +339,9 @@ TEST(TestSuite, PropagativeFloodfiller_circle) {
   img.setTo(255);
 
   // floodfill without diagonals
-  image_utils::PropagativeFloodfiller<uchar> pff;
+  vision_utils::PropagativeFloodfiller<uchar> pff;
   unsigned int ntimes = 10;
-  Timer timer;
+  vision_utils::Timer timer;
   for (unsigned int time = 0; time < ntimes; ++time) {
     pff.floodfill(img, center, false, false);
   } // end for (time)
@@ -351,7 +351,7 @@ TEST(TestSuite, PropagativeFloodfiller_circle) {
   // display buffer
   //  cv::Mat1f seen_buffer_float_buffer;
   //  cv::Mat3b seen_buffer_illus;
-  //  image_utils::PropagativeFloodfiller_seen_buffer_to_viz_image
+  //  vision_utils::PropagativeFloodfiller_seen_buffer_to_viz_image
   //      (seen_buffer_short, seen_buffer_float_buffer, seen_buffer_illus);
   //  cv::imshow("seen_buffer_illus", seen_buffer_illus); cv::waitKey(0);
 
@@ -369,16 +369,16 @@ TEST(TestSuite, PropagativeFloodfiller_circle) {
   cv::Mat3b illus_img;
   pff.illus_img(illus_img);
   cv::Mat1b illus_img_bw; // illus_img non null values should be = illus
-  image_utils::mask(illus_img, illus_img_bw, image_utils::is_zero_vec3b);
+  vision_utils::mask(illus_img, illus_img_bw, vision_utils::is_zero_vec3b);
   // cv::imshow("illus_img", illus_img); cv::imshow("illus_img_bw", illus_img_bw);  cv::waitKey(0);
-  ASSERT_TRUE(matrix_testing::matrices_equal(illus_img_bw, img));
+  ASSERT_TRUE(vision_utils::matrices_equal(illus_img_bw, img));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, ClosestPointInMask_empty_img) {
-  image_utils::ClosestPointInMask cl;
+  vision_utils::ClosestPointInMask cl;
   cv::Point ans = cl.find(cv::Mat1b(), cv::Point());
   ASSERT_TRUE(ans.x < 0 && ans.y < 0) << "ans:" << ans;
 }
@@ -386,7 +386,7 @@ TEST(TestSuite, ClosestPointInMask_empty_img) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, ClosestPointInMask_empty_full) {
-  image_utils::ClosestPointInMask cl;
+  vision_utils::ClosestPointInMask cl;
   cv::Mat1b mask(10, 10, (uchar) 0);
   cv::Point seed(5, 5);
   cv::Point ans = cl.find(mask, seed);
@@ -400,7 +400,7 @@ TEST(TestSuite, ClosestPointInMask_empty_full) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, ClosestPointInMask_single_point) {
-  image_utils::ClosestPointInMask cl;
+  vision_utils::ClosestPointInMask cl;
   int cols = 10;
   cv::Mat1b mask(cols, cols);
   for (unsigned int time = 0; time < 10; ++time) {
@@ -416,10 +416,10 @@ TEST(TestSuite, ClosestPointInMask_single_point) {
 
 TEST(TestSuite, ClosestPointInMask_david_arnaud1) {
   unsigned int ntimes = 100;
-  image_utils::ClosestPointInMask cl;
+  vision_utils::ClosestPointInMask cl;
   cv::Mat1b mask = cv::imread(IMG_DIR "depth/david_arnaud1_user_mask.png", GRAYSCALE);
   int cols = mask.cols, rows = mask.rows;
-  Timer timer;
+  vision_utils::Timer timer;
   for (unsigned int time = 0; time < ntimes; ++time) {
     cv::Point seed(rand() % cols, rand() % rows);
     cv::Point ans1 =
@@ -427,8 +427,8 @@ TEST(TestSuite, ClosestPointInMask_david_arnaud1) {
     cv::Point ans2 =
         cl.find(mask, seed, (uchar) 2, (uchar) 2);
     // illus
-    ASSERT_TRUE(image_utils::bbox_full(mask).contains(ans1)) << "ans1:" << ans1;
-    ASSERT_TRUE(image_utils::bbox_full(mask).contains(ans2)) << "ans2:" << ans2;
+    ASSERT_TRUE(vision_utils::bbox_full(mask).contains(ans1)) << "ans1:" << ans1;
+    ASSERT_TRUE(vision_utils::bbox_full(mask).contains(ans2)) << "ans2:" << ans2;
     ASSERT_TRUE(mask(ans1) == (uchar) 1);
     ASSERT_TRUE(mask(ans2) == (uchar) 2);
     //  cv::Mat3b illus;  user_image_to_rgb(mask, illus); illus /= 2;
@@ -443,7 +443,7 @@ TEST(TestSuite, ClosestPointInMask_david_arnaud1) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, ClosestPointInMask2_empty_img) {
-  image_utils::ClosestPointInMask2<uchar> cl;
+  vision_utils::ClosestPointInMask2<uchar> cl;
   cv::Point ans = cl.find(cv::Mat1b(), cv::Point());
   ASSERT_TRUE(ans.x < 0 && ans.y < 0) << "ans:" << ans;
 }
@@ -451,7 +451,7 @@ TEST(TestSuite, ClosestPointInMask2_empty_img) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, ClosestPointInMask2_empty_full) {
-  image_utils::ClosestPointInMask2<uchar> cl;
+  vision_utils::ClosestPointInMask2<uchar> cl;
   cv::Mat1b mask(10, 10, (uchar) 0);
   cv::Point seed(5, 5);
   cv::Point ans = cl.find(mask, seed);
@@ -465,7 +465,7 @@ TEST(TestSuite, ClosestPointInMask2_empty_full) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, ClosestPointInMask2_single_point) {
-  image_utils::ClosestPointInMask2<uchar> cl;
+  vision_utils::ClosestPointInMask2<uchar> cl;
   int cols = 10;
   cv::Mat1b mask(cols, cols);
   for (unsigned int time = 0; time < 10; ++time) {
@@ -481,10 +481,10 @@ TEST(TestSuite, ClosestPointInMask2_single_point) {
 
 TEST(TestSuite, ClosestPointInMask2_david_arnaud1) {
   unsigned int ntimes = 100;
-  image_utils::ClosestPointInMask2<uchar> cl;
+  vision_utils::ClosestPointInMask2<uchar> cl;
   cv::Mat1b mask = cv::imread(IMG_DIR "depth/david_arnaud1_user_mask.png", GRAYSCALE);
   int cols = mask.cols, rows = mask.rows;
-  Timer timer;
+  vision_utils::Timer timer;
   for (unsigned int time = 0; time < ntimes; ++time) {
     cv::Point seed(rand() % cols, rand() % rows);
     cv::Point ans1 =
@@ -492,8 +492,8 @@ TEST(TestSuite, ClosestPointInMask2_david_arnaud1) {
     cv::Point ans2 =
         cl.find(mask, seed, (uchar) 2, (uchar) 2);
     // illus
-    ASSERT_TRUE(image_utils::bbox_full(mask).contains(ans1)) << "ans1:" << ans1;
-    ASSERT_TRUE(image_utils::bbox_full(mask).contains(ans2)) << "ans2:" << ans2;
+    ASSERT_TRUE(vision_utils::bbox_full(mask).contains(ans1)) << "ans1:" << ans1;
+    ASSERT_TRUE(vision_utils::bbox_full(mask).contains(ans2)) << "ans2:" << ans2;
     ASSERT_TRUE(mask(ans1) == (uchar) 1);
     ASSERT_TRUE(mask(ans2) == (uchar) 2);
     //  cv::Mat3b illus;  user_image_to_rgb(mask, illus); illus /= 2;
@@ -509,7 +509,7 @@ TEST(TestSuite, ClosestPointInMask2_david_arnaud1) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, ShortestPathFinder_empty_img) {
-  image_utils::ShortestPathFinder<uchar> spf;
+  vision_utils::ShortestPathFinder<uchar> spf;
   std::vector<cv::Point> pts;
   bool ok = spf.find(cv::Mat1b(), cv::Point(), cv::Point(), pts);
   ASSERT_TRUE(ok == false);
@@ -522,18 +522,18 @@ void test_ShortestPathFinder(const cv::Mat1b & in,
                              const cv::Point & end,
                              const cv::Mat1b & correct_ans,
                              bool is_correct_ans_wider = false) {
-  image_utils::ShortestPathFinder<uchar> spf;
+  vision_utils::ShortestPathFinder<uchar> spf;
   std::vector<cv::Point> pts;
   bool ok;
   unsigned int ntimes = 10;
-  Timer timer;
+  vision_utils::Timer timer;
   for (unsigned int time = 0; time < ntimes; ++time)
     ok = spf.find(in, begin, end, pts);
   timer.printTime_factor("spf.find()", ntimes);
-  // std::cout << "pts:" << string_utils::iterable_to_string(pts) << std::endl;
+  // std::cout << "pts:" << vision_utils::iterable_to_string(pts) << std::endl;
   ASSERT_TRUE(ok == true);
-  ASSERT_TRUE(pts.front() == begin) << "pts:" << string_utils::iterable_to_string(pts);
-  ASSERT_TRUE(pts.back() == end) << "pts:" << string_utils::iterable_to_string(pts);
+  ASSERT_TRUE(pts.front() == begin) << "pts:" << vision_utils::iterable_to_string(pts);
+  ASSERT_TRUE(pts.back() == end) << "pts:" << vision_utils::iterable_to_string(pts);
 
   // check pts = in (only one path)
   cv::Mat1b out(in.size(), (uchar) 0);
@@ -554,7 +554,7 @@ void test_ShortestPathFinder(const cv::Mat1b & in,
     // std::cout << "out:" << out << std::endl;
     // std::cout << "correct_ans:" << correct_ans << std::endl;
     // std::cout << "correct_ans_thin:" << correct_ans_thin << std::endl;
-    ASSERT_TRUE(matrix_testing::matrices_equal(correct_ans_thin, out));
+    ASSERT_TRUE(vision_utils::matrices_equal(correct_ans_thin, out));
   }
 }
 
@@ -610,20 +610,20 @@ void test_EndFinder(const cv::Mat1b & mask,
                     const std::vector<cv::Point> & correct_end_pts,
                     bool print_time = true) {
   std::vector<cv::Point> end_pts;
-  Timer timer;
-  bool ok = image_utils::detect_end_points(mask, end_pts);
+  vision_utils::Timer timer;
+  bool ok = vision_utils::detect_end_points(mask, end_pts);
   if (print_time)
-    timer.printTime("image_utils::detect_end_points()");
+    timer.printTime("vision_utils::detect_end_points()");
   ASSERT_TRUE(ok);
 
   std::vector<cv::Point> end_pts_sorted = end_pts, correct_end_pts_sorted = correct_end_pts;
   std::sort(end_pts_sorted.begin(), end_pts_sorted.end(), pt_sorter);
   std::sort(correct_end_pts_sorted.begin(), correct_end_pts_sorted.end(), pt_sorter);
   ASSERT_TRUE(end_pts_sorted == correct_end_pts_sorted)
-      << "mask:" << image_utils::img2string(mask)
+      << "mask:" << vision_utils::img2string(mask)
          //<< ", has_no_neigh2string:" << finder.has_no_neigh2string()
-      << ", correct_end_pts_sorted:" << string_utils::iterable_to_string(correct_end_pts_sorted)
-      << ", end_pts_sorted:" << string_utils::iterable_to_string(end_pts_sorted);
+      << ", correct_end_pts_sorted:" << vision_utils::iterable_to_string(correct_end_pts_sorted)
+      << ", end_pts_sorted:" << vision_utils::iterable_to_string(end_pts_sorted);
 }
 
 TEST(TestSuite, EndFinder_empty_img) {
@@ -714,12 +714,12 @@ TEST(TestSuite, EndFinder_skeleton) {
   cv::Mat1b mask = cv::imread(IMG_DIR "skeletons/heads/skeleton_sample.png", GRAYSCALE);
   // test_EndFinder(mask, end_pts);
   std::vector<cv::Point> end_pts;
-  Timer timer;
-  bool ok = image_utils::detect_end_points(mask, end_pts);
-  timer.printTime("image_utils::detect_end_points()");
+  vision_utils::Timer timer;
+  bool ok = vision_utils::detect_end_points(mask, end_pts);
+  timer.printTime("vision_utils::detect_end_points()");
   ASSERT_TRUE(ok);
   ASSERT_TRUE(end_pts.size() == 10)
-      << "end_pts:" << string_utils::iterable_to_string(end_pts);
+      << "end_pts:" << vision_utils::iterable_to_string(end_pts);
 
   //  cv::Mat3b viz;
   //  cv::cvtColor(mask, viz, CV_GRAY2BGR);
@@ -733,7 +733,7 @@ TEST(TestSuite, EndFinder_skeleton) {
 TEST(TestSuite, HighestPointFinder_arnaud1) {
   cv::Mat1b mask = cv::imread(IMG_DIR "depth/david_arnaud1_canny.png", GRAYSCALE);
   cv::Point seed(433, 168), highest_pt;
-  image_utils::HighestPointFinder<uchar> finder;
+  vision_utils::HighestPointFinder<uchar> finder;
   highest_pt = finder.find(mask, seed);
   cv::circle(mask, seed, 3, cv::Scalar::all(0), 2);
   cv::circle(mask, highest_pt, 3, cv::Scalar::all(120), 2);
@@ -747,7 +747,7 @@ TEST(TestSuite, HighestPointFinder_arnaud1) {
 TEST(TestSuite, HighestPointFinder_arnaud3) {
   cv::Mat1b mask = cv::imread(IMG_DIR "depth/david_arnaud3_canny.png", GRAYSCALE);
   cv::Point seed(290, 188), highest_pt;
-  image_utils::HighestPointFinder<uchar> finder;
+  vision_utils::HighestPointFinder<uchar> finder;
   highest_pt = finder.find(mask, seed);
   cv::circle(mask, seed, 3, cv::Scalar::all(0), 2);
   cv::circle(mask, highest_pt, 3, cv::Scalar::all(120), 2);
@@ -760,7 +760,7 @@ TEST(TestSuite, HighestPointFinder_arnaud3) {
 
 TEST(TestSuite, floodfill_edge_closer_david_arnaud1) {
   cv::Mat1b mask = cv::imread(IMG_DIR "depth/david_arnaud1_canny.png", GRAYSCALE);
-  image_utils::FloodFillEdgeCloser closer;
+  vision_utils::FloodFillEdgeCloser closer;
   closer.close(mask, cv::Point(433, 168));
 #ifdef DISPLAY
   cv::imshow("mask", mask); cv::waitKey(0);
@@ -772,7 +772,7 @@ TEST(TestSuite, floodfill_edge_closer_david_arnaud1) {
 TEST(TestSuite, floodfill_edge_closer_david_arnaud3) {
   cv::Mat1b mask = cv::imread(IMG_DIR "depth/david_arnaud3_canny.png", GRAYSCALE);
   cv::Point seed(290, 188);
-  image_utils::FloodFillEdgeCloser closer;
+  vision_utils::FloodFillEdgeCloser closer;
   closer.close(mask, seed, true, false, (uchar) 0, 50, .8f);
   cv::circle(mask, seed, 3, cv::Scalar::all(0), 2);
 #ifdef DISPLAY

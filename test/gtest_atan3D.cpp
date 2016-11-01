@@ -25,10 +25,10 @@ ________________________________________________________________________________
 // Bring in gtest
 #include <gtest/gtest.h>
 #include "vision_utils/atan3D.h"
-#include <vision_utils/utils/rosmaster_alive.h>
+#include <vision_utils/rosmaster_alive.h>
 
 void test_convert3Dto2D(ros::NodeHandle & nh_private,
-                        ReprojectionMode & mode,
+                        vision_utils::ReprojectionMode & mode,
                         const std::string & mode_str,
                         const double & x, const double & y, const double & z,
                         const double & exp_x2D,
@@ -44,9 +44,9 @@ void test_convert3Dto2D(ros::NodeHandle & nh_private,
 }
 
 TEST(TestSuite, convert3Dto2D) {
-  if (!rosmaster_alive()) return;
+  if (!vision_utils::rosmaster_alive()) return;
   ros::NodeHandle nh_private("~");
-  ReprojectionMode mode;
+  vision_utils::ReprojectionMode mode;
   double x = 1, y = 2, z = 3;
   test_convert3Dto2D(nh_private, mode, "xy", x, y, z, x, y);
   test_convert3Dto2D(nh_private, mode, "+xy", x, y, z, x, y);
@@ -65,7 +65,7 @@ TEST(TestSuite, convert3Dto2D) {
 ////////////////////////////////////////////////////////////////////////////////
 
 void test_convert2Dto3D(ros::NodeHandle & nh_private,
-                        ReprojectionMode & mode,
+                        vision_utils::ReprojectionMode & mode,
                         const std::string & mode_str,
                         const double & x2D, const double & y2D, const double & z2D,
                         const double & exp_x,
@@ -83,9 +83,9 @@ void test_convert2Dto3D(ros::NodeHandle & nh_private,
 }
 
 TEST(TestSuite, convert2Dto3D) {
-  if (!rosmaster_alive()) return;
+  if (!vision_utils::rosmaster_alive()) return;
   ros::NodeHandle nh_private("~");
-  ReprojectionMode mode;
+  vision_utils::ReprojectionMode mode;
   double x2D = 1, y2D = 2, z2D = 3;
   test_convert2Dto3D(nh_private, mode, "xy", x2D, y2D, z2D, x2D, y2D, z2D);
   test_convert2Dto3D(nh_private, mode, "+xy", x2D, y2D, z2D, x2D, y2D, z2D);

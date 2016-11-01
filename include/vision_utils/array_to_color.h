@@ -33,6 +33,8 @@ Optionnal header drawing.
 #include "vision_utils/colormaps.h"
 #include "vision_utils/drawing_utils.h"
 
+namespace vision_utils {
+
 /*!
  * Compute the ROI of a given cell in the array.
  * \param col, row
@@ -87,11 +89,11 @@ void array_to_color(const _T & data,
                     bool draw_edges = true,
                     bool draw_headers = true,
                     cv::Scalar (*value_colormap)(const double & )
-                    = colormaps::ratio2grey_inv,
+                    = ratio2grey_inv,
                     std::string (*column_titlemap)(const unsigned int)
-                    = &titlemaps::int_to_uppercase_letter,
+                    = &int_to_uppercase_letter,
                     std::string (*row_titlemap)(const unsigned int)
-                    = &titlemaps::int_to_lowercase_letter,
+                    = &int_to_lowercase_letter,
                     const std::vector<std::string>* rows_custom_headers = NULL,
                     const std::vector<std::string>* cols_custom_headers = NULL
     ) {
@@ -118,7 +120,7 @@ void array_to_color(const _T & data,
   for (unsigned int row = 0; row < nrows; ++row) {
     for (unsigned int col = 0; col < ncols; ++col) {
       cv::Rect cell_roi = array_to_color_cell_roi(col, row, width1, height1, draw_headers);
-      // printf("data[%i][%i]:%g\n", row, col, data[row][col]);
+      //printf("data[%i][%i]:%g\n", row, col, data[row][col]);
       out(cell_roi) = value_colormap(data[row][col]);
     } // end loop col
   } // end loop row
@@ -151,8 +153,8 @@ void array_to_color(const _T & data,
     // horizontal labels
     for (unsigned int col = 0; col < ncols; ++col) {
       std::string header = (use_custom_headers ? (*cols_custom_headers)[col] : column_titlemap(col));
-      image_utils::draw_text_centered
-          (out, header, geometry_utils::rect_center<cv::Rect, cv::Point>
+      draw_text_centered
+          (out, header, rect_center<cv::Rect, cv::Point>
            (array_to_color_cell_roi(col, -1, width1, height1, true)),
            CV_FONT_HERSHEY_COMPLEX_SMALL, 1, CV_RGB(0, 0, 0));
     }
@@ -160,8 +162,8 @@ void array_to_color(const _T & data,
     // vertical labels
     for (unsigned int row = 0; row < nrows; ++row) {
       std::string header = (use_custom_headers ? (*rows_custom_headers)[row] : row_titlemap(row));
-      image_utils::draw_text_centered
-          (out, header, geometry_utils::rect_center<cv::Rect, cv::Point>
+      draw_text_centered
+          (out, header, rect_center<cv::Rect, cv::Point>
            (array_to_color_cell_roi(-1, row, width1, height1, true)),
            CV_FONT_HERSHEY_COMPLEX_SMALL, 1, CV_RGB(0, 0, 0));
     }
@@ -210,7 +212,7 @@ bool colormap_to_caption_image(cv::Mat & out,
   double value = min;
   int x_color_cell_min = width_inner / 2, x_color_cell_max = width_inner - 1;
   while (value < max - 1E-2) {
-    // printf("value:%g\n", value);
+    //printf("value:%g\n", value);
     int y_lower = height_inner * (1.f - (value             - min) / max),
         y_upper = height_inner * (1.f - (value +color_step - min) / max);
     cv::rectangle(out_roi,
@@ -229,13 +231,15 @@ bool colormap_to_caption_image(cv::Mat & out,
   while (value <= max) {
     // Careful, y_upper corresponds to the upper bound of the COLOR cell
     int y_lower = padding + height_inner * (1.f - (value - min) / max);
-    image_utils::draw_text_centered
-        (out, string_utils::cast_to_string(value),
+    draw_text_centered
+        (out, cast_to_string(value),
          cv::Point(padding + width_inner  / 4, y_lower),
          CV_FONT_HERSHEY_COMPLEX_SMALL, 1, CV_RGB(0, 0, 0));
     value+=caption_step;
   } // end while (value <= max)
   return true;
 } // end colormap_to_caption_image()
+
+} // end namespace vision_utils
 
 #endif // ARRAY_TO_COLOR_H

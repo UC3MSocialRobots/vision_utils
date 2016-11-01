@@ -9,9 +9,9 @@
 // #include "vision_utils/cv_conversion_float_uchar.h"
 
 // utils
-#include "vision_utils/utils/foo_point.h"
+#include "vision_utils/foo_point.h"
 
-namespace color_utils {
+namespace vision_utils {
 //typedef AD::Point3<double> Color;
 
 static const int NB_PREDEFINED_COLORS = 24;
@@ -81,13 +81,13 @@ inline void indexed_color_norm(float & r, float & g, float & b,
 template<class Color3_255>
 inline Color3_255 color(int idx = -1, int max = -1) {
   if (idx == -1)
-    return color_utils::hue2rgb<Color3_255>(rand() % 128);
+    return hue2rgb<Color3_255>(rand() % 128);
   if (max == -1) {
     unsigned char r, g, b;
-    color_utils::indexed_color255(r, g, b, idx);
+    indexed_color255(r, g, b, idx);
     return Color3_255(b, g, r);
   }
-  return color_utils::hue2rgb<Color3_255>(128.f * idx / max);
+  return hue2rgb<Color3_255>(128.f * idx / max);
 } //
 
 ////////////////////////////////////////////////////////////////////////////
@@ -97,11 +97,11 @@ inline Color3_255 color(int idx = -1, int max = -1) {
     */
 template<class Color4_255>
 inline Color4_255 color_scalar(int i = -1, int max = -1) {
-  geometry_utils::FooPoint3<unsigned char> color3 =
-      color_utils::color<geometry_utils::FooPoint3<unsigned char> >(i, max);
+  FooPoint3<unsigned char> color3 =
+      color<FooPoint3<unsigned char> >(i, max);
   return Color4_255(color3.x, color3.y, color3.z, 0);
 } // end color_scalar()
 
-} // end namespace color_utils
+} // end namespace vision_utils
 
 #endif // COLOR_UTILS_H

@@ -12,6 +12,8 @@
 #include <sensor_msgs/Image.h>
 #include "vision_utils/nan_handling.h"
 
+namespace vision_utils {
+
 //! uncomment for printing image info
 //#define DEBUG_PRINT
 
@@ -20,7 +22,7 @@
 //! when flag DEBUG_PRINT is on, print some infos about the img size and channels
 inline void print_cv_img_info(const cv::Mat & img, const std::string & img_name) {
 #ifdef DEBUG_PRINT
-  ROS_INFO("%s: %i x %i (%i channels, step1:%i)",
+  //printf("%s: %i x %i (%i channels, step1:%i)",
            img_name.c_str(), img.cols, img.rows, img.channels(),
            img.step1());
 #endif // DEBUG_PRINT
@@ -31,7 +33,7 @@ inline void print_cv_img_info(const cv::Mat & img, const std::string & img_name)
 //! when flag DEBUG_PRINT is on, print some infos about the img size and encoding
 inline void print_sensor_img_info(const sensor_msgs::Image & img, const std::string & img_name) {
 #ifdef DEBUG_PRINT
-  ROS_INFO("%s: %i x %i (encoding:'%s', data_size:%i)",
+  //printf("%s: %i x %i (encoding:'%s', data_size:%i)",
            img_name.c_str(), img.width, img.height, img.encoding.c_str(),
            img.data.size());
 #endif // DEBUG_PRINT
@@ -75,8 +77,8 @@ inline double compare_two_images(const cv::Mat & img1, const cv::Mat & img2,
   cv::Mat img1_one_channel_cleaned = img1.reshape(1).clone();
   cv::Mat img2_one_channel_cleaned = img2.reshape(1).clone();
   if (clean_nans) {
-    image_utils::remove_nans<float>(img1_one_channel_cleaned);
-    image_utils::remove_nans<float>(img2_one_channel_cleaned);
+    remove_nans<float>(img1_one_channel_cleaned);
+    remove_nans<float>(img2_one_channel_cleaned);
   } // end if (clean_nans)
 
   cv::Mat error_one_channel, error_rel_one_channel;
@@ -102,5 +104,7 @@ inline double compare_two_images(const cv::Mat & img1, const cv::Mat & img2,
 
   return error_avg;
 } // end compare_two_images();
+
+} // end namespace vision_utils
 
 #endif // PRINT_3F_IMG_H

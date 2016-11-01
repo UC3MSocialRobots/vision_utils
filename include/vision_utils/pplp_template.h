@@ -20,10 +20,10 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
 
-PeoplePoseListPublisher, also known under the sweet name of PPLP:
+PeoplePublisher, also known under the sweet name of PPLP:
 A template for a skill
 that can be activated on demand and
-that can publish PeoplePoseLists.
+that can publish Peoples.
 
 Its subscribers are inactive when the skill is constructed.
 They are initalized
@@ -46,7 +46,7 @@ Both start and stop topics are parameters given to the constructor of the class.
 
 \section Publications
   - \b "~ppl"
-        [people_msgs_rl::PeoplePoseList]
+        [people_msgs::People]
         The detected users in the mask
  */
 #ifndef TEMPLATE2PPL_H
@@ -54,19 +54,21 @@ Both start and stop topics are parameters given to the constructor of the class.
 
 // msg
 #include "vision_utils/nano_skill.h"
-#include <people_msgs_rl/PeoplePoseList.h>
+#include <people_msgs/People.h>
 #include <std_msgs/Int16.h>
 
 #ifndef DEBUG_PRINT
 #define DEBUG_PRINT(...)   {}
-//#define DEBUG_PRINT(...)   ROS_INFO_THROTTLE(5, __VA_ARGS__)
-//#define DEBUG_PRINT(...)   ROS_WARN(__VA_ARGS__)
+//#define DEBUG_PRINT(...)   //printf_THROTTLE(5, __VA_ARGS__)
+//#define DEBUG_PRINT(...)   printf(__VA_ARGS__)
 //#define DEBUG_PRINT(...)   printf(__VA_ARGS__)
 #endif
 
+namespace vision_utils {
+
 class PPLPublisherTemplate : public NanoSkill {
 public:
-  typedef people_msgs_rl::PeoplePoseList PPL;
+  typedef people_msgs::People PPL;
 
   PPLPublisherTemplate(const std::string & start_topic,
                        const std::string & stop_topic) :
@@ -121,5 +123,7 @@ private:
   ros::Publisher _ppl_pub;
   unsigned int _ppl_sent_nb;
 }; // end class PPLPublisherTemplate
+
+} // end namespace vision_utils
 
 #endif // TEMPLATE2PPL_H

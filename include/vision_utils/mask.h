@@ -44,7 +44,7 @@ ________________________________________________________________________________
 
 #include <opencv2/core/core.hpp>
 
-namespace image_utils {
+namespace vision_utils {
 
 inline bool is_nan_const_double(const double & val) { return isnan(val);}
 
@@ -148,6 +148,6 @@ bool color_mask_ncolors(const cv::Mat3b & img,
   return true;
 } // end color_mask();
 
-} // end namespace image_utils
+} // end namespace vision_utils
 
 #endif // MASK_H

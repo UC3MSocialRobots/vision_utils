@@ -24,9 +24,9 @@ void evo_function(gsl_vector * params, gsl_vector * xk_1, gsl_vector * xk)
   gsl_vector_set(xk, 1, y + dt * speed * sin(orien));
   gsl_vector_set(xk, 2, z);
   gsl_vector_set(xk, 3, orien
-                 + dt * brownian_noise_amp * combinatorics_utils::rand_gaussian());
+                 + dt * brownian_noise_amp * vision_utils::rand_gaussian());
   gsl_vector_set(xk, 4, speed
-                 + dt * brownian_noise_amp * combinatorics_utils::rand_gaussian());
+                 + dt * brownian_noise_amp * vision_utils::rand_gaussian());
 }
 
 // Observation function
@@ -35,7 +35,7 @@ void obs_function(gsl_vector * xk , gsl_vector * yk)
   double observation_noise_amp = .1;
   for(unsigned int i = 0 ; i < yk->size ; ++i)
     gsl_vector_set(yk, i, gsl_vector_get(xk,i)
-                   + observation_noise_amp * combinatorics_utils::rand_gaussian());
+                   + observation_noise_amp * vision_utils::rand_gaussian());
 }
 
 /*****************************************************/

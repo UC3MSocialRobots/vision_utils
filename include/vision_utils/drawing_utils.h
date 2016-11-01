@@ -2,12 +2,13 @@
 #define DRAWING_UTILS_H
 
 #include <opencv2/imgproc/imgproc.hpp>
-#include "vision_utils/utils/geometry_utils.h"
+#include "vision_utils/geometry_utils.h"
 #include "vision_utils/resize_utils.h"
 #include "vision_utils/titlemaps.h"
 #include "vision_utils/draw_arrow.h"
 
-namespace image_utils {
+namespace vision_utils {
+//cut:drawLine
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -25,6 +26,7 @@ inline void drawLine(cv::Mat & img,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:draw_segment
 
 inline void draw_segment(cv::Mat & img,
                          const cv::Vec4i & segment_ends,
@@ -37,6 +39,7 @@ inline void draw_segment(cv::Mat & img,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:drawPoint
 
 inline void drawPoint(cv::Mat & img, const cv::Point & p,
                       const cv::Scalar & color, const int thickness = 1) {
@@ -44,6 +47,7 @@ inline void drawPoint(cv::Mat & img, const cv::Point & p,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:drawRectangle
 
 inline void drawRectangle(cv::Mat & img, const cv::Rect & r, const cv::Scalar & color,
                           const int thickness =1,
@@ -55,6 +59,7 @@ inline void drawRectangle(cv::Mat & img, const cv::Rect & r, const cv::Scalar & 
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:drawCross
 
 inline void drawCross(cv::Mat & img, const int x, const int y, const int radius,
                       const cv::Scalar & color,  const int thickness =1,
@@ -75,6 +80,7 @@ inline void drawCross(cv::Mat & img, const cv::Point & p,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:drawPolygon
 
 inline void drawPolygon(cv::Mat & img,
                         const std::vector<cv::Point> & poly,
@@ -96,6 +102,7 @@ inline void drawPolygon(cv::Mat & img,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:drawListOfPoints
 
 /*!
 * \brief   draw a list of points
@@ -155,6 +162,7 @@ inline void drawListOfPoints_safe2(cv::Mat_<_T> & img,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:paste_img_compute_rois
 
 /*!
  Determine the ROIs for pasting an image onto another.
@@ -182,7 +190,7 @@ inline void paste_img_compute_rois(const Image & topaste, const Image & dst,
     return;
   }
 
-  cv::Rect inter_roi = geometry_utils::rectangle_intersection(dst_roi, topaste_roi);
+  cv::Rect inter_roi = rectangle_intersection(dst_roi, topaste_roi);
   // disjoint rectangles => do nothing
   if (inter_roi.width <= 0 || inter_roi.height <= 0) {
     dst_roi.width = dst_roi.height = topaste_roi.width = topaste_roi.height = 0;
@@ -237,9 +245,9 @@ inline void paste_img(const Image & topaste, Image & dst,
   Image topaste_sub = topaste(topaste_roi),
       dst_sub = dst(dst_roi);
   bool use_mask = (mask != NULL);
-  if (use_mask && !geometry_utils::bbox_included_image(topaste_roi, *mask)) {
+  if (use_mask && !bbox_included_image(topaste_roi, *mask)) {
     printf("paste_img(): incorrect dims of mask (%i,%i), topaste_roi:%s\n",
-           mask->cols, mask->rows, geometry_utils::print_rect(topaste_roi).c_str());
+           mask->cols, mask->rows, print_rect(topaste_roi).c_str());
     use_mask = false;
   }
   if (use_mask) {
@@ -257,6 +265,7 @@ inline void paste_img(const Image & topaste, Image & dst,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:draw_text_centered
 
 /*!
  \param img
@@ -282,6 +291,7 @@ inline void draw_text_centered(cv::Mat& img, const std::string& text,
 } // end draw_text_centered();
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:putTextBackground
 
 /*!
  * Put a text into an image with a given background color
@@ -324,6 +334,7 @@ inline cv::Rect putTextBackground(cv::Mat& img, const std::string& text,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:rotate_image
 
 /*!
   Roate an image by a given angle.
@@ -350,6 +361,7 @@ inline void rotate_image(const cv::Mat & src, cv::Mat & dst,
 } // end rotate_image();
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:draw_text_centered
 
 /*!
  \param img
@@ -389,7 +401,7 @@ inline void draw_text_rotated
 
   // create buffer if not big enough
   if (buffer1.cols < buffer_dim || buffer1.rows < buffer_dim) {
-    // printf("resize\n");
+    //printf("resize\n");
     buffer1.create(buffer_dim, buffer_dim);
   }
   // buffer2 alloc made by rotate_image();
@@ -402,7 +414,7 @@ inline void draw_text_rotated
 
   // find the ROI where buffer2 would be pasted
   cv::Rect topaste_roi, dst_roi;
-  image_utils::paste_img_compute_rois((cv::Mat) buffer1, (cv::Mat) img,
+  paste_img_compute_rois((cv::Mat) buffer1, (cv::Mat) img,
                                       org.x - text_pos.x, org.y - text_pos.y,
                                       topaste_roi, dst_roi);
   // do nothing if out of bounds
@@ -417,7 +429,7 @@ inline void draw_text_rotated
   // cv::Vec3b bg_color = (color[0] == 0 ? cv::Vec3b(255, 255, 255) : cv::Vec3b(0, 0, 0));
 
   // now paint img with color, use buffer2 as mask
-  //  image_utils::paste_img((cv::Mat) buffer3, img, org.x - text_pos.x, org.y - text_pos.y,
+  //  paste_img((cv::Mat) buffer3, img, org.x - text_pos.x, org.y - text_pos.y,
   //                         &buffer2);
   img(dst_roi).setTo(color, buffer2(topaste_roi));
 #else
@@ -426,7 +438,7 @@ inline void draw_text_rotated
   double cos_a = cos(angle_rad), sin_a = sin(angle_rad);
   int min_col = topaste_roi.x, max_col = topaste_roi.x + topaste_roi.width;
   int min_row = topaste_roi.y, max_row = topaste_roi.y + topaste_roi.height;
-  //  ROS_WARN("min_col:%i, max_col:%i, min_row:%i, max_row:%i",
+  //  printf("min_col:%i, max_col:%i, min_row:%i, max_row:%i\n",
   //           min_col, max_col, min_row, max_row);
   // iterate on the window of buffer1 that needs to be pasted
   for (int row = min_row; row < max_row; ++row) {
@@ -438,7 +450,7 @@ inline void draw_text_rotated
                         + ROTATE_COSSIN_X(col - text_pos.x, row - text_pos.y, cos_a, sin_a);
       int buffer1_row = text_pos.y
                         + ROTATE_COSSIN_Y(col - text_pos.x, row - text_pos.y, cos_a, sin_a);
-      //  ROS_WARN_THROTTLE(1, "col:%i, row:%i, buffer1_col:%i, buffer1_row:%i",
+      //  printf"col:%i, row:%i, buffer1_col:%i, buffer1_row:%i",
       //                    col, row, buffer1_col, buffer1_row);
 
       // if coordinates are inside bounds and buffer1 at this pixel is white,
@@ -457,6 +469,7 @@ inline void draw_text_rotated
 } // end draw_text_rotated();
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:paste_images
 
 static const unsigned int HEADER_SIZE = 30;
 
@@ -533,7 +546,7 @@ void paste_images(const std::vector<cv::Mat_<_T> > & imgs,
                   const int height1 = 50,
                   const int itempadding = 5,
                   bool draw_headers = true,
-                  titlemaps::Map column_titlemap = titlemaps::int_to_uppercase_letter,
+                  Map column_titlemap = int_to_uppercase_letter,
                   const std::vector<cv::Mat1b> & masks = std::vector<cv::Mat1b>(),
                   bool do_not_constrain_width = false)
 {
@@ -577,11 +590,11 @@ void paste_images(const std::vector<cv::Mat_<_T> > & imgs,
     // resize image if bigger than allowed space
     cv::Mat_<_T> curr_img_resized;
     cv::Mat1b curr_mask_resized;
-    image_utils::resize_if_bigger
+    resize_if_bigger
         (imgs[img_idx], curr_img_resized, allowed_width1, allowed_height1,
          cv::INTER_NEAREST, true, true);
     if (use_masks) {
-      image_utils::resize_if_bigger
+      resize_if_bigger
           (masks[img_idx], curr_mask_resized, allowed_width1, allowed_height1,
            cv::INTER_NEAREST, true, false);
     }
@@ -591,7 +604,7 @@ void paste_images(const std::vector<cv::Mat_<_T> > & imgs,
                   + (horizontal_pasting ? img_idx * width1 : header_size);
     int paste_y = (height1 - curr_img_resized.rows) / 2
                   + (horizontal_pasting ? 0 : img_idx * height1);
-    image_utils::paste_img(curr_img_resized, out, paste_x, paste_y,
+    paste_img(curr_img_resized, out, paste_x, paste_y,
                            (use_masks ? &curr_mask_resized : NULL));
     //    printf("curr_img_resized:%i x %i, paste_x:%i, paste_y:%i\n",
     //           curr_img_resized.cols, curr_img_resized.rows, paste_x, paste_y);
@@ -604,7 +617,7 @@ void paste_images(const std::vector<cv::Mat_<_T> > & imgs,
                                          : header_size / 2);
       int header_y = (horizontal_pasting ? height1 + header_size / 2
                                          : height1 * (.5 + img_idx));
-      image_utils::draw_text_centered
+      draw_text_centered
           (out, column_titlemap(img_idx), cv::Point(header_x, header_y),
            CV_FONT_HERSHEY_COMPLEX_SMALL, 1, CV_RGB(0, 0, 0));
     } // end for img_idx
@@ -613,6 +626,7 @@ void paste_images(const std::vector<cv::Mat_<_T> > & imgs,
 } // end if paste_images();
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:paste_images_gallery
 
 /*!
  * Paste a bunch of images OF THE SAME SIZE into a big collage,
@@ -643,13 +657,13 @@ void paste_images_gallery(const std::vector<cv::Mat_<T> > & in,
   // prepare output
   int galleryrows = std::ceil(1. * nimgs / gallerycols);
   out.create(rows1 * galleryrows, cols1 * gallerycols);
-  // printf("nimgs:%i, gallerycols:%i, galleryrows:%i\n", nimgs, gallerycols, galleryrows);
+  //printf("nimgs:%i, gallerycols:%i, galleryrows:%i\n", nimgs, gallerycols, galleryrows);
   out.setTo(background_color);
   // paste images
   for (int img_idx = 0; img_idx < nimgs; ++img_idx) {
     int galleryx = img_idx % gallerycols, galleryy = img_idx / gallerycols;
     cv::Rect roi(galleryx * cols1, galleryy * rows1, cols1, rows1);
-    // printf("### out:%ix%i, roi %i:'%s'\n", out.cols, out.rows, img_idx, geometry_utils::print_rect(roi).c_str());
+    //printf("### out:%ix%i, roi %i:'%s'\n", out.cols, out.rows, img_idx, print_rect(roi).c_str());
     if (cols1 != in[img_idx].cols || rows1 != in[img_idx].rows) {
       printf("Image %i of size (%ix%i), different from (%ix%i), skipping it.\n",
              img_idx, in[img_idx].cols, in[img_idx].rows, cols1, rows1);
@@ -664,8 +678,8 @@ void paste_images_gallery(const std::vector<cv::Mat_<T> > & in,
 } // end paste_pics<_T>
 
 ////////////////////////////////////////////////////////////////////////////////
+// cut
 
-
-} // end namespace image_utils
+} // end namespace vision_utils
 
 #endif // DRAWING_UTILS_H

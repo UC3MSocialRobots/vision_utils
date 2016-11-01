@@ -71,6 +71,8 @@ This leads to a speedup by almost 100 times on experimental tests.
 #define IMPL_GUO_HALL_ORIGINAL    "guo_hall_original"
 #define IMPL_GUO_HALL_FAST        "guo_hall_fast"
 
+namespace vision_utils {
+
 class VoronoiThinner {
 public:
   //! a constant not limiting the number of iterations of an implementation
@@ -205,7 +207,7 @@ public:
       return cv::Rect(0, 0, img.cols, img.rows);
     }
     cv::Rect bbox = boundingBox(img);
-    // printf("bbox:(%i, %i)+(%i, %i)\n", bbox.x, bbox.y, bbox.width, bbox.height);
+    //printf("bbox:(%i, %i)+(%i, %i)\n", bbox.x, bbox.y, bbox.width, bbox.height);
     // the top and left boundary of the rectangle are inclusive,
     // while the right and bottom boundaries are not
     if (bbox.x <= 0 || bbox.x + bbox.width >= img.cols
@@ -226,7 +228,7 @@ public:
     bbox.y --;
     bbox.width += 2;
     bbox.height += 2;
-    // printf("bbox:(%i, %i)+(%i, %i)\n", bbox.x, bbox.y, bbox.width, bbox.height);
+    //printf("bbox:(%i, %i)+(%i, %i)\n", bbox.x, bbox.y, bbox.width, bbox.height);
     img(bbox).copyTo(out);
     return bbox;
   } // end copy_bounding_box_plusone()
@@ -448,11 +450,11 @@ protected:
     int niters = 0;
     while (true) {
       bool haschanged1 = thin_guo_hall_iter(skel, 0);
-      // printf("0\n"); skel *= 255; cv::imshow("skel", skel); cv::waitKey(0); skel /= 255;
+      //printf("0\n"); skel *= 255; cv::imshow("skel", skel); cv::waitKey(0); skel /= 255;
       // std::cout << "iter0: skel:" << ImageContour::to_string(skel) << std::endl;
 
       bool haschanged2 = thin_guo_hall_iter(skel, 1);
-      // printf("1\n"); skel *= 255; cv::imshow("skel", skel); cv::waitKey(0); skel /= 255;
+      //printf("1\n"); skel *= 255; cv::imshow("skel", skel); cv::waitKey(0); skel /= 255;
       // std::cout << "iter1: skel:" << ImageContour::to_string(skel) << std::endl;
       if (!haschanged1 && !haschanged2)
         break;
@@ -485,7 +487,7 @@ protected:
     //         crop_img_before, max_iters);
     _bbox  = copy_bounding_box_plusone(img, skel, crop_img_before);
     skelcontour.from_image_C4(skel);
-    // printf("skelcontour:'%s'\n", skelcontour.to_string().c_str());
+    //printf("skelcontour:'%s'\n", skelcontour.to_string().c_str());
     int cols = skelcontour.cols, rows = skelcontour.rows;
 
     // clear queues
@@ -792,5 +794,7 @@ protected:
   std::deque<int> cols_to_set;
   std::deque<int> rows_to_set;
 }; // end class VoronoiThinner
+
+} // end namespace vision_utils
 
 #endif // VORONOI_H

@@ -27,14 +27,14 @@ ________________________________________________________________________________
 #define PPL_TF_UTILS_H
 
 // msg
-#include <people_msgs_rl/PeoplePoseList.h>
+#include <people_msgs/People.h>
 // ROS
 #include <tf/transform_listener.h>
 #include <tf/exceptions.h>
 
-namespace ppl_utils {
+namespace vision_utils {
 /*!
- * Convert a people_msgs_rl::PeoplePose from one frame to another.
+ * Convert a people_msgs::Person from one frame to another.
  * \param pose
  *   [IN+OUT] The pose to be converted.
  * \param target_frame
@@ -44,7 +44,7 @@ namespace ppl_utils {
  * \return
  *    true if success
  */
-bool convert_people_pose_tf(people_msgs_rl::PeoplePose & pose,
+bool convert_people_pose_tf(people_msgs::Person & pose,
                             const std::string & target_frame,
                             const tf::TransformListener & transform_listener) {
   // do nothing if same frame
@@ -54,7 +54,7 @@ bool convert_people_pose_tf(people_msgs_rl::PeoplePose & pose,
   // convert geometry_msgs::Pose -> geometry_msgs::PoseStamped
   geometry_msgs::PoseStamped pin, pout;
   pin.header = pose.header;
-  pin.pose = pose.head_pose;
+  pin.pose = pose.position;
   pout.header.stamp = pin.header.stamp;
   pout.header.frame_id = target_frame;
   try {
@@ -66,7 +66,7 @@ bool convert_people_pose_tf(people_msgs_rl::PeoplePose & pose,
            pose.header.frame_id.c_str(), target_frame.c_str(), e.what());
     return false;
   }
-  pose.head_pose = pout.pose;
+  pose.position = pout.pose;
   pose.header.frame_id = target_frame;
   return true;
 } // end convert_people_pose_tf()
@@ -74,7 +74,7 @@ bool convert_people_pose_tf(people_msgs_rl::PeoplePose & pose,
 //////////////////////////////////////////////////////////////////////////////
 
 /*!
- * Convert a list of people_msgs_rl::PeoplePose from one frame to another.
+ * Convert a list of people_msgs::Person from one frame to another.
  * \param list
  *   The list of poses to convert.
  * \param target_frame
@@ -84,7 +84,7 @@ bool convert_people_pose_tf(people_msgs_rl::PeoplePose & pose,
  * \return
  *    true if success
  */
-bool convert_ppl_tf(people_msgs_rl::PeoplePoseList & list,
+bool convert_ppl_tf(people_msgs::People & list,
                     const std::string & target_frame,
                     tf::TransformListener & transform_listener) {
   for (unsigned int pose_idx = 0; pose_idx < list.poses.size(); ++pose_idx) {
@@ -101,15 +101,15 @@ bool convert_ppl_tf(people_msgs_rl::PeoplePoseList & list,
 ////////////////////////////////////////////////////////////////////////////////
 
 //! set a new header for both the PPL and its sons
-inline void set_ppl_header(people_msgs_rl::PeoplePoseList & ppl,
+inline void set_ppl_header(people_msgs::People & ppl,
                            const std::string & frame,
                            const ros::Time & stamp) {
   ppl.header.frame_id = frame;
   ppl.header.stamp = stamp;
-  unsigned int npps = ppl.poses.size();
+  unsigned int npps = ppl.people.size();
   for (unsigned int i = 0; i < npps; ++i)
-    ppl.poses[i].header = ppl.header;
+    ppl.people[i].header = ppl.header;
 }
 
-} // end namespace ppl_utils
+} // end namespace vision_utils
 #endif // PPL_TF_UTILS_H

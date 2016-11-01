@@ -39,3 +39,6 @@ before_script: #  Use this to prepare your build for testing e.g. copy database 
 script: # compile
   - cd ~/catkin_ws
   - catkin_make
+  # compile tests
+  - cd build
+  - make tests

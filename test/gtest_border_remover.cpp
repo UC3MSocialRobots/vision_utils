@@ -1,16 +1,16 @@
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
 
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 #include "vision_utils/border_remover.h"
 #include <vision_utils/img_path.h>
 
 TEST(TestSuite, simple_test) {
-  //maggieDebug2("%sborder.png", IMG_DIR);
+  //ROS_INFO("%sborder.png", IMG_DIR);
   cv::Mat1b src = cv::imread(IMG_DIR "border.png", CV_LOAD_IMAGE_GRAYSCALE),
       dst;
-  Timer timer;
-  image_utils::remove_border(src, dst);
+  vision_utils::Timer timer;
+  vision_utils::remove_border(src, dst);
   timer.printTime("remove_border()");
   //cv::imshow("src", src);
   //cv::imshow("dst", dst);

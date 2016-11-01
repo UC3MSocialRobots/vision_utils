@@ -27,31 +27,31 @@ ________________________________________________________________________________
 #ifndef TITLEMAPS_H
 #define TITLEMAPS_H
 
-#include "vision_utils/utils/string_casts.h"
+#include "vision_utils/string_casts.h"
 
-namespace titlemaps {
+namespace vision_utils {
 
 typedef std::string (*Map)(const uint);
 
 //! \example 0->"A", 1->"B", etc.
 inline std::string int_to_uppercase_letter(const uint idx) {
-  return string_utils::cast_to_string((char) ('A' + idx));
+  return cast_to_string((char) ('A' + idx));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 //! \example 0->"a", 1->"b", etc.
 inline std::string int_to_lowercase_letter(const uint idx) {
-  return string_utils::cast_to_string((char) ('a' + idx));
+  return cast_to_string((char) ('a' + idx));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 //! \example 0->"1", 1->"2", etc.
 inline std::string int_to_number(const uint idx) {
-  return string_utils::cast_to_string(1 + idx);
+  return cast_to_string(1 + idx);
 }
 
-} // end namespace titlemaps
+} // end namespace vision_utils
 
 #endif // TITLEMAPS_H

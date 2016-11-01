@@ -56,9 +56,11 @@ A lightweight template for subscribing to a RGB stream.
 #include <opencv2/highgui/highgui.hpp>
 
 #define DEBUG_PRINT(...)   {}
-//#define DEBUG_PRINT(...)   ROS_INFO_THROTTLE(5, __VA_ARGS__)
-//#define DEBUG_PRINT(...)   ROS_WARN(__VA_ARGS__)
+//#define DEBUG_PRINT(...)   //printf_THROTTLE(5, __VA_ARGS__)
 //#define DEBUG_PRINT(...)   printf(__VA_ARGS__)
+//#define DEBUG_PRINT(...)   printf(__VA_ARGS__)
+
+namespace vision_utils {
 
 class RgbSkill : public NanoSkill {
 public:
@@ -177,5 +179,7 @@ private:
   cv_bridge::CvImageConstPtr _rgb_bridge;
   bool _is_camera_tilted;
 }; // end class RgbSkill
+
+} // end namespace vision_utils
 
 #endif // RGB_SKILL_H

@@ -5,12 +5,11 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/objdetect/objdetect.hpp>
 #include <vision_utils/img_path.h>
-#include "vision_utils/utils/debug_utils.h"
-#include "vision_utils/utils/geometry_utils.h"
+#include "vision_utils/geometry_utils.h"
 // vision
 #include "vision_utils/resize_utils.h"
 
-namespace image_utils {
+namespace vision_utils {
 // face detection param
 
 static const std::string DEFAULT_FACE_CASCADE =
@@ -34,7 +33,7 @@ static const int DEFAULT_MIN_WIDTH = 10; // 15
 //! create a face classifier
 cv::CascadeClassifier create_face_classifier
 (const std::string & cascade1_name = DEFAULT_FACE_CASCADE) {
-  maggieDebug2("cascade1_name:'%s'", cascade1_name.c_str());
+  //printf("cascade1_name:'%s'", cascade1_name.c_str());
   cv::CascadeClassifier cascadeClassifier;
   cascadeClassifier.load( cascade1_name );
   return cascadeClassifier;
@@ -51,16 +50,16 @@ void detect_with_opencv(const cv::Mat3b & rgb_img,
                         double scale_factor = DEFAULT_SCALE_FACTOR,
                         int min_neighbors = DEFAULT_MIN_NEIGHBORS,
                         int min_width = DEFAULT_MIN_WIDTH) {
-  // maggieDebug2("detect_with_opencv()");
+  // //printf("detect_with_opencv()");
 
   float scale = resize_if_bigger(rgb_img, small_img,
                                  resize_max_width, resize_max_height);
-  // ROS_WARN("scale:%f", scale);
+  //printf("scale:%f", scale);
 
   // convert to BW
   //    cv::cvtColor(big_img, frameBW, CV_BGR2GRAY);
   //    cv::equalizeHist( frameBW, frameBW );
-  //maggiePrint("frameBW:%ix%i", frameBW.cols, frameBW.rows);
+  //printf("frameBW:%ix%i", frameBW.cols, frameBW.rows);
 
 
   //    detectMultiScale( const Mat& image,
@@ -93,6 +92,6 @@ void detect_with_opencv(const cv::Mat3b & rgb_img,
     } // end loop rec_idx
   } // end if need_scale
 } // end detect_with_opencv();
-} // end namespace image_utils
+} // end namespace vision_utils
 
 #endif // OPENCV_FACE_DETECTOR_PPLP_H

@@ -26,30 +26,30 @@ Some tests for array_to_color()
 //#define DISPLAY
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
-#include "vision_utils/utils/cmatrix.h"
+#include "vision_utils/cmatrix.h"
 #include "vision_utils/array_to_color.h"
 
 int main(int argc, char** argv) {
   // create some data
   unsigned int ncols = 8, nrows = 12;
-  CMatrix<double> data(nrows, ncols);
+  vision_utils::CMatrix<double> data(nrows, ncols);
   for (unsigned int row = 0; row < nrows; ++row) {
     for (unsigned int col = 0; col < ncols; ++col) {
       data[row][col] = std::min(1., fabs(1. * row - col) / 10.);
     } // end loop col
   } // end loop row
-  maggiePrint("data:'%s'", data.to_string(15).c_str());
+  printf("data:'%s'", data.to_string(15).c_str());
 
   cv::Mat3b out1, out2, caption1, caption2;
   // draw with edges and greyscale colormap
-  array_to_color(data, nrows, ncols, out1, 50, 50);
-  colormap_to_caption_image(caption1, 100, 300, colormaps::ratio2grey_inv,
+  vision_utils::array_to_color(data, nrows, ncols, out1, 50, 50);
+  vision_utils::colormap_to_caption_image(caption1, 100, 300, vision_utils::ratio2grey_inv,
                       0., 1., .1, .2);
   // draw with no edges and red_green colormap
   array_to_color(data, nrows, ncols, out2, 60, 40, false, true,
-                 colormaps::ratio2red_green,
-                 &titlemaps::int_to_lowercase_letter, &titlemaps::int_to_number);
-  colormap_to_caption_image(caption2, 100, 300, colormaps::ratio2red_green,
+                 vision_utils::ratio2red_green,
+                 &vision_utils::int_to_lowercase_letter, &vision_utils::int_to_number);
+  vision_utils::colormap_to_caption_image(caption2, 100, 300, vision_utils::ratio2red_green,
                       0., 1., .05, .2, false);
 
 #ifdef DISPLAY

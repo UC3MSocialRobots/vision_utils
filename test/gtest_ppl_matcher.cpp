@@ -30,10 +30,10 @@ public:
   FooPPLMatcher() : PPLMatcherTemplate("FOO_PPLM_START", "FOO_PPLM_STOP") {
   }
   bool match(const PPL & new_ppl, const PPL & tracks, std::vector<double> & costs,
-             std::vector<people_msgs_rl::PeoplePoseAttributes> & new_ppl_added_attributes,
-             std::vector<people_msgs_rl::PeoplePoseAttributes> & tracks_added_attributes) {
+             std::vector<people_msgs::PersonAttributes> & new_ppl_added_attributes,
+             std::vector<people_msgs::PersonAttributes> & tracks_added_attributes) {
     unsigned int ntracks = tracks.poses.size(),
-        ncurr_users = new_ppl.poses.size();
+        ncurr_users = new_ppl.people.size();
     costs.resize(ntracks * ncurr_users, 1);
     // set diagonal costs to 0
     for (unsigned int curr_idx = 0; curr_idx < ncurr_users; ++curr_idx) {
@@ -52,7 +52,7 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, create) {
-  if (!rosmaster_alive()) return;
+  if (!vision_utils::rosmaster_alive()) return;
   FooPPLMatcher matcher;
   matcher.start();
   matcher.stop();
@@ -61,28 +61,28 @@ TEST(TestSuite, create) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, test_sizes) {
-  if (!rosmaster_alive()) return;
+  if (!vision_utils::rosmaster_alive()) return;
   FooPPLMatcher matcher;
-  pplm_testing::test_sizes(matcher);
+  vision_utils::test_sizes(matcher);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, test_same_msg) {
-  if (!rosmaster_alive()) return;
+  if (!vision_utils::rosmaster_alive()) return;
   FooPPLMatcher matcher;
   for (unsigned int nusers = 0; nusers < 10; ++nusers)
-    pplm_testing::test_same_msg(matcher, nusers);
+    vision_utils::test_same_msg(matcher, nusers);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, pplm_benchmark) {
-  if (!rosmaster_alive()) return;
+  if (!vision_utils::rosmaster_alive()) return;
   FooPPLMatcher matcher;
   FilenamePrefix2Imgs db_player;
   ASSERT_TRUE(db_player.from_file(IMG_DIR "breast/*_rgb.png"));
-  pplm_testing::pplm_benchmark(matcher, db_player, 1);
+  vision_utils::pplm_benchmark(matcher, db_player, 1);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

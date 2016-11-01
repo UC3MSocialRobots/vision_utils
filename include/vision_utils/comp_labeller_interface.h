@@ -3,7 +3,9 @@
 
 // std
 #include "opencv2/core/core.hpp"
-#include "vision_utils/utils/sort_utils.h"
+#include "vision_utils/sort_utils.h"
+
+namespace vision_utils {
 
 /*! \class  CompLabellerInterface
  *
@@ -58,5 +60,7 @@ private:
   std::vector<size_t> sizes;
   Order sort_order;
 };
+
+} // end namespace vision_utils
 
 #endif // COMP_LABELLER_INTERFACE_H

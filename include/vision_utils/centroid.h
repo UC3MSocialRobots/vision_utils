@@ -25,7 +25,7 @@ Find the centroid of a monochrome image.
 #ifndef CENTROID_H
 #define CENTROID_H
 #include <opencv2/core/core.hpp>
-namespace image_utils {
+namespace vision_utils {
 inline cv::Point centroidOfMonochromeImage(const cv::Mat1b & img) {
   assert(img.isContinuous());
   unsigned int ncols = img.cols, nrows = img.rows;
@@ -45,6 +45,6 @@ inline cv::Point centroidOfMonochromeImage(const cv::Mat1b & img) {
     return cv::Point();
   return cv::Point(colsum / npts, rowsum / npts);
 } // end centroidOfMonochromeImage()
-} // end namespace image_utils
+} // end namespace vision_utils
 
 #endif // CENTROID_H

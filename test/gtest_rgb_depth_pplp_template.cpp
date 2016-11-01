@@ -25,14 +25,14 @@ Tests for PPLPublisherTemplate
  */
 #include "vision_utils/rgb_depth_pplp_template.h"
 #include "vision_utils/pplp_testing.h"
-#include <vision_utils/utils/rosmaster_alive.h>
+#include <vision_utils/rosmaster_alive.h>
 
 class RgbDepthFoo2PPL : public RgbDepthPPLPublisherTemplate {
 public:
   RgbDepthFoo2PPL() : RgbDepthPPLPublisherTemplate("FOO_START", "FOO_STOP") {
     DEBUG_PRINT("RgbDepthFoo2PPL: started with '%s' and stopped with '%s', "
                "subscribing to '%s', '%s', "
-               "publish PeoplePoseList results on '%s'\n",
+               "publish People results on '%s'\n",
                get_start_stopic().c_str(), get_stop_stopic().c_str(),
                get_rgb_topic().c_str(), get_depth_topic().c_str(),
                get_ppl_topic().c_str());
@@ -43,7 +43,7 @@ public:
   virtual void process_rgb_depth(const cv::Mat3b & rgb,
                                  const cv::Mat1f & depth) {
     // build PPL message
-    people_msgs_rl::PeoplePoseList ppl;
+    people_msgs::People ppl;
     ppl.header = _images_header; // reuse the header of the last frame
     _rgb_copy = rgb;
     publish_PPL(ppl);
@@ -53,7 +53,7 @@ public:
 
   void display(const cv::Mat3b & rgb,
                const cv::Mat1f & depth) {
-    image_utils::depth_image_to_vizualisation_color_image(depth, _depth2viz);
+    vision_utils::depth_image_to_vizualisation_color_image(depth, _depth2viz);
     cv::imshow("rgb", rgb);
     cv::imshow("depth", _depth2viz);
   }
@@ -67,7 +67,7 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, create) {
-  if (!rosmaster_alive()) return;
+  if (!vision_utils::rosmaster_alive()) return;
   RgbDepthFoo2PPL skill;
   ASSERT_FALSE(skill.is_running());
   ASSERT_TRUE(skill.get_ppl_published_nb() == 0);
@@ -76,17 +76,17 @@ TEST(TestSuite, create) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, start_stop) {
-  if (!rosmaster_alive()) return;
+  if (!vision_utils::rosmaster_alive()) return;
   RgbDepthFoo2PPL skill;
-  pplp_testing::start_stop(skill);
+  vision_utils::start_stop(skill);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, speed_test) {
-  if (!rosmaster_alive()) return;
+  if (!vision_utils::rosmaster_alive()) return;
   RgbDepthFoo2PPL skill;
-  pplp_testing::speed_test(skill, false, 30, .8);
+  vision_utils::speed_test(skill, false, 30, .8);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

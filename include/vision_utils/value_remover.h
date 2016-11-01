@@ -8,9 +8,8 @@
 #endif // CV_MAJOR_VERSION == 2 && CV_MINOR_VERSION >= 4
 // AD
 #include "vision_utils/border_remover.h"
-#include "vision_utils/utils/debug_utils.h"
 
-namespace image_utils {
+namespace vision_utils {
 
 /*! replace the pixel with forbidden value by their left neighbours value
 */
@@ -29,7 +28,7 @@ inline void remove_value_left_propagation(cv::Mat_<_T> & src,
     for (int col = 0; col < src.cols; ++col) {
       if (*curr_pt != value_to_remove) {
         if (only_zeros_before_in_row == true) {
-          //maggiePrint("Row %i: cleaning from 0 to %i", row, col);
+          //printf("Row %i: cleaning from 0 to %i", row, col);
           // sweep the left nans
           for (int col_neigh = 0; col_neigh < col; ++col_neigh)
             row_ptr[col_neigh] = *curr_pt;
@@ -71,7 +70,7 @@ inline cv::Rect remove_value(const cv::Mat_<_T> & img_uchar,
   else if (nan_removal_method == VALUE_REMOVAL_METHOD_DIRECTIONAL_VALUE_PROPAGATION) {
     // left value propagation
     img_uchar.copyTo(img_uchar_with_no_nan);
-    image_utils::remove_value_left_propagation<_T>
+    remove_value_left_propagation<_T>
         (img_uchar_with_no_nan, value_to_remove);
   } // end if VALUE_REMOVAL_METHOD_DIRECTIONAL_VALUE_PROPAGATION
 
@@ -86,7 +85,7 @@ inline cv::Rect remove_value(const cv::Mat_<_T> & img_uchar,
 
   else if (nan_removal_method == VALUE_REMOVAL_METHOD_AVERAGE_BORDER) {
     // remove border
-    roi = image_utils::remove_border(img_uchar, img_uchar_with_no_nan,
+    roi = remove_border(img_uchar, img_uchar_with_no_nan,
                                      value_to_remove, 0.5);
     img_uchar(roi).copyTo(img_uchar_with_no_nan);
   } // end if VALUE_REMOVAL_METHOD_AVERAGE_BORDER
@@ -100,6 +99,6 @@ inline cv::Rect remove_value(const cv::Mat_<_T> & img_uchar,
 
 
 
-} // end namespace image_utils
+} // end namespace vision_utils
 
 #endif // VALUE_REMOVER_H

@@ -30,6 +30,8 @@ ________________________________________________________________________________
 #include <opencv2/core/core.hpp>
 #include <stdio.h>
 
+namespace vision_utils {
+
 /*!
  \param user
  \param out
@@ -65,7 +67,7 @@ inline void user_image_to_rgb(const cv::Mat & user, cv::Mat3b & out,
           break;
       } // end switch
       if (indices_image_val!= 0) {
-        color_utils::indexed_color255
+        indexed_color255
             (_out_img_ptr[3 * col + 2],
             _out_img_ptr[3 * col + 1],
             _out_img_ptr[3 * col    ],
@@ -136,5 +138,7 @@ inline cv::Mat3b user_image_to_rgb(const cv::Mat & user, int data_size = 8) {
   user_image_to_rgb(user, rgb, data_size);
   return rgb;
 }
+
+} // end namespace vision_utils
 
 #endif // USER_IMAGE_TO_RGB_H

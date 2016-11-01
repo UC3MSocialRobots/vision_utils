@@ -26,7 +26,7 @@ ________________________________________________________________________________
 
 int main(int argc, char** argv) {
   ros::init(argc, argv, "ppl_viewer");
-  PPLViewer viewer;
+  vision_utils::PPLViewer viewer;
   ros::spin();
   return 0;
 }

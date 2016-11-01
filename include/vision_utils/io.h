@@ -2,30 +2,16 @@
 #define IO_H
 
 #include "opencv2/highgui/highgui.hpp"
-#include "vision_utils/utils/system_utils.h"
-#include "vision_utils/utils/error.h"
-#include "vision_utils/cv_conversion_float_uchar.h"
-#include "vision_utils/user_image_to_rgb.h"
 #include "vision_utils/convert_n_colors.h"
+#include "vision_utils/cv_conversion_float_uchar.h"
+#include "vision_utils/infosimage.h"
+#include "vision_utils/system_utils.h"
+#include "vision_utils/user_image_to_rgb.h"
 
-namespace image_utils {
-
-/*!
- *\brief   returns a string with information about the image
- *(size, depth...)
- */
-inline std::string infosImage(const cv::Mat & i) {
-  std::ostringstream concl;
-  concl << "size:(" << i.cols << "x" << i.rows << "), ";
-  concl << i.channels() << " channels";
-  concl << ", depth:" << i.depth();
-  concl << ", type:" << i.type();
-  concl << ", isContinuous:" << i.isContinuous();
-  return concl.str();
-}
+namespace vision_utils {
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:to_string
 //#define FILENAME "image_utils_temp.yml"
 
 /*!
@@ -34,9 +20,9 @@ inline std::string infosImage(const cv::Mat & i) {
  *\param s its string representation
  */
 inline void to_string(const cv::Mat & mat, std::string & s) {
-  maggieDebug3("to_string()");
+  //printf("to_string()");
   if (mat.isContinuous() == false)
-    maggieError("Cannot convert an image that is not continuous !");
+    throw std::invalid_argument("Cannot convert an image that is not continuous !");
   size_t data_length = mat.cols * mat.rows * mat.elemSize();
   std::ostringstream s_stream;
   s_stream << mat.cols << ' ' << mat.rows << ' ' << mat.type() << ' '
@@ -46,14 +32,14 @@ inline void to_string(const cv::Mat & mat, std::string & s) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:from_string
 /*!
  *populate a matrix with a string
  *\param mat
  *\param s
  */
 inline void from_string(cv::Mat & mat, const std::string & s) {
-  maggieDebug3("from_string()");
+  //printf("from_string()");
   /*
      * with short stream 1
      */
@@ -64,13 +50,15 @@ inline void from_string(cv::Mat & mat, const std::string & s) {
   s_stream >> rows;
   s_stream >> type;
   s_stream >> data_length;
-  maggieDebug3("Creating an image of size %i rows x %i cols, type:%i.", rows, cols, type);
-  if (rows > 3000 || cols > 3000 || rows <= 0 || cols <= 0)
-    maggieError("Soemthing is wrong with those dimensions %ix%i.",
-                rows, cols);
+  //printf("Creating an image of size %i rows x %i cols, type:%i.", rows, cols, type);
+  if (rows > 3000 || cols > 3000 || rows <= 0 || cols <= 0) {
+    char error_msg[1000];
+    sprintf(error_msg, "Soemthing is wrong with those dimensions %ix%i.", rows, cols);
+    throw std::invalid_argument(error_msg);
+  }
   mat.create(rows, cols, type);
   if (mat.isContinuous() == false)
-    maggieError("Cannot convert to an image that is not continuous !");
+    throw std::invalid_argument("Cannot convert to an image that is not continuous !");
 
   // get everything left in the stream
   int data_stream_begin_position = 1 + (int) s_stream.tellg();
@@ -79,11 +67,12 @@ inline void from_string(cv::Mat & mat, const std::string & s) {
   for (int var = 0; var < data_stream_begin_position; ++var)
     ++s_ptr;
   // read the data
-  maggieDebug3("Ready to read %i bytes.", data_length);
+  //printf("Ready to read %i bytes.", data_length);
   memcpy(mat.data, &s.at(data_stream_begin_position), data_length);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:compress_jpeg
 
 inline void compress_jpeg(const cv::Mat3b & input, const int factor,
                           std::string & ans) {
@@ -93,19 +82,21 @@ inline void compress_jpeg(const cv::Mat3b & input, const int factor,
   std::vector<uchar> buf;
   bool encode_OK = cv::imencode(".jpg", input, buf, params);
   if (!encode_OK)
-    maggiePrint("Encoding failed !");
+    printf("Encoding failed !");
   ans = std::string(buf.begin(), buf.end());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:uncompress_jpeg
 
 inline void uncompress_jpeg(cv::Mat3b & output, const std::string & ans) {
   std::vector<uchar> ans_vector (ans.begin(), ans.end());
   output = cv::imdecode(cv::Mat (ans_vector), -1);
-  maggieDebug2("output:%s", image_utils::infosImage(output).c_str());
+  //printf("output:%s", infosImage(output).c_str());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:write_rgb_and_depth_to_yaml_file
 
 inline void write_rgb_and_depth_to_yaml_file(const std::string & yaml_filename_prefix,
                                              const cv::Mat & rgb, const cv::Mat & depth,
@@ -122,13 +113,14 @@ inline void write_rgb_and_depth_to_yaml_file(const std::string & yaml_filename_p
 } // end write_rgb_and_depth_to_yaml_file();
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:read_depth_rgb_from_yaml_file
 
 inline bool read_depth_rgb_from_yaml_file(const std::string & yaml_filename_prefix,
                                           cv::Mat & rgb, cv::Mat & depth) {
   std::ostringstream full_filename;
   full_filename << yaml_filename_prefix << "_rgb_depth.yaml";
-  if (!system_utils::file_exists(full_filename.str())) {
-    printf("File '%s' does not exist!", full_filename.str().c_str());
+  if (!file_exists(full_filename.str())) {
+    printf("File '%s' does not exist!\n", full_filename.str().c_str());
     return false;
   }
   cv::FileStorage fs(full_filename.str(), cv::FileStorage::READ);
@@ -139,14 +131,15 @@ inline bool read_depth_rgb_from_yaml_file(const std::string & yaml_filename_pref
     printf("read_depth_rgb_from_yaml_file('%s'): "
            "depth(%s) or RGB(%s) images are empty!",
            full_filename.str().c_str(),
-           image_utils::infosImage(depth).c_str(),
-           image_utils::infosImage(rgb).c_str());
+           infosImage(depth).c_str(),
+           infosImage(rgb).c_str());
     return false;
   }
   return true;
 } // end read_depth_rgb_from_yaml_file();
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:read_rgb_depth_user_image_from_image_file
 
 bool read_rgb_depth_user_image_from_image_file(const std::string & filename_prefix,
                                                cv::Mat* rgb = NULL,
@@ -154,7 +147,7 @@ bool read_rgb_depth_user_image_from_image_file(const std::string & filename_pref
                                                cv::Mat1b* user_mask = NULL,
                                                FileFormat format = FILE_PNG) {
   // read depth and rgb
-  if (!image_utils::read_rgb_and_depth_image_from_image_file
+  if (!read_rgb_and_depth_image_from_image_file
       (filename_prefix, rgb, depth, format))
     return false;
   // read user mask
@@ -173,10 +166,11 @@ bool read_rgb_depth_user_image_from_image_file(const std::string & filename_pref
     return false;
   }
   return true;
-  // printf("Read user mask file '%s'.\n", user_mask_filename.str().c_str());
+  //printf("Read user mask file '%s'.\n", user_mask_filename.str().c_str());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:write_rgb_depth_user_to_image_file
 
 inline bool write_rgb_depth_user_to_image_file
 (const std::string & filename_prefix,
@@ -226,6 +220,7 @@ inline bool write_rgb_depth_user_to_image_file
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:rectangle_to_string
 
 /*!
  *build a string to represent a rectangle
@@ -240,30 +235,33 @@ inline std::string rectangle_to_string(const cv::Rect & rect) {
 }
 
 ////////////////////////////////////////////////////////////////////////////
+//cut:print_random_pts_float
 
 template<class _T>
 static inline void print_random_pts_float(const cv::Mat & img, const int & nb_pts) {
-  maggieDebug2("print_random_pts(nb_pts:%i)", nb_pts);
+  //printf("print_random_pts(nb_pts:%i)", nb_pts);
   for (int pt_idx = 0; pt_idx < nb_pts; ++pt_idx) {
     int col = rand() % img.cols;
     int row = rand() % img.rows;
-    maggiePrint("row:%i, col:%i, val:%g", row, col, img.at<_T>(col, row));
+    printf("row:%i, col:%i, val:%g\n", row, col, img.at<_T>(col, row));
   } // end loop pt_idx
 } // end print_random_pts
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:print_random_pts_int
 
 template<class _T>
 static inline void print_random_pts_int(const cv::Mat & img, const int & nb_pts) {
-  maggieDebug2("print_random_pts(nb_pts:%i)", nb_pts);
+  //printf("print_random_pts(nb_pts:%i)", nb_pts);
   for (int pt_idx = 0; pt_idx < nb_pts; ++pt_idx) {
     int col = rand() % img.cols;
     int row = rand() % img.rows;
-    maggiePrint("row:%i, col:%i, val:%i", row, col, (int) img.at<_T>(col, row));
+    printf("row:%i, col:%i, val:%i\n", row, col, (int) img.at<_T>(col, row));
   } // end loop pt_idx
 } // end print_random_pts
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:to_yaml
 
 /*!
  * Save file to YAML / XML
@@ -283,6 +281,7 @@ inline void to_yaml(_T & obj,
 } // end to_yaml();
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:from_yaml
 
 /*!
  * Load from YAML / XML file
@@ -302,6 +301,7 @@ inline void from_yaml(_T & obj,
 } // end from_yaml();
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:write_vec
 
 template<class _T>
 inline void write(const std::vector<_T> & phs,
@@ -319,6 +319,7 @@ inline void write(const std::vector<_T> & phs,
 } // end write()
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:to_yaml_vector
 
 /*!
  * Save file to YAML / XML
@@ -337,6 +338,7 @@ inline void to_yaml_vector(const std::vector<_T> & phs,
 } // end to_yaml_vector();
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:read_vec
 
 template<class _T>
 inline void read(std::vector<_T> & phs,
@@ -349,6 +351,7 @@ inline void read(std::vector<_T> & phs,
 } // end write
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:to_yaml_vector
 
 /*!
  * Load from YAML / XML file
@@ -369,6 +372,7 @@ inline void from_yaml_vector(std::vector<_T> & obj,
 } // end from_yaml_vector();
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:imwrite_debug
 
 enum NbColors {
   COLOR_24BITS = 0,
@@ -396,7 +400,7 @@ inline bool imwrite_debug(const std::string& filename, cv::InputArray img,
   return true;
 } // end imwrite_debug()
 
-} // end namespace image_utils
+} // end namespace vision_utils
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -435,4 +439,5 @@ void read(const cv::FileNode & node, _T & x, const _T& default_value = _T()) {
     x.read(node);
 } //end read()
 
+//cut
 #endif // IO_H

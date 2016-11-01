@@ -27,7 +27,7 @@ A simple launcher for a PPLBenchmarker.
 
 int main(int argc, char** argv) {
   ros::init(argc, argv, "pplp_benchmarker");
-  PPLBenchmarker benchmarker;
+  vision_utils::PPLBenchmarker benchmarker;
   ros::spin();
   return 0;
 }

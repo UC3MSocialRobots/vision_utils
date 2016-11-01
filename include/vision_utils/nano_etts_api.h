@@ -4,6 +4,8 @@
 #include <ros/node_handle.h>
 #include <std_msgs/String.h>
 
+namespace vision_utils {
+
 /*!
  * \class NanoEttsApi
  * a tiny API for using etts that comes with no dependencies.
@@ -37,5 +39,7 @@ public:
   ros::NodeHandle _nh_public;
   ros::Publisher _pub;
 }; // end class NanoEttsApi
+
+} // end namespace vision_utils
 
 #endif // NANO_ETTS_API_H

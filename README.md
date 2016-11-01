@@ -30,3 +30,10 @@ $ sudo apt-get install python-rosdep
 $ sudo rosdep init
 $ rosdep install vision_utils --ignore-src
 ```
+
+Some dependencies must be installed manually as they are not included
+in ```rosdep```:
+
+```bash
+$ sudo apt install tesseract-ocr-fra  tesseract-ocr-spa
+```

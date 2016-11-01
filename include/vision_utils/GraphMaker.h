@@ -20,6 +20,8 @@
 #define TICK_SIZE 2
 #define TICK_LABEL_SHIFT 15
 
+namespace vision_utils {
+
 template<class Xtype, class Ytype>
 class GraphMaker {
 public:
@@ -126,7 +128,6 @@ private:
 /* *****************************************************************************
  * implementation
  ******************************************************************************/
-//#include "vision_utils/utils/debug_utils.h"
 
 template<class Xtype, class Ytype>
 GraphMaker<Xtype, Ytype>::GraphMaker() {
@@ -165,7 +166,7 @@ inline void GraphMaker<Xtype, Ytype>::recompute_convert_coeffs() {
 
 template<class Xtype, class Ytype>
 inline void GraphMaker<Xtype, Ytype>::set_image(cv::Mat & image) {
-    //maggieDebug2("set_image(%i x %i)", image.cols, image.rows);
+    //printf("set_image(%i x %i)", image.cols, image.rows);
     this->image = image;
     recompute_convert_coeffs();
 }
@@ -210,7 +211,7 @@ inline void GraphMaker<Xtype, Ytype>::draw_axes(const cv::Scalar & axes_color) {
     int tick_x_index_max = 1 + (int) (xmax / xtickstep);
     for (int tick_x_index = tick_x_index_min; tick_x_index < tick_x_index_max; ++tick_x_index) {
         double tick_x = tick_x_index * xtickstep;
-        //maggieDebug2("tick_x:%f, convert_coord_x(tick_x):%i", tick_x, convert_coord_x(tick_x));
+        //printf("tick_x:%f, convert_coord_x(tick_x):%i", tick_x, convert_coord_x(tick_x));
         int tick_x_graph = convert_coord_x(tick_x);
         line(image, cv::Point(tick_x_graph, x_tick_y - TICK_SIZE), cv::Point(
                 tick_x_graph, x_tick_y + TICK_SIZE), axes_color);
@@ -232,7 +233,7 @@ inline void GraphMaker<Xtype, Ytype>::draw_axes(const cv::Scalar & axes_color) {
     int tick_y_index_may = 1 + (int) (ymax / ytickstep);
     for (int tick_y_index = tick_y_index_min; tick_y_index < tick_y_index_may; ++tick_y_index) {
         double tick_y = tick_y_index * ytickstep;
-        //maggieDebug2("tick_y:%f, convert_coord_y(tick_y):%i", tick_y, convert_coord_y(tick_y));
+        //printf("tick_y:%f, convert_coord_y(tick_y):%i", tick_y, convert_coord_y(tick_y));
         int tick_y_graph = convert_coord_y(tick_y);
         line(image, cv::Point(y_tick_x - TICK_SIZE, tick_y_graph), cv::Point(
                 y_tick_x + TICK_SIZE, tick_y_graph), axes_color);
@@ -257,7 +258,7 @@ inline void GraphMaker<Xtype, Ytype>::draw_curve(const Curve & curve,
                                                 != curve.end(); ++point) {
         int current_x = convert_coord_x(point->first);
         int current_y = convert_coord_y(point->second);
-        //maggieDebug2("x:%f, y:%f, current_x:%i, current_y:%i", point->first, point->second, current_x, current_y);
+        //printf("x:%f, y:%f, current_x:%i, current_y:%i", point->first, point->second, current_x, current_y);
         line(image, cv::Point(last_x, last_y), cv::Point(current_x, current_y),
              color, thickness);
         last_x = current_x;
@@ -269,7 +270,7 @@ inline void GraphMaker<Xtype, Ytype>::draw_curve(const Curve & curve,
 template<class Xtype, class Ytype>
 inline void GraphMaker<Xtype, Ytype>::draw(bool want_axes /*= true*/,
                                            bool clear_image_before /*= true*/) {
-    //maggieDebug2("draw(%i x %i)", image.cols, image.rows);
+    //printf("draw(%i x %i)", image.cols, image.rows);
     //std::cout << xmin << ", " << xmax << std::endl;
 
     /* fill in white */
@@ -302,6 +303,8 @@ inline void GraphMaker<Xtype, Ytype>::draw_horizontal(const Ytype & y,
     cv::line(image, cv::Point(0, convert_coord_y(y)), cv::Point(image.cols,
                                                                 convert_coord_y(y)), color, thickness);
 }
+
+} // end namespace vision_utils
 
 #endif /* GRAPHMAKER_H_ */
 

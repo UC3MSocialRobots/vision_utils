@@ -20,7 +20,7 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
 
-Some tests for FilenamePrefix2Imgs.
+Some tests for vision_utils::FilenamePrefix2Imgs.
  */
 //#define DISPLAY
 #include <gtest/gtest.h>
@@ -28,7 +28,7 @@ Some tests for FilenamePrefix2Imgs.
 #include <vision_utils/img_path.h>
 
 TEST(TestSuite, ctor) {
-  FilenamePrefix2Imgs db;
+  vision_utils::FilenamePrefix2Imgs db;
   ASSERT_TRUE(db.get_playlist_size() == 0);
 }
 
@@ -36,8 +36,8 @@ TEST(TestSuite, ctor) {
 
 void test_load(const std::string & filename_regex,
                unsigned int nframes_exp,
-               DatabasePlayer::UserIdx exp_user_idx) {
-  FilenamePrefix2Imgs db;
+               vision_utils::DatabasePlayer::UserIdx exp_user_idx) {
+  vision_utils::FilenamePrefix2Imgs db;
   ASSERT_TRUE(db.from_file(filename_regex));
   unsigned int nframes = db.get_playlist_size();
   ASSERT_TRUE(nframes == nframes_exp);

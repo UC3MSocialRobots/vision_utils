@@ -30,10 +30,12 @@ This class also computes them.
 #ifndef DGAITDB_H
 #define DGAITDB_H
 
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 #include "vision_utils/oni2imgs.h"
 #include "vision_utils/blob_segmenter.h"
 #include "vision_utils/io.h"
+
+namespace vision_utils {
 
 class DGaitDB : public Oni2Imgs {
 public:
@@ -66,5 +68,7 @@ private:
   std::vector<cv::Rect> boundingBoxes;
   unsigned int _nusers;
 };
+
+} // end namespace vision_utils
 
 #endif // DGAITDB_H

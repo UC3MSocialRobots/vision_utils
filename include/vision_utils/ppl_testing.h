@@ -28,80 +28,80 @@ ________________________________________________________________________________
 
 #include <gtest/gtest.h>
 // AD
-#include <people_msgs_rl/PeoplePoseList.h>
-#include "vision_utils/utils/string_casts_stl.h"
-#include "vision_utils/utils/pt_utils.h"
-#include "vision_utils/utils/assignment_utils.h"
+#include <people_msgs/People.h>
+#include "vision_utils/string_casts_stl.h"
+#include "vision_utils/pt_utils.h"
+#include "vision_utils/assignment_utils.h"
 #include "vision_utils/people_pose_list_utils.h"
 
-#define ASSERT_TRUE_TIMEOUT(cond, timeout) { Timer timer; while (timer.getTimeSeconds() < timeout && !(cond)) usleep(50 * 1000); } ASSERT_TRUE(cond)
+#define ASSERT_TRUE_TIMEOUT(cond, timeout) { ::vision_utils::Timer timer; while (timer.getTimeSeconds() < timeout && !(cond)) usleep(50 * 1000); } ASSERT_TRUE(cond)
 
-namespace ppl_utils {
+namespace vision_utils {
 
 
 template<class Pt3>
-inline void ppl_factory(people_msgs_rl::PeoplePoseList & ppl,
+inline void ppl_factory(people_msgs::People & ppl,
                         const std::vector<Pt3> & exp_users_pos,
                         double pos_error_std_dev = 0,
                         ros::Time stamp = ros::Time::now()) {
   unsigned int nusers = exp_users_pos.size();
   ppl.header.stamp = stamp;
-  ppl.poses.clear();
+  ppl.people.clear();
   for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx) {
-    people_msgs_rl::PeoplePose pp;
+    people_msgs::Person pp;
     pp.header = ppl.header;
-    pp.person_name = string_utils::cast_to_string(user_idx);
+    pp.name = cast_to_string(user_idx);
     pp.std_dev = .1;
-    pt_utils::copy3(exp_users_pos[user_idx], pp.head_pose.position);
-    combinatorics_utils::add_gaussian_noise(pp.head_pose.position, pos_error_std_dev);
-    pp.confidence = 1;
-    ppl.poses.push_back(pp);
+    copy3(exp_users_pos[user_idx], pp.position);
+    add_gaussian_noise(pp.position, pos_error_std_dev);
+    pp.reliability = 1;
+    ppl.people.push_back(pp);
   } // end loop user_idx
 } // end ppl_factory();
 
 ////////////////////////////////////////////////////////////////////////////////
 
-inline void check_ppl_equals(const people_msgs_rl::PeoplePoseList & truth_ppl,
-                             const people_msgs_rl::PeoplePoseList & tracks_ppl,
+inline void check_ppl_equals(const people_msgs::People & truth_ppl,
+                             const people_msgs::People & tracks_ppl,
                              double pos_error_std_dev = 0) {
-  unsigned int ntracks = tracks_ppl.poses.size();
-  ASSERT_TRUE(truth_ppl.poses.size() == ntracks);
+  unsigned int ntracks = tracks_ppl.people.size();
+  ASSERT_TRUE(truth_ppl.people.size() == ntracks);
   // match the tracks with the truth PP
   std::vector<geometry_msgs::Point>
-      truth_pos = ppl_utils::ppl2points<geometry_msgs::Point>(truth_ppl),
-      tracks_pos = ppl_utils::ppl2points<geometry_msgs::Point>(tracks_ppl);
-  assignment_utils::MatchList matchlist_truth2track;
-  CMatrix<assignment_utils::Cost> costs;
-  assignment_utils::Cost best_cost;
-  ASSERT_TRUE(assignment_utils::assign_and_dists
+      truth_pos = ppl2points<geometry_msgs::Point>(truth_ppl),
+      tracks_pos = ppl2points<geometry_msgs::Point>(tracks_ppl);
+  MatchList matchlist_truth2track;
+  CMatrix<Cost> costs;
+  Cost best_cost;
+  ASSERT_TRUE(assign_and_dists
       (truth_pos, tracks_pos, costs, matchlist_truth2track, best_cost));
 
   // now check each match
   for (unsigned int match_idx = 0; match_idx < matchlist_truth2track.size(); ++match_idx) {
-    assignment_utils::Match match = matchlist_truth2track[match_idx];
+    Match match = matchlist_truth2track[match_idx];
     int truth_idx = match.first, track_idx = match.second;
-    const people_msgs_rl::PeoplePose *truth_pp = &(truth_ppl.poses[truth_idx]),
-        *track_pp = &(tracks_ppl.poses[track_idx]);
+    const people_msgs::Person *truth_pp = &(truth_ppl.people[truth_idx]),
+        *track_pp = &(tracks_ppl.people[track_idx]);
     // check 3D position
-    double dist = geometry_utils::distance_points3
-                  (truth_pp->head_pose.position,
-                   track_pp->head_pose.position);
+    double dist = distance_points3
+                  (truth_pp->position,
+                   track_pp->position);
     ASSERT_TRUE(dist <= 1E-3 + 5 * pos_error_std_dev) // 1E-3 for rounding errors
       << "track_idx " << track_idx
-                << ", users_pos:" << pt_utils::print_point(track_pp->head_pose.position)
-                << ", expected:" << pt_utils::print_point(truth_pp->head_pose.position)
+                << ", users_pos:" << print_point(track_pp->position)
+                << ", expected:" << print_point(truth_pp->position)
                 << ", dist:" <<dist;
-    // check person_name
-    ASSERT_TRUE(truth_pp->person_name == track_pp->person_name)
-      << "Truth name #" << truth_idx << " = '" << truth_pp->person_name << "' should be equal to "
-                << " track name #" << track_idx << " = '" << track_pp->person_name << "',"
-                   // << ", truth:" << ppl_utils::pp2string(*truth_pp)
-                   // << ", track:" << ppl_utils::pp2string(*track_pp)
-                << ", all truths:" << ppl_utils::ppl2string(truth_ppl)
-                << ", all tracks:" << ppl_utils::ppl2string(tracks_ppl);
+    // check name
+    ASSERT_TRUE(truth_pp->name == track_pp->name)
+      << "Truth name #" << truth_idx << " = '" << truth_pp->name << "' should be equal to "
+                << " track name #" << track_idx << " = '" << track_pp->name << "',"
+                   // << ", truth:" << pp2string(*truth_pp)
+                   // << ", track:" << pp2string(*track_pp)
+                << ", all truths:" << ppl2string(truth_ppl)
+                << ", all tracks:" << ppl2string(tracks_ppl);
   } // end for match_idx
 } // end check_ppl_equals();
 
-} // end namespace ppl_utils
+} // end namespace vision_utils
 
 #endif // PPL_TESTING_H

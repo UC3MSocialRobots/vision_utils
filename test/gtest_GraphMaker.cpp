@@ -9,16 +9,15 @@
 //#define DISPLAY
 #include <gtest/gtest.h>
 #include "vision_utils/GraphMaker.h"
-#include "vision_utils/utils/debug_utils.h"
 #include "highgui.h"
 
 int main(int argc, char** argv) {
-    maggiePrint("main()");
+    printf("main()");
 
     // rows, cols
     cv::Mat image(500, 800, CV_8UC3);
 
-    GraphMaker<double, double> gm;
+    vision_utils::GraphMaker<double, double> gm;
     gm.set_image(image);
     gm.set_window(5, 15, 1, -8, 8, 1);
 
@@ -26,7 +25,7 @@ int main(int argc, char** argv) {
     for (int i = 0; i < 1000; ++i) {
         ++global_counter;
         // build a custom curve
-        GraphMaker<double, double>::Curve curve_cos, curve_sin;
+        vision_utils::GraphMaker<double, double>::Curve curve_cos, curve_sin;
         for (double t = 0; t < 15; t += .1f) {
             double y_cos = 5 * cos(t + global_counter / 10.f);
             double y_sin = 3 * sin(t + global_counter / 10.f);

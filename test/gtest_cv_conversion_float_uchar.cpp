@@ -7,7 +7,7 @@
 
 #include <gtest/gtest.h>
 #include <stdio.h>
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 #include "vision_utils/cv_conversion_float_uchar.h"
 #include "vision_utils/print_3f_img.h"
 #include "vision_utils/float_image_generator.h"
@@ -18,10 +18,10 @@ void test_depth_image_to_vizualisation_color_image
 (const std::string & rgb_depth_filename_prefix)
 {
   printf("\ntest_depth_image_to_vizualisation_color_image()\n");
-  Timer timer;
+  vision_utils::Timer timer;
   // read depth and rgb files
   cv::Mat rgb_img, depth_img;
-  image_utils::read_rgb_and_depth_image_from_image_file
+  vision_utils::read_rgb_and_depth_image_from_image_file
       (rgb_depth_filename_prefix, &rgb_img, &depth_img);
   timer.printTime("read_rgb_and_depth_image_from_image_file()");
 
@@ -31,38 +31,38 @@ void test_depth_image_to_vizualisation_color_image
 
   timer.reset();
   for (unsigned int i = 0; i < n_times; ++i)
-    image_utils::depth_image_to_vizualisation_color_image
-        (depth_img, depth_img_illus_grey, image_utils::GREYSCALE_STRETCHED);
+    vision_utils::depth_image_to_vizualisation_color_image
+        (depth_img, depth_img_illus_grey, vision_utils::GREYSCALE_STRETCHED);
   timer.printTime_factor("depth_image_to_vizualisation_color_image(GREYSCALE_STRETCHED):", n_times);
 
   timer.reset();
   for (unsigned int i = 0; i < n_times; ++i)
-    image_utils::depth_image_to_vizualisation_color_image
-        (depth_img, depth_img_illus_red, image_utils::REDSCALE_STRETCHED);
+    vision_utils::depth_image_to_vizualisation_color_image
+        (depth_img, depth_img_illus_red, vision_utils::REDSCALE_STRETCHED);
   timer.printTime_factor("depth_image_to_vizualisation_color_image(REDSCALE_STRETCHED):", n_times);
 
   timer.reset();
   for (unsigned int i = 0; i < n_times; ++i)
-    image_utils::depth_image_to_vizualisation_color_image
-        (depth_img, depth_img_illus_full_rgb, image_utils::FULL_RGB_STRETCHED);
+    vision_utils::depth_image_to_vizualisation_color_image
+        (depth_img, depth_img_illus_full_rgb, vision_utils::FULL_RGB_STRETCHED);
   timer.printTime_factor("depth_image_to_vizualisation_color_image(FULL_RGB_STRETCHED):", n_times);
 
   timer.reset();
   for (unsigned int i = 0; i < n_times; ++i)
-    image_utils::depth_image_to_vizualisation_color_image
-        (depth_img, depth_img_illus_grey_scaled, image_utils::GREYSCALE_SCALED);
+    vision_utils::depth_image_to_vizualisation_color_image
+        (depth_img, depth_img_illus_grey_scaled, vision_utils::GREYSCALE_SCALED);
   timer.printTime_factor("depth_image_to_vizualisation_color_image(GREYSCALE_SCALED):", n_times);
 
   timer.reset();
   for (unsigned int i = 0; i < n_times; ++i)
-    image_utils::depth_image_to_vizualisation_color_image
-        (depth_img, depth_img_illus_red_scaled, image_utils::REDSCALE_SCALED);
+    vision_utils::depth_image_to_vizualisation_color_image
+        (depth_img, depth_img_illus_red_scaled, vision_utils::REDSCALE_SCALED);
   timer.printTime_factor("depth_image_to_vizualisation_color_image(REDSCALE_SCALED):", n_times);
 
   timer.reset();
   for (unsigned int i = 0; i < n_times; ++i)
-    image_utils::depth_image_to_vizualisation_color_image
-        (depth_img, depth_img_illus_full_rgb_scaled, image_utils::FULL_RGB_SCALED);
+    vision_utils::depth_image_to_vizualisation_color_image
+        (depth_img, depth_img_illus_full_rgb_scaled, vision_utils::FULL_RGB_SCALED);
   timer.printTime_factor("depth_image_to_vizualisation_color_image(FULL_RGB_SCALED):", n_times);
 
   cv::imshow("rgb_img", rgb_img);
@@ -83,25 +83,25 @@ void test_io() {
   int w = 100, h = 100;
   // only make for a depth image
   cv::Mat src_depth, src_depth_copy;
-  generate_sum_row_col<float>(src_depth, w, h);
-  image_utils::write_rgb_and_depth_image_to_image_file
+  vision_utils::generate_sum_row_col<float>(src_depth, w, h);
+  vision_utils::write_rgb_and_depth_image_to_image_file
       ("/tmp/foo", NULL,  &src_depth);
-  image_utils::read_rgb_and_depth_image_from_image_file
+  vision_utils::read_rgb_and_depth_image_from_image_file
       ("/tmp/foo", NULL,  &src_depth_copy);
-  print_cv_img_info(src_depth, "src_depth");
-  print_cv_img_info(src_depth_copy, "src_depth_copy");
-  compare_two_images(src_depth, src_depth_copy);
+  vision_utils::print_cv_img_info(src_depth, "src_depth");
+  vision_utils::print_cv_img_info(src_depth_copy, "src_depth_copy");
+  vision_utils::compare_two_images(src_depth, src_depth_copy);
 
   // also make it for a RGB
   cv::Mat src_rgb, src_rgb_copy;
-  generate_sum_row_col<cv::Vec3b>(src_rgb, w, h);
-  image_utils::write_rgb_and_depth_image_to_image_file
+  vision_utils::generate_sum_row_col<cv::Vec3b>(src_rgb, w, h);
+  vision_utils::write_rgb_and_depth_image_to_image_file
       ("/tmp/foo", &src_rgb,  &src_depth);
-  image_utils::read_rgb_and_depth_image_from_image_file
+  vision_utils::read_rgb_and_depth_image_from_image_file
       ("/tmp/foo", &src_rgb_copy,  &src_depth_copy);
-  print_cv_img_info(src_rgb, "src_rgb");
-  print_cv_img_info(src_rgb_copy, "src_rgb_copy");
-  compare_two_images(src_rgb, src_rgb_copy);
+  vision_utils::print_cv_img_info(src_rgb, "src_rgb");
+  vision_utils::print_cv_img_info(src_rgb_copy, "src_rgb_copy");
+  vision_utils::compare_two_images(src_rgb, src_rgb_copy);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

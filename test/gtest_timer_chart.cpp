@@ -31,7 +31,7 @@ Some tests for the TimerChart class.
 #include <unistd.h>
 
 inline void usleep_gauss(const double avg_us) {
-  usleep(std::max(1., combinatorics_utils::rand_gaussian() * 3E3 + avg_us));
+  usleep(std::max(1., vision_utils::rand_gaussian() * 3E3 + avg_us));
 }
 
 TEST(TestSuite, test1) {

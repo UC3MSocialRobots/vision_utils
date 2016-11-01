@@ -32,23 +32,25 @@ ________________________________________________________________________________
         The image
 
   - \b "ground_truth_ppl"
-        [people_msgs_rl::PeoplePoseList]
+        [people_msgs::People]
         The ground truth positions
  */
 #include <image_transport/image_transport.h>
 // AD
-#include "vision_utils/utils/find_and_replace.h"
-#include "vision_utils/utils/file_io.h"
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/find_and_replace.h"
+#include "vision_utils/file_io.h"
+#include "vision_utils/timer.h"
 #include "vision_utils/blob_segmenter.h"
 #include "vision_utils/color_utils.h"
 #include "vision_utils/database_player.h"
-// people_msgs_rl
+// people_msgs
 #include "vision_utils/images2ppl.h"
 #include "vision_utils/ppl_attributes.h"
 
-typedef people_msgs_rl::PeoplePose PP;
-typedef people_msgs_rl::PeoplePoseList PPL;
+namespace vision_utils {
+
+typedef people_msgs::Person PP;
+typedef people_msgs::People PPL;
 typedef cv::Point3d Pt3d;
 static const std::string CAMFRAME = "/openni_rgb_optical_frame", BASEFRAME = "/base_link";
 
@@ -82,8 +84,8 @@ public:
     for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx) {
       const ImgData::UserData* userdata = &(users_ptr->at(user_idx));
       UserId user_id = userdata->userid;
-      cv::Rect bbox = geometry_utils::shrink_rec(userdata->bbox, .3, .3);
-      cv::Scalar color = color_utils::color_scalar<cv::Scalar>(user_id);
+      cv::Rect bbox = shrink_rec(userdata->bbox, .3, .3);
+      cv::Scalar color = color_scalar<cv::Scalar>(user_id);
       std::swap(color[0], color[2]); // RGB -> BGR
       cv::rectangle(_bgr_display, bbox, color, 2);
     }
@@ -98,20 +100,20 @@ protected:
     printf("load_single_video('%s')\n", txt_filename.c_str());
     // parse 2D and 3D files
     std::string txt2d_filename = txt_filename;
-    string_utils::find_and_replace(txt2d_filename, "3D", "2D");
+    find_and_replace(txt2d_filename, "3D", "2D");
     std::string txt3d_filename = txt2d_filename;
-    string_utils::find_and_replace(txt3d_filename, "2D", "3D");
-    if (!system_utils::file_exists(txt2d_filename)
-        ||!system_utils::file_exists(txt3d_filename)) {
+    find_and_replace(txt3d_filename, "2D", "3D");
+    if (!file_exists(txt2d_filename)
+        ||!file_exists(txt3d_filename)) {
       printf("KTP2Imgs: Could not find files '%s' or '%s'\n",
              txt2d_filename.c_str(), txt3d_filename.c_str());
       return false;
     }
     // KTP_dataset_images/ground_truth/Still_gt2D.txt -> KTP_dataset_images/images/Still
     _img_folder = txt2d_filename + "/";
-    string_utils::find_and_replace(_img_folder, "ground_truth", "images");
-    string_utils::find_and_replace(_img_folder, "_gt2D.txt", "");
-    if (!system_utils::directory_exists(_img_folder)) {
+    find_and_replace(_img_folder, "ground_truth", "images");
+    find_and_replace(_img_folder, "_gt2D.txt", "");
+    if (!directory_exists(_img_folder)) {
       printf("KTP2Imgs: Could not find  folder '%s'\n", _img_folder.c_str());
       return false;
     }
@@ -122,15 +124,15 @@ protected:
       std::string filename = (use2D ? txt2d_filename : txt3d_filename);
       // printf("KTP2Imgs: filename:'%s'\n", filename.c_str());
       std::vector<std::string> lines;
-      string_utils::retrieve_file_split(filename, lines, true);
+      retrieve_file_split(filename, lines, true);
       unsigned int nlines = lines.size();
       for (unsigned int line_idx = 0; line_idx < nlines; ++line_idx) {
         std::string line = lines[line_idx];
         // printf("KTP2PPL: line '%s'\n", line.c_str());
-        string_utils::find_and_replace(line, ":", "");
-        string_utils::find_and_replace(line, ",", "");
+        find_and_replace(line, ":", "");
+        find_and_replace(line, ",", "");
         std::vector<std::string> words;
-        string_utils::StringSplit(line, " ", &words);
+        StringSplit(line, " ", &words);
         unsigned int nwords = words.size();
         // printf("nwords:%i\n", nwords);
         if ((nwords-1) % nfields_per_user != 0) {
@@ -142,20 +144,20 @@ protected:
         unsigned int nusers = ((nwords-1) / nfields_per_user);
         for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx) {
           unsigned int fieldspos = nfields_per_user*user_idx+1;
-          UserId currid = string_utils::cast_from_string<UserId>(words[fieldspos]);
+          UserId currid = cast_from_string<UserId>(words[fieldspos]);
           if (use2D) {
             cv::Rect* bbox = &(_files[currfile].get_userdata_by_id(currid)->bbox);
-            bbox->x = string_utils::cast_from_string<int>(words[fieldspos+1]);
-            bbox->y = string_utils::cast_from_string<int>(words[fieldspos+2]);
-            bbox->width = string_utils::cast_from_string<int>(words[fieldspos+3]);
-            bbox->height = string_utils::cast_from_string<int>(words[fieldspos+4]);
+            bbox->x = cast_from_string<int>(words[fieldspos+1]);
+            bbox->y = cast_from_string<int>(words[fieldspos+2]);
+            bbox->width = cast_from_string<int>(words[fieldspos+3]);
+            bbox->height = cast_from_string<int>(words[fieldspos+4]);
           } else { // 3D pos
             Pt3d* pos = &(_files[currfile].get_userdata_by_id(currid)->pos);
             //printf("word1:'%s'\n", words[fieldspos+1].c_str());
-            pos->x = string_utils::cast_from_string<double>(words[fieldspos+1]);
-            pos->y = string_utils::cast_from_string<double>(words[fieldspos+2]);
-            pos->z = string_utils::cast_from_string<double>(words[fieldspos+3]);
-            //printf("currfile '%s', pos:'%s'\n", currfile.c_str(), geometry_utils::printP(*pos).c_str());
+            pos->x = cast_from_string<double>(words[fieldspos+1]);
+            pos->y = cast_from_string<double>(words[fieldspos+2]);
+            pos->z = cast_from_string<double>(words[fieldspos+3]);
+            //printf("currfile '%s', pos:'%s'\n", currfile.c_str(), printP(*pos).c_str());
           } // end if (use2D)
         } // end loop user_idx
 
@@ -172,8 +174,8 @@ protected:
     UserId firstid = firstdata.userid;
     printf("First entry: file %s, user %i, bbox %s, pt %s\n",
            firstfile.c_str(), firstid,
-           geometry_utils::print_rect(firstdata.bbox).c_str(),
-           geometry_utils::printP(firstdata.pos).c_str());
+           print_rect(firstdata.bbox).c_str(),
+           printP(firstdata.pos).c_str());
     _file_it = _files.begin();
     return load_current_frame();
   } // end load_single_video()
@@ -220,11 +222,11 @@ protected:
       if (userdata->pos.x == 0 && userdata->pos.y == 0 && userdata->pos.z == 0) {
         continue;
       }
-      cv::Rect bbox = geometry_utils::shrink_rec(userdata->bbox, .3, .3);
-      cv::Point seed = geometry_utils::rect_center<cv::Rect, cv::Point>(bbox);
+      cv::Rect bbox = shrink_rec(userdata->bbox, .3, .3);
+      cv::Point seed = rect_center<cv::Rect, cv::Point>(bbox);
       unsigned int try_idx = 0, max_ntries = 100;
       for (; try_idx < max_ntries; ++try_idx) {
-        if (!std_utils::is_nan_depth(_depth32f(seed)) // real depth reading
+        if (!is_nan_depth(_depth32f(seed)) // real depth reading
             && _user8(seed) == 0 // seed not used before
             && _segmenter.find_blob(_depth32f, seed, _curr_user,
                                     BlobSegmenter::GROUND_PLANE_FINDER,
@@ -246,33 +248,35 @@ protected:
     if (!_ppl_conv.convert(_bgr, _depth32f, _user8, NULL, &_header))
       return false;
     _ground_truth_ppl = _ppl_conv.get_ppl();
-    _ground_truth_ppl.method = "ground_truth";
+    set_tag_people(_ground_truth_ppl, "method", "ground_truth");
     _ground_truth_ppl.header.frame_id = BASEFRAME;
     // use real 3D positions
-    nusers = _ground_truth_ppl.poses.size();
+    nusers = _ground_truth_ppl.people.size();
     for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx) {
-      PP* curr_pp = &(_ground_truth_ppl.poses[user_idx]);
-      UserId currid = string_utils::cast_from_string<int>(curr_pp->person_name);
+      PP* curr_pp = &(_ground_truth_ppl.people[user_idx]);
+      UserId currid = cast_from_string<int>(curr_pp->name);
       if (!user_positions.count(currid)) {
         printf("KTP2Imgs: file:'%s', user %i has no 3D pose!\n",
                _file_it->first.c_str(), currid);
         return false;
       }
-      pt_utils::copy3(user_positions[currid], curr_pp->head_pose.position);
+      copy3(user_positions[currid], curr_pp->position);
       // set headers
-      curr_pp->header = _ground_truth_ppl.header;
+      //curr_pp->header = _ground_truth_ppl.header;
+#if 0 // TODO images
       curr_pp->rgb.header = _ground_truth_ppl.header;
       curr_pp->depth.header = _ground_truth_ppl.header;
       curr_pp->user.header = _ground_truth_ppl.header;
+#endif
     }
 
       // anonymise it
-    _anonymous_ppl.method = "ktp2ppl";
+    set_tag_people(_anonymous_ppl, "method", "ktp2ppl");
     _anonymous_ppl = _ground_truth_ppl;
     for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx) {
-      PP* curr_pp = &(_anonymous_ppl.poses[user_idx]);
-      ppl_utils::set_attribute(*curr_pp, "ground_truth_label", curr_pp->person_name);
-      curr_pp->person_name = people_msgs_rl::PeoplePose::NO_RECOGNITION_MADE;
+      PP* curr_pp = &(_anonymous_ppl.people[user_idx]);
+      set_tag(*curr_pp, "ground_truth_label", curr_pp->name);
+      curr_pp->name = "NOREC";
     } // end loop user_idx
     return true;
   } // end load_current_frame()
@@ -309,7 +313,7 @@ protected:
   std::string _img_folder;
   BlobSegmenter _segmenter;
   cv::Mat1b _curr_user;
-  ppl_utils::Images2PPL _ppl_conv;
+  Images2PPL _ppl_conv;
 
   std_msgs::Header _header;
   PPL _ground_truth_ppl, _anonymous_ppl;
@@ -386,9 +390,11 @@ int KTP2PPL(int argc, char **argv) {
   return 0;
 }
 
+} // end namespace vision_utils
+
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv) {
   ros::init(argc, argv, "KTP2PPL");
-  return KTP2PPL(argc, argv);
+  return vision_utils::KTP2PPL(argc, argv);
 }

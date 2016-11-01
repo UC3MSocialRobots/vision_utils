@@ -23,7 +23,7 @@ ________________________________________________________________________________
  */
 // Bring in my package's API, which is what I'm testing
 #include "vision_utils/cloud_viewer_gnuplot.h"
-#include "vision_utils/utils/combinatorics_utils.h"
+#include "vision_utils/combinatorics_utils.h"
 // Bring in gtest
 #include <gtest/gtest.h>
 
@@ -32,7 +32,7 @@ typedef cv::Point3f Pt3f;
 #define BLOCKING false
 
 TEST(TestSuite, empty) {
-  CloudViewerGnuPlot viewer;
+  vision_utils::CloudViewerGnuPlot viewer;
   std::vector<Pt3f> pointcloud;
   std::vector<cv::Vec3b> pointcloud_RGB;
   viewer.view_cloud(pointcloud, "Caption", BLOCKING);
@@ -45,14 +45,14 @@ void test_gaussian(bool use_rgb) {
   std::vector<Pt3f> pointcloud;
   std::vector<cv::Vec3b> pointcloud_RGB;
   for (unsigned int pt = 0; pt < 100; ++pt) {
-    pointcloud.push_back(Pt3f(combinatorics_utils::rand_gaussian() / 10.f,
-                              combinatorics_utils::rand_gaussian() / 10.f,
-                              combinatorics_utils::rand_gaussian() / 10.f));
+    pointcloud.push_back(Pt3f(vision_utils::rand_gaussian() / 10.f,
+                              vision_utils::rand_gaussian() / 10.f,
+                              vision_utils::rand_gaussian() / 10.f));
     pointcloud_RGB.push_back(cv::Vec3b(50 + rand() % 200,
                                        50 + rand() % 200,
                                        50 + rand() % 200));
   } // end for pt
-  CloudViewerGnuPlot viewer;
+  vision_utils::CloudViewerGnuPlot viewer;
   if (use_rgb)
     viewer.view_rgb_cloud(pointcloud, pointcloud_RGB, "Caption", BLOCKING);
   else

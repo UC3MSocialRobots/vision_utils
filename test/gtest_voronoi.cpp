@@ -26,7 +26,7 @@ Some tests for Voronoi functions
 // Bring in gtest
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/timer.h"
 #include <vision_utils/img_path.h>
 #include "vision_utils/voronoi.h"
 
@@ -46,8 +46,8 @@ void test_thin_impl(const cv::Mat1b & query, const cv::Mat1b & correct_ans,
   printf("test_thin_impl('%s', crop:%i)\n",
          implementation_name.c_str(), crop_img_before);
   // make the effective thinning
-  VoronoiThinner thinner;
-  Timer timer;
+  vision_utils::VoronoiThinner thinner;
+  vision_utils::Timer timer;
   thinner.thin(query, implementation_name, crop_img_before);
   timer.printTime(implementation_name.c_str());
 
@@ -59,8 +59,8 @@ void test_thin_impl(const cv::Mat1b & query, const cv::Mat1b & correct_ans,
   if (only_print) {
     std::cout << "implementation_name:'" << implementation_name << "'"
               << ", crop:" << crop_img_before
-              << ", query:" << ImageContour::to_string(query)
-              << "skel.get_skeleton():" << ImageContour::to_string(thinner.get_skeleton())
+              << ", query:" << vision_utils::ImageContour::to_string(query)
+              << "skel.get_skeleton():" << vision_utils::ImageContour::to_string(thinner.get_skeleton())
               << std::endl;
     return;
   }
@@ -77,9 +77,9 @@ void test_thin_impl(const cv::Mat1b & query, const cv::Mat1b & correct_ans,
       << "implementation_name:'" << implementation_name << "'"
       << ", crop:" << crop_img_before
       << ", ratio_diff:" << ratio_diff
-      << ", query:" << ImageContour::to_string(query)
-      << "correct_ans:" << ImageContour::to_string(correct_ans_cropped)
-      << "skel.get_skeleton():" << ImageContour::to_string(thinner.get_skeleton());
+      << ", query:" << vision_utils::ImageContour::to_string(query)
+      << "correct_ans:" << vision_utils::ImageContour::to_string(correct_ans_cropped)
+      << "skel.get_skeleton():" << vision_utils::ImageContour::to_string(thinner.get_skeleton());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -220,7 +220,7 @@ TEST(TestSuite, minitest_guo_hall) {
   cv::Mat1b query(9, 7, (uchar) 0); // rows, cols
   cv::rectangle(query, cv::Point(1, 1), cv::Point(3, 7), cv::Scalar::all(255), -1);
   cv::rectangle(query, cv::Point(1, 5), cv::Point(5, 7), cv::Scalar::all(255), -1);
-  std::cout << "query:" << ImageContour::to_string(query) << std::endl;
+  std::cout << "query:" << vision_utils::ImageContour::to_string(query) << std::endl;
   cv::Rect foo(1, 1, 5, 5);
   std::cout << "foo" << foo << ", br:" << foo.br() << std::endl;
   cv::Mat1b correct_ans = query.clone();

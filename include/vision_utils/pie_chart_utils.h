@@ -32,9 +32,9 @@ Some utilities for drawing pie charts and their associated captions.
 #include <opencv2/highgui/highgui.hpp>
 #include "vision_utils/colormaps.h"
 #include "vision_utils/drawing_utils.h"
-#include "vision_utils/utils/geometry_utils.h"
+#include "vision_utils/geometry_utils.h"
 
-namespace pie_chart_utils {
+namespace vision_utils {
 
 static const int PIE_FONT_FACE = CV_FONT_HERSHEY_COMPLEX_SMALL;
 static const int CAPTION_FONT_FACE = PIE_FONT_FACE;
@@ -67,7 +67,7 @@ void make_pie(const std::vector<_T> & values,
               cv::Mat3b & out, int width = 400, int height = 400,
               bool draw_edges = true,
               const float draw_values_thres_ratio = 0,
-              colormaps::IndexColormap colormap = colormaps::index2predefined_color_washed,
+              IndexColormap colormap = index2predefined_color_washed,
               const double label_font_scale = 1) {
   // dimensions check
   if (out.cols < width || out.rows < height)
@@ -79,7 +79,7 @@ void make_pie(const std::vector<_T> & values,
   double sum_values = std::accumulate(values.begin(),values.end(), 0.);
   if (sum_values <= 0) {
     printf("make_pie:%s:sum of values <= 0, impossible to draw chart!\n",
-           string_utils::accessible_to_string(values).c_str());
+           accessible_to_string(values).c_str());
     return;
   }
 
@@ -110,7 +110,7 @@ void make_pie(const std::vector<_T> & values,
       //std::ostringstream txt;
       // txt << std::setprecision(2) << values[value_idx];
       sprintf(txt, "%.2f", values[value_idx]);
-      image_utils::draw_text_centered
+      draw_text_centered
           (out, txt,
            circle_center + cv::Point(label_radius * cos(median_angle),
                                      label_radius * sin(median_angle)),
@@ -137,7 +137,7 @@ void make_pie(const std::vector<_T> & values,
   if (draw_values_thres_ratio < 1) {
     sprintf(txt, "Total:%.2f", sum_values);
     int circle_lower_end = circle_center.y + circle_radius;
-    image_utils::draw_text_centered
+    draw_text_centered
         (out, txt, cv::Point(width / 2, (height + circle_lower_end) / 2),
          PIE_FONT_FACE, label_font_scale, black);
   }
@@ -183,7 +183,7 @@ inline void compute_needed_caption_height(const unsigned int nlabels,
 void make_caption(const std::vector<std::string> & labels,
                   cv::Mat3b & out, int width = 400,
                   bool draw_edges = true,
-                  colormaps::IndexColormap colormap = colormaps::index2predefined_color_washed) {
+                  IndexColormap colormap = index2predefined_color_washed) {
   // determine the height of one row
   unsigned int nlabels = labels.size();
   int needed_caption_height, caption_row_height;
@@ -238,7 +238,7 @@ void make_pie_and_caption(const std::vector<_T> & values,
                           cv::Mat3b & out, int width = 400, int height = 400,
                           bool draw_edges = true,
                           const float draw_values_thres_ratio = 0,
-                          colormaps::IndexColormap colormap = colormaps::index2predefined_color_washed,
+                          IndexColormap colormap = index2predefined_color_washed,
                           const double label_font_scale = 1) {
   // determine min height
   int needed_caption_height, caption_row_height;
@@ -260,6 +260,6 @@ void make_pie_and_caption(const std::vector<_T> & values,
     cv::line(out, cv::Point(0, pie_height), cv::Point(width, pie_height), CV_RGB(0, 0, 0));
 } // end make_pie_and_caption()
 
-} // end namespace pie_chart_utils
+} // end namespace vision_utils
 
 #endif // PIE_CHART_UTILS_H

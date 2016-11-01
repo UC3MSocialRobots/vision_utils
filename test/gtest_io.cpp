@@ -25,14 +25,14 @@ ________________________________________________________________________________
  */
 #include <gtest/gtest.h>
 #include "vision_utils/io.h"
-#include "vision_utils/utils/geometry_utils.h"
+#include "vision_utils/geometry_utils.h"
 
-class FooPointIo : public geometry_utils::FooPoint2f {
+class FooPointIo : public vision_utils::FooPoint2f {
 public:
-  FooPointIo() : geometry_utils::FooPoint2f() {}
+  FooPointIo() : vision_utils::FooPoint2f() {}
 
   FooPointIo(const float & x_, const float & y_) :
-    geometry_utils::FooPoint2f(x_, y_) {
+    vision_utils::FooPoint2f(x_, y_) {
   }
 
   /*!
@@ -58,22 +58,22 @@ public:
 
 TEST(TestSuite, test1) {
   FooPointIo pt1(1,2), pt1_clone, pt2(3,4);
-  image_utils::to_yaml(pt1, "/tmp/foo", "FooPointIo");
-  image_utils::from_yaml(pt1_clone, "/tmp/foo", "FooPointIo");
+  vision_utils::to_yaml(pt1, "/tmp/foo", "FooPointIo");
+  vision_utils::from_yaml(pt1_clone, "/tmp/foo", "FooPointIo");
 
   printf("pt1:%s, pt1_clone:%s\n\n",
-         geometry_utils::printP2(pt1).c_str(),
-         geometry_utils::printP2(pt1_clone).c_str());
+         vision_utils::printP2(pt1).c_str(),
+         vision_utils::printP2(pt1_clone).c_str());
 
   std::vector<FooPointIo> pts1, pts2;
   pts1.push_back(pt1);
   pts1.push_back(pt2);
   pts1.push_back(pt1_clone);
-  image_utils::to_yaml_vector(pts1, "/tmp/foo", "FooPointIoVector");
-  image_utils::from_yaml_vector(pts2, "/tmp/foo", "FooPointIoVector");
+  vision_utils::to_yaml_vector(pts1, "/tmp/foo", "FooPointIoVector");
+  vision_utils::from_yaml_vector(pts2, "/tmp/foo", "FooPointIoVector");
   printf("pts1:%s, pts2:%s\n",
-         string_utils::accessible_to_string(pts1).c_str(),
-         string_utils::accessible_to_string(pts2).c_str());
+         vision_utils::accessible_to_string(pts1).c_str(),
+         vision_utils::accessible_to_string(pts2).c_str());
 }
 
 ////////////////////////////////////////////////////////////////////////////////

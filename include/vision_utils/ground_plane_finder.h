@@ -36,6 +36,8 @@ ________________________________________________________________________________
 #include <pcl/sample_consensus/model_types.h>
 #include <pcl/segmentation/sac_segmentation.h>
 
+namespace vision_utils {
+
 class GroundPlaneFinder {
 public:
   typedef cv::Point3f Pt3f;
@@ -47,7 +49,7 @@ public:
 
   GroundPlaneFinder() : _plane_found(false) {
     image_geometry::PinholeCameraModel rgb_camera_model;
-    if (!kinect_openni_utils::read_camera_model_files
+    if (!read_camera_model_files
         (DEFAULT_KINECT_SERIAL(), _default_depth_cam_model, rgb_camera_model)) {
       printf("GroundPlaneFinder:could not load a default cam model!\n");
     }
@@ -72,7 +74,7 @@ public:
 
     cv::Rect roi= cv::Rect(0, (1 - lower_ratio_to_use) * depth.rows,
                            depth.cols, lower_ratio_to_use * depth.rows);
-    if (!kinect_openni_utils::pixel2world_depth<Pt3f>
+    if (!pixel2world_depth<Pt3f>
         (depth(roi), model, _pts, data_skip, cv::Mat(), true)) {
       printf("GroundPlaneFinder:pixel2world_depth failed!\n");
       _plane_found = false;
@@ -166,13 +168,13 @@ public:
       const float* depth_ptr = depth.ptr<float>(row);
       uchar* img_ptr = img.ptr(row);
       for (int col = 0; col < cols; ++col) {
-        if (std_utils::is_nan_depth(depth_ptr[col]))
+        if (is_nan_depth(depth_ptr[col]))
           continue;
         if (use_min_dist && depth_ptr[col] < min_dist)
           continue;
         if (use_max_dist && depth_ptr[col] > max_dist)
           continue;
-        pcl::PointXYZ curr = kinect_openni_utils::pixel2world_depth<pcl::PointXYZ>
+        pcl::PointXYZ curr = pixel2world_depth<pcl::PointXYZ>
                     (cv::Point2d(col + offset.x, row + offset.y), model, depth_ptr[col]);
         double dist = fabs(a * curr.x + b * curr.y + c * curr.z + d);
         if ((mark_if_ground && dist < distance_threshold_m) // belongs to ground
@@ -204,5 +206,7 @@ private:
   pcl::ModelCoefficients coefficients;
   pcl::PointIndices inliers;
 }; // en class GroundPlaneFinder
+
+} // end namespace vision_utils
 
 #endif // GROUND_PLANE_FINDER_H

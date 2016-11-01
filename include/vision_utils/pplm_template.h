@@ -20,35 +20,38 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
 
-PeoplePoseListMatcher, also known under the sweet name of PPLM:
+PeopleMatcher, also known under the sweet name of PPLM:
 
 \section Parameters, subscriptions, publications
   None
 
 \section Services
   - \b "~match_ppl"
-        [people_msgs_rl/MatchPPL]
+        [people_recognition_vision/MatchPPL]
         Match a detected PPL against a reference one.
  */
 #ifndef PPL_MATCHER_H
 #define PPL_MATCHER_H
 
 #include "vision_utils/nano_skill.h"
-#include <people_msgs_rl/MatchPPL.h>
+#include <people_recognition_vision/MatchPPL.h>
 #include <ros/service_server.h>
 #include "vision_utils/ppl_attributes.h"
 
 #ifndef DEBUG_PRINT
 #define DEBUG_PRINT(...)   {}
-//#define DEBUG_PRINT(...)   ROS_INFO_THROTTLE(5, __VA_ARGS__)
-//#define DEBUG_PRINT(...)   ROS_WARN(__VA_ARGS__)
+//#define DEBUG_PRINT(...)   //printf_THROTTLE(5, __VA_ARGS__)
+//#define DEBUG_PRINT(...)   printf(__VA_ARGS__)
 //#define DEBUG_PRINT(...)   printf(__VA_ARGS__)
 #endif
 
+namespace vision_utils {
+
+
 class PPLMatcherTemplate : public NanoSkill {
 public:
-  typedef people_msgs_rl::PeoplePose PP;
-  typedef people_msgs_rl::PeoplePoseList PPL;
+  typedef people_msgs::Person PP;
+  typedef people_msgs::People PPL;
 
   PPLMatcherTemplate (const std::string & start_topic,
                       const std::string & stop_topic)
@@ -67,13 +70,13 @@ public:
 
   /*! to be implemented by children classes.
      You should at least resize \arg costs to |new_ppl| * |tracks|.
-     ie new_ppl.poses.size() * tracks.poses.size().
+     ie new_ppl.people.size() * tracks.poses.size().
      The costs are then obtained by costs[detected_pp_idx][track_idx].
    */
   virtual bool match(const PPL & new_ppl, const PPL & tracks,
                      std::vector<double> & costs,
-                     std::vector<people_msgs_rl::PeoplePoseAttributes> & new_ppl_added_attributes,
-                     std::vector<people_msgs_rl::PeoplePoseAttributes> & tracks_added_attributes) = 0;
+                     people_msgs::People & new_ppl_added_attributes,
+                     people_msgs::People & tracks_added_attributes) = 0;
 
   //////////////////////////////////////////////////////////////////////////////
 
@@ -117,13 +120,13 @@ private:
   //////////////////////////////////////////////////////////////////////////////
 
   //! callback for the service
-  virtual bool match_cb(people_msgs_rl::MatchPPL::Request& request,
-                        people_msgs_rl::MatchPPL::Response& response) {
-    unsigned int npps = request.new_ppl.poses.size(),
+  virtual bool match_cb(people_recognition_vision::MatchPPL::Request& request,
+                        people_recognition_vision::MatchPPL::Response& response) {
+    unsigned int npps = request.new_ppl.people.size(),
         ntracks = request.tracks.poses.size();
     response.new_ppl_added_attributes.resize(npps);
     response.tracks_added_attributes.resize(ntracks);
-    if (request.new_ppl.poses.empty()
+    if (request.new_ppl.people.empty()
         || request.tracks.poses.empty()) {
       response.costs.clear();
       response.match_success = true;
@@ -142,5 +145,7 @@ private:
   std::string _srv_name;
   ros::ServiceServer _srv_server;
 }; // end class PPLMatcherTemplate
+
+} // end namespace vision_utils
 
 #endif // PPL_MATCHER_H

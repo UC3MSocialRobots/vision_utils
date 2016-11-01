@@ -33,12 +33,13 @@ retrieve similar images, etc.
 // CURL
 #include <curl/curl.h>
 // utils
-#include "vision_utils/utils/string_web_retrieve.h"
-#include "vision_utils/utils/system_utils.h"
-#include "vision_utils/utils/timer.h"
-#include "vision_utils/utils/timestamp.h"
+#include "vision_utils/exec_system.h"
+#include "vision_utils/string_web_retrieve.h"
+#include "vision_utils/system_utils.h"
+#include "vision_utils/timer.h"
+#include "vision_utils/timestamp.h"
 
-namespace image_utils {
+namespace vision_utils {
 
 static const std::string tmp_filename = "/tmp/google_images_upload.jpg";
 static const std::string similar_image_tmp_path = "/tmp/google_images_similar";
@@ -138,12 +139,12 @@ inline GoogleImagesLookStatus google_images_lookup
   curl_formadd(&formpost, &lastptr,
                CURLFORM_COPYNAME, "bih",
                CURLFORM_COPYCONTENTS,
-               string_utils::cast_to_string(img.rows).c_str(),
+               cast_to_string(img.rows).c_str(),
                CURLFORM_END);
   curl_formadd(&formpost, &lastptr,
                CURLFORM_COPYNAME, "biw",
                CURLFORM_COPYCONTENTS,
-               string_utils::cast_to_string(img.cols).c_str(),
+               cast_to_string(img.cols).c_str(),
                CURLFORM_END);
 
   /* initalize custom header list (stating that Expect: 100-continue is not
@@ -152,7 +153,7 @@ inline GoogleImagesLookStatus google_images_lookup
 
   curl = curl_easy_init();
   if (!curl) {
-    maggiePrint("curl_easy_init() failed!");
+    printf("curl_easy_init() failed!");
     return LOOKUP_FAIL;
   }
 
@@ -164,7 +165,7 @@ inline GoogleImagesLookStatus google_images_lookup
   curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
 
   ///
-  curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, string_utils::curl_writer);
+  curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curl_writer);
   std::string first_step_content;
   curl_easy_setopt(curl, CURLOPT_WRITEDATA, &first_step_content);
   ///
@@ -175,10 +176,10 @@ inline GoogleImagesLookStatus google_images_lookup
   res = curl_easy_perform(curl);
   //timer.printTime("after curl_easy_perform().");
   if (res != CURLE_OK) {
-    maggiePrint("Error: [%i]", res);
+    printf("Error: [%i]\n", res);
     return LOOKUP_FAIL;
   }
-  //maggiePrint("res:%i, first_step_content:'%s'", res, first_step_content.c_str());
+  //printf("res:%i, first_step_content:'%s'", res, first_step_content.c_str());
 
   /* then cleanup the formpost chain */
   //curl_formfree(formpost);
@@ -191,26 +192,26 @@ inline GoogleImagesLookStatus google_images_lookup
   ///
   // extract the URL
   int url_pos = 0;
-  std::string results_url = string_utils::extract_from_tags
+  std::string results_url = extract_from_tags
       (first_step_content, "HREF=\"", "\"", url_pos);
-  //maggiePrint("results_url:'%s'", results_url.c_str());
+  //printf("results_url:'%s'", results_url.c_str());
 
   // get the result page
   std::string results_content;
-  bool results_retrieve_success = string_utils::retrieve_url
+  bool results_retrieve_success = retrieve_url
       (results_url, results_content);
   if (!results_retrieve_success) {
-    maggiePrint("Could not get the results URL '%s'", results_url.c_str());
+    printf("Could not get the results URL '%s'\n", results_url.c_str());
     return LOOKUP_FAIL;
   }
   //timer.printTime("after retrieving the results page.");
 
 
-  //maggiePrint("results_content:'%s'", results_content.c_str());
+  //printf("results_content:'%s'", results_content.c_str());
   // write content in a file
   std::ostringstream html_filename;
-  html_filename << "/tmp/google_images_lookup_" << string_utils::timestamp() << ".html";
-  string_utils::save_file(html_filename.str(), results_content);
+  html_filename << "/tmp/google_images_lookup_" << timestamp() << ".html";
+  save_file(html_filename.str(), results_content);
   //timer.printTime("after saving a html copy of the results page.");
 
   // extract best guess
@@ -218,12 +219,12 @@ inline GoogleImagesLookStatus google_images_lookup
   std::string::size_type best_guess_header_pos =
       results_content.find(best_guess_header);
   if (best_guess_header_pos == std::string::npos) {
-    maggiePrint("Could not find best_guess_header='%s'", best_guess_header.c_str());
+    printf("Could not find best_guess_header='%s'\n", best_guess_header.c_str());
     best_guess = "";
   }
   else { // found the best_guess_header
     int best_guess_header_pos_int = best_guess_header_pos;
-    best_guess = string_utils::extract_from_tags
+    best_guess = extract_from_tags
         (results_content, ">", "<", best_guess_header_pos_int);
   }
   //timer.printTime("after finding best_guess.");
@@ -238,7 +239,7 @@ inline GoogleImagesLookStatus google_images_lookup
   std::string::size_type visually_similar_header_pos =
       results_content.find(visually_similar_header);
   if (visually_similar_header_pos == std::string::npos) {
-    maggiePrint("Could not find visually_similar_header='%s'",
+    printf("Could not find visually_similar_header='%s'\n",
                 visually_similar_header.c_str());
   }
   else { // found the visually_similar_header
@@ -246,9 +247,9 @@ inline GoogleImagesLookStatus google_images_lookup
     similar_images.clear();
     while (similar_images.size() < max_similar_images) {
       // get the URL
-      std::string visually_similar_url = string_utils::extract_from_tags
+      std::string visually_similar_url = extract_from_tags
           (results_content, "imgurl=", "&", img_url_pos);
-      //maggiePrint("visually_similar_url:'%s'", visually_similar_url.c_str());
+      //printf("visually_similar_url:'%s'", visually_similar_url.c_str());
       if (visually_similar_url == "")
         break;
       // retrieve the file
@@ -256,10 +257,10 @@ inline GoogleImagesLookStatus google_images_lookup
       cmd << "wget " << visually_similar_url
           << " -O " << similar_image_tmp_path
           << " --quiet --timeout=1";
-      system_utils::exec_system(cmd.str());
+      vision_utils::exec_system(cmd.str());
       cv::Mat similar_image = cv::imread(similar_image_tmp_path);
       if (similar_image.data == NULL) {
-        maggiePrint("Could not load URL '%s'", visually_similar_url.c_str());
+        printf("Could not load URL '%s'\n", visually_similar_url.c_str());
         continue;
       }
       similar_images.push_back(similar_image);
@@ -297,6 +298,6 @@ inline GoogleImagesLookStatus google_images_best_guess(const cv::Mat & img,
 ////////////////////////////////////////////////////////////////////////////////
 
 
-} // end namespace image_utils
+} // end namespace vision_utils
 
 #endif // GOOGLE_IMAGES_SEARCH_H

@@ -27,7 +27,9 @@ The filenames for the files generated with database available in
 #ifndef DGAITDB_FILENAME_H
 #define DGAITDB_FILENAME_H
 
-#include "vision_utils/utils/system_utils.h"
+#include "vision_utils/system_utils.h"
+
+namespace vision_utils {
 
 class DGaitDBFilename {
 public:
@@ -40,7 +42,7 @@ public:
   }
 
   //! \return true if the image directory exists
-  bool directory_exists() const { return system_utils::directory_exists(_input_directory); }
+  bool directory_exists() const { return vision_utils::directory_exists(_input_directory); }
 
   //////////////////////////////////////////////////////////////////////////////
 
@@ -107,5 +109,7 @@ public:
 
   std::string _input_directory;
 }; // end class DGaitDBFilename
+
+} // end namespace vision_utils
 
 #endif // DGAITDB_FILENAME_H

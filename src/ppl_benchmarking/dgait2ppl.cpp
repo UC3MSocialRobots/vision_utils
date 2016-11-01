@@ -34,18 +34,18 @@ and a ground truth PPL.
         The image
 
   - \b "ground_truth_ppl"
-        [people_msgs_rl::PeoplePoseList]
+        [people_msgs::People]
         The ground truth positions
  */
 
 #include "vision_utils/dgaitdb.h"
 //#include "vision_utils/dgaitdb_filename.h"
 #include <image_transport/image_transport.h>
-// people_msgs_rl
+// people_msgs
 #include "vision_utils/images2ppl.h"
 
-typedef people_msgs_rl::PeoplePose PP;
-typedef people_msgs_rl::PeoplePoseList PPL;
+typedef people_msgs::Person PP;
+typedef people_msgs::People PPL;
 static const int QUEUE_SIZE = 10;
 
 int dgait2ppl(int argc, char **argv) {
@@ -54,7 +54,7 @@ int dgait2ppl(int argc, char **argv) {
     return -1;
   }
   std::string filename = argv[1];
-  DGaitDB reader;
+  vision_utils::DGaitDB reader;
   bool repeat = false;
   if (!reader.from_file(filename, repeat))
     return -1;
@@ -69,14 +69,14 @@ int dgait2ppl(int argc, char **argv) {
   ros::Publisher ppl_pub = nh_public.advertise<PPL>("ground_truth_ppl", 1);
   // PPL stuff
   cv_bridge::CvImage depth_bridge, user_bridge, rgb_bridge;
-  ppl_utils::Images2PPL _ppl_conv;
+  vision_utils::Images2PPL _ppl_conv;
 
   printf("dgait2ppl: publishing rgb on '%s', depth on '%s', user on '%s', truth PPL on '%s'\n",
          rgb_pub.getTopic().c_str(), depth_pub.getTopic().c_str(), user_pub.getTopic().c_str(),
          ppl_pub.getTopic().c_str());
 
   while (ros::ok()) {
-    Timer timer;
+    vision_utils::Timer timer;
     if (!reader.go_to_next_frame()) {
       printf("dgait2ppl: couldn't go_to_next_frame()!\n");
       break;
@@ -103,7 +103,7 @@ int dgait2ppl(int argc, char **argv) {
 
     // transform to PPL
     if (_ppl_conv.convert(bgr, depth, user, NULL, &curr_header)) {
-      _ppl_conv.get_ppl().method = "ground_truth";
+      vision_utils::set_tag_people(_ppl_conv.get_ppl(), "method", "ground_truth");
       ppl_pub.publish(_ppl_conv.get_ppl());
     }
 

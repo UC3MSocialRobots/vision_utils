@@ -30,10 +30,12 @@ A template class for iteratively access RGB+depth+user databases.
 
 #include "vision_utils/user_image_to_rgb.h"
 // AD
-#include "vision_utils/utils/filename_handling.h"
-#include "vision_utils/utils/string_casts_stl.h"
-#include "vision_utils/utils/timestamp.h"
+#include "vision_utils/filename_handling.h"
+#include "vision_utils/string_casts_stl.h"
+#include "vision_utils/timestamp.h"
 #include "vision_utils/io.h"
+
+namespace vision_utils {
 
 class DatabasePlayer {
 public:
@@ -51,13 +53,14 @@ public:
   bool from_file(const std::string & filename_regex,
                  bool want_repeat_playlist_ = true) {
     printf("DatabasePlayer::from_file('%s')\n", filename_regex.c_str());
-    string_utils::resolve_file_regex(filename_regex, _playlist, true);
+    resolve_file_regex(filename_regex, _playlist, true);
     if (_playlist.size() == 0) {
       printf("DatabasePlayer: regex '%s' corresponds to no existing file\n",
              filename_regex.c_str());
       return false;
     }
-    printf("DatabasePlayer: playlist %s\n", string_utils::iterable_to_string(_playlist).c_str());
+    printf("DatabasePlayer: playlist %s\n",
+           iterable_to_string(_playlist).c_str());
     set_repeat_playlist(want_repeat_playlist_);
     _playlist_idx = 0;
     return load_single_video(_playlist[_playlist_idx]);
@@ -104,10 +107,10 @@ public:
     if (_has_rgb)
       cv::imshow("bgr", _bgr);
     if (_has_depth) {
-      image_utils::depth_image_to_vizualisation_color_image
-          //(_depth32f, depth_illus, image_utils::FULL_RGB_STRETCHED);
-          //(_depth32f, depth_illus, image_utils::FULL_RGB_SCALED, 2.5, 4);
-          (_depth32f, depth_illus, image_utils::FULL_RGB_SCALED, 1, 6);
+      depth_image_to_vizualisation_color_image
+          //(_depth32f, depth_illus, FULL_RGB_STRETCHED);
+          //(_depth32f, depth_illus, FULL_RGB_SCALED, 2.5, 4);
+          (_depth32f, depth_illus, FULL_RGB_SCALED, 1, 6);
       cv::imshow("depth", depth_illus);
     }
     if (_has_user) {
@@ -116,14 +119,14 @@ public:
     }
     char c = cv::waitKey(5);
     if (c == 's') { // save images
-      std::string timestamp = string_utils::timestamp();
+      std::string timestamp = vision_utils::timestamp();
       std::ostringstream filename;
       filename << "rgb_" << timestamp << ".png";
-      image_utils::imwrite_debug(filename.str(), _bgr, image_utils::COLOR_24BITS);
+      imwrite_debug(filename.str(), _bgr, COLOR_24BITS);
       filename.str(""); filename << "depth_" << timestamp << ".png";
-      image_utils::imwrite_debug(filename.str(), depth_illus, image_utils::COLORS256);
+      imwrite_debug(filename.str(), depth_illus, COLORS256);
       filename.str(""); filename << "user_" << timestamp << ".png";
-      image_utils::imwrite_debug(filename.str(), user_illus, image_utils::COLORS256);
+      imwrite_debug(filename.str(), user_illus, COLORS256);
     }
     return c;
   } // end display();
@@ -168,5 +171,7 @@ protected:
   bool _want_repeat_playlist;
   unsigned int _playlist_idx;
 }; // end class DatabasePlayer
+
+} // end namespace vision_utils
 
 #endif // DATABASE_PLAYER_H

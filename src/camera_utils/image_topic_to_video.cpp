@@ -40,7 +40,6 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <cv_bridge/cv_bridge.h>
 // AD
-#include "vision_utils/utils/error.h"
 
 cv_bridge::CvImageConstPtr _bridge_img_ptr;
 cv::VideoWriter _video_writer;
@@ -101,8 +100,8 @@ int main(int argc, char** argv) {
   // type "<timestamp>_<input_image_topic>.avi"
   std::ostringstream output_video_filename_stream;
   std::string _input_image_topic_clean = _input_image_topic;
-  string_utils::find_and_replace(_input_image_topic_clean, "/", "_");
-  output_video_filename_stream << string_utils::timestamp() << "_"
+  vision_utils::find_and_replace(_input_image_topic_clean, "/", "_");
+  output_video_filename_stream << vision_utils::timestamp() << "_"
                                << _input_image_topic_clean << ".avi";
   // now get the param
   nh_private.param("output_video_filename", _output_video_filename,

@@ -8,7 +8,7 @@ catkin_add_gtest     (gtest_blob_segmenter
   gtest_blob_segmenter.cpp
   ../include/vision_utils/blob_segmenter.h
   ../include/vision_utils/ground_plane_finder.h)
-TARGET_LINK_LIBRARIES(gtest_blob_segmenter  disjoint_sets2 ${catkin_LIBRARIES})
+TARGET_LINK_LIBRARIES(gtest_blob_segmenter  ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_border_remover
   gtest_border_remover.cpp
@@ -61,7 +61,7 @@ catkin_add_gtest     (gtest_google_images_search
   gtest_google_images_search.cpp
   ../include/vision_utils/google_images_search.h
   TIMEOUT 300.0) # 3 minutes
-TARGET_LINK_LIBRARIES(gtest_google_images_search  ${catkin_LIBRARIES} visionutils_translator)
+TARGET_LINK_LIBRARIES(gtest_google_images_search  ${catkin_LIBRARIES} curl)
 
 catkin_add_gtest     (gtest_GraphMaker  gtest_GraphMaker.cpp)
 TARGET_LINK_LIBRARIES(gtest_GraphMaker  ${catkin_LIBRARIES})
@@ -97,7 +97,7 @@ catkin_add_gtest     (gtest_image_contour
 target_link_libraries(gtest_image_contour ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_image_utils  gtest_image_utils.cpp)
-TARGET_LINK_LIBRARIES(gtest_image_utils  ${catkin_LIBRARIES} disjoint_sets2)
+TARGET_LINK_LIBRARIES(gtest_image_utils  ${catkin_LIBRARIES})
 catkin_add_gtest     (gtest_io
   gtest_io.cpp
   ../include/vision_utils/io.h)
@@ -123,7 +123,7 @@ target_link_libraries(gtest_nano_skill ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_ocr_utils
   gtest_ocr_utils.cpp)
-TARGET_LINK_LIBRARIES(gtest_ocr_utils  OcrUtils ${catkin_LIBRARIES})
+TARGET_LINK_LIBRARIES(gtest_ocr_utils   ${catkin_LIBRARIES} curl)
 
 catkin_add_gtest     (gtest_opencv_face_detector  gtest_opencv_face_detector.cpp)
 TARGET_LINK_LIBRARIES(gtest_opencv_face_detector  ${catkin_LIBRARIES})
@@ -133,10 +133,6 @@ target_link_libraries(gtest_opencv_ml ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_pie_chart_utils  gtest_pie_chart_utils.cpp)
 TARGET_LINK_LIBRARIES(gtest_pie_chart_utils  ${catkin_LIBRARIES})
-
-catkin_add_gtest     (gtest_ppl_matcher gtest_ppl_matcher.cpp  )
-target_link_libraries(gtest_ppl_matcher  ${catkin_LIBRARIES}
-  lap_vision_utils gsl)
 
 catkin_add_gtest     (gtest_pplp_template gtest_pplp_template.cpp )
 target_link_libraries(gtest_pplp_template  ${catkin_LIBRARIES})
@@ -164,7 +160,7 @@ catkin_add_gtest     (gtest_voronoi
 target_link_libraries(gtest_voronoi ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_xml_images_interface  gtest_xml_images_interface.cpp)
-TARGET_LINK_LIBRARIES(gtest_xml_images_interface  ${catkin_LIBRARIES} xml_images_interface)
+TARGET_LINK_LIBRARIES(gtest_xml_images_interface  ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_xml_images_reader  gtest_xml_images_reader.cpp)
-TARGET_LINK_LIBRARIES(gtest_xml_images_reader xml_images_reader ${catkin_LIBRARIES})
+TARGET_LINK_LIBRARIES(gtest_xml_images_reader ${catkin_LIBRARIES})

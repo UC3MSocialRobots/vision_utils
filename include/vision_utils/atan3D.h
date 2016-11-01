@@ -34,6 +34,8 @@ For instance, for seeing 3D points into a 2D viewer like Stage.
 
 #include <ros/node_handle.h>
 
+namespace vision_utils {
+
 /*! The reprojection mode, i.e. the coordinates to keep for reprojecting to 2D.
     The value should be such as:
 
@@ -139,7 +141,7 @@ public:
       set_reprojection_mode_xy();
       return;
     }
-    // printf("ReprojectionMode:axes:%i,%i\n", _axis1, _axis2);
+    //printf("ReprojectionMode:axes:%i,%i\n", _axis1, _axis2);
   } // end check_param();
 
   inline void set_reprojection_mode_xy() { _axis1 = plusX; _axis2 = plusY;}
@@ -204,5 +206,7 @@ public:
 private:
   ReprojectionMode _mode;
 }; // end class Atan3D
+
+} // end namespace vision_utils
 
 #endif // ATAN3D_H

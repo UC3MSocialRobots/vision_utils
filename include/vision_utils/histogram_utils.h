@@ -29,12 +29,12 @@ Some useful tools for handling with histograms
 #include <opencv2/imgproc/imgproc.hpp>
 #include "vision_utils/colormaps.h"
 #include <gnuplot-cpp/gnuplot_i.hpp>
-#include "vision_utils/utils/stats_utils.h"
+#include "vision_utils/stats_utils.h"
 #include "vision_utils/drawing_utils.h"
 #include "vision_utils/layer_utils.h"
 
-namespace histogram_utils {
-
+namespace vision_utils {
+//cut:normalize_hist
 typedef cv::MatND Histogram;
 
 //! normalizes the histogram bins by scaling them so that the sum of the bins becomes equal to factor.
@@ -43,6 +43,7 @@ void normalize_hist(Histogram & hist, const double factor = 1.0) {
 } // end normalize_hist();
 
 //////////////////////////////////////////////////////////////////////////////
+//cut:get_histogram
 
 //! Computes the 1D histogram of the first channel of the image
 Histogram get_histogram(const cv::Mat &image,
@@ -51,7 +52,7 @@ Histogram get_histogram(const cv::Mat &image,
                         bool want_normalize_hist = true) {
   Histogram hist;
   int histSize[] = {nbins};
-  float hranges[] = { 0, max_value };
+  float hranges[] = { 0.f, 1.f * max_value };
   const float* ranges[] = { hranges };
   int channels[] = {0};
   // Compute histogram
@@ -70,6 +71,7 @@ Histogram get_histogram(const cv::Mat &image,
 } // end get_histogram()
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:get_hue_histogram
 
 //! Computes the 1D histogram of the first channel of the image
 Histogram get_hue_histogram(const cv::Mat3b &rgb,
@@ -78,12 +80,13 @@ Histogram get_hue_histogram(const cv::Mat3b &rgb,
                             const int & nbins, const double max_value,
                             const cv::Mat & mask = cv::Mat(),
                             bool want_normalize_hist = true) {
-  color_utils::rgb2hue(rgb, hsv_buffer, hue_buffer);
+  rgb2hue(rgb, hsv_buffer, hue_buffer);
   return get_histogram(hue_buffer, nbins, max_value, mask, want_normalize_hist);
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:get_vector_of_histograms
 
 void get_vector_of_histograms(const std::vector<cv::Mat> &images,
                               std::vector<Histogram> & hists,
@@ -144,6 +147,7 @@ void get_vector_of_histograms(const cv::Mat &image,
 } // end get_vector_of_histograms();
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:is_histogram_empty
 
 //! \return true if the histogram is empty (bins are full of zeros)
 inline bool is_histogram_empty(const Histogram & hist) {
@@ -151,6 +155,7 @@ inline bool is_histogram_empty(const Histogram & hist) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:hist_max
 
 bool hist_max(const Histogram & hist,
               double & max_bin_value, double & max_bin_index,
@@ -172,6 +177,8 @@ bool hist_max(const Histogram & hist,
   return true;
 }
 
+//cut:hue_hist_dominant_color_to_string
+
 inline std::string hue_hist_dominant_color_to_string(const Histogram & hist,
                                                      bool skip_first_bin = false) {
   if (is_histogram_empty(hist))
@@ -191,12 +198,13 @@ inline std::string hue_hist_dominant_color_to_string(const Histogram & hist,
   // one dominant color
   float h = 180.f * max_bin_index / nbins;
   //  printf("h:%f\n", h);
-  //  cv::Vec3b h2rgb = color_utils::hue2rgb<cv::Vec3b>(h);
+  //  cv::Vec3b h2rgb = hue2rgb<cv::Vec3b>(h);
   //  std::cout  << "h2rgb:" << h2rgb << std::endl;
-  return color_utils::hue_to_string(h);
+  return hue_to_string(h);
 } // end hue_hist_dominant_color_to_string()
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:hist_to_string
 
 inline std::string hist_to_string(const Histogram &hist) {
   std::ostringstream bin_content;
@@ -220,18 +228,21 @@ inline std::string hist_to_string(const Histogram &hist) {
 } // end hist_to_string()
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:write_histogram_to_file
 
-inline void write_histogram_to_file(const histogram_utils::Histogram & hist,
+inline void write_histogram_to_file(const Histogram & hist,
                                     const std::string & output_filename) {
   cv::FileStorage fs(output_filename, cv::FileStorage::WRITE);
   fs << "hist" << hist;
   fs.release();
 }
 
-inline histogram_utils::Histogram read_histogram_from_file
+//cut:read_histogram_from_file
+
+inline Histogram read_histogram_from_file
 (const std::string & input_filename)
 {
-  histogram_utils::Histogram hist;
+  Histogram hist;
   cv::FileStorage fs(input_filename, cv::FileStorage::READ);
   fs["hist"] >> hist;
   fs.release();
@@ -239,13 +250,14 @@ inline histogram_utils::Histogram read_histogram_from_file
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:histogram_to_image
 
 // Computes the 1D histogram and returns an image of it.
 void histogram_to_image(const Histogram &hist,
                         cv::Mat3b & histImg,
                         const int width, const int height,
-                        colormaps::RatioColormap ratio_colormap
-                        = colormaps::ratio2grey){
+                        RatioColormap ratio_colormap
+                        = ratio2grey){
   // Image on which to display histogram
   histImg.create(height, width);
   histImg.setTo(cv::Scalar::all(255));
@@ -270,8 +282,8 @@ void histogram_to_image(const Histogram &hist,
   cv::line(histImg, cv::Point(0, average_px), cv::Point(histImg.cols, average_px),
            cv::Scalar::all(150), 1);
   // write dominant color
-  if (ratio_colormap == colormaps::ratio2hue)
-    image_utils::draw_text_centered
+  if (ratio_colormap == ratio2hue)
+    draw_text_centered
         (histImg, hue_hist_dominant_color_to_string(hist, true),
          cv::Point(width / 2, hpt / 2), cv::FONT_HERSHEY_PLAIN, 1, CV_RGB(0, 0, 0));
   //    cv::putText(histImg, hue_hist_dominant_color_to_string(hist, true),
@@ -279,32 +291,33 @@ void histogram_to_image(const Histogram &hist,
   // Draw a vertical line for each bin
   for( int bin_idx = 0; bin_idx < nbins; bin_idx++ ) {
     float binVal = hist.at<float>(bin_idx);
-    // printf("bin_idx:%i, binVal:%g\n", bin_idx, binVal);
+    //printf("bin_idx:%i, binVal:%g\n", bin_idx, binVal);
     cv::Point p1(bin_idx * bin_width, beta); // a zero value
     cv::Point p2((bin_idx + 1) * bin_width, alpha * binVal + beta);
-    // printf("p1:(%i, %i), p2:(%i, %i)\n", p1.x, p1.y, p2.x, p2.y);
+    //printf("p1:(%i, %i), p2:(%i, %i)\n", p1.x, p1.y, p2.x, p2.y);
     cv::rectangle(histImg, p1, p2, ratio_colormap(1.f * bin_idx / nbins), -1);
     cv::rectangle(histImg, p1, p2, cv::Scalar::all(0), 1);
   }
 } // end histogram_to_image();
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:vector_of_histograms_to_image
 
 void vector_of_histograms_to_image(const std::vector<Histogram> & hists,
                                    cv::Mat3b & histImg,
                                    const int width1, const int height1,
-                                   colormaps::RatioColormap ratio_colormap
-                                   = colormaps::ratio2grey,
+                                   RatioColormap ratio_colormap
+                                   = ratio2grey,
                                    std::vector<bool>* refresh_mask = NULL){
   unsigned int n_hists = hists.size();
   // check refresh_mask
   bool use_refresh_mask = (refresh_mask != NULL);
   if (use_refresh_mask && refresh_mask->size() != n_hists) {
-    printf("vector_of_histograms_to_image(): error, refresh_mask->size()=%i != n_hists=%i\n",
+    printf("vector_of_histograms_to_image(): error, refresh_mask->size()=%li != n_hists=%i\n",
            refresh_mask->size(), n_hists);
     return;
   }
-  // printf("vector_of_histograms_to_image(n_hists:%i)\n", n_hists);
+  //printf("vector_of_histograms_to_image(n_hists:%i)\n", n_hists);
 
   // check bounds
   int min_width = width1, min_height = height1 * n_hists;
@@ -318,7 +331,7 @@ void vector_of_histograms_to_image(const std::vector<Histogram> & hists,
       continue;
     // get ROI and draw histogram in it
     cv::Mat3b histImg_roi = histImg(cv::Rect(0, height1 * hist_idx, width1, height1));
-    histogram_utils::histogram_to_image(hists[hist_idx], histImg_roi,
+    histogram_to_image(hists[hist_idx], histImg_roi,
                                         width1, height1, ratio_colormap);
     // draw a separator line
     cv::line(histImg_roi, cv::Point(0, histImg_roi.rows - 1),
@@ -327,6 +340,7 @@ void vector_of_histograms_to_image(const std::vector<Histogram> & hists,
 } // end vector_of_histograms_to_image();
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:distance_hists
 
 /*! distance between two histograms
  * \param h1
@@ -376,6 +390,7 @@ double distance_hists(const Histogram & h1,
 } // end distance_hists()
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:merge_histograms
 
 /*!
  * Merge two histograms as an arithmetic average
@@ -424,7 +439,7 @@ bool merge_histograms(const std::vector<Histogram> & hists,
                       bool want_normalize_hist = true) {
   unsigned int nhists = hists.size();
   if (weights.size() != nhists) { // check size consistency
-    printf("merge_histograms(): %i weights, %i histograms! Returning\n",
+    printf("merge_histograms(): %li weights, %i histograms! Returning\n",
            weights.size(), nhists);
     return false;
   }
@@ -449,6 +464,7 @@ bool merge_histograms(const std::vector<Histogram> & hists,
   return true;
 }
 ////////////////////////////////////////////////////////////////////////////////
+//cut:distance_hist_vectors
 
 /*!
  * Compute the average distance of two vectors of histograms.
@@ -477,7 +493,7 @@ inline double distance_hist_vectors(const std::vector<Histogram> & hists1,
     if (is_histogram_empty(hists1[hist_idx]) || is_histogram_empty(hists2[hist_idx]))
       continue;
     ++nhists_non_empty;
-    sum += histogram_utils::distance_hists
+    sum += distance_hists
            (hists1[hist_idx], hists2[hist_idx], method, remaps_to_0_1);
   } // end loop hist_idx
 
@@ -485,6 +501,7 @@ inline double distance_hist_vectors(const std::vector<Histogram> & hists1,
 } // end distance_hist_vectors()
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:histogram2vectors
 
 void histogram2vectors(const Histogram & h, const double max_value,
                        std::vector<double> & bins, std::vector<double> & freqs) {
@@ -495,11 +512,12 @@ void histogram2vectors(const Histogram & h, const double max_value,
   for (unsigned int bin_idx = 0; bin_idx < nbins; ++bin_idx) {
     bins[bin_idx] = hstep * (.5 + bin_idx);
     freqs[bin_idx] = h.at<float>(bin_idx);
-    // printf("bins:%g, freqs:%g\n", bins[bin_idx], freqs[bin_idx]);
+    //printf("bins:%g, freqs:%g\n", bins[bin_idx], freqs[bin_idx]);
   } // end loop bin_idx
 } // histogram2vectors();
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:mean_std_dev_modulo
 
 void mean_std_dev_modulo(const Histogram & h, const double max_value,
                          double & mean, double & std_dev) {
@@ -511,6 +529,7 @@ void mean_std_dev_modulo(const Histogram & h, const double max_value,
 } // mean_std_dev();
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:histogram2gnuplot
 
 /*! plot histogram in gnuplot
   \var mean, std_dev: if wanted, draw the PDF of the histogram
@@ -542,9 +561,11 @@ void histogram2gnuplot(const Histogram & h, const double max_value,
     plotter.set_style("lines");
     plotter.plot_equation(equa.str());
   }
-  system_utils::wait_for_key();
+  wait_for_key();
 } // end mean_std_dev2gnuplot();
 
-} // end namespace histogram_utils
+//cut
+
+} // end namespace vision_utils
 
 #endif // HISTOGRAM_UTILS_H

@@ -26,7 +26,7 @@ A small function for drawing an arrow.
 
 #include <opencv2/core/core.hpp>
 
-namespace image_utils {
+namespace vision_utils {
 inline void draw_arrow
 (cv::Mat3b& img, cv::Point pt1, cv::Point pt2, const cv::Scalar& color,
  int thickness=1, int linetype=8, int shift=0) {
@@ -45,6 +45,6 @@ inline void draw_arrow
   pt_end.y  = pt2.y + side_strokes_length * sin(arrow_orien + M_PI - M_PI / 6);
   cv::line(img, pt2, pt_end, color, thickness, linetype, shift);
 } // end draw_arrow();
-} // end namespace image_utils
+} // end namespace vision_utils
 
 #endif // DRAW_ARROW_H

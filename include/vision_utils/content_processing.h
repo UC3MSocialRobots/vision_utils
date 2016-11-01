@@ -6,13 +6,13 @@
 // OpenCV
 #include <opencv2/imgproc/imgproc.hpp>
 // AD
-#include "vision_utils/utils/geometry_utils.h"
-#include "vision_utils/utils/cmatrix.h"
-// vision
+#include "vision_utils/cmatrix.h"
+#include "vision_utils/geometry_utils.h"
+#include "vision_utils/infosimage.h"
 #include "vision_utils/io.h"
 #include "vision_utils/mask.h"
 
-namespace image_utils {
+namespace vision_utils {
 
 #if 0
 /*!
@@ -40,7 +40,7 @@ inline void simpleLoop3b(const cv::Mat3b & img) {
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:img2string
 static std::string img2string(const cv::Mat1b & img) {
   std::ostringstream ans;
   ans << "(" << img.cols << "x" << img.rows << "):" << std::endl;
@@ -56,9 +56,10 @@ static std::string img2string(const cv::Mat1b & img) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+//cut:point_vec_to_string
 template<class Pt2Iterable>
 static std::string point_vec_to_string(const Pt2Iterable & in, const cv::Size size) {
-  //cv::Rect r = geometry_utils::boundingBox_vec<cv::Rect, cv::Point>(in);
+  //cv::Rect r = boundingBox_vec<cv::Rect, cv::Point>(in);
   //cv::Mat1b out(r.width, r.height);
   cv::Mat1b out(size, (uchar) 0);
   int cols = size.width;
@@ -73,6 +74,7 @@ static std::string point_vec_to_string(const Pt2Iterable & in, const cv::Size si
 
 ////////////////////////////////////////////////////////////////////////////////
 
+//cut:resizeMonochromeImage
 /*!
  *\brief   resize a monochroome image in another one -
      *
@@ -80,13 +82,13 @@ static std::string point_vec_to_string(const Pt2Iterable & in, const cv::Size si
  *\param   dest monochrome image
  */
 inline void resizeMonochromeImage(const cv::Mat1b & src, cv::Mat1b & dest) {
-  maggieDebug2("resizeMonochromeImage('%s', '%s'')",
-               infosImage(src).c_str(), infosImage(dest).c_str());
+  //printf("resizeMonochromeImage('%s', '%s'')", infosImage(src).c_str(), infosImage(dest).c_str());
   cv::resize(src, dest, dest.size(), 0, 0, cv::INTER_NEAREST);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
+//cut:bbox_full
 //! \return a bounding box corresponding to the full image
 inline cv::Rect bbox_full(const cv::Mat & img) {
   return cv::Rect(0, 0, img.cols, img.rows);
@@ -94,6 +96,7 @@ inline cv::Rect bbox_full(const cv::Mat & img) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+//cut:center
 //! \return the center point of an image
 inline cv::Point center(const cv::Mat & img) {
   return cv::Point(img.cols / 2, img.rows / 2);
@@ -101,6 +104,7 @@ inline cv::Point center(const cv::Mat & img) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+//cut:boundingBox
 /*!
  *\brief   get the bounding box of the non null points of an image
  *\param   img a monochrome image
@@ -151,6 +155,7 @@ static inline cv::Rect boundingBox(const cv::Mat_<_T> & img) {
 }
 
 ////////////////////////////////////////////////////////////////////////////
+//cut:redimContent
 
 /*!
  *\brief   fit the non nul bounding box of src to fit to the size of dest
@@ -158,8 +163,7 @@ static inline cv::Rect boundingBox(const cv::Mat_<_T> & img) {
  *\param   dest monochrome image
  */
 inline bool redimContent(const cv::Mat1b & src, cv::Mat1b & dest) {
-  maggieDebug2("redimContent('%s', '%s'')",
-               infosImage(src).c_str(), infosImage(dest).c_str());
+  //printf("redimContent('%s', '%s'')", infosImage(src).c_str(), infosImage(dest).c_str());
   //cout << "bbox 1:" << cvGetImageROI(src).cols << "," << cvGetImageROI(src).rows << endl;
   //    cv::Rect bbox_orig = cvGetImageROI(src);
   //    //cout << "bbox res:" << bbox.cols << "," << bbox.rows << endl;
@@ -169,7 +173,7 @@ inline bool redimContent(const cv::Mat1b & src, cv::Mat1b & dest) {
   //    cvSetImageROI(src, bbox_orig);
 
   cv::Rect bbox_src = boundingBox(src);
-  if (!geometry_utils::bboxes_included(bbox_full(src), bbox_src))
+  if (!bboxes_included(bbox_full(src), bbox_src))
     return false;
   resizeMonochromeImage(src(bbox_src), dest);
   return true;
@@ -193,10 +197,10 @@ inline void redimContent_vector_without_repetition_given_src_bbox(
     MyBool* resized_array_ptr,
     bool keep_ratio = false) {
   assert(src != rep);
-  maggieDebug3("redimContent_vector_without_repetition_given_src_bbox"
-               "(bbox_src:%s, dst_bbox:%s, keep_ratio:%i)",
-               rectangle_to_string(src_bbox).c_str(),
-               rectangle_to_string(dst_bbox).c_str(), keep_ratio);
+  //printf("redimContent_vector_without_repetition_given_src_bbox"
+//               "(bbox_src:%s, dst_bbox:%s, keep_ratio:%i)",
+//               rectangle_to_string(src_bbox).c_str(),
+//               rectangle_to_string(dst_bbox).c_str(), keep_ratio);
 
   /* compute the transformation
           { x' = aX * x + bX
@@ -221,7 +225,7 @@ inline void redimContent_vector_without_repetition_given_src_bbox(
   // this is true, keep_ratio or not
   float bX = - aX * src_bbox.x;
   float bY = - aY * src_bbox.y;
-  //maggieDebug2("x' = %g x + %g,  y' = %g y + %g", aX, bX, aY, bY);
+  //printf("x' = %g x + %g,  y' = %g y + %g", aX, bX, aY, bY);
 
   /* stock the results in an array */
   /* first init the array */
@@ -240,7 +244,7 @@ inline void redimContent_vector_without_repetition_given_src_bbox(
       *resized_array_pos_ptr = true;
     }
   } // end loop pt_idx
-  //maggieDebug2("nb_points:%i", nb_points);
+  //printf("nb_points:%i", nb_points);
 
   /* recopy the points marked in the array in the std::vector */
   rep.clear();
@@ -257,7 +261,7 @@ inline void redimContent_vector_without_repetition_given_src_bbox(
     } // end loop x
   } // end loop y
 
-  //maggieDebug2("rep_size:%i", rep.size());
+  //printf("rep_size:%i", rep.size());
 }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -275,10 +279,10 @@ inline void redimContent_vector_without_repetition_given_resized_array(
     MyBool* resized_array_ptr,
     bool keep_ratio = false) {
 
-  maggieDebug3("redimContent_vector_without_repetition_given_resized_array"
-               "(dst_bbox:%s, keep_ratio:%i)",
-               rectangle_to_string(dst_bbox).c_str(), keep_ratio);
-  cv::Rect src_bbox = geometry_utils::boundingBox_vec
+  //printf("redimContent_vector_without_repetition_given_resized_array"
+//               "(dst_bbox:%s, keep_ratio:%i)",
+//               rectangle_to_string(dst_bbox).c_str(), keep_ratio);
+  cv::Rect src_bbox = boundingBox_vec
                       <Pt2Iterable, cv::Rect>(src);
   redimContent_vector_without_repetition_given_src_bbox<Pt2Iterable>
       (src, rep,
@@ -301,9 +305,9 @@ inline void redimContent_vector_without_repetition(
     const cv::Rect & dst_bbox,
     bool keep_ratio = false) {
 
-  maggieDebug3("redimContent_vector_without_repetition"
-               "(dst_bbox:%s, keep_ratio:%i)",
-               rectangle_to_string(dst_bbox).c_str(), keep_ratio);
+  //printf("redimContent_vector_without_repetition"
+//               "(dst_bbox:%s, keep_ratio:%i)",
+//               rectangle_to_string(dst_bbox).c_str(), keep_ratio);
   assert(src != rep);
 #ifdef USE_MAT1B
   cv::Mat1b resized_array;
@@ -324,14 +328,15 @@ inline void redimContent_vector_without_repetition(
   //delete resized_array;
 }
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//cut:nonNulPoints
 
 /*!
  *\brief   get a vector from an image with all the non nul points
  */
 template<class Pt2Iterable>
 inline void nonNulPoints(const cv::Mat1b & img, Pt2Iterable & rep) {
-  maggieDebug3("nonNulPoints()");
+  //printf("nonNulPoints()");
 #if 0
   rep.clear();
   // rep.reserve( cv::countNonZero(img) );
@@ -362,6 +367,31 @@ inline void nonNulPoints(const cv::Mat1b & img, Pt2Iterable & rep) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+/*!
+ *\brief   get a vector from an image with all the non nul points
+ */
+template<class CoordIterable>
+inline void nonNulPoints(const cv::Mat1b & img, CoordIterable & x, CoordIterable & y) {
+  //printf("nonNulPoints()");
+  x.resize( cv::countNonZero(img) );
+  y.resize(x.size());
+  int rep_idx = 0;
+  for (int row = 0; row < img.rows; ++row) {
+    // get the address of row
+    const uchar* data = img.ptr<uchar>(row);
+    for (int col = 0; col < img.cols; ++col) {
+      if (*data++) {
+        x[rep_idx] = col;
+        y[rep_idx] = row;
+        ++rep_idx;
+      }
+    } // end loop col
+  } // end loop row
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+//cut:find_top_point_centered
 /*! Find the non null point with the lowest row index
  * in a mask, among non zero pixels.
  * We only search in columns with an index close to the vertical center
@@ -379,7 +409,7 @@ cv::Point find_top_point_centered(const cv::Mat_<_T> & image,
                                   cv::Rect* search_window_out = NULL) {
   assert(width_ratio_to_bbox > 0 && width_ratio_to_bbox <= 1);
   // find bounding box and allowed columns
-  cv::Rect bbox = (compute_bbox ? image_utils::boundingBox(image) : bbox_full(image));
+  cv::Rect bbox = (compute_bbox ? boundingBox(image) : bbox_full(image));
   int
       min_col = bbox.x + (1.f - width_ratio_to_bbox) * bbox.width / 2,
       max_col = bbox.x + (1.f + width_ratio_to_bbox) * bbox.width / 2,
@@ -412,31 +442,12 @@ cv::Point find_top_point_centered(const cv::Mat_<_T> & image,
   return cv::Point(-1, -1);
 }
 
-////////////////////////////////////////////////////////////////////////////////
 
-/*!
- *\brief   get a vector from an image with all the non nul points
- */
-template<class CoordIterable>
-inline void nonNulPoints(const cv::Mat1b & img, CoordIterable & x, CoordIterable & y) {
-  maggieDebug3("nonNulPoints()");
-  x.resize( cv::countNonZero(img) );
-  y.resize(x.size());
-  int rep_idx = 0;
-  for (int row = 0; row < img.rows; ++row) {
-    // get the address of row
-    const uchar* data = img.ptr<uchar>(row);
-    for (int col = 0; col < img.cols; ++col) {
-      if (*data++) {
-        x[rep_idx] = col;
-        y[rep_idx] = row;
-        ++rep_idx;
-      }
-    } // end loop col
-  } // end loop row
-}
 
 ////////////////////////////////////////////////////////////////////////////
+
+
+//cut:region_growth
 
 /* ************************************************************************
  *stuff with biggest components
@@ -451,7 +462,7 @@ inline void region_growth(const cv::Mat1b & mat,
                           const double maxDistWithSeedValue,
                           std::vector<cv::Point2i>& queue) {
 
-  maggieDebug3("region_growth()");
+  //printf("region_growth()");
 
   unsigned int positionInQueue = 0;
   queue.clear();
@@ -464,14 +475,14 @@ inline void region_growth(const cv::Mat1b & mat,
   // init the queue with the seed
   queue.push_back(seed);
   int seedValue = mat(seed.y, seed.x);
-  //maggieDebug2("seedValue:%i", seedValue);
+  //printf("seedValue:%i", seedValue);
   // mark as seen
   seenPoints[seed.y * mat.cols + seed.x] = SEEN;
 
   do {
     cv::Point2i head = queue.at(positionInQueue);
     ++positionInQueue;
-    //maggieDebug2("Checking:(%i,%i)", head.x, head.y);
+    //printf("Checking:(%i,%i)", head.x, head.y);
     int currentVal = mat(head.y, head.x);
 
     // check the neighbours
@@ -506,17 +517,17 @@ inline void region_growth(const cv::Mat1b & mat,
       // mark as seen
       seenPoints[yNeighbour * mat.cols + xNeighbour] = SEEN;
 
-      //maggieDebug2("Examining %i, %i", xNeighbour, yNeighbour);
+      //printf("Examining %i, %i", xNeighbour, yNeighbour);
 
       int neighbourValue = mat(yNeighbour, xNeighbour);
 
-      //maggieDebug2("Dist:%i", abs(neighbourValue - currentVal));
+      //printf("Dist:%i", abs(neighbourValue - currentVal));
       if ( (abs(neighbourValue - currentVal) > maxDistWithNeighbour)
            || (abs(neighbourValue - seedValue) > maxDistWithSeedValue)) {
         continue;
       }
 
-      //maggieDebug2("adding it");
+      //printf("adding it");
 
       // push in the queue
       queue .push_back(cv::Point2i(xNeighbour, yNeighbour));
@@ -634,9 +645,9 @@ protected:
                        bool propagate_along_diagonals = true) {
     _seen_pts_nb = 0;
     // check if seed valid
-    if (!image_utils::bbox_full(mask).contains(seed)) {
+    if (!bbox_full(mask).contains(seed)) {
       printf("seed %s outside of mask '%s'\n",
-             geometry_utils::printP2(seed).c_str(), infosImage(mask).c_str());
+             printP2(seed).c_str(), infosImage(mask).c_str());
       return -1;
     }
     _cols = mask.cols;
@@ -666,7 +677,7 @@ protected:
       _curr_row = QUEUEFRONT(_rowsqueue);
       _curr_col = QUEUEFRONT(_colsqueue);
       _curr_key = _curr_row * _cols + _curr_col;
-      // printf("Checking (%i, %i)\n", col, row);
+      //printf("Checking (%i, %i)\n", col, row);
       if (is_over()) // found!
         return _curr_key;
       // mark as seen
@@ -698,7 +709,7 @@ protected:
     } // end while (!_colsqueue.empty())
 
     // empty queue, point could not be found
-    // printf("PropagationTemplate: queue empty, no point was satisfying is_over()\n");
+    //printf("PropagationTemplate: queue empty, no point was satisfying is_over()\n");
     return -1;
   } // end propagate()
 
@@ -770,7 +781,7 @@ public:
     _seed_img_value = img(seed);
     _imgdata = img.ptr(); // needed for should_pt_be_added()
     propagate(img, seed, true);
-    // printf("nonzero:%i\n", cv::countNonZero(_queued));
+    //printf("nonzero:%i\n", cv::countNonZero(_queued));
     // cv::imshow("_queued", _queued); cv::waitKey(0);
     nonNulPoints(_queued, pts);
     return true;
@@ -877,7 +888,7 @@ public:
                              seed);
     if (!bbox_full(mask).contains(real_seed)) {
       printf("seed %s outside of mask '%s'\n",
-             geometry_utils::printP2(real_seed).c_str(), infosImage(mask).c_str());
+             printP2(real_seed).c_str(), infosImage(mask).c_str());
       return false;
     }
     _maskdata = mask.ptr(); // needed for should_pt_be_added()
@@ -915,8 +926,8 @@ public:
                         bool paint_nans_in_black = true) {
     _queued.convertTo(queued_float_buffer, CV_32F);
     // convert seen buffer into a visualisation image
-    image_utils::depth_image_to_vizualisation_color_image
-        (queued_float_buffer, queued_illus, image_utils::FULL_RGB_STRETCHED, paint_nans_in_black);
+    depth_image_to_vizualisation_color_image
+        (queued_float_buffer, queued_illus, FULL_RGB_STRETCHED, paint_nans_in_black);
   }
 
 protected:
@@ -954,7 +965,7 @@ public:
     pts.clear();
     if (!bbox_full(mask).contains(seed)) {
       printf("seed %s outside of mask '%s'\n",
-             geometry_utils::printP2(seed).c_str(), infosImage(mask).c_str());
+             printP2(seed).c_str(), infosImage(mask).c_str());
       return false;
     }
     _pts_ptr = &pts;
@@ -1022,7 +1033,7 @@ public:
     path.clear();
     if (!bbox_full(mask).contains(end)) {
       printf("end %s outside of mask '%s'\n",
-             geometry_utils::printP2(end).c_str(), infosImage(mask).c_str());
+             printP2(end).c_str(), infosImage(mask).c_str());
       return false;
     }
     _maskdata = (_T*) mask.ptr(); // needed for is_over()
@@ -1095,7 +1106,7 @@ public:
     // check if seed valid
     if (!bbox_full(mask).contains(seed)) {
       printf("seed %s outside of mask '%s'\n",
-             geometry_utils::printP2(seed).c_str(), infosImage(mask).c_str());
+             printP2(seed).c_str(), infosImage(mask).c_str());
       return cv::Point(-1, -1);
     }
     // stupid check: maybe seed is in mask
@@ -1121,7 +1132,7 @@ public:
       // check current point
       QUEUEDIM row = QUEUEFRONT(rowsqueue), col = QUEUEFRONT(colsqueue);
       int key = row * cols + col;
-      // printf("Checking (%i, %i)\n", col, row);
+      //printf("Checking (%i, %i)\n", col, row);
       if (maskdata[key] >= mask_minvalue && maskdata[key] <= mask_maxvalue) // found!
         return cv::Point(col, row);
       // mark as seen
@@ -1255,7 +1266,7 @@ public:
     // check seed well defined
     if (!bbox_full(src).contains(final_seed)) {
       printf("seed %s outside of img '%s'\n",
-             geometry_utils::printP2(final_seed).c_str(), infosImage(src).c_str());
+             printP2(final_seed).c_str(), infosImage(src).c_str());
       return false;
     }
     // allocate buffer
@@ -1275,7 +1286,7 @@ public:
           curr_row_size += floodfill_row(src, curr_row, col, edge_value);
       } // end loop col
 
-      // printf("curr_row:%i, curr_row_size:%i\n", curr_row, curr_row_size);
+      //printf("curr_row:%i, curr_row_size:%i\n", curr_row, curr_row_size);
 #if 1 // determine if it corresponds to a big opening
       bool is_line_opening = false;
       if (curr_row_size > prev_line_diff_thres + prev_row_size) {
@@ -1367,6 +1378,7 @@ private:
 
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:minnonzero_from_botton_row
 
 /*!
  * Find the min non zero value in an image, starting at the bottom row
@@ -1410,6 +1422,7 @@ inline bool minnonzero_from_botton_row(const cv::Mat_<_T> & img,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:propagative_floodfill
 
 typedef short BufferElem;
 //#define PROPAGATE_FLOODFILL_USE_STDVEC
@@ -1503,7 +1516,7 @@ void propagative_floodfill(const cv::Mat1b & img,
           lookup_function(curr_buff_val, curr_row, curr_col, lookup_cookie);
     } // end if (want_lookup_function)
 
-    // printf("queue front:(%i, %i), curr_buff_val:%i\n", curr_col, curr_row, curr_buff_val);
+    //printf("queue front:(%i, %i), curr_buff_val:%i\n", curr_col, curr_row, curr_buff_val);
 
     // check each of the neigbours
     // up
@@ -1605,11 +1618,12 @@ void propagative_floodfill_seen_buffer_to_viz_image(const SEEN_BUFFER_TYPE & que
   queued_short.convertTo(queued_float_buffer, CV_32F);
 #endif // PROPAGATE_FLOODFILL_USE_STDVEC
   // convert seen buffer into a visualisation image
-  image_utils::depth_image_to_vizualisation_color_image
-      (queued_float_buffer, queued_illus, image_utils::FULL_RGB_STRETCHED);
+  depth_image_to_vizualisation_color_image
+      (queued_float_buffer, queued_illus, FULL_RGB_STRETCHED);
 } // end propagative_floodfill_seen_buffer_to_viz_image()
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:get_all_different_values
 
 /*!
  * Find all different values of an image and put them into a vector.
@@ -1666,6 +1680,7 @@ inline void get_all_different_values(const cv::Mat_<_T> & img,
 } // end get_all_different_values()
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:get_all_non_null_values_and_com
 
 template<class _T>
 inline bool get_all_non_null_values_and_com(const cv::Mat_<_T> & img,
@@ -1716,7 +1731,7 @@ inline bool get_all_non_null_values_and_com(const cv::Mat_<_T> & img,
       com = cl.find(img, com, user_idx, user_idx);
     if (!bbox_full(img).contains(com)) {
       printf("com %s outside of img '%s'\n",
-             geometry_utils::printP2(com).c_str(), infosImage(img).c_str());
+             printP2(com).c_str(), infosImage(img).c_str());
       return false;
     }
     out.insert(std::pair<_T, cv::Point>(user_idx, com));
@@ -1773,7 +1788,7 @@ inline bool get_all_non_null_values_and_com_fast(const cv::Mat_<_T> & img,
       com = cl.find(img, com, (_T) user_idx, (_T) user_idx);
     if (!bbox_full(img).contains(com)) {
       printf("com %s outside of img '%s'\n",
-             geometry_utils::printP2(com).c_str(), infosImage(img).c_str());
+             printP2(com).c_str(), infosImage(img).c_str());
       return false;
     }
     out.insert(std::pair<_T, cv::Point>(user_idx, com));
@@ -1782,14 +1797,15 @@ inline bool get_all_non_null_values_and_com_fast(const cv::Mat_<_T> & img,
 } // end get_all_different_values()
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:detect_end_points
 
 template<class _T>
 inline bool detect_end_points(const cv::Mat_<_T> & img,
                               std::vector<cv::Point> & end_pts) {
-  // printf("detect()\n");
+  //printf("detect()\n");
   end_pts.clear();
   if (img.empty()) {
-    maggiePrint("EndFinder: empty input image.");
+    printf("EndFinder: empty input image.");
     return true;
   }
   int rows = img.rows, rowsm = img.rows - 1,
@@ -1803,7 +1819,7 @@ inline bool detect_end_points(const cv::Mat_<_T> & img,
         *curr_row = img.ptr(row),
         *down_row = (down_ok ? img.ptr(row+1) : NULL);
     for (int col = 0; col < cols; ++col) {
-      // printf("img(%i, %i) = %i\n", col, row, (int) curr_row[col]);
+      //printf("img(%i, %i) = %i\n", col, row, (int) curr_row[col]);
       if (!curr_row[col])
         continue;
       bool left_ok = col > 0, right_ok = col < colsm;
@@ -1827,7 +1843,7 @@ inline bool detect_end_points(const cv::Mat_<_T> & img,
       if (right_ok && down_ok && down_row[col+1] && (++neigh_nb) >= 2)
         continue;
       // found an end!
-      // printf("adding (%i, %i)\n", col, row);
+      //printf("adding (%i, %i)\n", col, row);
       end_pts.push_back(cv::Point(col, row));
     } // end loop col
     // shifting data pointers
@@ -1840,8 +1856,10 @@ inline bool detect_end_points(const cv::Mat_<_T> & img,
   return true;
 } // end detect_end_points()
 
+//cut
+
 ////////////////////////////////////////////////////////////////////////////////
 
-} // end namespace image_utils
+} // end namespace vision_utils
 
 #endif // CONTENT_PROCESSING_H

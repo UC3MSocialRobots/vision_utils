@@ -55,6 +55,8 @@ A class to apply Canny filters on depth images.
 #define TIMER_DISPLAY_CHART(t, step)        // empty
 #endif // CHART_TIMER_ON
 
+namespace vision_utils {
+
 class DepthCanny {
 public:
   //! the size of the kernel used to try to close contours (pixels)
@@ -67,7 +69,7 @@ public:
 
   DepthCanny() {
     set_canny_thresholds(DEFAULT_CANNY_THRES1, DEFAULT_CANNY_THRES2);
-    set_nan_removal_method(image_utils::VALUE_REMOVAL_METHOD_DO_NOTHING);
+    set_nan_removal_method(VALUE_REMOVAL_METHOD_DO_NOTHING);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -81,7 +83,7 @@ public:
 
   //////////////////////////////////////////////////////////////////////////////
 
-  inline void set_nan_removal_method(const image_utils::NaNRemovalMethod m) {
+  inline void set_nan_removal_method(const NaNRemovalMethod m) {
     _nan_removal_method = m;
   }
 
@@ -92,7 +94,7 @@ public:
       return;
 
     TIMER_RESET(timer);
-    image_utils::convert_float_to_uchar(depth_img, _img_uchar, src_float_clean_buffer,
+    convert_float_to_uchar(depth_img, _img_uchar, src_float_clean_buffer,
                                         _alpha_trans, _beta_trans);
 
     TIMER_PRINT_RESET(timer, "thresh(): remapping depth float->uchar");
@@ -100,17 +102,16 @@ public:
     /*
      *remove NaN from input image
      */
-    cv::Rect roi = image_utils::remove_value
-        (_img_uchar, _img_uchar_with_no_nan, image_utils::NAN_UCHAR,
+    cv::Rect roi = remove_value
+        (_img_uchar, _img_uchar_with_no_nan, NAN_UCHAR,
          _inpaint_mask, _nan_removal_method);
-    TIMER_PRINT_RESET(timer, "thresh(): image_utils::remove_value(NAN_UCHAR)");
+    TIMER_PRINT_RESET(timer, "thresh(): remove_value(NAN_UCHAR)");
 
     /*
      *edge detection
      */
     // canny
-    maggieDebug3("canny_thres1:%g, canny_thres2:%g, alpha_trans:%g",
-                 _canny_thres1, _canny_thres2, _alpha_trans);
+    //printf("canny_thres1:%g, canny_thres2:%g, alpha_trans:%g", _canny_thres1, _canny_thres2, _alpha_trans);
     cv::Canny(_img_uchar_with_no_nan, _edges,
               _alpha_trans *_canny_thres1, _alpha_trans *_canny_thres2);
 
@@ -128,7 +129,7 @@ public:
     TIMER_PRINT_RESET(timer, "thresh(): cv::threshold(_edges) -> _edges_inverted");
 
     // close borders
-    //image_utils::close_borders(edges_inverted_with_nan, (uchar) 255);
+    //close_borders(edges_inverted_with_nan, (uchar) 255);
     //    cv::morphologyEx(edges_inverted, edges_inverted_opened,
     //                     cv::MORPH_OPEN,
     //                     cv::Mat(MORPH_OPEN_KERNEL_SIZE, MORPH_OPEN_KERNEL_SIZE, CV_8U, 255));
@@ -142,11 +143,11 @@ public:
 #if 1 // faster
     _edges_inverted_opened.copyTo(_edges_inverted_opened_with_nan);
     _img_uchar(roi).copyTo(_edges_inverted_opened_with_nan,
-                           (_img_uchar(roi) == image_utils::NAN_UCHAR));
+                           (_img_uchar(roi) == NAN_UCHAR));
 #else
     cv::min(_edges_inverted_opened, _img_uchar(roi), _edges_inverted_opened_with_nan);
     cv::threshold(_edges_inverted_opened_with_nan, _edges_inverted_opened_with_nan,
-                  image_utils::NAN_UCHAR, 255, cv::THRESH_BINARY);
+                  NAN_UCHAR, 255, cv::THRESH_BINARY);
 #endif
     TIMER_PRINT_RESET(timer, "thresh(): combining Canny edges and NAN of depth");
   }
@@ -166,13 +167,13 @@ public:
   TIMER_CREATE(timer)
 
   // float -> uchar
-  image_utils::ScaleFactorType _alpha_trans, _beta_trans;
+  ScaleFactorType _alpha_trans, _beta_trans;
   cv::Mat1b _img_uchar;
   cv::Mat src_float_clean_buffer;
 
   // nan removal
   cv::Mat1b _img_uchar_with_no_nan;
-  image_utils::NaNRemovalMethod _nan_removal_method;
+  NaNRemovalMethod _nan_removal_method;
   cv::Mat1b _inpaint_mask;
 
   // edge detection
@@ -186,7 +187,6 @@ public:
   //cv::Mat1b harrisCorners;
 }; // end class DepthCanny
 
-////////////////////////////////////////////////////////////////////////////////
-
+} // end namespace vision_utils
 
 #endif // DEPTH_CANNY_H

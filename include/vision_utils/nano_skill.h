@@ -54,6 +54,8 @@ in the Automative Deliberative (AD) architecture.
 #include <ros/publisher.h>
 #include <std_msgs/Int16.h>
 
+namespace vision_utils {
+
 class NanoSkill {
 public:
   enum Status {
@@ -158,5 +160,7 @@ protected:
   Status _status;
   ros::Subscriber _start_sub, _stop_sub;
 }; // end class NanoSkill
+
+} // end namespace vision_utils
 
 #endif // NANO_SKILL_H

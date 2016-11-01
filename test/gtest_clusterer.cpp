@@ -24,16 +24,16 @@ Some tests for \a
  */
 // Bring in my package's API, which is what I'm testing
 #include "vision_utils/clusterer.h"
-#include "vision_utils/utils/foo_point.h"
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/foo_point.h"
+#include "vision_utils/timer.h"
 // Bring in gtest
 #include <gtest/gtest.h>
 
-typedef geometry_utils::FooPoint3f Pt3f;
+typedef vision_utils::FooPoint3f Pt3f;
 
 TEST(TestSuite, empty) {
   { // a scope for calling destructor
-  geometry_utils::Clusterer clusterer;
+  vision_utils::Clusterer clusterer;
   }
   ASSERT_NO_FATAL_FAILURE();
 }
@@ -41,8 +41,8 @@ TEST(TestSuite, empty) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, empty_call) {
-  geometry_utils::Clusterer clusterer;
-  geometry_utils::Rect3d bbox;
+  vision_utils::Clusterer clusterer;
+  vision_utils::Rect3d bbox;
   bool ret = clusterer.get_biggest_cluster_bbox(bbox);
   ASSERT_TRUE(ret == false); // failure
 
@@ -65,14 +65,14 @@ TEST(TestSuite, empty_call) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, single_pt) {
-  geometry_utils::Clusterer clusterer;
+  vision_utils::Clusterer clusterer;
   std::vector<Pt3f> data;
   data.push_back( Pt3f(0, 0, 0));
   bool ret = clusterer.cluster(data);
   ASSERT_TRUE(ret == true); // success
   ASSERT_TRUE(clusterer.get_cluster_nb() == 1);
 
-  geometry_utils::Rect3d bbox;
+  vision_utils::Rect3d bbox;
   ret = clusterer.get_biggest_cluster_bbox(bbox);
   ASSERT_TRUE(ret == true); // success
 
@@ -84,7 +84,7 @@ TEST(TestSuite, single_pt) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, two_clusters) {
-  geometry_utils::Clusterer clusterer;
+  vision_utils::Clusterer clusterer;
   std::vector<Pt3f> data;
   Pt3f pt1(0, 0, 0), pt2(1, 1, 0);
   unsigned int pt1_amount = 10, pt2_amount = 5;
@@ -96,7 +96,7 @@ TEST(TestSuite, two_clusters) {
   ASSERT_TRUE(ret == true); // success
   ASSERT_TRUE(clusterer.get_cluster_nb() == 2);
 
-  geometry_utils::Rect3d bbox; // should only include pt1
+  vision_utils::Rect3d bbox; // should only include pt1
   ret = clusterer.get_biggest_cluster_bbox(bbox);
   ASSERT_TRUE(ret == true); // success
   ASSERT_TRUE(bbox.centroid<Pt3f>() == pt1);
@@ -113,7 +113,7 @@ TEST(TestSuite, two_clusters) {
 
 // test coming from test_clusterer, needs to be converted to GTest \todo
 void foo() {
-  typedef geometry_utils::FooPoint3d Pt3;
+  typedef vision_utils::FooPoint3d Pt3;
   std::vector<Pt3> pts;
   for (unsigned int pt_idx = 0; pt_idx < 500; ++pt_idx) {
     if (rand() % 100 < 80) // inliers
@@ -122,15 +122,15 @@ void foo() {
       pts.push_back(Pt3(10 * drand48(), 10 * drand48(), 10 * drand48()));
   } // end loop pt_idx
 
-  Timer timer;
-  geometry_utils::Clusterer clusterer;
+  vision_utils::Timer timer;
+  vision_utils::Clusterer clusterer;
   bool success = clusterer.cluster(pts, 0.2);
   timer.printTime("clusterer.cluster()");
   ROS_WARN("success:%i", success);
   if (!success)
     return;
 
-  geometry_utils::Rect3d bbox;
+  vision_utils::Rect3d bbox;
   // std::vector<int> cluster_indices;
   success =clusterer.get_biggest_cluster_bbox(bbox);
 

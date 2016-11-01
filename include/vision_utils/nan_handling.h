@@ -28,8 +28,9 @@ Some functions to remove or store NaNs in images.
 
 #include <boost/unordered_set.hpp>
 #include <opencv2/core/core.hpp>
+#include "vision_utils/is_nan_depth.h"
 
-namespace image_utils {
+namespace vision_utils {
 
 //! what will symbolize NaN for an uchar image
 static const uchar NAN_UCHAR = 0;
@@ -39,13 +40,6 @@ static const uchar NAN_UCHAR = 0;
  * as its presence in images considerably slows down their processing.
  */
 static const float NAN_DEPTH = 0;
-
-////////////////////////////////////////////////////////////////////////////////
-
-//! \return \true if distance is a NAN (or a simulated one)
-inline bool is_nan_depth(const float & distance) {
-  return (distance == NAN_DEPTH || isnan(distance));
-}
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -94,7 +88,7 @@ inline void remove_nans_and_minmax(cv::Mat & img,
     _BasicType* src_ptr = (_BasicType*) img.ptr(row);
     // change each value
     for (int col = 0; col < values_per_row; ++col) {
-      // printf("remove_nans_and_minmax: (%i,%i): %g\n", col, row, *src_ptr);
+      //printf("remove_nans_and_minmax: (%i,%i): %g\n", col, row, *src_ptr);
       if (is_nan_depth(*src_ptr))
         *src_ptr = new_val;
       else if (!minmax_were_set) {
@@ -152,6 +146,6 @@ bool is_nan_pt(const Pt3 & pt) {
   return (is_nan_depth(pt.x) || is_nan_depth(pt.y) || is_nan_depth(pt.z));
 }
 
-} // end namespace image_utils
+} // end namespace vision_utils
 
 #endif // NAN_HANDLING_H

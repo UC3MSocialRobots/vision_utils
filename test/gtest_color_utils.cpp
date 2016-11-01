@@ -2,7 +2,6 @@
 //#define DISPLAY
 #include <gtest/gtest.h>
 #include "vision_utils/color_utils.h"
-#include "vision_utils/utils/error.h"
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -14,7 +13,7 @@ cv::Mat3b test_hue_to_string_bg(rows, cols), test_hue_to_string_bg_name;
 void test_hue_to_string_mouse_cb(int event, int x, int y, int flags, void* param) {
    test_hue_to_string_bg.copyTo(test_hue_to_string_bg_name);
    float h = 180.f * x / cols;
-   cv::putText(test_hue_to_string_bg_name, color_utils::hue_to_string(h),
+   cv::putText(test_hue_to_string_bg_name, vision_utils::hue_to_string(h),
                cv::Point(x, y), cv::FONT_HERSHEY_PLAIN, 1, CV_RGB(0, 0, 0));
 }
 
@@ -23,7 +22,7 @@ TEST(TestSuite, test_hue_to_string) {
   for (int col = 0; col < cols; ++col) {
     float h = 180.f * col / cols;
     cv::line(test_hue_to_string_bg, cv::Point(col, 0), cv::Point(col, rows),
-             color_utils::hue2rgb<cv::Scalar>(h));
+             vision_utils::hue2rgb<cv::Scalar>(h));
   } // end loop col
 
   // set callbacks
@@ -53,7 +52,7 @@ TEST(TestSuite, test_hue_scales) {
       float r, g, b;
       float h = 360.f * col / img.cols;
       float s = 1.f * row / img.rows;
-      color_utils::HSVtoRGB(h, s, 1.f, r, g, b);
+      vision_utils::HSVtoRGB(h, s, 1.f, r, g, b);
       data[col][0] = 255 * b;
       data[col][1] = 255 * g;
       data[col][2] = 255 * r;
@@ -64,7 +63,7 @@ TEST(TestSuite, test_hue_scales) {
   for (int col = 0; col < img.cols; ++col) {
     float h = 180.f * col / img.cols;
     cv::line(img2, cv::Point(col, 0), cv::Point(col, img2.rows),
-             color_utils::hue2rgb<cv::Scalar>(h));
+             vision_utils::hue2rgb<cv::Scalar>(h));
   } // end loop col
 
 #ifdef DISPLAY

@@ -28,12 +28,14 @@ A useful class for finding the head inside of a user mask.
 #define HEAD_FINDER_H
 
 #include "vision_utils/content_processing.h"
-#include "vision_utils/utils/stats_utils.h"
-#include "vision_utils/utils/clamp.h"
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/stats_utils.h"
+#include "vision_utils/clamp.h"
+#include "vision_utils/timer.h"
 #include "vision_utils/user_image_to_rgb.h"
 #include "vision_utils/voronoi.h"
 #include "cvstage/plugins/draw_ellipses.h"
+
+namespace vision_utils {
 
 
 class HeadFinder {
@@ -55,13 +57,13 @@ public:
       printf("HeadFinder:user_mask is empty!\n");
       return false;
     }
-    // Timer timer_;
+    // ::vision_utils::Timer timer_;
     // erode the img
-    cv::Rect bbox = image_utils::boundingBox(user_mask);
+    cv::Rect bbox = boundingBox(user_mask);
     int erode_kernel_size = clamp(bbox.width / 10, 5, 30);
     // erode_kernel_size must be odd
     erode_kernel_size = 1 + 2 * (int) (erode_kernel_size / 2);
-    // printf("erode_kernel_size:%i\n", erode_kernel_size);
+    //printf("erode_kernel_size:%i\n", erode_kernel_size);
     cv::Mat erode_kernel = cv::Mat(erode_kernel_size, erode_kernel_size, CV_8U, 255);
     cv::erode(user_mask, user_mask_eroded, erode_kernel);
     if (cv::countNonZero(user_mask_eroded) == 0) {
@@ -74,8 +76,8 @@ public:
       user_mask.copyTo(user_mask_eroded);
     }
     //    printf("user_mask:%s, user_mask_eroded:%s!\n",
-    //           image_utils::img2string(user_mask).c_str(),
-    //           image_utils::img2string(user_mask_eroded).c_str());
+    //           img2string(user_mask).c_str(),
+    //           img2string(user_mask_eroded).c_str());
 
     // thin img
     if (!_thinner.thin(user_mask_eroded, _thinning_method, true)) {
@@ -86,10 +88,10 @@ public:
     // cv::imshow("_skeleton", _thinner.get_skeleton()); cv::waitKey(0);
 
     // find end points of skeleton
-    if (!image_utils::detect_end_points(_thinner.get_skeleton(), _end_pts)
+    if (!detect_end_points(_thinner.get_skeleton(), _end_pts)
         || _end_pts.size() == 0) {
       printf("HeadFinder:detect_end_points() failed, skeleton:%s!\n",
-             image_utils::img2string(_thinner.get_skeleton()).c_str());
+             img2string(_thinner.get_skeleton()).c_str());
       return false;
     }
     // add offset
@@ -105,7 +107,7 @@ public:
     }
 
     // fit ellipse
-    image_utils::nonNulPoints(user_mask_eroded, _x, _y);
+    nonNulPoints(user_mask_eroded, _x, _y);
     if (_x.size() == 0) {
       printf("HeadFinder:user_mask_eroded empty!\n");
       return false;
@@ -135,7 +137,7 @@ public:
     _head_pos = cv::Point(0, 0);
     double dist = std::numeric_limits<double>::max();
     for (unsigned int end_pt_idx = 0; end_pt_idx < _end_pts.size(); ++end_pt_idx) {
-      double curr_dist = geometry_utils::distance_points_squared(_end_pts[end_pt_idx], _neck_pt);
+      double curr_dist = distance_points_squared(_end_pts[end_pt_idx], _neck_pt);
       if (curr_dist < dist) {
         _head_pos = _end_pts[end_pt_idx];
         dist = curr_dist;
@@ -208,5 +210,7 @@ protected:
   // viz stuff
   cv::Mat3b viz;
 }; // end class HeadFinder
+
+} // end namespace vision_utils
 
 #endif // HEAD_FINDER_H

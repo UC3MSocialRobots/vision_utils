@@ -5,10 +5,10 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-namespace image_utils {
+namespace vision_utils {
 
 ////////////////////////////////////////////////////////////////////////////
-
+//cut:extractLayer
 /*!
  *\brief   extract one of the layer from an image
      *
@@ -34,23 +34,23 @@ inline void extractLayer(const cv::Mat3b & src, cv::Mat1b & dest,
 #endif
 }
 
-} // end namespace image_utils
+} // end namespace vision_utils
 
-namespace color_utils {
+namespace vision_utils {
 
 ////////////////////////////////////////////////////////////////////////////
-
+//cut:rgb2hsv_layer
 /*!
  *\brief   save in "dest" one HSV component of "src"
  */
 inline void rgb2hsv_layer(const cv::Mat3b & src_bgr, cv::Mat3b & temp_hsv,
                           cv::Mat1b & dest_layer, const int layer_idx) {
   cv::cvtColor(src_bgr, temp_hsv, CV_BGR2HSV); // conversion in HSV
-  image_utils::extractLayer(temp_hsv, dest_layer, layer_idx);
+  extractLayer(temp_hsv, dest_layer, layer_idx);
 }
 
 ////////////////////////////////////////////////////////////////////////////
-
+//cut:rgb2hue
 /*!
  *\brief   save in "dest" the hue component of "src"
  */
@@ -71,7 +71,7 @@ inline cv::Mat1b rgb2hue(cv::Mat3b & src_bgr) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:rgb_file2hue
 //! read an image from file and return its
 inline cv::Mat1b rgb_file2hue(const std::string & filename) {
   cv::Mat3b img_rgb = cv::imread(filename, CV_LOAD_IMAGE_COLOR);
@@ -79,7 +79,7 @@ inline cv::Mat1b rgb_file2hue(const std::string & filename) {
 }
 
 ////////////////////////////////////////////////////////////////////////////
-
+//cut:rgb2saturation
 /*!
  *\brief   save in "dest" the saturation component of "src"
  */
@@ -89,7 +89,7 @@ inline void rgb2saturation(const cv::Mat3b & src_bgr, cv::Mat3b & temp_hsv,
 }
 
 ////////////////////////////////////////////////////////////////////////////
-
+//cut:rgb2saturation
 /*!
  *\brief   save in "dest" the value component of "src"
  */
@@ -99,11 +99,11 @@ inline void rgb2value(const cv::Mat3b & src_bgr, cv::Mat3b & temp_hsv,
 }
 
 ////////////////////////////////////////////////////////////////////////////
-
+//cut:hue2rgb
 inline void hue2rgb(const cv::Mat1b & hue, cv::Mat3b & rgb) {
   // make lookup table - hue goes in 0..180
   static std::vector<cv::Vec3b> hue_lut;
-  color_utils::hue2rgb_make_lookup_table(hue_lut, 180);
+  hue2rgb_make_lookup_table(hue_lut, 180);
   // use it
   rgb.create(hue.size());
   for (int row = 0; row < hue.rows; ++row) {
@@ -125,7 +125,7 @@ inline cv::Mat3b hue2rgb(const cv::Mat1b & hue) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:saturate_saturation_value
 void saturate_saturation_value(const cv::Mat3b & src_bgr,
                                std::vector<cv::Mat> & layers,
                                cv::Mat3b & out_bgr) {
@@ -138,7 +138,7 @@ void saturate_saturation_value(const cv::Mat3b & src_bgr,
 }
 
 ////////////////////////////////////////////////////////////////////////////
-
+//cut:rgb_saturate_saturation_value
 /*!
  *\brief   create the rgb image which illustrate the hue
  *\param   src a bgr image
@@ -156,7 +156,7 @@ inline void rgb_saturate_saturation_value(const cv::Mat3b & src_bgr, cv::Mat3b &
 }
 
 ////////////////////////////////////////////////////////////////////////////
-
+//cut:rgb2hue_and_showRGB
 /*!
  *\brief   create the rgb image which illustrate the hue component
  *of the image "filename"
@@ -171,7 +171,7 @@ inline void rgb2hue_and_showRGB(const std::string & filename) {
 } // end rgb2hue_and_showRGB();
 
 ////////////////////////////////////////////////////////////////////////////
-
+//cut:HSVfilter
 inline void HSVfilter(const cv::Mat3b & srcHSV,
                       const int outValue, cv::Mat1b & result,
                       const int Hmin, const int Hmax,
@@ -211,7 +211,7 @@ inline void HSVfilter(const cv::Mat3b & srcHSV,
   cv::min( (cv::Mat) Hbuffer, Sbuffer, result);
   cv::min( (cv::Mat) result, Vbuffer, result);
 }
-
-} // end namespace color_utils
+//cut:
+} // end namespace vision_utils
 
 #endif // LAYER_UTILS_H

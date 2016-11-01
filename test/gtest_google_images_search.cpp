@@ -22,7 +22,7 @@ ________________________________________________________________________________
 */
 // Bring in gtest
 #include <gtest/gtest.h>
-#include "vision_utils/utils/string_split.h"
+#include "vision_utils/string_split.h"
 #include "vision_utils/google_images_search.h"
 #include <vision_utils/img_path.h>
 
@@ -34,9 +34,9 @@ TEST(TestSuite, empty_image) {
   cv::Mat query;
   std::string best_guess;
   std::vector<cv::Mat> similar_images;
-  image_utils::GoogleImagesLookStatus status =
-      image_utils::google_images_lookup(query, best_guess, similar_images, true);
-  ASSERT_TRUE(status == image_utils::SIMILAR_IMAGES_NO_BEST_GUESS_NO) << "status:" << status;
+  vision_utils::GoogleImagesLookStatus status =
+      vision_utils::google_images_lookup(query, best_guess, similar_images, true);
+  ASSERT_TRUE(status == vision_utils::SIMILAR_IMAGES_NO_BEST_GUESS_NO) << "status:" << status;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -47,13 +47,13 @@ void test(const std::string & filename, const std::string & exp_guesses) {
   cv::Mat query = cv::imread(filename, CV_LOAD_IMAGE_COLOR);
   std::string best_guess;
   std::vector<cv::Mat> similar_images;
-  image_utils::GoogleImagesLookStatus status =
-      image_utils::google_images_lookup(query, best_guess, similar_images, true);
-  ASSERT_TRUE(status == image_utils::SIMILAR_IMAGES_OK_BEST_GUESS_OK) << "status:" << status;
+  vision_utils::GoogleImagesLookStatus status =
+      vision_utils::google_images_lookup(query, best_guess, similar_images, true);
+  ASSERT_TRUE(status == vision_utils::SIMILAR_IMAGES_OK_BEST_GUESS_OK) << "status:" << status;
 
   bool guess_match = false;
   std::vector<std::string> exp_guesses_vec;
-  string_utils::StringSplit(exp_guesses, ";", &exp_guesses_vec);
+  vision_utils::StringSplit(exp_guesses, ";", &exp_guesses_vec);
   for (unsigned int word_idx = 0; word_idx < exp_guesses_vec.size(); ++word_idx) {
     if (best_guess.find(exp_guesses[word_idx]) != std::string::npos) {
       guess_match = true;

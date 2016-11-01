@@ -31,10 +31,10 @@ at any time.
 #define PPL_USER_TRACKER_H
 
 // msg
-#include <people_msgs_rl/PeoplePoseList.h>
-#include "vision_utils/utils/foo_point.h"
+#include <people_msgs/People.h>
+#include "vision_utils/foo_point.h"
 
-namespace ppl_utils {
+namespace vision_utils {
 
 template<class P3a, class P3b>
 inline double dist3sq(const P3a & a, const P3b & b) {
@@ -46,17 +46,17 @@ inline double dist3sq(const P3a & a, const P3b & b) {
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class Pt3>
-int get_closest_pp(const people_msgs_rl::PeoplePoseList & ppl,
+int get_closest_pp(const people_msgs::People & ppl,
                    const Pt3 & center) {
-  unsigned int npeople = ppl.poses.size();
+  unsigned int npeople = ppl.people.size();
   if (!npeople) {
     printf("get_closest_pp(): empty PPL!\n");
     return -1;
   }
   int closest_pp_idx = 0;
-  double best_dist = dist3sq(center, ppl.poses[0].head_pose.position);
+  double best_dist = dist3sq(center, ppl.people[0].position.position);
   for (unsigned int pp_idx = 1; pp_idx < npeople; ++pp_idx) {
-    double dist = dist3sq(center, ppl.poses[pp_idx].head_pose.position);
+    double dist = dist3sq(center, ppl.people[pp_idx].position.position);
     if (best_dist > dist) {
       best_dist = dist;
       closest_pp_idx = pp_idx;
@@ -69,8 +69,8 @@ int get_closest_pp(const people_msgs_rl::PeoplePoseList & ppl,
 
 class PPLUserTracker {
 public:
-  typedef geometry_utils::FooPoint3d Pt3;
-  typedef people_msgs_rl::PeoplePoseList PPL;
+  typedef FooPoint3d Pt3;
+  typedef people_msgs::People PPL;
 
   PPLUserTracker() {}
 
@@ -79,11 +79,11 @@ public:
   bool set_user_to_nearest_person(const PPL & ppl,
                                   Pt3 center = Pt3(0,0,0)) {
     int pp_idx = get_closest_pp<Pt3>(ppl, center);
-    if (pp_idx < 0 || pp_idx >= (int) ppl.poses.size()) {
+    if (pp_idx < 0 || pp_idx >= (int) ppl.people.size()) {
       printf("PPLUserTracker::set_user_to_nearest_person(): could not find closest user!\n");
       return false;
     }
-    _user_name = ppl.poses[pp_idx].person_name;
+    _user_name = ppl.people[pp_idx].name;
     return true;
   }
 
@@ -98,14 +98,14 @@ public:
    */
   bool is_user_present(const PPL & ppl,
                        Pt3* user_pos = NULL) {
-    unsigned int npeople = ppl.poses.size();
+    unsigned int npeople = ppl.people.size();
     for (unsigned int pp_idx = 0; pp_idx < npeople; ++pp_idx) {
-      if (ppl.poses[pp_idx].person_name != _user_name)
+      if (ppl.people[pp_idx].name != _user_name)
         continue;
       if (user_pos != NULL) { // store position
-        user_pos->x = ppl.poses[pp_idx].head_pose.position.x;
-        user_pos->y = ppl.poses[pp_idx].head_pose.position.y;
-        user_pos->z = ppl.poses[pp_idx].head_pose.position.z;
+        user_pos->x = ppl.people[pp_idx].position.position.x;
+        user_pos->y = ppl.people[pp_idx].position.position.y;
+        user_pos->z = ppl.people[pp_idx].position.position.z;
       }
       return true;
     } // end loop pp_idx
@@ -129,6 +129,6 @@ private:
   std::string _user_name;
 }; // end PPLUserTracker
 
-} // end namespace ppl_utils
+} // end namespace vision_utils
 
 #endif // PPL_USER_TRACKER_H

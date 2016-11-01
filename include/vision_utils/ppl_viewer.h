@@ -64,7 +64,7 @@ ________________________________________________________________________________
 
 \section Subscriptions
   - \b {ppl_topics}
-        [people_msgs_rl::PeoplePoseList]
+        [people_msgs::People]
         One or several computed PPL, see above.
 
 \section Publications
@@ -76,19 +76,21 @@ ________________________________________________________________________________
 
 #include "vision_utils/color_utils.h"
 #include "vision_utils/ppl2ms.h"
-#include "vision_utils/utils/laser_utils.h"
-#include "vision_utils/utils/map_utils.h"
-#include "vision_utils/utils/multi_subscriber.h"
-#include "vision_utils/utils/pt_utils.h"
-#include "vision_utils/utils/timestamp.h"
+#include "vision_utils/laser_utils.h"
+#include "vision_utils/map_utils.h"
+#include "vision_utils/multi_subscriber.h"
+#include "vision_utils/pt_utils.h"
+#include "vision_utils/timestamp.h"
 #include "cvstage/plugins/draw_xy_lines.h"
 // ROS
 #include <sensor_msgs/LaserScan.h>
 
+namespace vision_utils {
+
 class PPLViewer {
 public:
-  typedef people_msgs_rl::PeoplePose PP;
-  typedef people_msgs_rl::PeoplePoseList PPL;
+  typedef people_msgs::Person PP;
+  typedef people_msgs::People PPL;
   typedef std::string MethodName;
 
   PPLViewer() {
@@ -107,7 +109,7 @@ public:
     nh_private.param("scan_topic", scan_topic, scan_topic);
     nh_private.param("save_images", _save_images, false);
     // create multi subscriber
-    ppl_subscribers = ros::MultiSubscriber::subscribe
+    ppl_subscribers = MultiSubscriber::subscribe
         (nh_public, ppl_topics, 1, &PPLViewer::draw_new_ppl, this);
     if (!blob_topic.empty())
       blob_subscriber = nh_public.subscribe(blob_topic, 1, &PPLViewer::redraw_blobs, this);
@@ -165,9 +167,9 @@ protected:
     // draw scan
     // convert to (x,y) in msg frame
     if (!_last_scan.ranges.empty()) {
-      laser_utils::convert_sensor_data_to_xy(_last_scan, _pts_src_frame);
+      convert_sensor_data_to_xy(_last_scan, _pts_src_frame);
       // double scan_z_dst_frame = 0;
-      //    if (laser_utils::convert_xy_vec_frame(_last_scan.header,
+      //    if (convert_xy_vec_frame(_last_scan.header,
       //                                           _pts_src_frame,
       //                                           _tf_listener,
       //                                           _frame,
@@ -200,7 +202,7 @@ protected:
     char c = cv::waitKey(50);
     if (c == 's' || _save_images) {
       std::ostringstream filename;
-      filename << "/tmp/PPLViewer_" << string_utils::timestamp() << ".png";
+      filename << "/tmp/PPLViewer_" << timestamp() << ".png";
       if (!cv::imwrite(filename.str(), _ms.get_viz()))
         printf("/!\\ Could not write file '%s'\n", filename.str().c_str());
       printf("Succesfully written file '%s'\n", filename.str().c_str());
@@ -212,16 +214,18 @@ protected:
 
   bool _display, _save_images;
   MiniStage _ms;
-  ros::MultiSubscriber ppl_subscribers;
+  MultiSubscriber ppl_subscribers;
   ros::Subscriber blob_subscriber;
   ros::Subscriber scan_subscriber;
   std::string _window_name;
   PPL2MS _ppl2ms;
-  typedef geometry_utils::FooPoint2f SimplePt2D;
+  typedef FooPoint2f SimplePt2D;
   sensor_msgs::LaserScan _last_scan;
   std::vector<SimplePt2D> _pts_src_frame, _pts_dst_frame;
   tf::TransformListener _tf_listener;
   std::string _frame;
 }; // end class PPLViewer
+
+} // end namespace vision_utils
 
 #endif // PPL_VIEWER_H

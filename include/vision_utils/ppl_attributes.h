@@ -1,5 +1,5 @@
 /*!
-  \file        ppl_attributes.h
+  \file        ppl_tags.h
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
   \date        2014/1/21
@@ -23,131 +23,184 @@ ________________________________________________________________________________
 \todo Description of the file
  */
 
-#ifndef PPL_ATTRIBUTES_H
-#define PPL_ATTRIBUTES_H
+#ifndef PPL_tagS_H
+#define PPL_tagS_H
 
 // msg
-#include <people_msgs_rl/PeoplePoseList.h>
+#include <people_msgs/People.h>
 // AD
-#include "vision_utils/utils/string_casts.h"
+#include "vision_utils/string_casts.h"
 
-namespace ppl_utils {
+namespace vision_utils {
 
-//! \return false if the number of attribute names and values are different
-bool check_attributes_not_corrupted(const people_msgs_rl::PeoplePoseAttributes & attrs) {
-  if (attrs.names.size() == attrs.values.size())
+//! \return false if the number of tag names and values are different
+bool check_tags_not_corrupted(const people_msgs::Person & p) {
+  if (p.tagnames.size() == p.tags.size())
     return true;
-  printf("Pose attributes corrupted, %li names, %li values!\n",
-         attrs.names.size(), attrs.values.size());
+  printf("Pose tags corrupted, %li names, %li values!\n",
+         p.tagnames.size(), p.tags.size());
   return false;
-}
-
-//! \return false if the number of attribute names and values are different
-bool check_attributes_not_corrupted(const people_msgs_rl::PeoplePose & pose) {
-  return check_attributes_not_corrupted(pose.attributes);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class T>
-bool set_attribute(people_msgs_rl::PeoplePoseAttributes & attrs,
-                   const std::string & attr_name,
-                   const T & attr_value) {
-  if (!check_attributes_not_corrupted(attrs))
+bool set_tag(people_msgs::Person & p,
+             const std::string & tag_name,
+             const T & tag_value) {
+  if (!check_tags_not_corrupted(p))
     return false;
-  unsigned int nattrs = attrs.names.size();
-  // search the attribute name
-  std::string attr_value_str = string_utils::cast_to_string(attr_value);
-  for (unsigned int attr_idx = 0; attr_idx < nattrs; ++attr_idx) {
-    if (attrs.names[attr_idx] == attr_name) {
-      attrs.values[attr_idx] = attr_value_str;
+  unsigned int ntags = p.tagnames.size();
+  // search the tag name
+  std::string tag_value_str = cast_to_string(tag_value);
+  for (unsigned int tag_idx = 0; tag_idx < ntags; ++tag_idx) {
+    if (p.tagnames[tag_idx] == tag_name) {
+      p.tags[tag_idx] = tag_value_str;
       return true; // success
     }
-  } // end loop attr_idx
+  } // end loop tag_idx
   // insert at end
-  attrs.names.push_back(attr_name);
-  attrs.values.push_back(attr_value_str);
+  p.tagnames.push_back(tag_name);
+  p.tags.push_back(tag_value_str);
   return true; // success
-} // end set_attribute()
+} // end set_tag()
 
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class T>
-bool set_attribute(people_msgs_rl::PeoplePose & pose,
-                   const std::string & attr_name, const T & attr_value) {
-  return set_attribute<T>(pose.attributes, attr_name, attr_value);
-}
+bool set_tag_people(people_msgs::People & ppl,
+                    const std::string & tag_name,
+                    const T & tag_value) {
+  bool ok = true;
+  unsigned int nppl = ppl.people.size();
+  for (unsigned int i = 0; i < nppl; ++i) {
+    ok = ok && set_tag(ppl.people[i], tag_name, tag_value);
+  }
+  return true; // success
+} // end set_tag()
 
 ////////////////////////////////////////////////////////////////////////////////
 
-//! \return true if the pose has a valid attribute with name \arg attr_name
-bool has_attribute(const people_msgs_rl::PeoplePose & pose,
-                   const std::string & attr_name) {
-  if (!check_attributes_not_corrupted(pose))
+//! \return true if the pose has a valid tag with name \arg tag_name
+bool has_tag(const people_msgs::Person & p,
+             const std::string & tag_name) {
+  if (!check_tags_not_corrupted(p))
     return false;
-  return (std::find(pose.attributes.names.begin(),
-                    pose.attributes.names.end(),
-                    attr_name) != pose.attributes.names.end());
+  return (std::find(p.tagnames.begin(),
+                    p.tagnames.end(),
+                    tag_name) != p.tagnames.end());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class T>
-bool get_attribute_readonly(const people_msgs_rl::PeoplePose & pose,
-                            const std::string & attr_name,
-                            T & attr_value) {
-  if (!check_attributes_not_corrupted(pose))
+bool get_tag(const people_msgs::Person & p,
+             const std::string & tag_name,
+             T & tag_value) {
+  if (!check_tags_not_corrupted(p))
     return false;
-  unsigned int nattrs = pose.attributes.names.size();
-  // search the attribute name
-  for (unsigned int attr_idx = 0; attr_idx < nattrs; ++attr_idx) {
-    if (pose.attributes.names[attr_idx] != attr_name)
+  unsigned int ntags = p.tagnames.size();
+  // search the tag name
+  for (unsigned int tag_idx = 0; tag_idx < ntags; ++tag_idx) {
+    if (p.tagnames[tag_idx] != tag_name)
       continue;
     bool success;
-    attr_value = string_utils::cast_from_string<T>(pose.attributes.values[attr_idx], success);
+    tag_value = cast_from_string<T>(p.tags[tag_idx], success);
     return success;
-  } // end loop attr_idx
+  } // end loop tag_idx
   return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-bool copy_attributes(const people_msgs_rl::PeoplePoseAttributes & src,
-                     people_msgs_rl::PeoplePoseAttributes & dst) {
-  if (!check_attributes_not_corrupted(src) || !check_attributes_not_corrupted(dst))
-    return false;
-  // copy all other attributes
-  unsigned int nattributes = std::min(src.names.size(),
-                                      src.values.size());
-  for (unsigned int attr_idx = 0; attr_idx < nattributes; ++attr_idx) {
-    if (!ppl_utils::set_attribute(dst, src.names[attr_idx],
-                                  src.values[attr_idx]))
-      return false;
-  } // end for (attr_idx)
-  return true;
-} // end copy_attributes()
+template<class T>
+T get_tag_default(const people_msgs::Person & p,
+                  const std::string & tag_name,
+                  const T & default_value) {
+  T ans = default_value;
+  return (get_tag(p, tag_name, ans) ? ans : default_value);
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
-bool copy_attributes(const people_msgs_rl::PeoplePose & pp_src,
-                     people_msgs_rl::PeoplePose & pp_dst) {
-  return copy_attributes(pp_src.attributes, pp_dst.attributes);
-} // end copy_attributes()
+template<class T>
+bool get_tag_people(const people_msgs::People & ppl,
+                    const std::string & tag_name,
+                    T & tag_value) {
+  unsigned int nppl = ppl.people.size();
+  for (unsigned int i = 0; i < nppl; ++i) {
+    if (get_tag(ppl.people[i], tag_name, tag_value))
+      return true;
+  }
+  return false;
+}
 
-bool copy_attributes(const std::vector<people_msgs_rl::PeoplePoseAttributes> & attrs_src,
-                     people_msgs_rl::PeoplePoseList & ppl_dst) {
-  unsigned int nppls = attrs_src.size();
-  if (ppl_dst.poses.size() != nppls) {
-    printf("copy_attributes(): cannot copy, attributes vector of size %i,"
-           "dest PPL of size %li\n", nppls, ppl_dst.poses.size());
+////////////////////////////////////////////////////////////////////////////////
+
+template<class T>
+T get_tag_people_default(const people_msgs::People & ppl,
+                         const std::string & tag_name,
+                         const T & default_value) {
+  T ans = default_value;
+  unsigned int nppl = ppl.people.size();
+  for (unsigned int i = 0; i < nppl; ++i) {
+    if (get_tag(ppl.people[i], tag_name, ans))
+      return ans;
+  }
+  return default_value;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// special functions for the "method" tag
+
+inline bool set_method(people_msgs::Person & pp,
+                       const std::string & method) {
+  return set_tag(pp, "method", method);
+}
+inline bool set_method(people_msgs::People & ppl,
+                       const std::string & method) {
+  return set_tag_people(ppl, "method", method);
+}
+inline std::string get_method(const people_msgs::Person & pp) {
+  return get_tag_default(pp, "method", std::string());
+}
+inline std::string get_method(const people_msgs::People & ppl) {
+  return get_tag_people_default(ppl, "method", std::string());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+bool copy_tags(const people_msgs::Person & src,
+               people_msgs::Person & dst) {
+  if (!check_tags_not_corrupted(src) || !check_tags_not_corrupted(dst))
+    return false;
+  // copy all other tags
+  unsigned int ntags = std::min(src.tagnames.size(),
+                                src.tags.size());
+  for (unsigned int tag_idx = 0; tag_idx < ntags; ++tag_idx) {
+    if (!set_tag(dst, src.tagnames[tag_idx],
+                               src.tags[tag_idx]))
+      return false;
+  } // end for (tag_idx)
+  return true;
+} // end copy_tags()
+
+////////////////////////////////////////////////////////////////////////////////
+
+bool copy_tags(const people_msgs::People & ppl_src,
+               people_msgs::People & ppl_dst) {
+  unsigned int nppls = ppl_src.people.size();
+  if (ppl_dst.people.size() != nppls) {
+    printf("copy_tags(): cannot copy, tags vector of size %i,"
+           "dest PPL of size %li\n", nppls, ppl_dst.people.size());
   }
   for (unsigned int i = 0; i < nppls; ++i) {
-    if (!copy_attributes(attrs_src[i], ppl_dst.poses[i].attributes))
+    if (!copy_tags(ppl_src.people[i], ppl_dst.people[i]))
       return false;
   } // end for (i)
   return true;
-} // end copy_attributes()
+} // end copy_tags()
 
-} // end namespace ppl_utils
+} // end namespace vision_utils
 
-#endif // PPL_ATTRIBUTES_H
+#endif // PPL_tagS_H

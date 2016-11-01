@@ -3,7 +3,7 @@
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
   \date        2013/8/22
-  
+
 ________________________________________________________________________________
 
 This program is free software: you can redistribute it and/or modify
@@ -21,24 +21,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
 
 Some tests for XmlImage
-        
+
  */
 // Bring in gtest
 #include <gtest/gtest.h>
 #include <vision_utils/img_path.h>
 #include "vision_utils/xml_images_reader.h"
 
-class FooXmlImagesReader : public XmlImagesReader {
+class FooXmlImagesReader : public vision_utils::XmlImagesReader {
 public:
   //! \see XmlImagesReader::from_xml_node_custom()
-  void from_xml_node_custom(const XmlDocument & doc, XmlDocument::Node* node) {
+  void from_xml_node_custom(const vision_utils::XmlDocument & doc, vision_utils::XmlDocument::Node* node) {
     _nb_reads = doc.get_node_attribute(node, "nb_reads", 0);
     // increment the number of reads
     ++_nb_reads;
   }
 
   //! \see XmlImagesReader::to_xml_node_custom()
-  void to_xml_node_custom(XmlDocument & doc, XmlDocument::Node* node) const {
+  void to_xml_node_custom(vision_utils::XmlDocument & doc, vision_utils::XmlDocument::Node* node) const {
     doc.set_node_attribute(node, "nb_reads", _nb_reads);
   }
 

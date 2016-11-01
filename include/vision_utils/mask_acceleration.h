@@ -29,10 +29,13 @@ ________________________________________________________________________________
 #include <opencv2/highgui/highgui.hpp>
 //AD
 #include "vision_utils/draw_arrow.h"
-#include "vision_utils/utils/geometry_utils.h"
-#include "vision_utils/utils/timer.h"
+#include "vision_utils/geometry_utils.h"
+#include "vision_utils/timer.h"
 // trying to solve the problem of the white pixels at edge
 // cf https://stackoverflow.com/questions/20418416/how-to-fill-contours-that-touch-the-image-border
+
+namespace vision_utils {
+
 
 class MaskAcceleration {
 public:
@@ -143,7 +146,7 @@ public:
       // find the closest point from the prev_simplified_contour
       cv::Point closest_prev_pt;
       double min_dist_sq;
-      if (!geometry_utils::distance_point_polygon_squared
+      if (!distance_point_polygon_squared
           (curr_pt, _prev_simplified_contour, closest_prev_pt, min_dist_sq, false))
         continue;
 
@@ -154,7 +157,7 @@ public:
         continue;
       PixelAcceleration new_acc;
       new_acc.origin =  curr_pt;
-      new_acc.orien = geometry_utils::oriented_angle_of_a_vector
+      new_acc.orien = oriented_angle_of_a_vector
                       (curr_pt - closest_prev_pt);
       new_acc.norm = curr_acc;
       _pixel_accelerations.push_back(new_acc);
@@ -208,7 +211,7 @@ public:
     for (unsigned int acc_idx = 0; acc_idx < _pixel_accelerations.size(); ++acc_idx) {
       cv::Point end =  curr_acc->origin + cv::Point(acc_drawing_scale * curr_acc->norm * cos(curr_acc->orien),
                                                     acc_drawing_scale * curr_acc->norm * sin(curr_acc->orien));
-      image_utils::draw_arrow (img_out, curr_acc->origin + final_offset,
+      draw_arrow (img_out, curr_acc->origin + final_offset,
                                end + final_offset, CV_RGB(255, 0, 0), 2);
       ++ curr_acc;
     } // end loop acc_idx
@@ -223,7 +226,7 @@ public:
   //////////////////////////////////////////////////////////////////////////////
 
   inline cv::Point get_centroid() const {
-    return _offset + geometry_utils::barycenter(_simplified_contour);
+    return _offset + barycenter(_simplified_contour);
   }
 
 protected:
@@ -233,13 +236,13 @@ protected:
     for (int pt_idx = 0; pt_idx < (int) contour.size() - 2; ++pt_idx) {
       bool need_delete = false;
       // minimum distance
-      double dist = geometry_utils::distance_points_squared(contour[pt_idx], contour[pt_idx + 1]);
+      double dist = distance_points_squared(contour[pt_idx], contour[pt_idx + 1]);
       if (dist < 15 * 15)
         need_delete = true;
 
       if (!need_delete){
         // open angle
-        double angle = geometry_utils::absolute_angle_between_three_points
+        double angle = absolute_angle_between_three_points
                        (contour[pt_idx], contour[pt_idx + 1], contour[pt_idx + 2]);
         if (fabs(angle - M_PI) < M_PI / 6)
           need_delete = true;
@@ -266,6 +269,7 @@ protected:
   std::vector<PixelAcceleration> _pixel_accelerations;
 }; // end class MaskAcceleration
 
+} // end namespace vision_utils
 
 #endif // MASK_ACCELERATION_H
 

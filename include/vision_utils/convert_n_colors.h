@@ -27,9 +27,9 @@ ________________________________________________________________________________
 
 #include <stdlib.h>
 // AD
-#include "vision_utils/utils/system_utils.h"
+#include "vision_utils/exec_system_get_output.h"
 
-namespace image_utils {
+namespace vision_utils {
 
 inline bool reduce_monochrome(const std::string & file_in,
                               const std::string & file_out) {
@@ -41,13 +41,13 @@ inline bool reduce_monochrome(const std::string & file_in,
   // check file size
   order.str("");
   order << "ls -l " << tmp_file << " | awk '{ print $5 }'";
-  std::string size_str = system_utils::exec_system_get_output(order.str().c_str());
-  // printf("size:'%s'\n", size_str.c_str());
+  std::string size_str = exec_system_get_output(order.str().c_str());
+  //printf("size:'%s'\n", size_str.c_str());
   if (size_str[0] == '0') {
     printf("reduce_monochrome(): Could not convert '%s' to monochrome!\n", file_in.c_str());
     return false;
   }
-  // printf("reduce_monochrome(): Conversion of '%s' to monochrome OK.\n", file_in.c_str());
+  //printf("reduce_monochrome(): Conversion of '%s' to monochrome OK.\n", file_in.c_str());
   // move back file
   order.str("");
   order << "mv " << tmp_file << " " << file_out;
@@ -60,7 +60,7 @@ inline bool reduce_monochrome(const std::string & file_in,
 
 }
 
-/*! 
+/*!
   Reduce the number of colors (and its size) in an image.
   From http://stackoverflow.com/questions/14031965/convert-32-bit-png-to-8-bit-png-with-imagemagick-by-preserving-semi-transparent
 */
@@ -76,13 +76,13 @@ inline bool convert_n_colors(const std::string & file_in,
   // check file size
   order.str("");
   order << "ls -l " << tmp_file << " | awk '{ print $5 }'";
-  std::string size_str = system_utils::exec_system_get_output(order.str().c_str());
-  // printf("size:'%s'\n", size_str.c_str());
-  if (size_str[0] == '0') { 
+  std::string size_str = exec_system_get_output(order.str().c_str());
+  //printf("size:'%s'\n", size_str.c_str());
+  if (size_str[0] == '0') {
     printf("convert_n_colors(): Could not convert '%s' to %i colors!\n", file_in.c_str(), ncolors);
     return false;
   }
-  // printf("convert_n_colors(): Conversion of '%s' to %i colors OK.\n", file_in.c_str(), ncolors);
+  //printf("convert_n_colors(): Conversion of '%s' to %i colors OK.\n", file_in.c_str(), ncolors);
   // move back file
   order.str("");
   order << "mv " << tmp_file << " " << file_out;
@@ -91,8 +91,8 @@ inline bool convert_n_colors(const std::string & file_in,
     printf("convert_n_colors(): Could not write to '%s'!\n", file_out.c_str());
     return false;
   }
-  return true; 
+  return true;
 } // end convert_n_colors()
 
-} // end namespace image_utils {
+} // end namespace vision_utils {
 #endif // CONVERT_N_COLORS_H
