@@ -28,12 +28,11 @@
 
 namespace vision_utils {
 
-typedef std::set<std::string> WordDict;
-typedef std::set<char> LetterDict;
-typedef std::string OcrLanguage;
 
 ////////////////////////////////////////////////////////////////////////////////
 //cut:load_word_dict
+typedef std::set<std::string> WordDict;
+
 bool load_word_dict(const std::string & dict_filename, WordDict & dict) {
   printf("load_word_dict('%s')\n", dict_filename.c_str());
 
@@ -50,6 +49,8 @@ bool load_word_dict(const std::string & dict_filename, WordDict & dict) {
 
 ////////////////////////////////////////////////////////////////////////////////
 //cut:load_letter_dict
+typedef std::set<char> LetterDict;
+
 bool load_letter_dict(const vision_utils::LanguageId &src_language, LetterDict & dict) {
   printf("Loading the dictionary for the language %i\n", src_language);
   std::string dict_filename = "";
@@ -189,6 +190,8 @@ bool clean_string_from_weird_chars(std::string & sentence_to_clean,
 // tesseract API : http://tesseract-ocr.repairfaq.org/classTessBaseAPI.html
 #include <tesseract/baseapi.h>
 #endif
+
+typedef std::string OcrLanguage;
 
 bool analyse_image(const cv::Mat & image,
                    const vision_utils::LanguageId src_language,

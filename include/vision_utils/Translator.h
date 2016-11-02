@@ -14,25 +14,14 @@
 #include "vision_utils/string_casts_stl.h"
 #include "vision_utils/string_split.h"
 
-//! here is defined the active translator engine
-//#define USE_GOOGLE_API_V1 // deprecated since june 2011
-//#define USE_GOOGLE_API_V2 // costly since december 2011
-#define USE_MICROSOFT_TRANSLATOR_V2 // aaaargh, microsoft!
-
-#ifdef USE_GOOGLE_API_V2
-#define GOOGLE_API_KEY "AIzaSyDugyKvZraqZjIh9038_HZZewrVQu1NwQ0";
-#endif // USE_GOOGLE_API_V2
-
-#ifdef USE_MICROSOFT_TRANSLATOR_V2
-#define MICROSOFT_APPLICATION_ID "6844AE3580856D2EC7A64C79F55F11AA47CB961B";
-#endif // USE_MICROSOFT_TRANSLATOR_V2
-
 namespace vision_utils {
 
+//cut:build_languages_map
 typedef std::string CountryDomain;
 typedef int LanguageId;
 typedef std::map<LanguageId, CountryDomain> LanguageMap;
 typedef LanguageMap::value_type LanguagePair;
+
 enum { // sorted list please!
   LANGUAGE_UNKNOWN = -1,
   LANGUAGE_LAST_USED = 0,
@@ -85,7 +74,6 @@ enum { // sorted list please!
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-
 /*! a function to populate a map with the Google languages */
 void build_languages_map(LanguageMap & map) {
   // printf("build_language_map()\n");
@@ -139,7 +127,7 @@ void build_languages_map(LanguageMap & map) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:get_language_id_from_country_domain
 /*! make an inversed search in the language map
   \return true if success */
 bool get_language_id_from_country_domain(const LanguageMap & languages_map,
@@ -160,7 +148,7 @@ bool get_language_id_from_country_domain(const LanguageMap & languages_map,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:get_country_domain_from_language_id
 /*! make a direct search in the language map
   \return true if success */
 bool get_country_domain_from_language_id(const LanguageMap & languages_map,
@@ -180,7 +168,7 @@ bool get_country_domain_from_language_id(const LanguageMap & languages_map,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:get_language_full_name
 /*! \return the full name of a language.
   \example "english" for LANGUAGE_ENGLISH */
 std::string get_language_full_name(const LanguageId & language_id) {
@@ -237,6 +225,20 @@ std::string get_language_full_name(const LanguageId & language_id) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:detect_language
+//! here is defined the active translator engine
+//#define USE_GOOGLE_API_V1 // deprecated since june 2011
+//#define USE_GOOGLE_API_V2 // costly since december 2011
+#define USE_MICROSOFT_TRANSLATOR_V2 // aaaargh, microsoft!
+
+#ifdef USE_GOOGLE_API_V2
+#define GOOGLE_API_KEY "AIzaSyDugyKvZraqZjIh9038_HZZewrVQu1NwQ0";
+#endif // USE_GOOGLE_API_V2
+
+#ifdef USE_MICROSOFT_TRANSLATOR_V2
+#define MICROSOFT_APPLICATION_ID "6844AE3580856D2EC7A64C79F55F11AA47CB961B";
+#endif // USE_MICROSOFT_TRANSLATOR_V2
+
 
 /*! calls the google appi to detect the language */
 LanguageId detect_language(const std::string & sentence_to_translate) {
@@ -296,7 +298,7 @@ LanguageId detect_language(const std::string & sentence_to_translate) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:translate
 //! \return sentence_to_translate if fails
 std::string translate(const std::string & sentence_to_translate,
                       const LanguageId & language_orig,
@@ -398,16 +400,16 @@ std::string translate(const std::string & sentence_to_translate,
 
 ////////////////////////////////////////////////////////////////////////////////
 //// functions for string processing
-
+//cut:extract_country_domain
 /*!
   extract the language indicator at the beginning of the sentence
   \param sentence a sentence starting with an indicator
   \param ans will be populated
   \return true if success
-  \example _extract_language_id("en:foo", ans)
+  \example extract_language_id("en:foo", ans)
   will return true and ans = "en"
   */
-bool _extract_country_domain(const std::string & sentence,
+bool extract_country_domain(const std::string & sentence,
                              CountryDomain & ans) {
 
   size_t sep_pos = sentence.find(':');
@@ -422,25 +424,27 @@ bool _extract_country_domain(const std::string & sentence,
 
 }
 
+//cut:extract_language_id
+
 /*!
   extract the language indicator and makes an inverse lookup in the map
   \param ans will be populated
   \return true if success
   \example sentence="en:foo" return LANGUAGE_ENGLISH
   */
-bool _extract_language_id(const std::string & sentence,
+bool extract_language_id(const std::string & sentence,
                           const LanguageMap & map,
                           LanguageId & ans) {
-  //printf("_extract_language_id(sentence:'%s')\n", sentence.c_str());
+  //printf("extract_language_id(sentence:'%s')\n", sentence.c_str());
   std::string country_domain;
-  if (!_extract_country_domain(sentence, country_domain))
+  if (!extract_country_domain(sentence, country_domain))
     return false;
   //printf("country_domain:'%s'\n", country_domain.c_str());
   return get_language_id_from_country_domain(map, country_domain, ans);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:find_given_language_in_multilanguage_line
 /*!
   \param versions a vector of strings,
   each string is the country domain and the sentence in this language.
@@ -456,7 +460,7 @@ bool _extract_language_id(const std::string & sentence,
   \example if target_language == LANGUAGE_ENGLISH,
   will search a sentence that starts with "en:"
   */
-bool _find_given_language_in_multilanguage_line(
+bool find_given_language_in_multilanguage_line(
     const std::vector<std::string> & versions,
     const LanguageId target_language,
     const LanguageMap & map,
@@ -472,7 +476,7 @@ bool _find_given_language_in_multilanguage_line(
   std::vector<std::string> good_versions;
   for(std::vector<std::string>::const_iterator current_version = versions.begin();
       current_version != versions.end() ; ++current_version) {
-    if (_extract_country_domain(*current_version, current_version_lang_prefix)
+    if (extract_country_domain(*current_version, current_version_lang_prefix)
         && current_version_lang_prefix == target_country_domain) {
       // we remove the prefix and the colon
       good_versions.push_back(current_version->substr(1 + target_country_domain.size()));
@@ -487,7 +491,7 @@ bool _find_given_language_in_multilanguage_line(
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:build_given_language_in_multilanguage_line
 /*! first, try to see if the given language is given
    *  in \arg textMultiLanguage.
    * If it is not, translate from one of the given languages,
@@ -503,7 +507,7 @@ bool _find_given_language_in_multilanguage_line(
    *            if (target_language == LANGUAGE_FRENCH)
    *              will return "Salut"
    */
-bool _build_given_language_in_multilanguage_line(
+bool build_given_language_in_multilanguage_line(
     const std::string & textMultiLanguage,
     const LanguageId target_language,
     const LanguageMap & languages_map,
@@ -513,7 +517,7 @@ bool _build_given_language_in_multilanguage_line(
 
   std::string sentence_good_language;
   // first search in the wanted language
-  bool was_found = vision_utils::_find_given_language_in_multilanguage_line(
+  bool was_found = vision_utils::find_given_language_in_multilanguage_line(
         versions, target_language, languages_map, sentence_good_language);
   if (was_found) {
     printf("The wanted language %i was supplied by the user.\n",
@@ -523,7 +527,7 @@ bool _build_given_language_in_multilanguage_line(
   }
 
   // if not present, search english and translate it
-  was_found = vision_utils::_find_given_language_in_multilanguage_line(
+  was_found = vision_utils::find_given_language_in_multilanguage_line(
         versions, vision_utils::LANGUAGE_ENGLISH, languages_map, sentence_good_language);
   if (was_found) {
     printf("LANGUAGE_ENGLISH was supplied by the user. "
@@ -542,13 +546,13 @@ bool _build_given_language_in_multilanguage_line(
     // extract the language key
     vision_utils::LanguageId version_language_id;
     bool language_id_found;
-    language_id_found = vision_utils::_extract_language_id
+    language_id_found = vision_utils::extract_language_id
         (*version, languages_map, version_language_id);
     if (!language_id_found)
       continue;
 
     // extract the corresponding sentence
-    was_found = vision_utils::_find_given_language_in_multilanguage_line(
+    was_found = vision_utils::find_given_language_in_multilanguage_line(
           versions, version_language_id, languages_map, sentence_good_language);
     if (was_found) {
       printf("%i was supplied by the user. "
@@ -574,6 +578,7 @@ bool _build_given_language_in_multilanguage_line(
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+//cut:translateToGibberishLanguage
 /** Traduce una frase a Gibberish Language
       The general process you'll want to follow is:
       - split the string
@@ -581,7 +586,7 @@ bool _build_given_language_in_multilanguage_line(
       - for each word, move the first letter to the end, and all other letters up one position in the string.
       - put all the words back together as a single string.
       **/
-std::string _translateToGibberishLanguage(const std::string & stringSource){
+std::string translateToGibberishLanguage(const std::string & stringSource){
 
   std::string manip = "",newstring = "";
   std::vector<std::string> words;

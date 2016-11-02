@@ -22,8 +22,6 @@
 
 namespace vision_utils {
 
-typedef double ScaleFactorType;
-
 //cut:hue2rgb
 
 /*!
@@ -51,6 +49,7 @@ inline void hue2rgb_make_lookup_table(std::vector<cv::Vec3b> & lut,
 } // end hue2rgb_make_lookup_table()
 
 //cut:compute_alpha_beta
+typedef double ScaleFactorType;
 
 ////////////////////////////////////////////////////////////////////////////////
 
