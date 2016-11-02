@@ -222,7 +222,7 @@ private:
       _user_bridge = cv_bridge::toCvShare(user_msg, sensor_msgs::image_encodings::TYPE_8UC1);
       _images_header = rgb_msg->header;
     } catch (cv_bridge::Exception& e) {
-      ROS_ERROR("cv_bridge exception: %s", e.what());
+      printf("cv_bridge exception: %s\n", e.what());
       return;
     }
     process_rgb_depth_user(_rgb_bridge->image,

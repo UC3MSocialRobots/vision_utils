@@ -218,7 +218,7 @@ protected:
       _rgb_bridge = cv_bridge::toCvShare(rgb_msg, sensor_msgs::image_encodings::BGR8);
       _images_header = rgb_msg->header;
     } catch (cv_bridge::Exception& e) {
-      ROS_ERROR("cv_bridge exception: %s", e.what());
+      printf("cv_bridge exception: %s\n", e.what());
       return;
     }
     process_rgb_depth(_rgb_bridge->image, _depth_bridge->image);

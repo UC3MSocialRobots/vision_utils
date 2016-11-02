@@ -34,7 +34,8 @@ http://en.wikipedia.org/wiki/Combinatorics
 #include <sstream>
 #include <set>
 #include <algorithm> // for min()
-#include<math.h> // for log
+#include <stdexcept> // for invalid_argument()
+#include <math.h> // for log
 
 #include "vision_utils/string_casts_stl.h"
 

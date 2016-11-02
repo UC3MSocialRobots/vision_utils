@@ -320,7 +320,7 @@ bool convert(const people_msgs::Person* curr_pose,
                                               sensor_msgs::image_encodings::TYPE_8UC1);
   }
   catch (cv_bridge::Exception& e) {
-    ROS_ERROR("PP2Images: cv_bridge exception: %s", e.what());
+    printf("PP2Images: cv_bridge exception: %s\n", e.what());
     return false;
   }
   if (rgb)

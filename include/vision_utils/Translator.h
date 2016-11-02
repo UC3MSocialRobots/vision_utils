@@ -88,7 +88,7 @@ enum { // sorted list please!
 
 /*! a function to populate a map with the Google languages */
 void build_languages_map(LanguageMap & map) {
-  // ROS_INFO("build_language_map()");
+  // printf("build_language_map()\n");
   map.insert( LanguagePair(LANGUAGE_UNKNOWN, "??") );
   map.insert( LanguagePair(LANGUAGE_AFRIKAANS, "af") );
   map.insert( LanguagePair(LANGUAGE_ALBANIAN, "sq") );
@@ -146,7 +146,7 @@ bool get_language_id_from_country_domain(const LanguageMap & languages_map,
                                          const CountryDomain & country_domain,
                                          LanguageId & ans)
 {
-  ROS_DEBUG("get_language_id_from_country_domain(country_domain:'%s')", country_domain.c_str());
+  //printf("get_language_id_from_country_domain(country_domain:'%s')\n", country_domain.c_str());
   ans = LANGUAGE_UNKNOWN;
   if (!vision_utils::reverse_search(languages_map, country_domain, ans)) {
     printf("Cannot resolve country_domain '%s' to an int, "
@@ -184,7 +184,7 @@ bool get_country_domain_from_language_id(const LanguageMap & languages_map,
 /*! \return the full name of a language.
   \example "english" for LANGUAGE_ENGLISH */
 std::string get_language_full_name(const LanguageId & language_id) {
-  ROS_DEBUG("get_language_full_name(%i)", language_id);
+  //printf("get_language_full_name(%i)\n", language_id);
   switch (language_id) {
   case vision_utils::LANGUAGE_AFRIKAANS: return "afrikaans";
   case vision_utils::LANGUAGE_ALBANIAN: return "albanian";
@@ -240,7 +240,7 @@ std::string get_language_full_name(const LanguageId & language_id) {
 
 /*! calls the google appi to detect the language */
 LanguageId detect_language(const std::string & sentence_to_translate) {
-  ROS_INFO("detect_language('%s')", sentence_to_translate.c_str());
+  printf("detect_language('%s')\n", sentence_to_translate.c_str());
 
   // prepair the string for http encoding
   std::string sentence_to_translate_url = sentence_to_translate;
@@ -302,7 +302,7 @@ std::string translate(const std::string & sentence_to_translate,
                       const LanguageId & language_orig,
                       const LanguageId & language_dest) {
 
-  ROS_INFO("translate(sentence:'%s'' : %s -> %s)",
+  printf("translate(sentence:'%s'' : %s -> %s)\n",
            sentence_to_translate.c_str(),
            get_language_full_name(language_orig).c_str(),
            get_language_full_name(language_dest).c_str());
@@ -326,7 +326,7 @@ std::string translate(const std::string & sentence_to_translate,
   if (language_orig == LANGUAGE_UNKNOWN)
     language_orig_detect = detect_language(sentence_to_translate);
   if (language_orig_detect == LANGUAGE_UNKNOWN) { // detection failed -> quit
-    ROS_WARN("Impossible to detect the language of '%s'",
+    printf("Impossible to detect the language of '%s'\n",
              sentence_to_translate.c_str());
     return sentence_to_translate;
   }
@@ -375,7 +375,7 @@ std::string translate(const std::string & sentence_to_translate,
   // send the request
   std::string server_answer;
   vision_utils::retrieve_url(url.str(), server_answer);
-  //ROS_WARN("server_answer:%s", server_answer.c_str());
+  //printf("server_answer:%s\n", server_answer.c_str());
 
   // extract from the tags
   int search_pos = 0;
@@ -412,7 +412,7 @@ bool _extract_country_domain(const std::string & sentence,
 
   size_t sep_pos = sentence.find(':');
   if ( sep_pos == std::string::npos ) {
-    /* ROS_INFO("The language version '%s' does not respect the syntax.",
+    /* printf("The language version '%s' does not respect the syntax.\n",
                  sentence.c_str());*/
     return false;
   }
@@ -431,11 +431,11 @@ bool _extract_country_domain(const std::string & sentence,
 bool _extract_language_id(const std::string & sentence,
                           const LanguageMap & map,
                           LanguageId & ans) {
-  ROS_DEBUG("_extract_language_id(sentence:'%s')", sentence.c_str());
+  //printf("_extract_language_id(sentence:'%s')\n", sentence.c_str());
   std::string country_domain;
   if (!_extract_country_domain(sentence, country_domain))
     return false;
-  ROS_DEBUG("country_domain:'%s'", country_domain.c_str());
+  //printf("country_domain:'%s'\n", country_domain.c_str());
   return get_language_id_from_country_domain(map, country_domain, ans);
 }
 
@@ -516,7 +516,7 @@ bool _build_given_language_in_multilanguage_line(
   bool was_found = vision_utils::_find_given_language_in_multilanguage_line(
         versions, target_language, languages_map, sentence_good_language);
   if (was_found) {
-    ROS_INFO("The wanted language %i was supplied by the user.",
+    printf("The wanted language %i was supplied by the user.\n",
              target_language);
     ans = sentence_good_language;
     return true;
@@ -526,8 +526,8 @@ bool _build_given_language_in_multilanguage_line(
   was_found = vision_utils::_find_given_language_in_multilanguage_line(
         versions, vision_utils::LANGUAGE_ENGLISH, languages_map, sentence_good_language);
   if (was_found) {
-    ROS_INFO("LANGUAGE_ENGLISH was supplied by the user. "
-             "Translating from that to %i",
+    printf("LANGUAGE_ENGLISH was supplied by the user. "
+             "Translating from that to %i\n",
              target_language);
     ans = vision_utils::translate(sentence_good_language,
                                   vision_utils::LANGUAGE_ENGLISH,
@@ -551,8 +551,8 @@ bool _build_given_language_in_multilanguage_line(
     was_found = vision_utils::_find_given_language_in_multilanguage_line(
           versions, version_language_id, languages_map, sentence_good_language);
     if (was_found) {
-      ROS_INFO("%i was supplied by the user. "
-               "Translating from that ('%s') to %i",
+      printf("%i was supplied by the user. "
+               "Translating from that ('%s') to %i\n",
                version_language_id,
                sentence_good_language.c_str(),
                target_language);
@@ -564,8 +564,8 @@ bool _build_given_language_in_multilanguage_line(
   } // end loop version
 
   // if everything failed, assume it is current language
-  /*ROS_WARN("I couldn't detect any known language in the sentence '%s'. "
-              "Did you respect the sayTextNL() syntax ?",
+  /*printf("I couldn't detect any known language in the sentence '%s'. "
+              "Did you respect the sayTextNL() syntax ?\n",
               textMultiLanguage.c_str());*/
 
   ans = textMultiLanguage;

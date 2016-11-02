@@ -25,30 +25,6 @@
 #include <string>
 #include <set>
 
-// constants
-#define OCR_APP_NAME  "tesseract"
-//#define OCR_APP_NAME  "/usr/local/src/tesseract/api/tesseract"
-
-#define ENGLISH   "eng"
-#define SPANISH   "spa"
-#define FRENCH    "fra"
-#define GREEK     "ell"
-#define RUSSIAN   "rus"
-#define JAPANESE  "jpn"
-#define UNKNOWN   "???"
-
-#define TEMP_BASE_FILENAME    "/tmp/ocr_dump"
-#define TEMP_TIF_FILENAME     TEMP_BASE_FILENAME  ".tif"
-#define TEMP_TXT_FILENAME     TEMP_BASE_FILENAME  ".txt"
-#define TEMP_CONFIG_FILENAME  TEMP_BASE_FILENAME  "_config.txt"
-
-//#define USE_API
-
-#ifdef USE_API
-// tesseract API : http://tesseract-ocr.repairfaq.org/classTessBaseAPI.html
-#include <tesseract/baseapi.h>
-#endif
-
 
 namespace vision_utils {
 
@@ -59,7 +35,7 @@ typedef std::string OcrLanguage;
 ////////////////////////////////////////////////////////////////////////////////
 //cut:load_word_dict
 bool load_word_dict(const std::string & dict_filename, WordDict & dict) {
-  ROS_INFO("load_word_dict('%s')", dict_filename.c_str());
+  printf("load_word_dict('%s')\n", dict_filename.c_str());
 
   // read the file as a vector of strings
   std::vector<std::string> dict_vector;
@@ -75,7 +51,7 @@ bool load_word_dict(const std::string & dict_filename, WordDict & dict) {
 ////////////////////////////////////////////////////////////////////////////////
 //cut:load_letter_dict
 bool load_letter_dict(const vision_utils::LanguageId &src_language, LetterDict & dict) {
-  ROS_INFO("Loading the dictionary for the language %i", src_language);
+  printf("Loading the dictionary for the language %i\n", src_language);
   std::string dict_filename = "";
   if (src_language == vision_utils::LANGUAGE_ENGLISH)
     dict_filename = IMG_DIR "hangman/english.characters";
@@ -88,7 +64,7 @@ bool load_letter_dict(const vision_utils::LanguageId &src_language, LetterDict &
     return false;
   }
 
-  ROS_INFO("load_letter_dict('%s')", dict_filename.c_str());
+  printf("load_letter_dict('%s')\n", dict_filename.c_str());
 
   // read the file as a string
   std::string file_str;
@@ -106,13 +82,12 @@ bool load_letter_dict(const vision_utils::LanguageId &src_language, LetterDict &
 //cut:clean_string_from_weird_chars
 bool clean_string_from_weird_chars(std::string & sentence_to_clean,
                                    const vision_utils::LanguageId src_language) {
-  ROS_DEBUG("clean_string_from_weird_chars(%s)",
-            sentence_to_clean.substr(0, std::min(10, (int) sentence_to_clean.size())).c_str());
+//  printf("clean_string_from_weird_chars(%s)\n",
+//            sentence_to_clean.substr(0, std::min(10, (int) sentence_to_clean.size())).c_str());
 
   // convert to lowercase
   vision_utils::to_lowercase(sentence_to_clean);
-  ROS_DEBUG("After to_lowercase:'%s'",
-            sentence_to_clean.c_str());
+  //printf("After to_lowercase:'%s'\n", sentence_to_clean.c_str());
 
   /*
     *  check if the word contains weird letters
@@ -152,15 +127,15 @@ bool clean_string_from_weird_chars(std::string & sentence_to_clean,
         } // end if contains_weird_char
 
         // if we reached here, remove it
-        ROS_INFO("Removing word '%s'", ocr_word->c_str());
+        printf("Removing word '%s'\n", ocr_word->c_str());
       } // end for ocr_word
 
       sentence_to_clean_no_weird_words << ocr_line_clean.str() << std::endl;
     } // end for ocr_line
 
     sentence_to_clean = sentence_to_clean_no_weird_words.str();
-    ROS_DEBUG("After cleaning weird words:'%s'",
-              sentence_to_clean.c_str());
+//    printf("After cleaning weird words:'%s'\n",
+//              sentence_to_clean.c_str());
   } // end if (load_letter_dict())
 
   /*
@@ -183,18 +158,42 @@ bool clean_string_from_weird_chars(std::string & sentence_to_clean,
         sentence_to_clean_no_empty_lines << *ocr_line << "\n";
     }
     sentence_to_clean = sentence_to_clean_no_empty_lines.str();
-    ROS_DEBUG("After removing empty lines:'%s'",
-              sentence_to_clean.c_str());
+    //printf("After removing empty lines:'%s'\n", sentence_to_clean.c_str());
   } // end if language = ENGLISH...
   return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 //cut:analyse_image
+
+// constants
+#define OCR_APP_NAME  "tesseract"
+//#define OCR_APP_NAME  "/usr/local/src/tesseract/api/tesseract"
+
+#define ENGLISH   "eng"
+#define SPANISH   "spa"
+#define FRENCH    "fra"
+#define GREEK     "ell"
+#define RUSSIAN   "rus"
+#define JAPANESE  "jpn"
+#define UNKNOWN   "???"
+
+#define TEMP_BASE_FILENAME    "/tmp/ocr_dump"
+#define TEMP_TIF_FILENAME     TEMP_BASE_FILENAME  ".tif"
+#define TEMP_TXT_FILENAME     TEMP_BASE_FILENAME  ".txt"
+#define TEMP_CONFIG_FILENAME  TEMP_BASE_FILENAME  "_config.txt"
+
+//#define USE_API
+
+#ifdef USE_API
+// tesseract API : http://tesseract-ocr.repairfaq.org/classTessBaseAPI.html
+#include <tesseract/baseapi.h>
+#endif
+
 bool analyse_image(const cv::Mat & image,
                    const vision_utils::LanguageId src_language,
                    std::string & answer) {
-  ROS_INFO("analyse_image('%s', language:%i)",
+  printf("analyse_image('%s', language:%i)\n",
            vision_utils::infosImage(image).c_str(),
            src_language);
 
@@ -252,10 +251,10 @@ bool analyse_image(const cv::Mat & image,
               << TEMP_BASE_FILENAME;
   if (ocr_src_language != UNKNOWN)
     instruction << " -l " << ocr_src_language;
-  ROS_INFO("Executing '%s'", instruction.str().c_str());
+  printf("Executing '%s'\n", instruction.str().c_str());
   int retval = system( instruction.str().c_str() );
   if (retval < 0) {
-    ROS_WARN("Executing '%s' returned an error!", instruction.str().c_str());
+    printf("Executing '%s' returned an error!\n", instruction.str().c_str());
     return false;
   }
   // get the file
@@ -266,7 +265,7 @@ bool analyse_image(const cv::Mat & image,
     return false;
 #endif
 
-  ROS_INFO("Result before cleaning :'%s'", ocr_result_dirty.c_str());
+  printf("Result before cleaning :'%s'\n", ocr_result_dirty.c_str());
   answer = ocr_result_dirty;
   if (!clean_string_from_weird_chars(answer, src_language))
     return false;
