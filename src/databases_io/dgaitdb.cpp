@@ -25,6 +25,7 @@ ________________________________________________________________________________
 
 #include "vision_utils/dgaitdb.h"
 #include "vision_utils/dgaitdb_filename.h"
+#include "vision_utils/write_rgb_depth_user_to_image_file.h"
 
 int video_reader(int argc, char **argv) {
   if (argc < 1) {

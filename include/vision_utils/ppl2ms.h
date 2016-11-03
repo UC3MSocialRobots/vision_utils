@@ -61,11 +61,11 @@ on a MiniStage visualizer.
 #include <cv_bridge/cv_bridge.h>
 #include "vision_utils/atan3D.h"
 #include "vision_utils/color_utils.h"
-#include "vision_utils/drawing_utils.h"
+#include "vision_utils/copy3.h"
+#include "vision_utils/drawPolygon.h"
+#include "vision_utils/map_direct_search.h"
+#include "vision_utils/map_keys_to_container.h"
 #include "vision_utils/ppl_attributes.h"
-#include "vision_utils/resize_utils.h"
-#include "vision_utils/map_utils.h"
-#include "vision_utils/pt_utils.h"
 
 #define DEBUG_PRINT(...)   {}
 //#define DEBUG_PRINT(...)   printf(__VA_ARGS__)

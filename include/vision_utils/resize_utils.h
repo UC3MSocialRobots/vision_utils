@@ -26,7 +26,7 @@ ________________________________________________________________________________
 #ifndef RESIZE_UTILS_H
 #define RESIZE_UTILS_H
 
-#include "vision_utils/rect_utils.h"
+#include <limits>
 #include <opencv2/imgproc/imgproc.hpp>
 
 namespace vision_utils {

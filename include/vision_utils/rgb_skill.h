@@ -50,7 +50,7 @@ A lightweight template for subscribing to a RGB stream.
 #include "vision_utils/nano_skill.h"
 #include <image_transport/image_transport.h>
 #include <sensor_msgs/image_encodings.h>
-#include "vision_utils/kinect_openni_utils.h"
+
 // opencv
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/highgui/highgui.hpp>

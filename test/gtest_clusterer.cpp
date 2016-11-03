@@ -3,7 +3,7 @@
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
   \date        2013/4/25
-  
+
 ________________________________________________________________________________
 
 This program is free software: you can redistribute it and/or modify
@@ -126,7 +126,7 @@ void foo() {
   vision_utils::Clusterer clusterer;
   bool success = clusterer.cluster(pts, 0.2);
   timer.printTime("clusterer.cluster()");
-  ROS_WARN("success:%i", success);
+  printf("success:%i", success);
   if (!success)
     return;
 
@@ -134,7 +134,7 @@ void foo() {
   // std::vector<int> cluster_indices;
   success =clusterer.get_biggest_cluster_bbox(bbox);
 
-  ROS_WARN("success:%i, bbox:'%s'", success, bbox.to_string().c_str());
+  printf("success:%i, bbox:'%s'", success, bbox.to_string().c_str());
   return;
 }
 

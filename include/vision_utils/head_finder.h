@@ -27,8 +27,8 @@ A useful class for finding the head inside of a user mask.
 #ifndef HEAD_FINDER_H
 #define HEAD_FINDER_H
 
-#include "vision_utils/content_processing.h"
-#include "vision_utils/stats_utils.h"
+
+
 #include "vision_utils/clamp.h"
 #include "vision_utils/timer.h"
 #include "vision_utils/user_image_to_rgb.h"

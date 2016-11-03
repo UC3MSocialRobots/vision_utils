@@ -25,7 +25,7 @@ Some tests for \b kinect_openni_utils namespace.
  */
 // Bring in gtest
 #include <gtest/gtest.h>
-#include "vision_utils/kinect_openni_utils.h"
+
 #include <opencv2/highgui/highgui.hpp>
 
 

@@ -11,7 +11,8 @@
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
 // AD
-#include "vision_utils/OcrUtils.h"
+#include <vision_utils/analyse_image.h>
+#include <vision_utils/build_languages_map.h>"
 #include <vision_utils/img_path.h>
 
 void ocr_test(const std::string filename, vision_utils::LanguageId language,

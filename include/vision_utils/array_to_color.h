@@ -29,9 +29,11 @@ Optionnal header drawing.
 #ifndef ARRAY_TO_COLOR_H
 #define ARRAY_TO_COLOR_H
 
-#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <vision_utils/rect_center.h>
+#include <vision_utils/draw_text_centered.h>
 #include "vision_utils/colormaps.h"
-#include "vision_utils/drawing_utils.h"
+#include "vision_utils/titlemaps.h"
 
 namespace vision_utils {
 

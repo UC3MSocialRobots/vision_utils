@@ -25,9 +25,10 @@ ________________________________________________________________________________
  */
 //#define DISPLAY
 #include <gtest/gtest.h>
-#include "vision_utils/combinatorics_utils.h"
+
 #include "vision_utils/timer.h"
 #include "vision_utils/pie_chart_utils.h"
+#include "vision_utils/rand_gaussian.h"
 
 template<class _T>
 void test_pie1(const std::vector<_T> & values,

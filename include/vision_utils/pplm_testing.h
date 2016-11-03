@@ -30,7 +30,7 @@ Some useful classes for benchmarking PPLMatcherTemplate children classes.
 // AD
 #include "vision_utils/database_player.h"
 #include "vision_utils/pplm_template.h"
-#include "vision_utils/assignment_utils.h"
+
 #include "vision_utils/images2ppl.h"
 #include "vision_utils/timer.h"
 #include <vision_utils/rosmaster_alive.h>

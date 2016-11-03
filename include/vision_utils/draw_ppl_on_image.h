@@ -28,8 +28,8 @@ ________________________________________________________________________________
 
 // msg
 #include <people_msgs/People.h>
-#include "vision_utils/drawing_utils.h"
-#include "vision_utils/pt_utils.h"
+
+
 
 namespace vision_utils {
 /*!

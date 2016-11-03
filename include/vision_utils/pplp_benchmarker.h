@@ -69,12 +69,17 @@ and evaluates the mean error of each PPL method.
 #define PPL_BENCHMARKER_H
 
 #include <people_msgs/People.h>
+#include "vision_utils/assign_and_dists.h"
+#include "vision_utils/cmatrix.h"
+#include "vision_utils/copy3.h"
+#include "vision_utils/foo_point.h"
+#include "vision_utils/match.h"
+#include "vision_utils/map_to_string.h"
 #include "vision_utils/multi_subscriber.h"
 #include "vision_utils/ppl_attributes.h"
-#include "vision_utils/pt_utils.h"
+#include "vision_utils/save_file.h"
 #include "vision_utils/timer.h"
-#include "vision_utils/file_io.h"
-#include "vision_utils/assignment_utils.h"
+
 // ros
 #include <ros/package.h>
 

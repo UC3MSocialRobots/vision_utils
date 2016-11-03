@@ -8,9 +8,12 @@
 #include <gtest/gtest.h>
 #include <stdio.h>
 #include "vision_utils/timer.h"
-#include "vision_utils/cv_conversion_float_uchar.h"
+
 #include "vision_utils/print_3f_img.h"
+#include "vision_utils/read_rgb_and_depth_image_from_image_file.h"
+#include "vision_utils/depth_image_to_vizualisation_color_image.h"
 #include "vision_utils/float_image_generator.h"
+#include "vision_utils/write_rgb_and_depth_image_to_image_file.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 

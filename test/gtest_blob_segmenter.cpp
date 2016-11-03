@@ -28,6 +28,7 @@ ________________________________________________________________________________
 #include "vision_utils/timer.h"
 #include "vision_utils/matrix_testing.h"
 #include "vision_utils/blob_segmenter.h"
+#include "vision_utils/read_rgb_depth_user_image_from_image_file.h"
 #include "vision_utils/user_image_to_rgb.h"
 #include <vision_utils/img_path.h>
 

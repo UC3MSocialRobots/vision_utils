@@ -29,8 +29,13 @@ ________________________________________________________________________________
 #include <vision_utils/img_path.h>
 #include "vision_utils/matrix_testing.h"
 
-#include "vision_utils/drawing_utils.h"
+
 #include "vision_utils/timer.h"
+#include "vision_utils/paste_images.h"
+#include "vision_utils/paste_images_gallery.h"
+#include "vision_utils/draw_text_rotated.h"
+#include "vision_utils/resize_utils.h"
+#include "vision_utils/titlemaps.h"
 
 //#define DISPLAY
 

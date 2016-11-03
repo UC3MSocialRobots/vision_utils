@@ -29,7 +29,8 @@ designed for clustering reprojected images.
 #define IMAGE_CLUSTERER_H
 
 #include "vision_utils/clusterer.h"
-#include "vision_utils/kinect_openni_utils.h"
+#include "vision_utils/pixel2world_rgb.h"
+#include "vision_utils/world2pixel.h"
 
 namespace vision_utils {
 

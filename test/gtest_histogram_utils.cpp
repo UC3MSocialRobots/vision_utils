@@ -27,13 +27,25 @@ Tests for the histogram_utils namespace.
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
 // AD
-#include "vision_utils/histogram_utils.h"
-#include "vision_utils/timer.h"
-#include "vision_utils/matrix_testing.h"
-
+#include "vision_utils/analyse_image.h"
+#include <vision_utils/colormaps.h>
+#include <vision_utils/distance_hists.h>
+#include "vision_utils/get_histogram.h"
+#include "vision_utils/get_hue_histogram.h"
+#include "vision_utils/get_vector_of_histograms.h"
+#include <vision_utils/histogram_to_image.h>
+#include "vision_utils/hist_to_string.h"
 #include <vision_utils/img_path.h>
-// kinect
+#include "vision_utils/matrix_testing.h"
+#include <vision_utils/mean_std_dev_modulo.h>
+#include "vision_utils/read_histogram_from_file.h"
+#include <vision_utils/rectangle_intersection.h>
+#include <vision_utils/rgb2hue.h>
+#include "vision_utils/rgb_file2hue.h"
+#include "vision_utils/timer.h"
 #include "vision_utils/user_image_to_rgb.h"
+#include "vision_utils/vector_of_histograms_to_image.h"
+#include "vision_utils/write_histogram_to_file.h"
 
 
 ////////////////////////////////////////////////////////////////////////////////

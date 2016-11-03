@@ -4,12 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// compressed_rounded_image_transport
-#include "vision_utils/hue_utils.h"
-// #include "vision_utils/cv_conversion_float_uchar.h"
-
 // utils
 #include "vision_utils/foo_point.h"
+#include "vision_utils/hue2rgb.h"
 
 namespace vision_utils {
 //typedef AD::Point3<double> Color;

@@ -1,9 +1,9 @@
 // opencv
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
+#include "vision_utils/all_files_in_dir.h"
+#include "vision_utils/cast_from_string.h"
 #include "vision_utils/timer.h"
-#include "vision_utils/system_utils.h"
-#include "vision_utils/string_casts.h"
 #include "vision_utils/opencv_face_detector.h"
 #include <iomanip>
 

@@ -33,10 +33,8 @@ Some useful functions for manipulating point clouds.
 #include <pcl/kdtree/kdtree.h>
 #include <pcl/segmentation/extract_clusters.h>
 // utils
-#undef RAD2DEG // defined in both "pcl_macros.h" and "geometry_utils.h"
-#undef DEG2RAD // defined in both "pcl_macros.h" and "geometry_utils.h"
+#include "vision_utils/copy3.h"
 #include "vision_utils/Rect3.h"
-#include "vision_utils/pt_utils.h"
 
 namespace vision_utils {
 

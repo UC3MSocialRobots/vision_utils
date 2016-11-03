@@ -24,8 +24,13 @@ ________________________________________________________________________________
 
  */
 #include <gtest/gtest.h>
-#include "vision_utils/io.h"
-#include "vision_utils/geometry_utils.h"
+#include "vision_utils/accessible_to_string.h"
+#include "vision_utils/foo_point.h"
+#include "vision_utils/from_yaml.h"
+#include "vision_utils/from_yaml_vector.h"
+#include "vision_utils/printP2.h"
+#include "vision_utils/to_yaml.h"
+#include "vision_utils/to_yaml_vector.h"
 
 class FooPointIo : public vision_utils::FooPoint2f {
 public:

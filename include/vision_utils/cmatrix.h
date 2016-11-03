@@ -44,8 +44,8 @@ No need to use "new", "free()" or "delete" at any point.
 #include <string.h>
 #include <sstream>
 #include <iomanip>
-#include "vision_utils/string_casts.h"
 #include <vector>
+#include "vision_utils/cast_type_to_string.h"
 
 namespace vision_utils {
 

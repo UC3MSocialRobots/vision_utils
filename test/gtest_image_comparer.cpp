@@ -29,6 +29,9 @@ Some tests for ImageComparer
 #include <vision_utils/img_path.h>
 #include "vision_utils/timer.h"
 
+#include <opencv2/highgui/highgui.hpp>
+#include <queue>
+
 typedef std::vector<cv::Point> Pt2Vec;
 typedef std::list<cv::Point>   Pt2List;
 typedef std::deque<cv::Point>  Pt2Deque;

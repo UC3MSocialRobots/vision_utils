@@ -45,9 +45,10 @@ ________________________________________________________________________________
 
 #include <ros/ros.h>
 #include <people_msgs/People.h>
+#include <visualization_msgs/Marker.h>
+#include "vision_utils/copy3.h"
+#include "vision_utils/foo_point.h"
 #include "vision_utils/marker_utils.h"
-#include "vision_utils/geometry_utils.h"
-#include "vision_utils/pt_utils.h"
 #include "vision_utils/ppl_attributes.h"
 
 ros::Publisher marker_pub;

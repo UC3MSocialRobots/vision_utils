@@ -25,10 +25,11 @@ ________________________________________________________________________________
 #ifndef RLPD2IMGS_H
 #define RLPD2IMGS_H
 
-#include "vision_utils/find_and_replace.h"
 #include "vision_utils/database_player.h"
+#include "vision_utils/find_and_replace.h"
+#include "vision_utils/imread_safe.h"
 #include "vision_utils/mask.h"
-#include "vision_utils/opencv_safe_image_io.h"
+#include "vision_utils/read_rgb_and_depth_image_from_image_file.h"
 
 namespace vision_utils {
 

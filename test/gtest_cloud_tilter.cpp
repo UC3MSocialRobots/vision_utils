@@ -25,15 +25,17 @@ ________________________________________________________________________________
 // Bring in gtest
 #include <gtest/gtest.h>
 #include <opencv2/core/core.hpp>
-#include "vision_utils/kinect_openni_utils.h"
-#include "vision_utils/combinatorics_utils.h"
-#include "vision_utils/timer.h"
+#include <image_geometry/pinhole_camera_model.h>
 // vision_utils
 #include "vision_utils/cloud_viewer_gnuplot.h"
 #include "vision_utils/cloud_tilter.h"
 #include "vision_utils/dgaitdb_filename.h"
-#include "vision_utils/io.h"
 #include <vision_utils/img_path.h>
+#include "vision_utils/kinect_serials.h"
+#include "vision_utils/timer.h"
+#include "vision_utils/read_rgb_depth_user_image_from_image_file.h"
+#include "vision_utils/read_camera_model_files.h"
+#include "vision_utils/pixel2world_depth.h"
 
 //#define DISPLAY
 
@@ -81,7 +83,7 @@ void test_straighten_picture(int dgaitdb_index) {
     return;
   std::vector<std::string> files = f.all_filenames_test();
   std::string filename_prefix = files[dgaitdb_index];
-  test_straighten_picture(filename_prefix, DEFAULT_KINECT_SERIAL(), 1);
+  test_straighten_picture(filename_prefix, vision_utils::DEFAULT_KINECT_SERIAL(), 1);
 }
 
 TEST(TestSuite, dgaitdb_picture_user0) { test_straighten_picture(0); }
@@ -92,15 +94,15 @@ TEST(TestSuite, dgaitdb_all_users) {
 }
 
 TEST(TestSuite, dgaitdb_ltm_depth) {
-  test_straighten_picture(IMG_DIR "depth/alberto1", KINECT_SERIAL_LAB(), 255);
-  test_straighten_picture(IMG_DIR "depth/david_arnaud1", KINECT_SERIAL_LAB(), 1);
-  test_straighten_picture(IMG_DIR "depth/david_arnaud1", KINECT_SERIAL_LAB(), 2);
-  test_straighten_picture(IMG_DIR "depth/david_arnaud2", KINECT_SERIAL_LAB(), 1);
-  test_straighten_picture(IMG_DIR "depth/david_arnaud2", KINECT_SERIAL_LAB(), 2);
-  test_straighten_picture(IMG_DIR "depth/david_arnaud3", KINECT_SERIAL_LAB(), 1);
-  test_straighten_picture(IMG_DIR "depth/david_arnaud3", KINECT_SERIAL_LAB(), 2);
-  test_straighten_picture(IMG_DIR "depth/juggling1", KINECT_SERIAL_LAB(), 255);
-  test_straighten_picture(IMG_DIR "depth/juggling2", KINECT_SERIAL_LAB(), 255);
+  test_straighten_picture(IMG_DIR "depth/alberto1", vision_utils::DEFAULT_KINECT_SERIAL(), 255);
+  test_straighten_picture(IMG_DIR "depth/david_arnaud1", vision_utils::DEFAULT_KINECT_SERIAL(), 1);
+  test_straighten_picture(IMG_DIR "depth/david_arnaud1", vision_utils::DEFAULT_KINECT_SERIAL(), 2);
+  test_straighten_picture(IMG_DIR "depth/david_arnaud2", vision_utils::DEFAULT_KINECT_SERIAL(), 1);
+  test_straighten_picture(IMG_DIR "depth/david_arnaud2", vision_utils::DEFAULT_KINECT_SERIAL(), 2);
+  test_straighten_picture(IMG_DIR "depth/david_arnaud3", vision_utils::DEFAULT_KINECT_SERIAL(), 1);
+  test_straighten_picture(IMG_DIR "depth/david_arnaud3", vision_utils::DEFAULT_KINECT_SERIAL(), 2);
+  test_straighten_picture(IMG_DIR "depth/juggling1", vision_utils::DEFAULT_KINECT_SERIAL(), 255);
+  test_straighten_picture(IMG_DIR "depth/juggling2", vision_utils::DEFAULT_KINECT_SERIAL(), 255);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

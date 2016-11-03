@@ -33,9 +33,12 @@ retrieve similar images, etc.
 // CURL
 #include <curl/curl.h>
 // utils
+#include "vision_utils/cast_to_string.h"
 #include "vision_utils/exec_system.h"
-#include "vision_utils/string_web_retrieve.h"
-#include "vision_utils/system_utils.h"
+#include "vision_utils/extract_utils.h"
+#include "vision_utils/extract_utils.h"
+#include "vision_utils/retrieve_url.h"
+#include "vision_utils/save_file.h"
 #include "vision_utils/timer.h"
 #include "vision_utils/timestamp.h"
 

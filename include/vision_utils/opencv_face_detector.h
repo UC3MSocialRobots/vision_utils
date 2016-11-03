@@ -5,8 +5,6 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/objdetect/objdetect.hpp>
 #include <vision_utils/img_path.h>
-#include "vision_utils/geometry_utils.h"
-// vision
 #include "vision_utils/resize_utils.h"
 
 namespace vision_utils {

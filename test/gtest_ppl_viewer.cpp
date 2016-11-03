@@ -27,6 +27,7 @@ Some tests for PPLViewer
 
 // Bring in gtest
 #include <gtest/gtest.h>
+#include "vision_utils/iterable_to_string.h"
 #include "vision_utils/ppl_viewer.h"
 #include "vision_utils/images2ppl.h"
 #include "vision_utils/timer.h"
@@ -37,6 +38,7 @@ Some tests for PPLViewer
 #define MYTIMEOUT 5 // seconds
 #define WAIT_WHILE(cond, timeout) { vision_utils::Timer timer; while (timer.getTimeSeconds() < timeout && (cond)) usleep(50 * 1000); }
 #define ASSERT_TRUE_TIMEOUT(cond, timeout) { vision_utils::Timer timer; while (timer.getTimeSeconds() < timeout && !(cond)) usleep(50 * 1000); } ASSERT_TRUE(cond)
+#define DEG2RAD     0.01745329251994329577  //!< to convert degrees to radians
 
 TEST(TestSuite, ctor) {
   if (!vision_utils::rosmaster_alive()) return;

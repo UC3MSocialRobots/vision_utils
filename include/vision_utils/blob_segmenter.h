@@ -28,10 +28,10 @@ ________________________________________________________________________________
 #define BLOB_SEGMENTER_H
 
 #include "vision_utils/depth_canny.h"
-#include "vision_utils/content_processing.h"
 #include "vision_utils/disjoint_sets2.h"
 #include "vision_utils/ground_plane_finder.h"
 #include "vision_utils/infosimage.h"
+#include "vision_utils/region_growth.h"
 
 namespace vision_utils {
 

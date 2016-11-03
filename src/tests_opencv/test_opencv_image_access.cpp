@@ -231,7 +231,7 @@ void iterate_whole_image_color(cv::Mat3b & image) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-//#include "vision_utils/io.h"
+//
 
 void iterate_whole_image_multidimensional() {
   unsigned int SIZE = 50;

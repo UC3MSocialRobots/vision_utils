@@ -29,13 +29,11 @@ Some useful functions for testing PPLPublisherTemplate-based classes.
 // Bring in gtest
 #include <gtest/gtest.h>
 // people_msgs
-#include "vision_utils/pplp_template.h"
 #include "vision_utils/images2ppl.h"
-#include "vision_utils/kinect_openni_utils.h"
-#include "vision_utils/io.h"
-#include "vision_utils/content_processing.h"
-#include "vision_utils/drawing_utils.h"
-#include "vision_utils/pt_utils.h"
+#include "vision_utils/paste_images.h"
+#include "vision_utils/pplp_template.h"
+#include "vision_utils/printP.h"
+
 // utils
 #include "vision_utils/timer.h"
 // long_term_memory

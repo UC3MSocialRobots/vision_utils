@@ -26,8 +26,8 @@ ________________________________________________________________________________
 #define _curr_prefix2IMGS_H
 
 #include "vision_utils/database_player.h"
-#include "vision_utils/io.h"
 #include "vision_utils/find_and_replace.h"
+#include "vision_utils/read_rgb_depth_user_image_from_image_file.h"
 
 namespace vision_utils {
 

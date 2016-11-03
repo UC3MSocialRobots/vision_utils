@@ -33,7 +33,7 @@ This class also computes them.
 #include "vision_utils/timer.h"
 #include "vision_utils/oni2imgs.h"
 #include "vision_utils/blob_segmenter.h"
-#include "vision_utils/io.h"
+
 
 namespace vision_utils {
 

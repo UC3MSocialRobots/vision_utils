@@ -28,7 +28,7 @@ ________________________________________________________________________________
 #define CLOUD_TILTER_H
 
 #include <opencv2/core/core.hpp>
-#include "vision_utils/stats_utils.h"
+#include "vision_utils/gaussian_pdf2ellipse.h"
 
 namespace vision_utils {
 

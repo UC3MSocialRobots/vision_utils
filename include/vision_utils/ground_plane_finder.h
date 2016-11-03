@@ -27,7 +27,10 @@ ________________________________________________________________________________
 #define GROUND_PLANE_FINDER_H
 
 // AD
-#include "vision_utils/kinect_openni_utils.h"
+#include <image_geometry/pinhole_camera_model.h>
+#include <vision_utils/kinect_serials.h>
+#include <vision_utils/pixel2world_depth.h>
+#include <vision_utils/read_camera_model_files.h>
 // PCL
 #include <pcl/ModelCoefficients.h>
 #include <pcl/io/pcd_io.h>

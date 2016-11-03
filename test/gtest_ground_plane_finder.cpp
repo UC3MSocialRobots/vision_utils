@@ -26,7 +26,8 @@ ________________________________________________________________________________
 #include <gtest/gtest.h>
 #include "vision_utils/timer.h"
 #include "vision_utils/ground_plane_finder.h"
-#include "vision_utils/io.h"
+#include "vision_utils/read_rgb_and_depth_image_from_image_file.h"
+
 #include <vision_utils/img_path.h>
 
 //#define DISPLAY

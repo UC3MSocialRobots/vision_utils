@@ -26,7 +26,7 @@ ________________________________________________________________________________
 #ifndef STRING_SPLIT_H
 #define STRING_SPLIT_H
 
-#include "vision_utils/string_casts.h"
+#include <vision_utils/cast_from_string.h>
 #include <vector>
 
 namespace vision_utils {

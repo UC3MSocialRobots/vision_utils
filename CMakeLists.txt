@@ -10,12 +10,8 @@ SET(ROSDEPS cv_bridge image_geometry image_transport pcl_ros rosbag
 find_package(catkin REQUIRED COMPONENTS ${ROSDEPS})
 find_package(PCL REQUIRED common visualization)
 ### 4 - Message/Service/Action Generators (add_message_files(), add_service_files(), add_action_files())
-add_message_files(
-  FILES
-  Rect.msg
-)
+# nothing to do in this package
 ### 5 - Invoke message/service/action generation (generate_messages())
-generate_messages()
 set(devel_pkg_inc ${CATKIN_DEVEL_PREFIX}/include/${PROJECT_NAME})
 configure_file(cmake/img_path.h.in ${devel_pkg_inc}/img_path.h)
 install(FILES ${devel_pkg_inc}/img_path.h DESTINATION ${devel_pkg_inc})
@@ -28,12 +24,19 @@ catkin_package(
 )
 ### 7 - Libraries/Executables to build (add_library()/add_executable()/target_link_libraries())
 include_directories(
-  include third_parties
+  include
+  third_parties
   ${catkin_INCLUDE_DIRS}
-  /usr/include/openni /usr/include/nite /usr/include/ni
+  ${CATKIN_DEVEL_PREFIX}/include # for the generated "img_path"
   ${PCL_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
+  /usr/include/openni  /usr/include/nite  /usr/include/ni
 )
+# make all headers visible
+# http://stackoverflow.com/questions/28384935/qtcreator-cmake-project-how-to-show-all-project-files
+FILE(GLOB_RECURSE LibFiles "include/*.h")
+add_custom_target(qtcreator_headers SOURCES ${LibFiles})
+
 SET(AD_USE_NITE ON CACHE BOOL "")
 ADD_SUBDIRECTORY(third_parties)
 ADD_SUBDIRECTORY(src)

@@ -25,6 +25,8 @@ ________________________________________________________________________________
 #ifndef SAVE_FILE_H
 #define SAVE_FILE_H
 
+#include <fstream>
+
 namespace vision_utils {
 
 /*! Save a string to a given file

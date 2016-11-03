@@ -26,7 +26,8 @@ Some tests for clouds viewing.
 
 // Bring in my package's API, which is what I'm testing
 #include "vision_utils/cloud_viewer.h"
-#include "vision_utils/combinatorics_utils.h"
+#include "vision_utils/rand_gaussian.h"
+
 // Bring in gtest
 #include <gtest/gtest.h>
 

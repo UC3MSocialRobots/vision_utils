@@ -26,9 +26,11 @@ ________________________________________________________________________________
 #include <opencv2/highgui/highgui.hpp>
 // AD
 #include <vision_utils/img_path.h>
+#include <vision_utils/draw_text_rotated.h>
+#include <vision_utils/resize_utils.h>
 #include "vision_utils/timer.h"
-// vision
-#include "vision_utils/drawing_utils.h"
+#include "vision_utils/paste_images.h"
+#include <iostream>
 
 ////////////////////////////////////////////////////////////////////////////////
 

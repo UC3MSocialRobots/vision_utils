@@ -30,9 +30,11 @@ Some utilities for drawing pie charts and their associated captions.
 #include <vector>
 #include <numeric>
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include "vision_utils/accessible_to_string.h"
 #include "vision_utils/colormaps.h"
-#include "vision_utils/drawing_utils.h"
-#include "vision_utils/geometry_utils.h"
+#include "vision_utils/draw_text_centered.h"
+#define DEG2RAD     0.01745329251994329577  //!< to convert degrees to radians
 
 namespace vision_utils {
 

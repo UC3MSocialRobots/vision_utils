@@ -25,12 +25,23 @@ and \b cvstage_plugins namespace.
 
  */
 // Bring in gtest
+#include <opencv2/highgui/highgui.hpp>
+#include <map>
 #include <gtest/gtest.h>
-#include "vision_utils/content_processing.h"
+#include <vision_utils/get_all_different_values.h>
+#include <vision_utils/detect_end_points.h>
+#include <vision_utils/img2string.h>
+#include <vision_utils/get_all_non_null_values_and_com.h>
 #include <vision_utils/img_path.h>
-#include "vision_utils/timer.h"
-#include "vision_utils/map_utils.h"
+#include <vision_utils/iterable_to_int_string.h>
+#include <vision_utils/iterable_to_string.h>
+#include <vision_utils/map_keys_to_container.h>
+#include <vision_utils/map_to_string.h>
+#include <vision_utils/mask.h>
 #include "vision_utils/matrix_testing.h"
+#include <vision_utils/propagative_floodfill.h>
+#include "vision_utils/region_growth.h"
+#include "vision_utils/timer.h"
 #include "vision_utils/user_image_to_rgb.h"
 
 #define GRAYSCALE CV_LOAD_IMAGE_GRAYSCALE

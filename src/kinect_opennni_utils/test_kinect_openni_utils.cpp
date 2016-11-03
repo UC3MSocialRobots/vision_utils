@@ -23,7 +23,7 @@ ________________________________________________________________________________
 Some tests for the utils with Kinect images.
  */
 
-#include "vision_utils/kinect_openni_utils.h"
+
 #include "vision_utils/timer.h"
 // opencv
 #include <opencv2/highgui/highgui.hpp>
@@ -40,9 +40,9 @@ Some tests for the utils with Kinect images.
 */
 //#if ( ROS_VERSION_MINIMUM(1, 7, 0) ) // fuerte code
 #if 0
-#include "vision_utils/marker_utils.h"
-#include "vision_utils/pt_utils.h"
-#include "vision_utils/cv_conversion_float_uchar.h"
+
+
+
 
 void reproject_image_ros(const std::string & rgb_depth_filename_prefix,
                          const std::string & kinect_serial_number) {

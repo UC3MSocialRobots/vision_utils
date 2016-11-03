@@ -27,8 +27,9 @@ ________________________________________________________________________________
 #ifndef COLORMAPS_H
 #define COLORMAPS_H
 
-#include "vision_utils/color_utils.h"
 #include "vision_utils/clamp.h"
+#include "vision_utils/color_utils.h"
+#include "vision_utils/hue2rgb.h"
 
 namespace vision_utils {
 

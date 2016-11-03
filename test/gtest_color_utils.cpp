@@ -1,7 +1,8 @@
 
 //#define DISPLAY
 #include <gtest/gtest.h>
-#include "vision_utils/color_utils.h"
+#include "vision_utils/hue_to_string.h"
+#include "vision_utils/hue2rgb.h"
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 

@@ -3,18 +3,7 @@
  * \author Arnaud Ramey ( arnaud.a.ramey@gmail.com )
             -- Robotics Lab, University Carlos III of Madrid
  * \date Jan. 2012
-  */
-
-#include <ros/ros.h>
-#include <image_transport/image_transport.h>
-#include <cv_bridge/cv_bridge.h>
-#include <opencv2/highgui/highgui.hpp>
-// compressed_rounded
-#include "vision_utils/timer.h"
-#include "vision_utils/cv_conversion_float_uchar.h"
-
-
-/*! This is an executable to subscribe to a depth topic
+This is an executable to subscribe to a depth topic
   and show it in a grayscale version.
 
 \section Parameters
@@ -40,6 +29,13 @@
         The input image.
         Must be a depth image.
   */
+#include <ros/ros.h>
+#include <image_transport/image_transport.h>
+#include <cv_bridge/cv_bridge.h>
+#include <opencv2/highgui/highgui.hpp>
+// compressed_rounded
+#include "vision_utils/timer.h"
+#include "vision_utils/depth_image_to_vizualisation_color_image.h"
 
 //! the uchar image that is displayed
 //cv::Mat1b uchar_greyscale_img;

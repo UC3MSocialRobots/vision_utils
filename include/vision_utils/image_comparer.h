@@ -14,12 +14,14 @@
 
 ////// my imports
 #include "vision_utils/hausdorff_distances.h"
-#include "vision_utils/file_io.h"
 #include "vision_utils/filename_handling.h"
-#include "vision_utils/content_processing.h"
-
+#include <vision_utils/retrieve_file_split.h>
+#include <vision_utils/iterable_to_string.h>
+#include <vision_utils/nonNulPoints.h>
+#include <vision_utils/redimContent.h>
+#include <vision_utils/point_vec_to_string.h>
 ///// STL imports
-#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include <sstream>          // for std::sstreams
 
 namespace vision_utils {

@@ -31,7 +31,8 @@ Based on http://answers.ros.org/question/56168/subscribing-to-multiple-topics-of
 #include <ros/ros.h>
 #include "vision_utils/string_split.h"
 #include "vision_utils/find_and_replace.h"
-#include "vision_utils/string_casts_stl.h"
+#include <vision_utils/accessible_to_string.h>
+
 
 namespace vision_utils {
 

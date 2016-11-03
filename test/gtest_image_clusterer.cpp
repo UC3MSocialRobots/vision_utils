@@ -29,10 +29,12 @@ Some tests for class \a ImageClusterer
 // Bring in gtest
 #include <gtest/gtest.h>
 // utils
-#include "vision_utils/timer.h"
-#include "vision_utils/io.h"
 #include "vision_utils/image_clusterer.h"
 #include <vision_utils/img_path.h>
+#include "vision_utils/kinect_serials.h"
+#include "vision_utils/read_camera_model_files.h"
+#include "vision_utils/read_rgb_and_depth_image_from_image_file.h"
+#include "vision_utils/timer.h"
 
 void test_image_roi(const std::string & rgb_depth_filename_prefix,
                     const std::string & kinect_serial_number) {
@@ -98,14 +100,14 @@ void test_image_roi(const std::string & rgb_depth_filename_prefix,
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, all_tests) {
-  test_image_roi(IMG_DIR "depth/inside1", KINECT_SERIAL_LAB());
-  test_image_roi(IMG_DIR "depth/juggling1", KINECT_SERIAL_LAB());
-  test_image_roi(IMG_DIR "depth/juggling2", KINECT_SERIAL_LAB());
-  test_image_roi(IMG_DIR "depth/juggling3", KINECT_SERIAL_LAB());
-  test_image_roi(IMG_DIR "depth/alberto1", KINECT_SERIAL_LAB());
-  test_image_roi(IMG_DIR "depth/alberto2", KINECT_SERIAL_LAB());
-  test_image_roi(IMG_DIR "depth/alvaro1", KINECT_SERIAL_LAB());
-  test_image_roi(IMG_DIR "depth/alvaro2", KINECT_SERIAL_LAB());
+  test_image_roi(IMG_DIR "depth/inside1", vision_utils::KINECT_SERIAL_LAB());
+  test_image_roi(IMG_DIR "depth/juggling1", vision_utils::KINECT_SERIAL_LAB());
+  test_image_roi(IMG_DIR "depth/juggling2", vision_utils::KINECT_SERIAL_LAB());
+  test_image_roi(IMG_DIR "depth/juggling3", vision_utils::KINECT_SERIAL_LAB());
+  test_image_roi(IMG_DIR "depth/alberto1", vision_utils::KINECT_SERIAL_LAB());
+  test_image_roi(IMG_DIR "depth/alberto2", vision_utils::KINECT_SERIAL_LAB());
+  test_image_roi(IMG_DIR "depth/alvaro1", vision_utils::KINECT_SERIAL_LAB());
+  test_image_roi(IMG_DIR "depth/alvaro2", vision_utils::KINECT_SERIAL_LAB());
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -74,16 +74,15 @@ ________________________________________________________________________________
 #ifndef PPL_VIEWER_H
 #define PPL_VIEWER_H
 
-#include "vision_utils/color_utils.h"
-#include "vision_utils/ppl2ms.h"
-#include "vision_utils/laser_utils.h"
-#include "vision_utils/map_utils.h"
+
+#include "vision_utils/convert_sensor_data_to_xy.h"
+#include "vision_utils/foo_point.h"
 #include "vision_utils/multi_subscriber.h"
-#include "vision_utils/pt_utils.h"
+#include "vision_utils/ppl2ms.h"
 #include "vision_utils/timestamp.h"
 #include "cvstage/plugins/draw_xy_lines.h"
 // ROS
-#include <sensor_msgs/LaserScan.h>
+#include <tf/transform_listener.h>
 
 namespace vision_utils {
 

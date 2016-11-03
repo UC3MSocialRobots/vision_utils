@@ -25,10 +25,14 @@ ________________________________________________________________________________
 // Bring in gtest
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
-#include "vision_utils/layer_utils.h"
-#include "vision_utils/matrix_testing.h"
-#include "vision_utils/timer.h"
 #include <vision_utils/img_path.h>
+#include "vision_utils/matrix_testing.h"
+#include "vision_utils/rgb2hue.h"
+#include "vision_utils/rgb2value.h"
+#include "vision_utils/rgb_saturate_saturation_value.h"
+#include "vision_utils/rgb2saturation.h"
+#include "vision_utils/saturate_saturation_value.h"
+#include "vision_utils/timer.h"
 
 
 TEST(TestSuite, rgb2hue_four_colors_img) {

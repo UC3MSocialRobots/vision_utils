@@ -31,7 +31,7 @@ ________________________________________________________________________________
 #include <numeric>
 #include <opencv2/highgui/highgui.hpp>
 #include "vision_utils/colormaps.h"
-#include "vision_utils/geometry_utils.h"
+
 
 namespace vision_utils {
 

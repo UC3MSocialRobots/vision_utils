@@ -33,7 +33,6 @@ changing extensions, extracting folder, etc.
 #include "vision_utils/file_exists.h"
 #include "vision_utils/exec_system_get_output.h"
 #include "vision_utils/string_split.h"
-#include "vision_utils/system_utils.h"
 
 namespace vision_utils {
 typedef std::set<std::string> StringSet;

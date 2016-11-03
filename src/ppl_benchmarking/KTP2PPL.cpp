@@ -37,12 +37,17 @@ ________________________________________________________________________________
  */
 #include <image_transport/image_transport.h>
 // AD
-#include "vision_utils/find_and_replace.h"
-#include "vision_utils/file_io.h"
-#include "vision_utils/timer.h"
 #include "vision_utils/blob_segmenter.h"
 #include "vision_utils/color_utils.h"
 #include "vision_utils/database_player.h"
+#include "vision_utils/directory_exists.h"
+#include "vision_utils/find_and_replace.h"
+#include "vision_utils/print_rect.h"
+#include "vision_utils/printP.h"
+#include "vision_utils/rect_center.h"
+#include "vision_utils/retrieve_file_split.h"
+#include "vision_utils/shrink_rec.h"
+#include "vision_utils/timer.h"
 // people_msgs
 #include "vision_utils/images2ppl.h"
 #include "vision_utils/ppl_attributes.h"

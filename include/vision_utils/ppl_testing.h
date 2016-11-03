@@ -29,10 +29,9 @@ ________________________________________________________________________________
 #include <gtest/gtest.h>
 // AD
 #include <people_msgs/People.h>
-#include "vision_utils/string_casts_stl.h"
-#include "vision_utils/pt_utils.h"
-#include "vision_utils/assignment_utils.h"
-#include "vision_utils/people_pose_list_utils.h"
+
+
+
 
 #define ASSERT_TRUE_TIMEOUT(cond, timeout) { ::vision_utils::Timer timer; while (timer.getTimeSeconds() < timeout && !(cond)) usleep(50 * 1000); } ASSERT_TRUE(cond)
 

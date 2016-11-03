@@ -36,11 +36,17 @@ making life easier.
 // msg
 #include <people_msgs/People.h>
 // AD
-#include "vision_utils/content_processing.h"
-#include "vision_utils/kinect_openni_utils.h"
-#include "vision_utils/pt_utils.h"
+#include "vision_utils/boundingBox.h"
+#include "vision_utils/copy3.h"
+#include "vision_utils/get_all_non_null_values_and_com.h"
+#include "vision_utils/kinect_serials.h"
 #include "vision_utils/ppl_attributes.h"
+#include "vision_utils/mask.h"
+#include "vision_utils/pixel2world_depth.h"
+#include "vision_utils/read_camera_model_files.h"
+#include "vision_utils/read_rgb_depth_user_image_from_image_file.h"
 // ROS
+#include <image_geometry/pinhole_camera_model.h>
 #include <sensor_msgs/image_encodings.h>
 #include <cv_bridge/cv_bridge.h>
 

@@ -27,9 +27,12 @@ ________________________________________________________________________________
 #ifndef TIMER_CHART_H
 #define TIMER_CHART_H
 
+#include <map>
+#include <string>
+#include <vector>
+#include <opencv2/highgui/highgui.hpp>
 #include "vision_utils/timer.h"
 #include "vision_utils/pie_chart_utils.h"
-#include "vision_utils/map_utils.h"
 
 // some useful preprocesor functions for TimerCharts.
 // put the line "#define CHART_TIMER_ON" in your code,
