@@ -5,7 +5,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/objdetect/objdetect.hpp>
 #include <vision_utils/img_path.h>
-#include "vision_utils/resize_utils.h"
+#include <vision_utils/resize_if_bigger.h>
 
 namespace vision_utils {
 // face detection param

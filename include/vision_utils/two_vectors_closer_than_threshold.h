@@ -1,8 +1,8 @@
 /*!
-  \file        bboxes_included.h
+  \file        two_vectors_closer_than_threshold.h
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
-  \date        2016/11/2
+  \date        2016/11/5
 ________________________________________________________________________________
 
 This program is free software: you can redistribute it and/or modify
@@ -20,34 +20,39 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
  */
 
-#ifndef BBOXES_INCLUDED_H
-#define BBOXES_INCLUDED_H
-
-#include <vision_utils/img_bbox.h>
+#ifndef TWO_VECTORS_CLOSER_THAN_THRESHOLD_H
+#define TWO_VECTORS_CLOSER_THAN_THRESHOLD_H
+#include <vector>
 
 namespace vision_utils {
 
-//! \retun true if \a small is included into \a big
-template<class Rect>
-inline bool bboxes_included(const Rect & big, const Rect & small) {
-  if (big.x > small.x)
-    return 0;
-  if (big.y > small.y)
-    return 0;
-  if (big.x + big.width < small.x + small.width)
-    return 0;
-  if (big.y + big.height < small.y + small.height)
-    return 0;
-  return 1;
-}
+/*!
+ \param A
+    a vector of 2D points
+ \param B
+    a vector of 2D points
+ \param min_dist
+    a threshold distance
+ \return bool
+    true if there is a a pair of points closer than min_dist
+*/
+template<class _Pt2>
+inline bool two_vectors_closer_than_threshold(const std::vector<_Pt2> & A,
+                                              const std::vector<_Pt2> & B,
+                                              const float min_dist) {
+  float min_dist_sq = min_dist * min_dist;
+  for (unsigned int A_idx = 0; A_idx < A.size(); ++A_idx) {
+    for (unsigned int B_idx = 0; B_idx < B.size(); ++B_idx) {
+      if (distance_points_squared(A[A_idx], B[B_idx])
+          < min_dist_sq)
+        return true;
+    } // end loop B_idx
+  } // end loop A_idx
+  return false;
+} // end two_vectors_closer_than_threshold()
 
 ////////////////////////////////////////////////////////////////////////////////
 
-template<class Rect, class Img>
-inline bool bbox_included_image(const Rect & r, const Img & img) {
-  return bboxes_included(img_bbox<Img, Rect>(img), r);
-}
-
 } // end namespace vision_utils
 
-#endif // BBOXES_INCLUDED_H
+#endif // TWO_VECTORS_CLOSER_THAN_THRESHOLD_H

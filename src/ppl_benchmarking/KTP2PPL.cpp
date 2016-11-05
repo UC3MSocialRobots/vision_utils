@@ -48,7 +48,6 @@ ________________________________________________________________________________
 #include "vision_utils/retrieve_file_split.h"
 #include "vision_utils/shrink_rec.h"
 #include "vision_utils/timer.h"
-// people_msgs
 #include "vision_utils/images2ppl.h"
 #include "vision_utils/ppl_attributes.h"
 

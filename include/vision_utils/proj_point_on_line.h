@@ -1,8 +1,8 @@
 /*!
-  \file        point_vec_to_string.h
+  \file        proj_point_on_line.h
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
-  \date        2016/11/2
+  \date        2016/11/5
 ________________________________________________________________________________
 
 This program is free software: you can redistribute it and/or modify
@@ -20,30 +20,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
  */
 
-#ifndef POINT_VEC_TO_STRING_H
-#define POINT_VEC_TO_STRING_H
-// std includes
-#include <opencv2/core/core.hpp>
-#include <string>
-#include <vision_utils/img2string.h>
+#ifndef PROJ_POINT_ON_LINE_H
+#define PROJ_POINT_ON_LINE_H
 
 namespace vision_utils {
 
-template<class Pt2Iterable>
-static std::string point_vec_to_string(const Pt2Iterable & in, const cv::Size size) {
-  //cv::Rect r = boundingBox_vec<cv::Rect, cv::Point>(in);
-  //cv::Mat1b out(r.width, r.height);
-  cv::Mat1b out(size, (uchar) 0);
-  int cols = size.width;
-  uchar* outdata = out.ptr(0);
-  for (unsigned int pt_idx = 0; pt_idx < in.size(); ++pt_idx) {
-    if (in[pt_idx].x >= 0 && in[pt_idx].x < size.width &&
-        in[pt_idx].y >= 0 && in[pt_idx].y < size.height)
-      outdata[in[pt_idx].y * cols + in[pt_idx].x] = 255;
-  } // end loop pt_idx
-  return img2string(out);
+/*!
+  \return the projection of P on the line ax + by + c = 0
+  */
+template<class Point2>
+static inline Point2
+proj_point_on_line(const Point2 & P,
+                   const double & a, const double & b, const double & c) {
+  return Point2(
+        // x:
+        (-a * c  - a * b *  P.y + b * b * P.x)
+        / (a * a + b * b),
+        // y:
+        (-b * c  - a * b *  P.x + a * a * P.y)
+        / (a * a + b * b)
+        );
 }
 
 } // end namespace vision_utils
 
-#endif // POINT_VEC_TO_STRING_H
+#endif // PROJ_POINT_ON_LINE_H

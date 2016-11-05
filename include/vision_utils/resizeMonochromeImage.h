@@ -23,7 +23,7 @@ ________________________________________________________________________________
 #ifndef RESIZEMONOCHROMEIMAGE_H
 #define RESIZEMONOCHROMEIMAGE_H
 // std includes
-#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 namespace vision_utils {
 

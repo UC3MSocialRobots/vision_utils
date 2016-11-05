@@ -24,6 +24,7 @@ Some tests for MaskAcceleration
 */
 #include <gtest/gtest.h>
 #include "vision_utils/mask_acceleration.h"
+#include <vision_utils/distance_points.h>
 
 //#define DISPLAY
 

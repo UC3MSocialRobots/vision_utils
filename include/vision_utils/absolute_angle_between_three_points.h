@@ -23,6 +23,8 @@ ________________________________________________________________________________
 #ifndef ABSOLUTE_ANGLE_BETWEEN_THREE_POINTS_H
 #define ABSOLUTE_ANGLE_BETWEEN_THREE_POINTS_H
 
+#include "vision_utils/absolute_angle_between_two_vectors.h"
+
 namespace vision_utils {
 
 /*!

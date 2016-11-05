@@ -27,16 +27,19 @@ A useful class for finding the head inside of a user mask.
 #ifndef HEAD_FINDER_H
 #define HEAD_FINDER_H
 
-
-
 #include "vision_utils/clamp.h"
 #include "vision_utils/timer.h"
 #include "vision_utils/user_image_to_rgb.h"
 #include "vision_utils/voronoi.h"
+#include <vision_utils/boundingBox.h>
+#include <vision_utils/detect_end_points.h>
+#include <vision_utils/img2string.h>
+#include <vision_utils/nonNulPoints.h>
+#include <vision_utils/gaussian_pdf2ellipse.h>
+#include <vision_utils/distance_points_squared.h>
 #include "cvstage/plugins/draw_ellipses.h"
 
 namespace vision_utils {
-
 
 class HeadFinder {
 public:

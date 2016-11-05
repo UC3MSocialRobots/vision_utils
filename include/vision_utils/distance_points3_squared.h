@@ -1,8 +1,8 @@
 /*!
-  \file        point_vec_to_string.h
+  \file        distance_points3_squared.h
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
-  \date        2016/11/2
+  \date        2016/11/5
 ________________________________________________________________________________
 
 This program is free software: you can redistribute it and/or modify
@@ -20,30 +20,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
  */
 
-#ifndef POINT_VEC_TO_STRING_H
-#define POINT_VEC_TO_STRING_H
-// std includes
-#include <opencv2/core/core.hpp>
-#include <string>
-#include <vision_utils/img2string.h>
+#ifndef DISTANCE_POINTS3_SQUARED_H
+#define DISTANCE_POINTS3_SQUARED_H
 
 namespace vision_utils {
 
-template<class Pt2Iterable>
-static std::string point_vec_to_string(const Pt2Iterable & in, const cv::Size size) {
-  //cv::Rect r = boundingBox_vec<cv::Rect, cv::Point>(in);
-  //cv::Mat1b out(r.width, r.height);
-  cv::Mat1b out(size, (uchar) 0);
-  int cols = size.width;
-  uchar* outdata = out.ptr(0);
-  for (unsigned int pt_idx = 0; pt_idx < in.size(); ++pt_idx) {
-    if (in[pt_idx].x >= 0 && in[pt_idx].x < size.width &&
-        in[pt_idx].y >= 0 && in[pt_idx].y < size.height)
-      outdata[in[pt_idx].y * cols + in[pt_idx].x] = 255;
-  } // end loop pt_idx
-  return img2string(out);
+/*!
+ \param A  a 3D pt (x, y, z)
+ \param B  a 3D pt (x, y, z) - it can be of another type than A
+ \return the quantity AB * AB. It is faster to compute than their actual distance
+ and enough for, for instance, comparing two distances
+*/
+template<class Point3_A, class Point3_B>
+static inline double
+distance_points3_squared(const Point3_A & A, const Point3_B & B) {
+  return (A.x - B.x) * (A.x - B.x)
+      +  (A.y - B.y) * (A.y - B.y)
+      +  (A.z - B.z) * (A.z - B.z);
 }
 
 } // end namespace vision_utils
 
-#endif // POINT_VEC_TO_STRING_H
+#endif // DISTANCE_POINTS3_SQUARED_H

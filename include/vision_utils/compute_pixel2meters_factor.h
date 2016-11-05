@@ -23,6 +23,10 @@ ________________________________________________________________________________
 #ifndef COMPUTE_PIXEL2METERS_FACTOR_H
 #define COMPUTE_PIXEL2METERS_FACTOR_H
 // std includes
+#include "image_geometry/pinhole_camera_model.h"
+#include <vision_utils/pixel2world_depth.h>
+#include <vision_utils/dist3.h>
+#include <vision_utils/read_camera_model_files.h>
 #include <opencv2/core/core.hpp>
 #include <stdio.h> // for printf(), etc
 #include <string>

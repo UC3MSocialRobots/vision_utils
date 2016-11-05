@@ -3,7 +3,7 @@
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
   \date        2013/4/23
-  
+
 ________________________________________________________________________________
 
 This program is free software: you can redistribute it and/or modify
@@ -26,8 +26,13 @@ Some tests for \b kinect_openni_utils namespace.
 // Bring in gtest
 #include <gtest/gtest.h>
 
+#include "vision_utils/kinect_serials.h"
+#include "vision_utils/pixel2world_rgb.h"
+#include "vision_utils/read_camera_model_files.h"
+// ROS
+#include <ros/package.h>
 #include <opencv2/highgui/highgui.hpp>
-
+#include <image_geometry/pinhole_camera_model.h>
 
 typedef cv::Point3f Pt3;
 //typedef std_msgs::ColorRGBA Color;
@@ -51,7 +56,7 @@ TEST(TestSuite, pixel2world_rgb_empty_calls) {
   // get camera model
   image_geometry::PinholeCameraModel depth_camera_model, rgb_camera_model;
   vision_utils::read_camera_model_files
-      (DEFAULT_KINECT_SERIAL(), depth_camera_model, rgb_camera_model);
+      (vision_utils::DEFAULT_KINECT_SERIAL(), depth_camera_model, rgb_camera_model);
   ret = vision_utils::pixel2world_rgb_color255(cv::Mat(), cv::Mat(),
                                                       depth_camera_model,
                                                       depth_reprojected, colors,
@@ -77,7 +82,7 @@ TEST(TestSuite, pixel2world_nan) {
   // get camera model
   image_geometry::PinholeCameraModel depth_camera_model, rgb_camera_model;
   vision_utils::read_camera_model_files
-      (DEFAULT_KINECT_SERIAL(), depth_camera_model, rgb_camera_model);
+      (vision_utils::DEFAULT_KINECT_SERIAL(), depth_camera_model, rgb_camera_model);
   // only NaNs -> should remove all of them
   cv::Mat3b color(10, 10, cv::Vec3b(255, 0, 0));
   cv::Mat1f depth;
@@ -109,7 +114,7 @@ TEST(TestSuite, pixel2world_rgb) {
   ASSERT_FALSE(depth_img.empty());
   ASSERT_TRUE(depth_img.size() == rgb_img.size());
 
-  const std::string kinect_serial_number = KINECT_SERIAL_ARNAUD();
+  const std::string kinect_serial_number = vision_utils::KINECT_SERIAL_ARNAUD();
   std::vector<Pt3> depth_reprojected;
   std::vector<Color> colors;
   bool ret;

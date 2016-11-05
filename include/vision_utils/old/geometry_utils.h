@@ -14,7 +14,6 @@
 
 
 #include "vision_utils/foo_point.h"
-#include "vision_utils/distances.h"
 #include "vision_utils/hausdorff_distances.h"
 // std
 #include <math.h> // for acos()

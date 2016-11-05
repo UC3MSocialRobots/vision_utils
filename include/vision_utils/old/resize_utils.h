@@ -28,6 +28,7 @@ ________________________________________________________________________________
 
 #include <limits>
 #include <opencv2/imgproc/imgproc.hpp>
+#include <vision_utils/rectangle_intersection.h>
 
 namespace vision_utils {
 //cut:resize_if_bigger

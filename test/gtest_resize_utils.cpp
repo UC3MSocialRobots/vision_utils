@@ -29,6 +29,8 @@ ________________________________________________________________________________
 
 #include "vision_utils/timer.h"
 #include <vision_utils/img_path.h>
+#include <vision_utils/scale_img_forward_backward.h>
+#include <vision_utils/scale_img_warp.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 

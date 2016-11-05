@@ -27,6 +27,7 @@ Some tests for HeadFinder
 #include "vision_utils/timer.h"
 #include <vision_utils/img_path.h>
 #include "vision_utils/head_finder.h"
+#include <vision_utils/distance_points.h>
 
 // #define DISPLAY
 

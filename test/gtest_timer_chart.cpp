@@ -37,7 +37,7 @@ inline void usleep_gauss(const double avg_us) {
 
 TEST(TestSuite, test1) {
   TIMER_CREATE(timer);
-  for (int i = 0; i < 100; ++i) {
+  for (int i = 0; i < 20; ++i) {
     printf("i:%i\n", i);
 
     usleep_gauss(50E3);

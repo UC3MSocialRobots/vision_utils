@@ -12,22 +12,22 @@
 #include <gtest/gtest.h>
 #include <iostream>
 // AD
+#include "vision_utils/compute_pixel2meters_factor.h"
 #include <vision_utils/img_path.h>
 #include "vision_utils/timer.h"
-
-
-// vision_utils
-
 #include "vision_utils/connected_comp_interface.h"
-
 #include "vision_utils/image_comparer.h"
-
 #include "vision_utils/value_remover.h"
-
-
-// kinect
 #include "vision_utils/user_image_to_rgb.h"
-
+#include "vision_utils/rectangle_to_string.h"
+#include "vision_utils/region_growth.h"
+#include "vision_utils/drawListOfPoints.h"
+#include "vision_utils/to_string.h"
+#include "vision_utils/from_string.h"
+#include "vision_utils/infosimage.h"
+#include "vision_utils/kinect_serials.h"
+#include "vision_utils/read_rgb_depth_user_image_from_image_file.h"
+#include "vision_utils/propagative_floodfill.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -513,7 +513,7 @@ TEST(TestSuite, find_top_point_centered) {
   test_propagative_floodfill(IMG_DIR "depth/juggling2_user_mask.png", juggling2_pt);
   test_propagative_floodfill_custom_lookup(IMG_DIR "depth/juggling1_user_mask.png", juggling1_pt);
   test_propagative_floodfill_custom_lookup(IMG_DIR "depth/juggling2_user_mask.png", juggling2_pt);
-  test_compute_pixel2meters_factor(IMG_DIR "depth/juggling1", KINECT_SERIAL_LAB());
+  test_compute_pixel2meters_factor(IMG_DIR "depth/juggling1", vision_utils::KINECT_SERIAL_LAB());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -525,19 +525,19 @@ TEST(TestSuite, propagative_floodfill) {
   test_propagative_floodfill(IMG_DIR "depth/juggling2_user_mask.png", juggling2_pt);
   test_propagative_floodfill_custom_lookup(IMG_DIR "depth/juggling1_user_mask.png", juggling1_pt);
   test_propagative_floodfill_custom_lookup(IMG_DIR "depth/juggling2_user_mask.png", juggling2_pt);
-  test_compute_pixel2meters_factor(IMG_DIR "depth/juggling1", KINECT_SERIAL_LAB());
+  test_compute_pixel2meters_factor(IMG_DIR "depth/juggling1", vision_utils::KINECT_SERIAL_LAB());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, test_compute_pixel2meters_factor) {
-  test_compute_pixel2meters_factor(IMG_DIR "depth/juggling1", KINECT_SERIAL_LAB());
+  test_compute_pixel2meters_factor(IMG_DIR "depth/juggling1", vision_utils::KINECT_SERIAL_LAB());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char** argv) {
-  ros::Time::init();
+  //ros::Time::init();
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

@@ -27,9 +27,9 @@ ________________________________________________________________________________
 #include <stdio.h> // for printf(), etc
 #include <vector>
 #include "vision_utils/draw_text_centered.h"
-#include "vision_utils/resize_utils.h"
 #include "vision_utils/paste_img_compute_rois.h"
 #include "vision_utils/titlemaps.h"
+#include <vision_utils/resize_if_bigger.h>
 
 namespace vision_utils {
 

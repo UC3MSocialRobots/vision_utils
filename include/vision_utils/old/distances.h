@@ -7,7 +7,7 @@
 namespace vision_utils {
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:distance_points
 /*!
   \return the distance AB
   */
@@ -18,7 +18,7 @@ distance_points(const Point2_A & A, const Point2_B & B) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:distance_points_squared
 /*!
  \param A
  \param B
@@ -32,7 +32,7 @@ distance_points_squared(const Point2_A & A, const Point2_B & B) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:distance_points3_squared
 /*!
  \param A  a 3D pt (x, y, z)
  \param B  a 3D pt (x, y, z) - it can be of another type than A
@@ -48,7 +48,7 @@ distance_points3_squared(const Point3_A & A, const Point3_B & B) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:distance_points3
 /*!
  \param A  a 3D pt (x, y, z)
  \param B  a 3D pt (x, y, z) - it can be of another type than A
@@ -64,7 +64,7 @@ distance_points3(const Point3_A & A, const Point3_B & B) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:proj_point_on_line
 /*!
   \return the projection of P on the line ax + by + c = 0
   */
@@ -83,7 +83,7 @@ proj_point_on_line(const Point2 & P,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:dist_point_line
 /*!
   \return the projection of P on the line ax + by + c = 0
   */
@@ -95,7 +95,7 @@ dist_point_line(const Point2 & P,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:distance_point_segment
 /*!
  return the distance to a segment
  \param pt
@@ -128,7 +128,7 @@ static inline double distance_point_segment(const Point2 & pt,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:distance_point_segment_sq
 /*!
  return the squared euclididan distance to a segment
  \param pt
@@ -168,7 +168,7 @@ static inline double distance_point_segment_sq(const Point2 & pt,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:distance_point_polygon
 /*!
  * \brief   returns the min distance to the sides of the polygon
  * (euclidean projection on the sides).
@@ -202,7 +202,7 @@ static inline double distance_point_polygon(const Point2 & pt,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:distance_point_polygon_squared
 /*!
  \brief   returns the squared min distance to the sides of the polygon
  (euclidean projection on the sides).
@@ -258,7 +258,7 @@ static inline bool distance_point_polygon_squared
 } // end distance_point_polygon
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:two_vectors_closer_than_threshold
 /*!
  \param A
     a vector of 2D points

@@ -23,6 +23,8 @@ ________________________________________________________________________________
 #ifndef ABSOLUTE_ANGLE_BETWEEN_TWO_VECTORS_H
 #define ABSOLUTE_ANGLE_BETWEEN_TWO_VECTORS_H
 
+#include "vision_utils/norm2.h"
+
 namespace vision_utils {
 
 /*!

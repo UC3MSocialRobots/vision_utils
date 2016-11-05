@@ -1,8 +1,8 @@
 /*!
-  \file        point_vec_to_string.h
+  \file        scale_img_warp.h
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
-  \date        2016/11/2
+  \date        2016/11/5
 ________________________________________________________________________________
 
 This program is free software: you can redistribute it and/or modify
@@ -20,30 +20,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
  */
 
-#ifndef POINT_VEC_TO_STRING_H
-#define POINT_VEC_TO_STRING_H
-// std includes
+#ifndef SCALE_IMG_WARP_H
+#define SCALE_IMG_WARP_H
 #include <opencv2/core/core.hpp>
-#include <string>
-#include <vision_utils/img2string.h>
 
 namespace vision_utils {
 
-template<class Pt2Iterable>
-static std::string point_vec_to_string(const Pt2Iterable & in, const cv::Size size) {
-  //cv::Rect r = boundingBox_vec<cv::Rect, cv::Point>(in);
-  //cv::Mat1b out(r.width, r.height);
-  cv::Mat1b out(size, (uchar) 0);
-  int cols = size.width;
-  uchar* outdata = out.ptr(0);
-  for (unsigned int pt_idx = 0; pt_idx < in.size(); ++pt_idx) {
-    if (in[pt_idx].x >= 0 && in[pt_idx].x < size.width &&
-        in[pt_idx].y >= 0 && in[pt_idx].y < size.height)
-      outdata[in[pt_idx].y * cols + in[pt_idx].x] = 255;
-  } // end loop pt_idx
-  return img2string(out);
+template<class _T>
+void scale_img_warp(const cv::Mat_<_T> & in, cv::Mat_<_T> & out,
+                    const float & xscale = 1, const int & xoffset = 0,
+                    const float & yscale = 1, const int & yoffset = 0) {
+  if (xscale == 0 || yscale == 0)
+    return;
+  cv::Mat1d M(2, 3, (float) 0); // rows, cols
+  M(0, 0) = xscale;
+  M(1, 1) = yscale;
+  M(0, 2) = xoffset;
+  M(1, 2) = yoffset;
+  cv::warpAffine(in, out, M, in.size(), cv::INTER_NEAREST);
 }
 
 } // end namespace vision_utils
 
-#endif // POINT_VEC_TO_STRING_H
+#endif // SCALE_IMG_WARP_H

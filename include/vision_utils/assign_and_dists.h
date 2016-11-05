@@ -25,10 +25,10 @@ ________________________________________________________________________________
 // std includes
 #include <vector>
 #include "vision_utils/cmatrix.h"
-#include "vision_utils/match.h"
-#include "vision_utils/distances.h"
+#include <vision_utils/distance_points_squared.h>
 #include "vision_utils/hausdorff_distances.h"
 #include "vision_utils/linear_assign.h"
+#include "vision_utils/match.h"
 
 namespace vision_utils {
 

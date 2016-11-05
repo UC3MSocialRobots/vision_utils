@@ -24,6 +24,7 @@ ________________________________________________________________________________
 #define DRAW_TEXT_CENTERED_H
 // std includes
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <string>
 
 namespace vision_utils {

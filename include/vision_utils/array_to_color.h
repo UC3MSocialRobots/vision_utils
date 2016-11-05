@@ -29,7 +29,7 @@ Optionnal header drawing.
 #ifndef ARRAY_TO_COLOR_H
 #define ARRAY_TO_COLOR_H
 
-#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <vision_utils/rect_center.h>
 #include <vision_utils/draw_text_centered.h>
 #include "vision_utils/colormaps.h"
