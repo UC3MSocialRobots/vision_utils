@@ -23,6 +23,8 @@ ________________________________________________________________________________
 #ifndef REVERSE_ASSIGNMENT_LIST_H
 #define REVERSE_ASSIGNMENT_LIST_H
 
+#include <vision_utils/match.h>
+
 namespace vision_utils {
 
 /*!
