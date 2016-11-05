@@ -25,6 +25,8 @@ ________________________________________________________________________________
 #ifndef EXEC_SYSTEM_H
 #define EXEC_SYSTEM_H
 
+#include <stdio.h>
+
 namespace vision_utils {
 
 //! execute a system instruction in a safe mode
