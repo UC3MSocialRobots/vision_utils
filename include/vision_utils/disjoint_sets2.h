@@ -16,6 +16,7 @@
  *******************************************************************************/
 
 #include <iostream>
+#include <stdexcept> // for invalid_argument
 #include <iomanip>      // std::setw
 #include <opencv2/core/core.hpp>
 #include <vision_utils/comp_labeller_interface.h>
