@@ -1,7 +1,7 @@
 /*!
   \file        absolute_angle_between_three_points.h
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
-                -- Robotics Lab, University Carlos III of Madrid
+                 -- Robotics Lab, University Carlos III of Madrid
   \date        2016/11/2
 ________________________________________________________________________________
 
