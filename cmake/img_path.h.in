@@ -1,6 +1,0 @@
-#ifndef IMG_PATH_H_
-#define IMG_PATH_H_
-
-#define IMG_DIR                "@CMAKE_CURRENT_SOURCE_DIR@/data/images/"
-
-#endif
