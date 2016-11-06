@@ -77,7 +77,7 @@ void start_stop(PPLPublisherTemplate & skill,
     // trigger a PPL publishing
     // read images
     cv::Mat rgb, depth; cv::Mat1b user;
-    std::string filename_prefix = IMG_DIR "depth/alberto1";
+    std::string filename_prefix = IMG_DIR() + "depth/alberto1";
     ASSERT_TRUE(read_rgb_depth_user_image_from_image_file
         (filename_prefix, &rgb, &depth, (publish_user? &user : NULL)));
     if (iter == 2){  // change the size to check we really get the new image
@@ -132,7 +132,7 @@ void speed_test(PPLPublisherTemplate & skill,
 
   // read images
   cv::Mat rgb, depth; cv::Mat1b user;
-  std::string filename_prefix = IMG_DIR "depth/juggling1";
+  std::string filename_prefix = IMG_DIR() + "depth/juggling1";
   read_rgb_depth_user_image_from_image_file
       (filename_prefix, &rgb, &depth, (publish_user? &user : NULL));
   std_msgs::Header header;
@@ -341,7 +341,7 @@ void ppl_vs_user_benchmark(MyPPLPublisherTemplate & skill,
 //! version for only one file
 template<class MyPPLPublisherTemplate>
 void ppl_vs_user_benchmark(MyPPLPublisherTemplate & skill,
-                           const std::string & filename_prefix = IMG_DIR "depth/juggling1",
+                           const std::string & filename_prefix = IMG_DIR() + "depth/juggling1",
                            bool publish_user = false,
                            bool accept_false_positives = true,
                            bool resume_on_fail = false,

@@ -23,6 +23,7 @@ ________________________________________________________________________________
 #ifndef MEAN_H
 #define MEAN_H
 // std includes
+#include <numeric> // for accumulate
 #include <stdio.h> // for printf(), etc
 
 namespace vision_utils {

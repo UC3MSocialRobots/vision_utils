@@ -25,6 +25,7 @@ ________________________________________________________________________________
 // std includes
 #include <stdio.h> // for printf(), etc
 #include <string>
+#include "image_geometry/pinhole_camera_model.h"
 #include "vision_utils/read_camera_info_binary_files.h"
 #include "vision_utils/read_camera_info_bag_files.h"
 

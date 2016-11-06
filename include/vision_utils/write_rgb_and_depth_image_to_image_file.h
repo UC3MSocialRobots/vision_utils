@@ -29,6 +29,8 @@ ________________________________________________________________________________
 #include <string>
 #include <vector>
 #include "vision_utils/file_format.h"
+#include "vision_utils/compute_alpha_beta.h"
+#include "vision_utils/convert_float_to_uchar.h"
 
 namespace vision_utils {
 

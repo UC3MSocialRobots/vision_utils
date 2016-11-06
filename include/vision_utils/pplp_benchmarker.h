@@ -304,7 +304,7 @@ private:
   std::map<MethodName, MethodError> _errors;
   typedef std::map<UserName, UserName> NamesMap;
   std::map<MethodName, NamesMap> method2truth2track;
-  Timer _errors_timer;
+  vision_utils::Timer _errors_timer;
   double _errors_display_timeout;
   CMatrix<Cost> _costs;
 }; // end class PPLBenchmarker

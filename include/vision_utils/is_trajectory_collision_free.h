@@ -24,6 +24,7 @@ ________________________________________________________________________________
 #define IS_TRAJECTORY_COLLISION_FREE_H
 // std includes
 #include <vector>
+#include "vision_utils/is_point_in_costmap.h"
 
 namespace vision_utils {
 

@@ -62,7 +62,7 @@ public:
    * \param depth_cam_model
    *    the model of the camera that generated the depth map
    * \param canny_thres1, canny_thres2
-   *    \see vision_utils::DepthCanny::set_canny_thresholds()
+   *    \see DepthCanny::set_canny_thresholds()
    * \param ground_distance_threshold_m, ground_lower_ratio_to_use, data_skip
    *    \see GroundPlaneFinder::compute_plane()
    * \param prev_line_diff_thres, src_width_ratio_thres
@@ -75,8 +75,8 @@ public:
                  CleaningMethod method = NONE,
                  const image_geometry::PinholeCameraModel* depth_cam_model = NULL,
                  bool ground_recompute_plane = true,
-                 double canny_thres1 = vision_utils::DepthCanny::DEFAULT_CANNY_THRES1,
-                 double canny_thres2 = vision_utils::DepthCanny::DEFAULT_CANNY_THRES2,
+                 double canny_thres1 = DepthCanny::DEFAULT_CANNY_THRES1,
+                 double canny_thres2 = DepthCanny::DEFAULT_CANNY_THRES2,
                  double ground_distance_threshold_m = GroundPlaneFinder::DEFAULT_DISTANCE_THRESHOLD_M,
                  double ground_lower_ratio_to_use = GroundPlaneFinder::DEFAULT_LOWER_RATIO_TO_USE,
                  int data_skip = GroundPlaneFinder::DEFAULT_DATA_SKIP,
@@ -170,7 +170,7 @@ public:
    *    to the lower half of the depth map.
    *    If false, the previous ground plane estimation by GroundPlaneFinder will be skipt.
    * \param canny_thres1, canny_thres2
-   *    \see vision_utils::DepthCanny::set_canny_thresholds()
+   *    \see DepthCanny::set_canny_thresholds()
    * \param ground_distance_threshold_m, ground_lower_ratio_to_use, data_skip
    *    \see GroundPlaneFinder::compute_plane()
    * \return true if success
@@ -183,8 +183,8 @@ public:
                       double min_dist_m = -1, double max_dist_m = -1,
                       int max_blobs_nb = -1, int min_blob_size_pix = -1,
                       bool ground_recompute_plane = true,
-                      double canny_thres1 = vision_utils::DepthCanny::DEFAULT_CANNY_THRES1,
-                      double canny_thres2 = vision_utils::DepthCanny::DEFAULT_CANNY_THRES2,
+                      double canny_thres1 = DepthCanny::DEFAULT_CANNY_THRES1,
+                      double canny_thres2 = DepthCanny::DEFAULT_CANNY_THRES2,
                       double ground_distance_threshold_m = GroundPlaneFinder::DEFAULT_DISTANCE_THRESHOLD_M,
                       double ground_lower_ratio_to_use = GroundPlaneFinder::DEFAULT_LOWER_RATIO_TO_USE,
                       int data_skip = GroundPlaneFinder::DEFAULT_DATA_SKIP) {
@@ -301,7 +301,7 @@ public:
   //////////////////////////////////////////////////////////////////////////////
 
 private:
-  vision_utils::DepthCanny _depth_canny;
+  DepthCanny _depth_canny;
   cv::Mat1b _final_mask;
   FloodFillEdgeCloser _closer;
   GroundPlaneFinder _ground_finder;

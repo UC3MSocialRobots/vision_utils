@@ -23,7 +23,7 @@ ________________________________________________________________________________
 #ifndef IMWRITE_DEBUG_H
 #define IMWRITE_DEBUG_H
 // std includes
-#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include <stdio.h> // for printf(), etc
 #include <string>
 #include <vector>

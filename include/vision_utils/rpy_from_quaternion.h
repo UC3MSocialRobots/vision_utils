@@ -23,6 +23,10 @@ ________________________________________________________________________________
 #ifndef RPY_FROM_QUATERNION_H
 #define RPY_FROM_QUATERNION_H
 
+#include <ros/common.h>
+#include <geometry_msgs/Quaternion.h>
+#include <tf/tf.h>
+
 namespace vision_utils {
 
 //! extract roll, pitch, yaw from a quaternion

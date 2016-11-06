@@ -37,11 +37,11 @@ bool load_letter_dict(const vision_utils::LanguageId &src_language, LetterDict &
   printf("Loading the dictionary for the language %i\n", src_language);
   std::string dict_filename = "";
   if (src_language == vision_utils::LANGUAGE_ENGLISH)
-    dict_filename = IMG_DIR "hangman/english.characters";
+    dict_filename = IMG_DIR() + "hangman/english.characters";
   else if (src_language == vision_utils::LANGUAGE_FRENCH)
-    dict_filename = IMG_DIR "hangman/spanish.characters";
+    dict_filename = IMG_DIR() + "hangman/spanish.characters";
   else if (src_language == vision_utils::LANGUAGE_SPANISH)
-    dict_filename = IMG_DIR "hangman/spanish.characters";
+    dict_filename = IMG_DIR() + "hangman/spanish.characters";
   else {
     printf("t here is no letter list for language %i!\n", src_language);
     return false;

@@ -33,8 +33,8 @@ ________________________________________________________________________________
 
 #include <vision_utils/img_path.h>
 
-#define DEPTH_DIR  IMG_DIR "depth/"
-#define BREAST_DIR  IMG_DIR "breast/"
+#define DEPTH_DIR  IMG_DIR() + "depth/"
+#define BREAST_DIR  IMG_DIR() + "breast/"
 
 namespace vision_utils {
 

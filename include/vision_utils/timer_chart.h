@@ -34,9 +34,9 @@ ________________________________________________________________________________
 #include "vision_utils/timer.h"
 #include "vision_utils/pie_chart_utils.h"
 
-// some useful preprocesor functions for TimerCharts.
+// some useful preprocesor functions for vision_utils::TimerCharts.
 // put the line "#define CHART_TIMER_ON" in your code,
-// BEFORE the include of "timer_chart.h", to activate the TimerChart
+// BEFORE the include of "timer_chart.h", to activate the vision_utils::TimerChart
 #ifdef CHART_TIMER_ON
 #define TIMER_CREATE(t)                     ::vision_utils::TimerChart t;
 #define TIMER_RESET(t)                      t.reset();
@@ -51,12 +51,12 @@ ________________________________________________________________________________
 
 namespace vision_utils {
 
-class TimerChart : public Timer {
+class vision_utils::TimerChart : public vision_utils::Timer {
 public:
   typedef std::map<std::string, int> Label2IndexMap;
 
-  TimerChart(const std::string & window_name = "TimerChart") :
-    Timer(), _window_name(window_name) {
+  vision_utils::TimerChart(const std::string & window_name = "TimerChart") :
+    vision_utils::Timer(), _window_name(window_name) {
     _display_call_counter = 0;
     cv::namedWindow(_window_name);
   }

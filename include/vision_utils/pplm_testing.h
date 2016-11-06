@@ -49,7 +49,7 @@ namespace vision_utils {
 inline bool create_ppl
 (people_msgs::People & ppl,
  const int nusers,
- const std::string & filename_prefix = IMG_DIR "depth/juggling1")
+ const std::string & filename_prefix = IMG_DIR() + "depth/juggling1")
 {
   // read user, depth, rgb files
   Images2PPL file;
@@ -78,7 +78,7 @@ inline bool create_ppl
 ////////////////////////////////////////////////////////////////////////////////
 
 void test_sizes(PPLMatcherTemplate & skill,
-                const std::string & filename_prefix = IMG_DIR "depth/juggling1") {
+                const std::string & filename_prefix = IMG_DIR() + "depth/juggling1") {
   ros::NodeHandle nh_public;
   ros::AsyncSpinner spinner(0);
   spinner.start();
@@ -112,7 +112,7 @@ void test_sizes(PPLMatcherTemplate & skill,
 void test_same_msg(PPLMatcherTemplate & skill,
                    unsigned int nusers,
                    double max_cost_self = 1E-2,
-                   const std::string & filename_prefix = IMG_DIR "depth/juggling1") {
+                   const std::string & filename_prefix = IMG_DIR() + "depth/juggling1") {
   ros::NodeHandle nh_public;
   ros::AsyncSpinner spinner(0);
   spinner.start();
@@ -148,8 +148,8 @@ void test_same_msg(PPLMatcherTemplate & skill,
 
 void test_two_frames_matching
 (PPLMatcherTemplate & skill,
- const std::string & filename_prefix1 = IMG_DIR "depth/david_arnaud1",
- const std::string & filename_prefix2 = IMG_DIR "depth/david_arnaud2")
+ const std::string & filename_prefix1 = IMG_DIR() + "depth/david_arnaud1",
+ const std::string & filename_prefix2 = IMG_DIR() + "depth/david_arnaud2")
 {
   ros::NodeHandle nh_public;
   ros::AsyncSpinner spinner(0);

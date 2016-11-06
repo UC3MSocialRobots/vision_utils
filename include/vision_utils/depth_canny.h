@@ -40,7 +40,7 @@ A class to apply Canny filters on depth images.
 #include "vision_utils/timer_chart.h"
 
 #elif defined TIMER_ON // chart timer
-#define TIMER_CREATE(t)                     Timer t;
+#define TIMER_CREATE(t)                     vision_utils::Timer t;
 #define TIMER_RESET(t)                      t.reset();
 #define TIMER_PRINT_RESET(t, msg)           t.printTime(msg); t.reset();
 #define TIMER_DISPLAY_CHART(t, step)        // empty

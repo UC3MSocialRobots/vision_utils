@@ -10,10 +10,6 @@
 namespace vision_utils {
 // face detection param
 
-static const std::string DEFAULT_FACE_CASCADE =
-    IMG_DIR
-    //"haarCascade_openCV/haarcascade_frontalface_alt.xml";
-    "haarCascade_openCV/haarcascade_frontalface_alt2.xml";
 
 /*! the scale reduction factor of the RGB image for face detection
  * (btwn 0 and 1) */
@@ -30,10 +26,15 @@ static const int DEFAULT_MIN_WIDTH = 10; // 15
 
 //! create a face classifier
 cv::CascadeClassifier create_face_classifier
-(const std::string & cascade1_name = DEFAULT_FACE_CASCADE) {
+(const std::string & cascade1_name = "") {
+  std::string cascade_name = cascade1_name;
+  if (cascade_name.empty()) // default
+    cascade_name = IMG_DIR() +
+        std::string("haarCascade_openCV/haarcascade_frontalface_alt2.xml");
+        //"haarCascade_openCV/haarcascade_frontalface_alt.xml";
   //printf("cascade1_name:'%s'", cascade1_name.c_str());
   cv::CascadeClassifier cascadeClassifier;
-  cascadeClassifier.load( cascade1_name );
+  cascadeClassifier.load( cascade_name );
   return cascadeClassifier;
 } // end create_face_classifier()
 

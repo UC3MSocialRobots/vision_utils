@@ -3,7 +3,10 @@
 
 #include <ros/package.h>
 
-inline  std::string IMG_DIR { return ros::package::getPath("vision_utils/")
-                                      + "/data/images/"; }
+namespace vision_utils {
+inline std::string IMG_DIR() {
+  return ros::package::getPath("vision_utils/") + "/data/images/";
+}
+} // end namespace vision_utils
 
 #endif

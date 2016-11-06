@@ -34,7 +34,7 @@ public:
 
   /*! create an annotator from loading an xml file
       \param path_to_xml_file it should finish with /
-      Example IMG_DIR "pz/"
+      Example IMG_DIR() + "pz/"
       \param xml_filename Example foo.xml
       */
   virtual bool from_xml_file(const std::string & path_to_xml_file,

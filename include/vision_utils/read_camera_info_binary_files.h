@@ -27,6 +27,7 @@ ________________________________________________________________________________
 #include <stdio.h> // for printf(), etc
 #include <string>
 #include <ros/package.h>
+#include <sensor_msgs/CameraInfo.h>
 #include "vision_utils/ros_object_from_file.h"
 #include "vision_utils/file_exists.h"
 

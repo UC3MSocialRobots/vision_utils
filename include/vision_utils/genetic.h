@@ -120,8 +120,7 @@ public:
       if (_current_generation->front().grade
           > _best_element.grade) {
         _best_element = _current_generation->front();
-        //printf("New best element at generation %i, grade:%g",
-                     generation_idx, _best_element.grade);
+        //printf("New best element at generation %i, grade:%g", generation_idx, _best_element.grade);
       }
 
       // build the new generation:

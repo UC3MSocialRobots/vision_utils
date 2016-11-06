@@ -46,8 +46,5 @@ inline void map_values_to_container( const  M & m, V & v ) {
 } // end map_values_to_container
 
 } // end namespace vision_utils
-#endif // MAP_UTILS_H
-
-} // end namespace vision_utils
 
 #endif // MAP_VALUES_TO_CONTAINER_H

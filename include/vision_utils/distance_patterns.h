@@ -24,6 +24,7 @@ ________________________________________________________________________________
 #define DISTANCE_PATTERNS_H
 // std includes
 #include <vector>
+#include "vision_utils/hausdorff_distances.h"
 
 namespace vision_utils {
 
@@ -47,7 +48,7 @@ inline float distance_patterns(const std::vector<_Pt2> & A,
   //printf("B_rot:%s\n", accessible_to_string(B_rot).c_str());
 
   // compare A and B_rot
-  float sum_dist = D22_with_min<_Pt2, std::vector<_Pt2> >
+  float sum_dist = vision_utils::D22_with_min<_Pt2, std::vector<_Pt2> >
       (A, B_rot, max_distance);
   // float sum_dist = 0;
   //for (unsigned int ptA_idx = 0; ptA_idx < A.size(); ++ptA_idx)

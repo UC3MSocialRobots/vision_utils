@@ -28,6 +28,8 @@ ________________________________________________________________________________
 #include <stdio.h> // for printf(), etc
 #include <string>
 #include <vision_utils/write_rgb_and_depth_image_to_image_file.h>
+#include <vision_utils/user_image_to_rgb.h>
+#include <vision_utils/convert_n_colors.h>
 
 namespace vision_utils {
 

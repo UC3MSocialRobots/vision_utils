@@ -37,7 +37,9 @@ A useful class for finding the head inside of a user mask.
 #include <vision_utils/nonNulPoints.h>
 #include <vision_utils/gaussian_pdf2ellipse.h>
 #include <vision_utils/distance_points_squared.h>
-#include "cvstage/plugins/draw_ellipses.h"
+#include <vision_utils/draw_ellipses.h>
+
+#include <opencv2/highgui/highgui.hpp>
 
 namespace vision_utils {
 
@@ -122,12 +124,12 @@ public:
     // timer_.printTime("gaussian_pdf2ellipse\n");
     // find the end axe of the ellipse that must correspond to the neck
     // i.e. find point with lowest y in all end axes
-    _fitted_ellipse = cvstage_plugins::three_pts2ellipse
+    _fitted_ellipse = vision_utils::three_pts2ellipse
                       (_ellipse_center, _ellipse_end1, _ellipse_end2);
     _fitted_ellipse.size.width += erode_kernel_size; // compensate the erode
     _fitted_ellipse.size.height += erode_kernel_size;
     _ellipse_all_axes.resize(4);
-    cvstage_plugins::ellipse_axes(_fitted_ellipse, _ellipse_all_axes[0], _ellipse_all_axes[1],
+    vision_utils::ellipse_axes(_fitted_ellipse, _ellipse_all_axes[0], _ellipse_all_axes[1],
         _ellipse_all_axes[2], _ellipse_all_axes[3]);
     _neck_pt.y = INT_MAX;
     for (unsigned int pt_idx = 0; pt_idx < 4; ++pt_idx) {
