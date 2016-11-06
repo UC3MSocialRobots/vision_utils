@@ -100,14 +100,14 @@ void test_image_roi(const std::string & rgb_depth_filename_prefix,
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, all_tests) {
-  test_image_roi(IMG_DIR "depth/inside1", vision_utils::KINECT_SERIAL_LAB());
-  test_image_roi(IMG_DIR "depth/juggling1", vision_utils::KINECT_SERIAL_LAB());
-  test_image_roi(IMG_DIR "depth/juggling2", vision_utils::KINECT_SERIAL_LAB());
-  test_image_roi(IMG_DIR "depth/juggling3", vision_utils::KINECT_SERIAL_LAB());
-  test_image_roi(IMG_DIR "depth/alberto1", vision_utils::KINECT_SERIAL_LAB());
-  test_image_roi(IMG_DIR "depth/alberto2", vision_utils::KINECT_SERIAL_LAB());
-  test_image_roi(IMG_DIR "depth/alvaro1", vision_utils::KINECT_SERIAL_LAB());
-  test_image_roi(IMG_DIR "depth/alvaro2", vision_utils::KINECT_SERIAL_LAB());
+  test_image_roi(vision_utils::IMG_DIR() + "depth/inside1", vision_utils::KINECT_SERIAL_LAB());
+  test_image_roi(vision_utils::IMG_DIR() + "depth/juggling1", vision_utils::KINECT_SERIAL_LAB());
+  test_image_roi(vision_utils::IMG_DIR() + "depth/juggling2", vision_utils::KINECT_SERIAL_LAB());
+  test_image_roi(vision_utils::IMG_DIR() + "depth/juggling3", vision_utils::KINECT_SERIAL_LAB());
+  test_image_roi(vision_utils::IMG_DIR() + "depth/alberto1", vision_utils::KINECT_SERIAL_LAB());
+  test_image_roi(vision_utils::IMG_DIR() + "depth/alberto2", vision_utils::KINECT_SERIAL_LAB());
+  test_image_roi(vision_utils::IMG_DIR() + "depth/alvaro1", vision_utils::KINECT_SERIAL_LAB());
+  test_image_roi(vision_utils::IMG_DIR() + "depth/alvaro2", vision_utils::KINECT_SERIAL_LAB());
 }
 
 ////////////////////////////////////////////////////////////////////////////////

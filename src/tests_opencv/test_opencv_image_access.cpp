@@ -524,11 +524,11 @@ int main(int argc, char** argv) {
 
   idx = 1;
   if (choice == idx++) {
-    cv::Mat1b image_bw = cv::imread(IMG_DIR "pz/pz01.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+    cv::Mat1b image_bw = cv::imread(vision_utils::IMG_DIR() + "pz/pz01.jpg", CV_LOAD_IMAGE_GRAYSCALE);
     iterate_whole_image_bw(image_bw);
   }
   else if (choice == idx++) {
-    cv::Mat3b image_color = cv::imread(IMG_DIR "pz/pz01.jpg", CV_LOAD_IMAGE_COLOR);
+    cv::Mat3b image_color = cv::imread(vision_utils::IMG_DIR() + "pz/pz01.jpg", CV_LOAD_IMAGE_COLOR);
     iterate_whole_image_color(image_color);
   }
   else if (choice == idx++)

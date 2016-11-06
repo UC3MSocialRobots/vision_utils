@@ -68,7 +68,7 @@ TEST(TestSuite, rgb_saturate_saturation_value_four_colors_img) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, rgb_saturate_saturation_value_bench) {
-  cv::Mat3b src_bgr = cv::imread(IMG_DIR "balloon.png"), out_bgr, out_bgr2;
+  cv::Mat3b src_bgr = cv::imread(vision_utils::IMG_DIR() + "balloon.png"), out_bgr, out_bgr2;
   unsigned int ntimes = 10;
   vision_utils::Timer timer;
   for (unsigned int time = 0; time < ntimes; ++time)
@@ -87,7 +87,7 @@ TEST(TestSuite, rgb_saturate_saturation_value_bench) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, rgb_saturate_saturation_value_img) {
-  cv::Mat3b src_bgr = cv::imread(IMG_DIR "balloon.png"), out_bgr;
+  cv::Mat3b src_bgr = cv::imread(vision_utils::IMG_DIR() + "balloon.png"), out_bgr;
   std::vector<cv::Mat> layers;
   vision_utils::saturate_saturation_value(src_bgr, layers, out_bgr);
   ASSERT_TRUE(src_bgr.size() == out_bgr.size());

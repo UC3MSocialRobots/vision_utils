@@ -60,7 +60,7 @@ _T make_struct(int min, int max) {
 }
 
 TEST(TestSuite, get_all_different_values) {
-  cv::Mat1b query = cv::imread(IMG_DIR "balloon_masks.png", GRAYSCALE);
+  cv::Mat1b query = cv::imread(vision_utils::IMG_DIR() + "balloon_masks.png", GRAYSCALE);
 
   std::set<uchar> out_set, correct_set = make_struct<std::set<uchar> >(0, 3);
   vision_utils::Timer timer;
@@ -90,7 +90,7 @@ TEST(TestSuite, get_all_different_values) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, get_all_different_values2) {
-  cv::Mat1b query = cv::imread(IMG_DIR "depth/david_arnaud1_user_mask.png", GRAYSCALE);
+  cv::Mat1b query = cv::imread(vision_utils::IMG_DIR() + "depth/david_arnaud1_user_mask.png", GRAYSCALE);
   std::set<uchar> out_set, correct_set = make_struct<std::set<uchar> >(0, 2);
   vision_utils::Timer timer;
   vision_utils::get_all_different_values(query, out_set, false);
@@ -162,19 +162,19 @@ void test_get_all_different_values_and_com(const cv::Mat1b & query,
 
 TEST(TestSuite, get_all_different_values_and_com) {
   test_get_all_different_values_and_com
-      (cv::imread(IMG_DIR "balloon_masks.png", GRAYSCALE), 1, 3);
+      (cv::imread(vision_utils::IMG_DIR() + "balloon_masks.png", GRAYSCALE), 1, 3);
   test_get_all_different_values_and_com
-      (cv::imread(IMG_DIR "depth/david_arnaud1_user_mask.png", GRAYSCALE), 1, 2);
+      (cv::imread(vision_utils::IMG_DIR() + "depth/david_arnaud1_user_mask.png", GRAYSCALE), 1, 2);
   test_get_all_different_values_and_com
-      (cv::imread(IMG_DIR "depth/david_arnaud2_user_mask.png", GRAYSCALE), 1, 2);
+      (cv::imread(vision_utils::IMG_DIR() + "depth/david_arnaud2_user_mask.png", GRAYSCALE), 1, 2);
   test_get_all_different_values_and_com
-      (cv::imread(IMG_DIR "depth/david_arnaud3_user_mask.png", GRAYSCALE), 1, 2);
+      (cv::imread(vision_utils::IMG_DIR() + "depth/david_arnaud3_user_mask.png", GRAYSCALE), 1, 2);
   test_get_all_different_values_and_com
-      (cv::imread(IMG_DIR "depth/alberto1_user_mask.png", GRAYSCALE), 255, 255);
+      (cv::imread(vision_utils::IMG_DIR() + "depth/alberto1_user_mask.png", GRAYSCALE), 255, 255);
   test_get_all_different_values_and_com
-      (cv::imread(IMG_DIR "depth/juggling1_user_mask.png", GRAYSCALE) / 255, 1, 1);
+      (cv::imread(vision_utils::IMG_DIR() + "depth/juggling1_user_mask.png", GRAYSCALE) / 255, 1, 1);
   test_get_all_different_values_and_com // no normalization
-      (cv::imread(IMG_DIR "depth/juggling1_user_mask.png", GRAYSCALE), 255, 255);
+      (cv::imread(vision_utils::IMG_DIR() + "depth/juggling1_user_mask.png", GRAYSCALE), 255, 255);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -428,7 +428,7 @@ TEST(TestSuite, ClosestPointInMask_single_point) {
 TEST(TestSuite, ClosestPointInMask_david_arnaud1) {
   unsigned int ntimes = 100;
   vision_utils::ClosestPointInMask cl;
-  cv::Mat1b mask = cv::imread(IMG_DIR "depth/david_arnaud1_user_mask.png", GRAYSCALE);
+  cv::Mat1b mask = cv::imread(vision_utils::IMG_DIR() + "depth/david_arnaud1_user_mask.png", GRAYSCALE);
   int cols = mask.cols, rows = mask.rows;
   vision_utils::Timer timer;
   for (unsigned int time = 0; time < ntimes; ++time) {
@@ -493,7 +493,7 @@ TEST(TestSuite, ClosestPointInMask2_single_point) {
 TEST(TestSuite, ClosestPointInMask2_david_arnaud1) {
   unsigned int ntimes = 100;
   vision_utils::ClosestPointInMask2<uchar> cl;
-  cv::Mat1b mask = cv::imread(IMG_DIR "depth/david_arnaud1_user_mask.png", GRAYSCALE);
+  cv::Mat1b mask = cv::imread(vision_utils::IMG_DIR() + "depth/david_arnaud1_user_mask.png", GRAYSCALE);
   int cols = mask.cols, rows = mask.rows;
   vision_utils::Timer timer;
   for (unsigned int time = 0; time < ntimes; ++time) {
@@ -589,7 +589,7 @@ TEST(TestSuite, ShortestPathFinder_thick_line) {
 }
 
 TEST(TestSuite, ShortestPathFinder_skeleton) {
-  cv::Mat1b in = (cv::imread(IMG_DIR "skeletons/ref_skel.png", GRAYSCALE) == 255);
+  cv::Mat1b in = (cv::imread(vision_utils::IMG_DIR() + "skeletons/ref_skel.png", GRAYSCALE) == 255);
   cv::Point begin(127, 36), end(59, 393);
   test_ShortestPathFinder(in, begin, end, cv::Mat());
 }
@@ -601,15 +601,15 @@ void test_maze(const std::string & filename, cv::Point begin, cv::Point end) {
 }
 
 TEST(TestSuite, ShortestPathFinder_maze) {
-  test_maze(IMG_DIR "maze_solved.png", cv::Point(22, 124), cv::Point(173, 25));
+  test_maze(vision_utils::IMG_DIR() + "maze_solved.png", cv::Point(22, 124), cv::Point(173, 25));
 }
 
 TEST(TestSuite, ShortestPathFinder_maze_circular) {
-  test_maze(IMG_DIR "maze-circular.png", cv::Point(459, 5), cv::Point(431, 434));
+  test_maze(vision_utils::IMG_DIR() + "maze-circular.png", cv::Point(459, 5), cv::Point(431, 434));
 }
 
 TEST(TestSuite, ShortestPathFinder_maze_harder) {
-  test_maze(IMG_DIR "maze-harder-solved.png", cv::Point(16, 6), cv::Point(1985, 2017));
+  test_maze(vision_utils::IMG_DIR() + "maze-harder-solved.png", cv::Point(16, 6), cv::Point(1985, 2017));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -722,7 +722,7 @@ TEST(TestSuite, EndFinder_line_big) {
 }
 
 TEST(TestSuite, EndFinder_skeleton) {
-  cv::Mat1b mask = cv::imread(IMG_DIR "skeletons/heads/skeleton_sample.png", GRAYSCALE);
+  cv::Mat1b mask = cv::imread(vision_utils::IMG_DIR() + "skeletons/heads/skeleton_sample.png", GRAYSCALE);
   // test_EndFinder(mask, end_pts);
   std::vector<cv::Point> end_pts;
   vision_utils::Timer timer;
@@ -742,7 +742,7 @@ TEST(TestSuite, EndFinder_skeleton) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, HighestPointFinder_arnaud1) {
-  cv::Mat1b mask = cv::imread(IMG_DIR "depth/david_arnaud1_canny.png", GRAYSCALE);
+  cv::Mat1b mask = cv::imread(vision_utils::IMG_DIR() + "depth/david_arnaud1_canny.png", GRAYSCALE);
   cv::Point seed(433, 168), highest_pt;
   vision_utils::HighestPointFinder<uchar> finder;
   highest_pt = finder.find(mask, seed);
@@ -756,7 +756,7 @@ TEST(TestSuite, HighestPointFinder_arnaud1) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, HighestPointFinder_arnaud3) {
-  cv::Mat1b mask = cv::imread(IMG_DIR "depth/david_arnaud3_canny.png", GRAYSCALE);
+  cv::Mat1b mask = cv::imread(vision_utils::IMG_DIR() + "depth/david_arnaud3_canny.png", GRAYSCALE);
   cv::Point seed(290, 188), highest_pt;
   vision_utils::HighestPointFinder<uchar> finder;
   highest_pt = finder.find(mask, seed);
@@ -770,7 +770,7 @@ TEST(TestSuite, HighestPointFinder_arnaud3) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, floodfill_edge_closer_david_arnaud1) {
-  cv::Mat1b mask = cv::imread(IMG_DIR "depth/david_arnaud1_canny.png", GRAYSCALE);
+  cv::Mat1b mask = cv::imread(vision_utils::IMG_DIR() + "depth/david_arnaud1_canny.png", GRAYSCALE);
   vision_utils::FloodFillEdgeCloser closer;
   closer.close(mask, cv::Point(433, 168));
 #ifdef DISPLAY
@@ -781,7 +781,7 @@ TEST(TestSuite, floodfill_edge_closer_david_arnaud1) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, floodfill_edge_closer_david_arnaud3) {
-  cv::Mat1b mask = cv::imread(IMG_DIR "depth/david_arnaud3_canny.png", GRAYSCALE);
+  cv::Mat1b mask = cv::imread(vision_utils::IMG_DIR() + "depth/david_arnaud3_canny.png", GRAYSCALE);
   cv::Point seed(290, 188);
   vision_utils::FloodFillEdgeCloser closer;
   closer.close(mask, seed, true, false, (uchar) 0, 50, .8f);

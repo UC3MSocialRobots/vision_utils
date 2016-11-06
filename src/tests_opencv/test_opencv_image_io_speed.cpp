@@ -149,8 +149,8 @@ void test_depth_image(const cv::Mat & depth) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main() {
-  //test_color_image(cv::imread(IMG_DIR "balloon.png"));
-  test_color_image(cv::imread(IMG_DIR "arnaud001.png"));
+  //test_color_image(cv::imread(vision_utils::IMG_DIR() + "balloon.png"));
+  test_color_image(cv::imread(vision_utils::IMG_DIR() + "arnaud001.png"));
 
   //cv::Mat depth;
   //generate_full_rand<float>(depth, 640, 480, 1, 10, false);

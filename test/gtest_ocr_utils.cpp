@@ -30,34 +30,34 @@ void ocr_test(const std::string filename, vision_utils::LanguageId language,
 }
 
 TEST(TestSuite, ocr1) {
-  ocr_test(IMG_DIR "ocr/ocr.png", vision_utils::LANGUAGE_ENGLISH, "1234");
+  ocr_test(vision_utils::IMG_DIR() + "ocr/ocr.png", vision_utils::LANGUAGE_ENGLISH, "1234");
 }
 TEST(TestSuite, ocr2) {
-  ocr_test(IMG_DIR "ocr/ocr2.png", vision_utils::LANGUAGE_SPANISH, "escuelas infantiles");
+  ocr_test(vision_utils::IMG_DIR() + "ocr/ocr2.png", vision_utils::LANGUAGE_SPANISH, "escuelas infantiles");
 }
 TEST(TestSuite, ocr3) {
-  ocr_test(IMG_DIR "ocr/ocr3.png", vision_utils::LANGUAGE_SPANISH, "rendimiento");
+  ocr_test(vision_utils::IMG_DIR() + "ocr/ocr3.png", vision_utils::LANGUAGE_SPANISH, "rendimiento");
 }
 TEST(TestSuite, ocr4) {
-  ocr_test(IMG_DIR "ocr/ocr4.png", vision_utils::LANGUAGE_SPANISH, "vuelta");
+  ocr_test(vision_utils::IMG_DIR() + "ocr/ocr4.png", vision_utils::LANGUAGE_SPANISH, "vuelta");
 }
 TEST(TestSuite, ocr5) {
-  ocr_test(IMG_DIR "ocr/ocr5.png", vision_utils::LANGUAGE_SPANISH, "cita en esta muestra");
+  ocr_test(vision_utils::IMG_DIR() + "ocr/ocr5.png", vision_utils::LANGUAGE_SPANISH, "cita en esta muestra");
 }
 TEST(TestSuite, ocr6) {
-  ocr_test(IMG_DIR "ocr/ocr6.png", vision_utils::LANGUAGE_SPANISH, "nuestras");
+  ocr_test(vision_utils::IMG_DIR() + "ocr/ocr6.png", vision_utils::LANGUAGE_SPANISH, "nuestras");
 }
 TEST(TestSuite, ocr7) {
-  ocr_test(IMG_DIR "ocr/ocr7.png", vision_utils::LANGUAGE_SPANISH, "urgente");
+  ocr_test(vision_utils::IMG_DIR() + "ocr/ocr7.png", vision_utils::LANGUAGE_SPANISH, "urgente");
 }
 TEST(TestSuite, ocr8) {
-  ocr_test(IMG_DIR "ocr/ocr8.png", vision_utils::LANGUAGE_ENGLISH, "caps lock");
+  ocr_test(vision_utils::IMG_DIR() + "ocr/ocr8.png", vision_utils::LANGUAGE_ENGLISH, "caps lock");
 }
 TEST(TestSuite, ru) {
-  ocr_test(IMG_DIR "ocr/ocr-ru-one_language_is_never_enough.png", vision_utils::LANGUAGE_RUSSIAN);
+  ocr_test(vision_utils::IMG_DIR() + "ocr/ocr-ru-one_language_is_never_enough.png", vision_utils::LANGUAGE_RUSSIAN);
 }
 TEST(TestSuite, ja) {
-  ocr_test(IMG_DIR "ocr/ocr-ja.png", vision_utils::LANGUAGE_JAPANESE);
+  ocr_test(vision_utils::IMG_DIR() + "ocr/ocr-ja.png", vision_utils::LANGUAGE_JAPANESE);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -78,7 +78,7 @@ TEST(TestSuite, empty_ppl) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void test_publish(std::string filename_prefix = IMG_DIR "depth/juggling1",
+void test_publish(std::string filename_prefix = vision_utils::IMG_DIR() + "depth/juggling1",
                   unsigned int nusers = 1,
                   bool use_2_ppl_methods = false,
                   bool generate_path = false) {
@@ -159,7 +159,7 @@ void test_publish(std::string filename_prefix = IMG_DIR "depth/juggling1",
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void full_test_publish(std::string filename_prefix = IMG_DIR "depth/juggling1",
+void full_test_publish(std::string filename_prefix = vision_utils::IMG_DIR() + "depth/juggling1",
                        unsigned int nusers = 1) {
   test_publish(filename_prefix, nusers);
   test_publish(filename_prefix, nusers, true);
@@ -167,13 +167,13 @@ void full_test_publish(std::string filename_prefix = IMG_DIR "depth/juggling1",
   test_publish(filename_prefix, nusers, true, true);
 }
 
-TEST(TestSuite, empty_lab)    { full_test_publish(IMG_DIR "depth/empty_lab", 0); }
-TEST(TestSuite, juggling1)    { full_test_publish(IMG_DIR "depth/juggling1", 1); }
-TEST(TestSuite, david_arnaud1){ full_test_publish(IMG_DIR "depth/david_arnaud1", 2); }
+TEST(TestSuite, empty_lab)    { full_test_publish(vision_utils::IMG_DIR() + "depth/empty_lab", 0); }
+TEST(TestSuite, juggling1)    { full_test_publish(vision_utils::IMG_DIR() + "depth/juggling1", 1); }
+TEST(TestSuite, david_arnaud1){ full_test_publish(vision_utils::IMG_DIR() + "depth/david_arnaud1", 2); }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void test_image_no_image(std::string filename_prefix = IMG_DIR "depth/juggling1",
+void test_image_no_image(std::string filename_prefix = vision_utils::IMG_DIR() + "depth/juggling1",
                          unsigned int nusers = 1) {
   if (!vision_utils::rosmaster_alive()) return;
   printf("test_image_no_image('%s', %i users)\n", filename_prefix.c_str(), nusers);
@@ -240,9 +240,9 @@ void test_image_no_image(std::string filename_prefix = IMG_DIR "depth/juggling1"
   } // end loop time_idx
 } // end test_image_no_image();
 
-TEST(TestSuite, image_no_image_empty_lab)    { test_image_no_image(IMG_DIR "depth/empty_lab", 0); }
-TEST(TestSuite, image_no_image_juggling1)    { test_image_no_image(IMG_DIR "depth/juggling1", 1); }
-TEST(TestSuite, image_no_image_david_arnaud1){ test_image_no_image(IMG_DIR "depth/david_arnaud1", 2); }
+TEST(TestSuite, image_no_image_empty_lab)    { test_image_no_image(vision_utils::IMG_DIR() + "depth/empty_lab", 0); }
+TEST(TestSuite, image_no_image_juggling1)    { test_image_no_image(vision_utils::IMG_DIR() + "depth/juggling1", 1); }
+TEST(TestSuite, image_no_image_david_arnaud1){ test_image_no_image(vision_utils::IMG_DIR() + "depth/david_arnaud1", 2); }
 
 
 ////////////////////////////////////////////////////////////////////////////////

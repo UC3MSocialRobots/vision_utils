@@ -81,7 +81,7 @@ TEST(TestSuite, pplm_benchmark) {
   if (!vision_utils::rosmaster_alive()) return;
   FooPPLMatcher matcher;
   FilenamePrefix2Imgs db_player;
-  ASSERT_TRUE(db_player.from_file(IMG_DIR "breast/*_rgb.png"));
+  ASSERT_TRUE(db_player.from_file(vision_utils::IMG_DIR() + "breast/*_rgb.png"));
   vision_utils::pplm_benchmark(matcher, db_player, 1);
 }
 

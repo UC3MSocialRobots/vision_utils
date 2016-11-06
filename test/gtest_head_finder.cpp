@@ -93,62 +93,62 @@ TEST(TestSuite, black_mask) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, hard_mask1) {
-  test_find(IMG_DIR "skeletons/heads/hard_mask1.png", true, cv::Point(313, 194), true);
+  test_find(vision_utils::IMG_DIR() + "skeletons/heads/hard_mask1.png", true, cv::Point(313, 194), true);
 }
 TEST(TestSuite, hard_mask2) {
-  test_find(IMG_DIR "skeletons/heads/hard_mask2.png", true, cv::Point(325, 181), true);
+  test_find(vision_utils::IMG_DIR() + "skeletons/heads/hard_mask2.png", true, cv::Point(325, 181), true);
 }
 TEST(TestSuite, hard_mask3) {
-  test_find(IMG_DIR "skeletons/heads/hard_mask3.png", true, cv::Point(325, 181), true);
+  test_find(vision_utils::IMG_DIR() + "skeletons/heads/hard_mask3.png", true, cv::Point(325, 181), true);
 }
 
 TEST(TestSuite, heads01) {
-  test_find(IMG_DIR "skeletons/heads/01.png", true, cv::Point(), true);
+  test_find(vision_utils::IMG_DIR() + "skeletons/heads/01.png", true, cv::Point(), true);
 }
 TEST(TestSuite, heads02) {
-  test_find(IMG_DIR "skeletons/heads/02.png", true, cv::Point(), true);
+  test_find(vision_utils::IMG_DIR() + "skeletons/heads/02.png", true, cv::Point(), true);
 }
 TEST(TestSuite, heads03) {
-  test_find(IMG_DIR "skeletons/heads/03.png", true, cv::Point(), true);
+  test_find(vision_utils::IMG_DIR() + "skeletons/heads/03.png", true, cv::Point(), true);
 }
 TEST(TestSuite, heads04) {
-  test_find(IMG_DIR "skeletons/heads/04.png", true, cv::Point(), true);
+  test_find(vision_utils::IMG_DIR() + "skeletons/heads/04.png", true, cv::Point(), true);
 }
 TEST(TestSuite, heads05) {
-  test_find(IMG_DIR "skeletons/heads/05.png", true, cv::Point(), true);
+  test_find(vision_utils::IMG_DIR() + "skeletons/heads/05.png", true, cv::Point(), true);
 }
 TEST(TestSuite, alberto1_user_mask) {
-  test_find(IMG_DIR "depth/alberto1_user_mask.png", true, cv::Point(364, 74));
+  test_find(vision_utils::IMG_DIR() + "depth/alberto1_user_mask.png", true, cv::Point(364, 74));
 }
 TEST(TestSuite, juggling1_user_mask) {
-  test_find(IMG_DIR "depth/juggling1_user_mask.png", true, cv::Point(371, 67));
+  test_find(vision_utils::IMG_DIR() + "depth/juggling1_user_mask.png", true, cv::Point(371, 67));
 }
 TEST(TestSuite, juggling2_user_mask) {
-  test_find(IMG_DIR "depth/juggling2_user_mask.png", true, cv::Point(402, 72));
+  test_find(vision_utils::IMG_DIR() + "depth/juggling2_user_mask.png", true, cv::Point(402, 72));
 }
 TEST(TestSuite, ainara1) {
-  test_find(IMG_DIR "breast/2013-10-05_15-46-13-769_user_mask.png", true, cv::Point(268, 92));
+  test_find(vision_utils::IMG_DIR() + "breast/2013-10-05_15-46-13-769_user_mask.png", true, cv::Point(268, 92));
 }
 TEST(TestSuite, ainara2) {
-  test_find(IMG_DIR "breast/2013-10-05_15-46-03-861_user_mask.png", true, cv::Point(135, 102));
+  test_find(vision_utils::IMG_DIR() + "breast/2013-10-05_15-46-03-861_user_mask.png", true, cv::Point(135, 102));
 }
 TEST(TestSuite, ref_skel) {
-  test_find(cv::imread(IMG_DIR "skeletons/ref_skel.png", CV_LOAD_IMAGE_GRAYSCALE) == 255,
+  test_find(cv::imread(vision_utils::IMG_DIR() + "skeletons/ref_skel.png", CV_LOAD_IMAGE_GRAYSCALE) == 255,
             true, cv::Point(129, 41));
 }
 
 TEST(TestSuite, david_arnaud1) {
-  test_find(cv::imread(IMG_DIR "depth/david_arnaud1_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE) == 1,
+  test_find(cv::imread(vision_utils::IMG_DIR() + "depth/david_arnaud1_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE) == 1,
             true, cv::Point(340, 102));
 }
 
 TEST(TestSuite, david_arnaud2) {
-  test_find(cv::imread(IMG_DIR "depth/david_arnaud2_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE) == 1,
+  test_find(cv::imread(vision_utils::IMG_DIR() + "depth/david_arnaud2_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE) == 1,
             true, cv::Point(266, 86));
 }
 
 TEST(TestSuite, david_arnaud3) {
-  test_find(cv::imread(IMG_DIR "depth/david_arnaud3_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE) == 1,
+  test_find(cv::imread(vision_utils::IMG_DIR() + "depth/david_arnaud3_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE) == 1,
             true, cv::Point(338, 119));
 }
 

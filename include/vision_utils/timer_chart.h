@@ -51,11 +51,11 @@ ________________________________________________________________________________
 
 namespace vision_utils {
 
-class vision_utils::TimerChart : public vision_utils::Timer {
+class TimerChart : public Timer {
 public:
   typedef std::map<std::string, int> Label2IndexMap;
 
-  vision_utils::TimerChart(const std::string & window_name = "TimerChart") :
+  TimerChart(const std::string & window_name = "TimerChart") :
     vision_utils::Timer(), _window_name(window_name) {
     _display_call_counter = 0;
     cv::namedWindow(_window_name);

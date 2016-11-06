@@ -53,11 +53,11 @@ void test_load(const std::string & filename_regex,
   } // end for (frame_idx)
 }
 
-TEST(TestSuite, alberto1)  { test_load(IMG_DIR "depth/alberto1_rgb.png", 1, 1); }
-TEST(TestSuite, alberto2)  { test_load(IMG_DIR "depth/alberto*_rgb.png", 2, 1); }
-TEST(TestSuite, juggling)  { test_load(IMG_DIR "depth/juggling*_rgb.png", 3, 0); }
-TEST(TestSuite, all_depth) { test_load(IMG_DIR "depth/*_rgb.png", 12, 1); }
-TEST(TestSuite, breast)    { test_load(IMG_DIR "breast/*_rgb.png", 22, 4); }
+TEST(TestSuite, alberto1)  { test_load(vision_utils::IMG_DIR() + "depth/alberto1_rgb.png", 1, 1); }
+TEST(TestSuite, alberto2)  { test_load(vision_utils::IMG_DIR() + "depth/alberto*_rgb.png", 2, 1); }
+TEST(TestSuite, juggling)  { test_load(vision_utils::IMG_DIR() + "depth/juggling*_rgb.png", 3, 0); }
+TEST(TestSuite, all_depth) { test_load(vision_utils::IMG_DIR() + "depth/*_rgb.png", 12, 1); }
+TEST(TestSuite, breast)    { test_load(vision_utils::IMG_DIR() + "breast/*_rgb.png", 22, 4); }
 
 ////////////////////////////////////////////////////////////////////////////////
 

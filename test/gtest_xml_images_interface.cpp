@@ -43,7 +43,7 @@ protected:
 int main(int argc, char** argv) {
   ROS_INFO("main()");
   XmlImageFooInterface interf;
-  //interf.from_xml_file(IMG_DIR "pz/", "pz.xml");
+  //interf.from_xml_file(vision_utils::IMG_DIR() + "pz/", "pz.xml");
 
   // Run all the tests that were declared with TEST()
   // srand(time(NULL));

@@ -59,9 +59,9 @@ void benchmark(const std::string & imgfile,
 
 TEST(TestSuite, benchmark) {
   unsigned int ntimes = 20;
-  benchmark(IMG_DIR "depth/alberto1_rgb.png", 1,   50, 1,   30, ntimes);
-  benchmark(IMG_DIR "depth/alberto1_rgb.png", .5,  50, .8,  30, ntimes);
-  benchmark(IMG_DIR "depth/alberto1_rgb.png", 1.5, 50, 1.2, 30, ntimes);
+  benchmark(vision_utils::IMG_DIR() + "depth/alberto1_rgb.png", 1,   50, 1,   30, ntimes);
+  benchmark(vision_utils::IMG_DIR() + "depth/alberto1_rgb.png", .5,  50, .8,  30, ntimes);
+  benchmark(vision_utils::IMG_DIR() + "depth/alberto1_rgb.png", 1.5, 50, 1.2, 30, ntimes);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

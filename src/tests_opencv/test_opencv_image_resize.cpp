@@ -94,7 +94,7 @@ void process_image(cv::Mat3b & image, double scale) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main() {
-    cv::Mat3b image = cv::imread(IMG_DIR "pz/pz01.jpg", CV_LOAD_IMAGE_COLOR);
+    cv::Mat3b image = cv::imread(vision_utils::IMG_DIR() + "pz/pz01.jpg", CV_LOAD_IMAGE_COLOR);
     process_image(image, 0.6);
     printf("\n");
     process_image(image, 1.6);

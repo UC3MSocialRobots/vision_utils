@@ -70,8 +70,8 @@ void test(const std::string & filename, const std::string & exp_guesses) {
     ASSERT_TRUE(similar_images[image_idx].cols > 0 && similar_images[image_idx].rows > 0);
 }
 
-TEST(TestSuite, frenadol) { test(IMG_DIR "frenadol.png", "frenadol"); }
-TEST(TestSuite, maggie) { test(IMG_DIR "maggie.png", "social robots;human robot interaction"); }
+TEST(TestSuite, frenadol) { test(vision_utils::IMG_DIR() + "frenadol.png", "frenadol"); }
+TEST(TestSuite, maggie) { test(vision_utils::IMG_DIR() + "maggie.png", "social robots;human robot interaction"); }
 
 ////////////////////////////////////////////////////////////////////////////////
 

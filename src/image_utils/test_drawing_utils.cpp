@@ -36,7 +36,7 @@ ________________________________________________________________________________
 
 inline void test_text_rotated() {
   printf("test_text_rotated()\n");
-  cv::Mat3b img = cv::imread(IMG_DIR "balloon.png");
+  cv::Mat3b img = cv::imread(vision_utils::IMG_DIR() + "balloon.png");
   cv::Mat1b buffer1, buffer2;
   for (unsigned int i = 0; i <= 10; ++i) {
     std::ostringstream text; text << "text" << i;
@@ -54,7 +54,7 @@ inline void test_text_rotated() {
 
 inline void test_text_rotated2() {
   printf("test_text_rotated2()\n");
-  cv::Mat3b img = cv::imread(IMG_DIR "balloon.png");
+  cv::Mat3b img = cv::imread(vision_utils::IMG_DIR() + "balloon.png");
   cv::Mat1b buffer1, buffer2;
   vision_utils::Timer timer;
   unsigned int n_times = 1000;
@@ -75,7 +75,7 @@ inline void test_text_rotated2() {
 
 inline void test_resize_constrain_proportions() {
   printf("test_resize_constrain_proportions()\n");
-  cv::Mat3b img = cv::imread(IMG_DIR "balloon.png");
+  cv::Mat3b img = cv::imread(vision_utils::IMG_DIR() + "balloon.png");
   cv::Mat3b img_resize_if_bigger, img_resize_if_bigger2, img_resize_constrain_proportions;
   vision_utils::resize_if_bigger(img, img_resize_if_bigger, 100, 200);
   vision_utils::resize_if_bigger(img, img_resize_if_bigger2, 200, 100);
@@ -150,16 +150,16 @@ inline void test_paste_images() {
   std::vector<cv::Mat3b> imgs;
   test_paste_images(imgs);
 
-  imgs.push_back(cv::imread(IMG_DIR "maggie.png"));
+  imgs.push_back(cv::imread(vision_utils::IMG_DIR() + "maggie.png"));
   test_paste_images(imgs);
 
   imgs.push_back(cv::Mat());
   test_paste_images(imgs);
 
-  imgs.push_back(cv::imread(IMG_DIR "frenadol.png"));
+  imgs.push_back(cv::imread(vision_utils::IMG_DIR() + "frenadol.png"));
   test_paste_images(imgs);
 
-  imgs.push_back(cv::imread(IMG_DIR "paleo.png"));
+  imgs.push_back(cv::imread(vision_utils::IMG_DIR() + "paleo.png"));
   test_paste_images(imgs);
 }
 
@@ -193,9 +193,9 @@ int main() {
   else if (choice == idx++)
     test_resize_constrain_proportions();
   else if (choice == idx++)
-    test_paste_image(cv::imread(IMG_DIR "arnaud001.png"), cv::imread(IMG_DIR "paleo.png"));
+    test_paste_image(cv::imread(vision_utils::IMG_DIR() + "arnaud001.png"), cv::imread(vision_utils::IMG_DIR() + "paleo.png"));
   else if (choice == idx++)
-    test_paste_image(cv::imread(IMG_DIR "paleo.png"), cv::imread(IMG_DIR "arnaud001.png"));
+    test_paste_image(cv::imread(vision_utils::IMG_DIR() + "paleo.png"), cv::imread(vision_utils::IMG_DIR() + "arnaud001.png"));
   else if (choice == idx++)
     test_paste_images();
 }

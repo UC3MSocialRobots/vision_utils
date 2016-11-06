@@ -79,17 +79,17 @@ void test_prefix(const std::string & filename_prefix) {
   ASSERT_TRUE(ratio > .05) << "ratio:" << ratio; // 5%
 }
 
-TEST(TestSuite, juggling1) { test_prefix(IMG_DIR "depth/juggling1"); }
-TEST(TestSuite, juggling2) { test_prefix(IMG_DIR "depth/juggling2"); }
-TEST(TestSuite, juggling3) { test_prefix(IMG_DIR "depth/juggling3"); }
-TEST(TestSuite, alberto1) { test_prefix(IMG_DIR "depth/alberto1"); }
-TEST(TestSuite, alberto2) { test_prefix(IMG_DIR "depth/alberto2"); }
-TEST(TestSuite, alvaro1) { test_prefix(IMG_DIR "depth/alvaro1"); }
-TEST(TestSuite, alvaro2) { test_prefix(IMG_DIR "depth/alvaro2"); }
-TEST(TestSuite, david_arnaud1) { test_prefix(IMG_DIR "depth/david_arnaud1"); }
-TEST(TestSuite, david_arnaud2) { test_prefix(IMG_DIR "depth/david_arnaud2"); }
-TEST(TestSuite, david_arnaud3) { test_prefix(IMG_DIR "depth/david_arnaud3"); }
-TEST(TestSuite, ainara1) { test_prefix(IMG_DIR "breast/2013-10-05_15-46-03-286"); }
+TEST(TestSuite, juggling1) { test_prefix(vision_utils::IMG_DIR() + "depth/juggling1"); }
+TEST(TestSuite, juggling2) { test_prefix(vision_utils::IMG_DIR() + "depth/juggling2"); }
+TEST(TestSuite, juggling3) { test_prefix(vision_utils::IMG_DIR() + "depth/juggling3"); }
+TEST(TestSuite, alberto1) { test_prefix(vision_utils::IMG_DIR() + "depth/alberto1"); }
+TEST(TestSuite, alberto2) { test_prefix(vision_utils::IMG_DIR() + "depth/alberto2"); }
+TEST(TestSuite, alvaro1) { test_prefix(vision_utils::IMG_DIR() + "depth/alvaro1"); }
+TEST(TestSuite, alvaro2) { test_prefix(vision_utils::IMG_DIR() + "depth/alvaro2"); }
+TEST(TestSuite, david_arnaud1) { test_prefix(vision_utils::IMG_DIR() + "depth/david_arnaud1"); }
+TEST(TestSuite, david_arnaud2) { test_prefix(vision_utils::IMG_DIR() + "depth/david_arnaud2"); }
+TEST(TestSuite, david_arnaud3) { test_prefix(vision_utils::IMG_DIR() + "depth/david_arnaud3"); }
+TEST(TestSuite, ainara1) { test_prefix(vision_utils::IMG_DIR() + "breast/2013-10-05_15-46-03-286"); }
 
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -69,8 +69,8 @@ void test_io(const std::string filename) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TEST(TestSuite, io_balloon) { test_io(IMG_DIR "balloon.png"); }
-TEST(TestSuite, io_paleo) { test_io(IMG_DIR "paleo.png"); }
+TEST(TestSuite, io_balloon) { test_io(vision_utils::IMG_DIR() + "balloon.png"); }
+TEST(TestSuite, io_paleo) { test_io(vision_utils::IMG_DIR() + "paleo.png"); }
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -96,9 +96,9 @@ void test_mean_std_dev(const std::string & filename,
 #endif // DISPLAY
 }
 
-//TEST(TestSuite, test_mean_std_dev_red_grad) { test_mean_std_dev(IMG_DIR "red_grad.png", 0.5, 13); }
-TEST(TestSuite, test_mean_std_dev_notebook) { test_mean_std_dev(IMG_DIR "notebook.png", 13, 6); }
-TEST(TestSuite, test_mean_std_dev_paleo) { test_mean_std_dev(IMG_DIR "paleo.png", 58, 26); }
+//TEST(TestSuite, test_mean_std_dev_red_grad) { test_mean_std_dev(vision_utils::IMG_DIR() + "red_grad.png", 0.5, 13); }
+TEST(TestSuite, test_mean_std_dev_notebook) { test_mean_std_dev(vision_utils::IMG_DIR() + "notebook.png", 13, 6); }
+TEST(TestSuite, test_mean_std_dev_paleo) { test_mean_std_dev(vision_utils::IMG_DIR() + "paleo.png", 58, 26); }
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -125,9 +125,9 @@ void test_hue_roi_mask(const std::string filename) {
   ASSERT_TRUE(vision_utils::matrices_equal(histo_mask, histo_roi));
 }
 
-TEST(TestSuite, test_hue_roi_mask_red_grad) { test_hue_roi_mask(IMG_DIR "red_grad.png"); }
-TEST(TestSuite, test_hue_roi_mask_notebook) { test_hue_roi_mask(IMG_DIR "notebook.png"); }
-TEST(TestSuite, test_hue_roi_mask_paleo) { test_hue_roi_mask(IMG_DIR "paleo.png"); }
+TEST(TestSuite, test_hue_roi_mask_red_grad) { test_hue_roi_mask(vision_utils::IMG_DIR() + "red_grad.png"); }
+TEST(TestSuite, test_hue_roi_mask_notebook) { test_hue_roi_mask(vision_utils::IMG_DIR() + "notebook.png"); }
+TEST(TestSuite, test_hue_roi_mask_paleo) { test_hue_roi_mask(vision_utils::IMG_DIR() + "paleo.png"); }
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -149,7 +149,7 @@ void test_histo_bw(const std::string filename) {
 }
 
 TEST(TestSuite, histo_bw) {
-  test_histo_bw(IMG_DIR "balloon.png");
+  test_histo_bw(vision_utils::IMG_DIR() + "balloon.png");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -194,8 +194,8 @@ void test_histo_hue_mask(const std::string filename,
 }
 
 TEST(TestSuite, histo_hue_mask) {
-  test_histo_hue_mask(IMG_DIR "balloon.png");
-  test_histo_hue_mask(IMG_DIR "balloon.png", IMG_DIR "balloon_mask1.png");
+  test_histo_hue_mask(vision_utils::IMG_DIR() + "balloon.png");
+  test_histo_hue_mask(vision_utils::IMG_DIR() + "balloon.png", vision_utils::IMG_DIR() + "balloon_mask1.png");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -289,7 +289,7 @@ void test_dist_roi_moving_mouse(const std::string filename) {
 }
 
 TEST(TestSuite, dist_roi_moving_mouse) {
-  test_dist_roi_moving_mouse(IMG_DIR "balloon.png");
+  test_dist_roi_moving_mouse(vision_utils::IMG_DIR() + "balloon.png");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -323,11 +323,11 @@ void test_get_vector_of_histograms_illus
 TEST(TestSuite, get_vector_of_histograms_2_images_2_masks) {
   // read files
   std::vector<cv::Mat> hues;
-  hues.push_back(vision_utils::rgb_file2hue(IMG_DIR "depth/juggling1_rgb.png"));
-  hues.push_back(vision_utils::rgb_file2hue(IMG_DIR "depth/juggling2_rgb.png"));
+  hues.push_back(vision_utils::rgb_file2hue(vision_utils::IMG_DIR() + "depth/juggling1_rgb.png"));
+  hues.push_back(vision_utils::rgb_file2hue(vision_utils::IMG_DIR() + "depth/juggling2_rgb.png"));
   std::vector<cv::Mat> masks;
-  masks.push_back(cv::imread(IMG_DIR "depth/juggling1_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE));
-  masks.push_back(cv::imread(IMG_DIR "depth/juggling2_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE));
+  masks.push_back(cv::imread(vision_utils::IMG_DIR() + "depth/juggling1_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE));
+  masks.push_back(cv::imread(vision_utils::IMG_DIR() + "depth/juggling2_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE));
   // compute histograms
   int nbins = 25, max_value = 180; // hue till 180
   std::vector<VU::Histogram> hists;
@@ -339,11 +339,11 @@ TEST(TestSuite, get_vector_of_histograms_2_images_2_masks) {
 
 TEST(TestSuite, get_vector_of_histograms_1_image_3_masks) {
   // read files
-  cv::Mat hue = vision_utils::rgb_file2hue(IMG_DIR "balloon.png");
+  cv::Mat hue = vision_utils::rgb_file2hue(vision_utils::IMG_DIR() + "balloon.png");
   std::vector<cv::Mat> masks;
-  masks.push_back(cv::imread(IMG_DIR "balloon_mask1.png", CV_LOAD_IMAGE_GRAYSCALE));
-  masks.push_back(cv::imread(IMG_DIR "balloon_mask2.png", CV_LOAD_IMAGE_GRAYSCALE));
-  masks.push_back(cv::imread(IMG_DIR "balloon_mask3.png", CV_LOAD_IMAGE_GRAYSCALE));
+  masks.push_back(cv::imread(vision_utils::IMG_DIR() + "balloon_mask1.png", CV_LOAD_IMAGE_GRAYSCALE));
+  masks.push_back(cv::imread(vision_utils::IMG_DIR() + "balloon_mask2.png", CV_LOAD_IMAGE_GRAYSCALE));
+  masks.push_back(cv::imread(vision_utils::IMG_DIR() + "balloon_mask3.png", CV_LOAD_IMAGE_GRAYSCALE));
   // compute histograms
   int nbins = 25, max_value = 180; // hue till 180
   std::vector<VU::Histogram> hists;
@@ -356,8 +356,8 @@ TEST(TestSuite, get_vector_of_histograms_1_image_3_masks) {
 
 TEST(TestSuite, get_vector_of_histograms_1_image_1_multimask) {
   // read files
-  cv::Mat hue = vision_utils::rgb_file2hue(IMG_DIR "balloon.png");
-  cv::Mat multimask = cv::imread(IMG_DIR "balloon_masks.png", CV_LOAD_IMAGE_GRAYSCALE);
+  cv::Mat hue = vision_utils::rgb_file2hue(vision_utils::IMG_DIR() + "balloon.png");
+  cv::Mat multimask = cv::imread(vision_utils::IMG_DIR() + "balloon_masks.png", CV_LOAD_IMAGE_GRAYSCALE);
   unsigned int n_masks = 3;
   // compute histograms
   int nbins = 25, max_value = 180; // hue till 180

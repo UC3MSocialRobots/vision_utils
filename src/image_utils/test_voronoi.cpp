@@ -439,27 +439,27 @@ int CLI(int argc, char** argv) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char** argv) {
-  // benchmark_logs(cv::imread(IMG_DIR "depth/juggling1_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE));
+  // benchmark_logs(cv::imread(vision_utils::IMG_DIR() + "depth/juggling1_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE));
 
-  //  generate_video_bw(cv::imread(IMG_DIR "depth/juggling1_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE),
+  //  generate_video_bw(cv::imread(vision_utils::IMG_DIR() + "depth/juggling1_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE),
   //                    IMPL_GUO_HALL, true, true);
   //  return 0;
 
-  //  generate_video_bw(cv::imread(IMG_DIR "depth/juggling1_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE),
+  //  generate_video_bw(cv::imread(vision_utils::IMG_DIR() + "depth/juggling1_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE),
   //                    IMPL_MORPH, true, true);
   //  return 0;
 
-  //  generate_video_comparer(cv::imread(IMG_DIR "skeletons/horse.png", CV_LOAD_IMAGE_GRAYSCALE),
+  //  generate_video_comparer(cv::imread(vision_utils::IMG_DIR() + "skeletons/horse.png", CV_LOAD_IMAGE_GRAYSCALE),
   //                          true, 2, "horse_");
-  //  generate_video_comparer(cv::imread(IMG_DIR "depth/juggling1_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE),
+  //  generate_video_comparer(cv::imread(vision_utils::IMG_DIR() + "depth/juggling1_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE),
   //                          true, 4, "comparer_juggling1_mask_");
-  //  generate_video_comparer(cv::imread(IMG_DIR "depth/alberto1_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE),
+  //  generate_video_comparer(cv::imread(vision_utils::IMG_DIR() + "depth/alberto1_user_mask.png", CV_LOAD_IMAGE_GRAYSCALE),
   //                          true, 4, "alberto1_mask_");
-  //  generate_video_comparer(cv::imread(IMG_DIR "skeletons/japanese_src.png", CV_LOAD_IMAGE_GRAYSCALE),
+  //  generate_video_comparer(cv::imread(vision_utils::IMG_DIR() + "skeletons/japanese_src.png", CV_LOAD_IMAGE_GRAYSCALE),
   //                          true, 2, "comparer_japanese_src_");
-  //  generate_video_comparer(cv::imread(IMG_DIR "skeletons/opencv_src.png", CV_LOAD_IMAGE_GRAYSCALE),
+  //  generate_video_comparer(cv::imread(vision_utils::IMG_DIR() + "skeletons/opencv_src.png", CV_LOAD_IMAGE_GRAYSCALE),
   //                          true, 1, "opencv_src_");
-  //  generate_video_comparer(cv::imread(IMG_DIR "powerXML/power.png", CV_LOAD_IMAGE_GRAYSCALE),
+  //  generate_video_comparer(cv::imread(vision_utils::IMG_DIR() + "powerXML/power.png", CV_LOAD_IMAGE_GRAYSCALE),
   //                          true, 2, "comparer_power_");
   return CLI(argc, argv);
 }

@@ -121,9 +121,9 @@ int main(int argc, char** argv) {
 
   idx = 1;
   if (choice == idx++)
-    detect_one_pic(IMG_DIR "group.jpg");
+    detect_one_pic(vision_utils::IMG_DIR() + "group.jpg");
   else if (choice == idx++)
-    detect_one_pic(IMG_DIR "arnaud001.png");
+    detect_one_pic(vision_utils::IMG_DIR() + "arnaud001.png");
   else if (choice == idx++) {
     if (argc < 3) {
       printf("Please specify: file, scale_factor, min_neighbors, min_width!\n");
@@ -140,7 +140,7 @@ int main(int argc, char** argv) {
           vision_utils::cast_from_string<int>(argv[7]));
   }
   else if (choice == idx++)
-    detect_one_pic(IMG_DIR "depth/albertopng");
+    detect_one_pic(vision_utils::IMG_DIR() + "depth/albertopng");
   else if (choice == idx++)
     test_camera();
   else if (choice == idx++)

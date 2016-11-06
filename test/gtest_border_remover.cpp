@@ -7,7 +7,7 @@
 
 TEST(TestSuite, simple_test) {
   //ROS_INFO("%sborder.png", IMG_DIR);
-  cv::Mat1b src = cv::imread(IMG_DIR "border.png", CV_LOAD_IMAGE_GRAYSCALE),
+  cv::Mat1b src = cv::imread(vision_utils::IMG_DIR() + "border.png", CV_LOAD_IMAGE_GRAYSCALE),
       dst;
   vision_utils::Timer timer;
   vision_utils::remove_border(src, dst);

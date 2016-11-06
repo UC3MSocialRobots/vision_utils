@@ -32,7 +32,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, bbox) {
-  cv::Mat1b test = cv::imread(IMG_DIR "star.png",
+  cv::Mat1b test = cv::imread(vision_utils::IMG_DIR() + "star.png",
                               CV_LOAD_IMAGE_GRAYSCALE);
 
   vision_utils::Timer timer;
@@ -51,11 +51,11 @@ TEST(TestSuite, bbox) {
 TEST(TestSuite, region_growth) {
   std::vector<cv::Point2i> ans;
 
-  cv::Mat1b image = cv::imread(IMG_DIR "region_growth.png", 0);
+  cv::Mat1b image = cv::imread(vision_utils::IMG_DIR() + "region_growth.png", 0);
   vision_utils::region_growth_no_seen_points(
         image, cv::Point2i(47, 70), 50, 150, ans);
 
-  // cv::Mat1b image = cv::imread(IMG_DIR "rectangles.png", 0);
+  // cv::Mat1b image = cv::imread(vision_utils::IMG_DIR() + "rectangles.png", 0);
   // vision_utils::region_growth(image, cv::Point2i(1, 8), 0, 0, ans);
 
   vision_utils::drawListOfPoints(image, ans, (uchar) 127);
@@ -115,20 +115,20 @@ inline void test_string(const std::string & img_filename, int nb_times) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, string_all_images) {
-  test_string(IMG_DIR "balloon.png", 200);
-  test_string(IMG_DIR "paleo.png", 200);
-  test_string(IMG_DIR "rectangles.png", 200);
-  test_string(IMG_DIR "depth/alberto1_rgb.png", 200);
+  test_string(vision_utils::IMG_DIR() + "balloon.png", 200);
+  test_string(vision_utils::IMG_DIR() + "paleo.png", 200);
+  test_string(vision_utils::IMG_DIR() + "rectangles.png", 200);
+  test_string(vision_utils::IMG_DIR() + "depth/alberto1_rgb.png", 200);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, redim_content) {
-  cv::Mat1b test = cv::imread(IMG_DIR  "balloonBW.png" , CV_LOAD_IMAGE_GRAYSCALE);
+  cv::Mat1b test = cv::imread(vision_utils::IMG_DIR() + "balloonBW.png" , CV_LOAD_IMAGE_GRAYSCALE);
   cv::Mat1b test_roi;
   test(cv::Rect(50, 50, 150, 150)).copyTo(test_roi);
 
-  // cv::Mat test0 = cv::imread(IMG_DIR "rectangles.png" , CV_LOAD_IMAGE_GRAYSCALE);
+  // cv::Mat test0 = cv::imread(vision_utils::IMG_DIR() + "rectangles.png" , CV_LOAD_IMAGE_GRAYSCALE);
   // cv::Mat test_roi ( test0, cv::Rect(2, 2, 8, 8));
 
   /* std::vector version */
@@ -296,7 +296,7 @@ void test_remove_value(const std::string image_filename) {
 } // end test_remove_value();
 
 TEST(TestSuite, value_remover) {
-  test_remove_value(IMG_DIR "depth/inside1");
+  test_remove_value(vision_utils::IMG_DIR() + "depth/inside1");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -495,10 +495,10 @@ TEST(TestSuite, floodfill_edge_closer) {
   cv::Point juggling1_pt = cv::Point(370, 70),
       //juggling2_pt = cv::Point(400, 70),
       juggling3_pt = cv::Point(360, 90);
-  test_floodfill_edge_closer(IMG_DIR "broken_edge.png", cv::Point(11, 19));
-  test_floodfill_edge_closer(IMG_DIR "broken_edge.png", cv::Point(9, 8));
-  test_floodfill_edge_closer(IMG_DIR "depth/juggling1_broken_edge.png", juggling1_pt, false);
-  test_floodfill_edge_closer(IMG_DIR "depth/juggling3_broken_edge.png", juggling3_pt, false);
+  test_floodfill_edge_closer(vision_utils::IMG_DIR() + "broken_edge.png", cv::Point(11, 19));
+  test_floodfill_edge_closer(vision_utils::IMG_DIR() + "broken_edge.png", cv::Point(9, 8));
+  test_floodfill_edge_closer(vision_utils::IMG_DIR() + "depth/juggling1_broken_edge.png", juggling1_pt, false);
+  test_floodfill_edge_closer(vision_utils::IMG_DIR() + "depth/juggling3_broken_edge.png", juggling3_pt, false);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -507,13 +507,13 @@ TEST(TestSuite, find_top_point_centered) {
   cv::Point juggling1_pt = cv::Point(370, 70),
       juggling2_pt = cv::Point(400, 70);
       //juggling3_pt = cv::Point(360, 90);
-  test_find_top_point_centered(IMG_DIR "depth/juggling1_user_mask.png");
-  test_find_top_point_centered(IMG_DIR "depth/juggling2_user_mask.png");
-  test_propagative_floodfill(IMG_DIR "depth/juggling1_user_mask.png", juggling1_pt);
-  test_propagative_floodfill(IMG_DIR "depth/juggling2_user_mask.png", juggling2_pt);
-  test_propagative_floodfill_custom_lookup(IMG_DIR "depth/juggling1_user_mask.png", juggling1_pt);
-  test_propagative_floodfill_custom_lookup(IMG_DIR "depth/juggling2_user_mask.png", juggling2_pt);
-  test_compute_pixel2meters_factor(IMG_DIR "depth/juggling1", vision_utils::KINECT_SERIAL_LAB());
+  test_find_top_point_centered(vision_utils::IMG_DIR() + "depth/juggling1_user_mask.png");
+  test_find_top_point_centered(vision_utils::IMG_DIR() + "depth/juggling2_user_mask.png");
+  test_propagative_floodfill(vision_utils::IMG_DIR() + "depth/juggling1_user_mask.png", juggling1_pt);
+  test_propagative_floodfill(vision_utils::IMG_DIR() + "depth/juggling2_user_mask.png", juggling2_pt);
+  test_propagative_floodfill_custom_lookup(vision_utils::IMG_DIR() + "depth/juggling1_user_mask.png", juggling1_pt);
+  test_propagative_floodfill_custom_lookup(vision_utils::IMG_DIR() + "depth/juggling2_user_mask.png", juggling2_pt);
+  test_compute_pixel2meters_factor(vision_utils::IMG_DIR() + "depth/juggling1", vision_utils::KINECT_SERIAL_LAB());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -521,17 +521,17 @@ TEST(TestSuite, find_top_point_centered) {
 TEST(TestSuite, propagative_floodfill) {
   cv::Point juggling1_pt = cv::Point(370, 70),
       juggling2_pt = cv::Point(400, 70);
-  test_propagative_floodfill(IMG_DIR "depth/juggling1_user_mask.png", juggling1_pt);
-  test_propagative_floodfill(IMG_DIR "depth/juggling2_user_mask.png", juggling2_pt);
-  test_propagative_floodfill_custom_lookup(IMG_DIR "depth/juggling1_user_mask.png", juggling1_pt);
-  test_propagative_floodfill_custom_lookup(IMG_DIR "depth/juggling2_user_mask.png", juggling2_pt);
-  test_compute_pixel2meters_factor(IMG_DIR "depth/juggling1", vision_utils::KINECT_SERIAL_LAB());
+  test_propagative_floodfill(vision_utils::IMG_DIR() + "depth/juggling1_user_mask.png", juggling1_pt);
+  test_propagative_floodfill(vision_utils::IMG_DIR() + "depth/juggling2_user_mask.png", juggling2_pt);
+  test_propagative_floodfill_custom_lookup(vision_utils::IMG_DIR() + "depth/juggling1_user_mask.png", juggling1_pt);
+  test_propagative_floodfill_custom_lookup(vision_utils::IMG_DIR() + "depth/juggling2_user_mask.png", juggling2_pt);
+  test_compute_pixel2meters_factor(vision_utils::IMG_DIR() + "depth/juggling1", vision_utils::KINECT_SERIAL_LAB());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, test_compute_pixel2meters_factor) {
-  test_compute_pixel2meters_factor(IMG_DIR "depth/juggling1", vision_utils::KINECT_SERIAL_LAB());
+  test_compute_pixel2meters_factor(vision_utils::IMG_DIR() + "depth/juggling1", vision_utils::KINECT_SERIAL_LAB());
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -55,7 +55,7 @@ TEST(TestSuite, seed_outside) {
   cv::Mat3b rgb;
   cv::Mat1f depth;
   ASSERT_TRUE(vision_utils::read_rgb_and_depth_image_from_image_file
-              (IMG_DIR "depth/juggling1", &rgb, &depth));
+              (vision_utils::IMG_DIR() + "depth/juggling1", &rgb, &depth));
   cv::Mat1b out;
   bool ok = segmenter.find_blob(depth, cv::Point(10, depth.cols + 10), out);
   ASSERT_TRUE(!ok);
@@ -116,37 +116,37 @@ void blob_vs_nite(const std::string & filename_prefix,
 }
 
 TEST(TestSuite, blob_vs_nite_juggling1) {
-  blob_vs_nite(IMG_DIR "depth/juggling1", vision_utils::BlobSegmenter::FLOODFILL_EDGE_CLOSER, 255);
-  blob_vs_nite(IMG_DIR "depth/juggling1", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, 255);
+  blob_vs_nite(vision_utils::IMG_DIR() + "depth/juggling1", vision_utils::BlobSegmenter::FLOODFILL_EDGE_CLOSER, 255);
+  blob_vs_nite(vision_utils::IMG_DIR() + "depth/juggling1", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, 255);
 }
 TEST(TestSuite, blob_vs_nite_alberto1) {
-  blob_vs_nite(IMG_DIR "depth/alberto1", vision_utils::BlobSegmenter::FLOODFILL_EDGE_CLOSER, 255);
-  blob_vs_nite(IMG_DIR "depth/alberto1", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, 255);
+  blob_vs_nite(vision_utils::IMG_DIR() + "depth/alberto1", vision_utils::BlobSegmenter::FLOODFILL_EDGE_CLOSER, 255);
+  blob_vs_nite(vision_utils::IMG_DIR() + "depth/alberto1", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, 255);
 }
 TEST(TestSuite, blob_vs_nite_david_arnaud1) {
   // david
-  blob_vs_nite(IMG_DIR "depth/david_arnaud1", vision_utils::BlobSegmenter::FLOODFILL_EDGE_CLOSER, 1);
-  blob_vs_nite(IMG_DIR "depth/david_arnaud1", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, 1);
+  blob_vs_nite(vision_utils::IMG_DIR() + "depth/david_arnaud1", vision_utils::BlobSegmenter::FLOODFILL_EDGE_CLOSER, 1);
+  blob_vs_nite(vision_utils::IMG_DIR() + "depth/david_arnaud1", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, 1);
   // arnaud
-  blob_vs_nite(IMG_DIR "depth/david_arnaud1", vision_utils::BlobSegmenter::FLOODFILL_EDGE_CLOSER, 2);
-  blob_vs_nite(IMG_DIR "depth/david_arnaud1", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, 2);
+  blob_vs_nite(vision_utils::IMG_DIR() + "depth/david_arnaud1", vision_utils::BlobSegmenter::FLOODFILL_EDGE_CLOSER, 2);
+  blob_vs_nite(vision_utils::IMG_DIR() + "depth/david_arnaud1", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, 2);
 }
 TEST(TestSuite, blob_vs_nite_david_arnaud2) {
   // david
 
-  blob_vs_nite(IMG_DIR "depth/david_arnaud2", vision_utils::BlobSegmenter::FLOODFILL_EDGE_CLOSER, 1);
-  blob_vs_nite(IMG_DIR "depth/david_arnaud2", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, 1);
+  blob_vs_nite(vision_utils::IMG_DIR() + "depth/david_arnaud2", vision_utils::BlobSegmenter::FLOODFILL_EDGE_CLOSER, 1);
+  blob_vs_nite(vision_utils::IMG_DIR() + "depth/david_arnaud2", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, 1);
   // arnaud
-  blob_vs_nite(IMG_DIR "depth/david_arnaud2", vision_utils::BlobSegmenter::FLOODFILL_EDGE_CLOSER, 2);
-  blob_vs_nite(IMG_DIR "depth/david_arnaud2", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, 2);
+  blob_vs_nite(vision_utils::IMG_DIR() + "depth/david_arnaud2", vision_utils::BlobSegmenter::FLOODFILL_EDGE_CLOSER, 2);
+  blob_vs_nite(vision_utils::IMG_DIR() + "depth/david_arnaud2", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, 2);
 }
 TEST(TestSuite, blob_vs_nite_david_arnaud3) {
   // david
-  blob_vs_nite(IMG_DIR "depth/david_arnaud3", vision_utils::BlobSegmenter::FLOODFILL_EDGE_CLOSER, 1);
-  blob_vs_nite(IMG_DIR "depth/david_arnaud3", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, 1);
+  blob_vs_nite(vision_utils::IMG_DIR() + "depth/david_arnaud3", vision_utils::BlobSegmenter::FLOODFILL_EDGE_CLOSER, 1);
+  blob_vs_nite(vision_utils::IMG_DIR() + "depth/david_arnaud3", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, 1);
   // arnaud
-  blob_vs_nite(IMG_DIR "depth/david_arnaud3", vision_utils::BlobSegmenter::FLOODFILL_EDGE_CLOSER, 2);
-  blob_vs_nite(IMG_DIR "depth/david_arnaud3", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, 2);
+  blob_vs_nite(vision_utils::IMG_DIR() + "depth/david_arnaud3", vision_utils::BlobSegmenter::FLOODFILL_EDGE_CLOSER, 2);
+  blob_vs_nite(vision_utils::IMG_DIR() + "depth/david_arnaud3", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, 2);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -212,13 +212,13 @@ void generate_user_mask(const std::string & filename_prefix) {
   // vision_utils::imwrite_debug(vision_utils::timestamp()+"_mask.png", user_mask, vision_utils::MONOCHROME);
 }
 
-TEST(TestSuite, generate_user_mask_juggling1) { generate_user_mask(IMG_DIR "depth/juggling1");}
-TEST(TestSuite, generate_user_mask_juggling2) { generate_user_mask(IMG_DIR "depth/juggling2");}
-TEST(TestSuite, generate_user_mask_juggling3) { generate_user_mask(IMG_DIR "depth/juggling3");}
-TEST(TestSuite, generate_user_mask_alberto1) { generate_user_mask(IMG_DIR "depth/alberto1");}
-TEST(TestSuite, generate_user_mask_alberto2) { generate_user_mask(IMG_DIR "depth/alberto2");}
-TEST(TestSuite, generate_user_mask_alvaro1) { generate_user_mask(IMG_DIR "depth/alvaro1");}
-TEST(TestSuite, generate_user_mask_alvaro2) { generate_user_mask(IMG_DIR "depth/alvaro2");}
+TEST(TestSuite, generate_user_mask_juggling1) { generate_user_mask(vision_utils::IMG_DIR() + "depth/juggling1");}
+TEST(TestSuite, generate_user_mask_juggling2) { generate_user_mask(vision_utils::IMG_DIR() + "depth/juggling2");}
+TEST(TestSuite, generate_user_mask_juggling3) { generate_user_mask(vision_utils::IMG_DIR() + "depth/juggling3");}
+TEST(TestSuite, generate_user_mask_alberto1) { generate_user_mask(vision_utils::IMG_DIR() + "depth/alberto1");}
+TEST(TestSuite, generate_user_mask_alberto2) { generate_user_mask(vision_utils::IMG_DIR() + "depth/alberto2");}
+TEST(TestSuite, generate_user_mask_alvaro1) { generate_user_mask(vision_utils::IMG_DIR() + "depth/alvaro1");}
+TEST(TestSuite, generate_user_mask_alvaro2) { generate_user_mask(vision_utils::IMG_DIR() + "depth/alvaro2");}
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -288,22 +288,22 @@ void blobs_vs_nite(const std::string & filename_prefix,
 }
 
 TEST(TestSuite, blobs_vs_nite_juggling1) {
-  blobs_vs_nite(IMG_DIR "depth/juggling1", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, IdxVec(1, 255));
+  blobs_vs_nite(vision_utils::IMG_DIR() + "depth/juggling1", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, IdxVec(1, 255));
 }
 TEST(TestSuite, blobs_vs_nite_alberto1) {
-  blobs_vs_nite(IMG_DIR "depth/alberto1", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, IdxVec(1, 255));
+  blobs_vs_nite(vision_utils::IMG_DIR() + "depth/alberto1", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, IdxVec(1, 255));
 }
 TEST(TestSuite, blobs_vs_nite_david_arnaud1) {
   IdxVec vec; vec.push_back(1); vec.push_back(2);
-  blobs_vs_nite(IMG_DIR "depth/david_arnaud1", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, vec);
+  blobs_vs_nite(vision_utils::IMG_DIR() + "depth/david_arnaud1", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, vec);
 }
 TEST(TestSuite, blobs_vs_nite_david_arnaud2) {
   IdxVec vec; vec.push_back(1); vec.push_back(2);
-  blobs_vs_nite(IMG_DIR "depth/david_arnaud2", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, vec);
+  blobs_vs_nite(vision_utils::IMG_DIR() + "depth/david_arnaud2", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, vec);
 }
 TEST(TestSuite, blobs_vs_nite_david_arnaud3) {
   IdxVec vec; vec.push_back(1); vec.push_back(2);
-  blobs_vs_nite(IMG_DIR "depth/david_arnaud3", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, vec);
+  blobs_vs_nite(vision_utils::IMG_DIR() + "depth/david_arnaud3", vision_utils::BlobSegmenter::GROUND_PLANE_FINDER, vec);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

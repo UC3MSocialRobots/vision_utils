@@ -240,7 +240,7 @@ TEST(TestSuite, eat_rectangle) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, benchmark) {
-  cv::Mat1b img = cv::imread(IMG_DIR "depth/juggling1_user_mask.png",
+  cv::Mat1b img = cv::imread(vision_utils::IMG_DIR() + "depth/juggling1_user_mask.png",
                              CV_LOAD_IMAGE_GRAYSCALE);
   unsigned int ntimes = 1000;
   vision_utils::ImageContour contour;

@@ -110,7 +110,7 @@ TEST(TestSuite, single_file) {
   content << "<image filename=\"" << filename1 << "\"/>";
   content << "</images>";
   FooXmlImagesReader reader;
-  bool read_success = reader.from_xml_content(IMG_DIR, content.str());
+  bool read_success = reader.from_xml_content(vision_utils::IMG_DIR(), content.str());
   EXPECT_TRUE(read_success);
   EXPECT_TRUE(reader.get_nb_files() == 1);
   //cv::imshow("test", *reader.get_current_cv_img()); cv::waitKey(0);
@@ -118,7 +118,7 @@ TEST(TestSuite, single_file) {
   // check it is the same image with a file reading
   EXPECT_TRUE(reader.get_current_file_index() == 0);
   EXPECT_TRUE(reader.get_current_filename() == filename1);
-  cv::Mat3b im = cv::imread(std::string(IMG_DIR) + filename1, CV_LOAD_IMAGE_COLOR);
+  cv::Mat3b im = cv::imread(vision_utils::IMG_DIR() + filename1, CV_LOAD_IMAGE_COLOR);
   EXPECT_TRUE(im.size() == reader.get_current_cv_img()->size());
 
   // move around
@@ -139,7 +139,7 @@ TEST(TestSuite, two_files) {
   content << "<image filename=\"" << filename2 << "\"/>";
   content << "</images>";
   FooXmlImagesReader reader;
-  bool read_success = reader.from_xml_content(IMG_DIR, content.str());
+  bool read_success = reader.from_xml_content(vision_utils::IMG_DIR(), content.str());
   EXPECT_TRUE(read_success);
   EXPECT_TRUE(reader.get_nb_files() == 2);
   //cv::imshow("test", *reader.get_current_cv_img()); cv::waitKey(0);

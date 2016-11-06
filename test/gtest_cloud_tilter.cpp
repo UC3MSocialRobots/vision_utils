@@ -94,15 +94,15 @@ TEST(TestSuite, dgaitdb_all_users) {
 }
 
 TEST(TestSuite, dgaitdb_ltm_depth) {
-  test_straighten_picture(IMG_DIR "depth/alberto1", vision_utils::DEFAULT_KINECT_SERIAL(), 255);
-  test_straighten_picture(IMG_DIR "depth/david_arnaud1", vision_utils::DEFAULT_KINECT_SERIAL(), 1);
-  test_straighten_picture(IMG_DIR "depth/david_arnaud1", vision_utils::DEFAULT_KINECT_SERIAL(), 2);
-  test_straighten_picture(IMG_DIR "depth/david_arnaud2", vision_utils::DEFAULT_KINECT_SERIAL(), 1);
-  test_straighten_picture(IMG_DIR "depth/david_arnaud2", vision_utils::DEFAULT_KINECT_SERIAL(), 2);
-  test_straighten_picture(IMG_DIR "depth/david_arnaud3", vision_utils::DEFAULT_KINECT_SERIAL(), 1);
-  test_straighten_picture(IMG_DIR "depth/david_arnaud3", vision_utils::DEFAULT_KINECT_SERIAL(), 2);
-  test_straighten_picture(IMG_DIR "depth/juggling1", vision_utils::DEFAULT_KINECT_SERIAL(), 255);
-  test_straighten_picture(IMG_DIR "depth/juggling2", vision_utils::DEFAULT_KINECT_SERIAL(), 255);
+  test_straighten_picture(vision_utils::IMG_DIR() + "depth/alberto1", vision_utils::DEFAULT_KINECT_SERIAL(), 255);
+  test_straighten_picture(vision_utils::IMG_DIR() + "depth/david_arnaud1", vision_utils::DEFAULT_KINECT_SERIAL(), 1);
+  test_straighten_picture(vision_utils::IMG_DIR() + "depth/david_arnaud1", vision_utils::DEFAULT_KINECT_SERIAL(), 2);
+  test_straighten_picture(vision_utils::IMG_DIR() + "depth/david_arnaud2", vision_utils::DEFAULT_KINECT_SERIAL(), 1);
+  test_straighten_picture(vision_utils::IMG_DIR() + "depth/david_arnaud2", vision_utils::DEFAULT_KINECT_SERIAL(), 2);
+  test_straighten_picture(vision_utils::IMG_DIR() + "depth/david_arnaud3", vision_utils::DEFAULT_KINECT_SERIAL(), 1);
+  test_straighten_picture(vision_utils::IMG_DIR() + "depth/david_arnaud3", vision_utils::DEFAULT_KINECT_SERIAL(), 2);
+  test_straighten_picture(vision_utils::IMG_DIR() + "depth/juggling1", vision_utils::DEFAULT_KINECT_SERIAL(), 255);
+  test_straighten_picture(vision_utils::IMG_DIR() + "depth/juggling2", vision_utils::DEFAULT_KINECT_SERIAL(), 255);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

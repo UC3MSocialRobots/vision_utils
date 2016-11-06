@@ -72,10 +72,10 @@ void check_imgs(const std::vector<cv::Mat_<T> > & ims,
 
 TEST(TestSuite, paste_images_gallery_arnaud) {
   std::vector<cv::Mat1b> ims;
-  ims.push_back(cv::imread(IMG_DIR "faces/people_lab/arnaud_20.png", CV_LOAD_IMAGE_GRAYSCALE));
-  ims.push_back(cv::imread(IMG_DIR "faces/people_lab/arnaud_21.png", CV_LOAD_IMAGE_GRAYSCALE));
-  ims.push_back(cv::imread(IMG_DIR "faces/people_lab/arnaud_22.png", CV_LOAD_IMAGE_GRAYSCALE));
-  ims.push_back(cv::imread(IMG_DIR "faces/people_lab/arnaud_23.png", CV_LOAD_IMAGE_GRAYSCALE));
+  ims.push_back(cv::imread(vision_utils::IMG_DIR() + "faces/people_lab/arnaud_20.png", CV_LOAD_IMAGE_GRAYSCALE));
+  ims.push_back(cv::imread(vision_utils::IMG_DIR() + "faces/people_lab/arnaud_21.png", CV_LOAD_IMAGE_GRAYSCALE));
+  ims.push_back(cv::imread(vision_utils::IMG_DIR() + "faces/people_lab/arnaud_22.png", CV_LOAD_IMAGE_GRAYSCALE));
+  ims.push_back(cv::imread(vision_utils::IMG_DIR() + "faces/people_lab/arnaud_23.png", CV_LOAD_IMAGE_GRAYSCALE));
   for (unsigned int i = 1; i <= 6; ++i)
     check_imgs(ims, i, (uchar) 0);
 }
@@ -84,10 +84,10 @@ TEST(TestSuite, paste_images_gallery_arnaud) {
 
 TEST(TestSuite, paste_images_gallery_color) {
   std::vector<cv::Mat3b> ims;
-  ims.push_back(cv::imread(IMG_DIR "depth/alberto1_rgb.png", CV_LOAD_IMAGE_COLOR));
-  ims.push_back(cv::imread(IMG_DIR "depth/alberto2_rgb.png", CV_LOAD_IMAGE_COLOR));
-  ims.push_back(cv::imread(IMG_DIR "depth/alvaro1_rgb.png", CV_LOAD_IMAGE_COLOR));
-  ims.push_back(cv::imread(IMG_DIR "depth/alvaro2_rgb.png", CV_LOAD_IMAGE_COLOR));
+  ims.push_back(cv::imread(vision_utils::IMG_DIR() + "depth/alberto1_rgb.png", CV_LOAD_IMAGE_COLOR));
+  ims.push_back(cv::imread(vision_utils::IMG_DIR() + "depth/alberto2_rgb.png", CV_LOAD_IMAGE_COLOR));
+  ims.push_back(cv::imread(vision_utils::IMG_DIR() + "depth/alvaro1_rgb.png", CV_LOAD_IMAGE_COLOR));
+  ims.push_back(cv::imread(vision_utils::IMG_DIR() + "depth/alvaro2_rgb.png", CV_LOAD_IMAGE_COLOR));
   for (unsigned int i = 1; i <= 6; ++i)
     check_imgs(ims, i, cv::Vec3b(0,0,0));
 }
@@ -95,7 +95,7 @@ TEST(TestSuite, paste_images_gallery_color) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, text_rotated) {
-  cv::Mat3b img = cv::imread(IMG_DIR "balloon.png");
+  cv::Mat3b img = cv::imread(vision_utils::IMG_DIR() + "balloon.png");
   cv::Mat1b buffer1, buffer2;
   for (unsigned int i = 0; i <= 10; ++i) {
     std::ostringstream text; text << "text" << i;
@@ -117,7 +117,7 @@ TEST(TestSuite, text_rotated) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, text_rotated2) {
-  cv::Mat3b img = cv::imread(IMG_DIR "balloon.png");
+  cv::Mat3b img = cv::imread(vision_utils::IMG_DIR() + "balloon.png");
   cv::Mat1b buffer1, buffer2;
   vision_utils::Timer timer;
   unsigned int n_times = 1000;
@@ -141,7 +141,7 @@ TEST(TestSuite, text_rotated2) {
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST(TestSuite, resize_constrain_proportions) {
-  cv::Mat3b img = cv::imread(IMG_DIR "balloon.png");
+  cv::Mat3b img = cv::imread(vision_utils::IMG_DIR() + "balloon.png");
   cv::Mat3b img_resize_if_bigger, img_resize_if_bigger2, img_resize_constrain_proportions;
   vision_utils::resize_if_bigger(img, img_resize_if_bigger, 100, 200);
   vision_utils::resize_if_bigger(img, img_resize_if_bigger2, 200, 100);
@@ -184,10 +184,10 @@ inline void test_paste_image(const cv::Mat & bg, const cv::Mat & fg) {
 }
 
 TEST(TestSuite, paste_image) {
-  test_paste_image(cv::imread(IMG_DIR "arnaud001.png"),
-                   cv::imread(IMG_DIR "paleo.png"));
-  test_paste_image(cv::imread(IMG_DIR "paleo.png"),
-                   cv::imread(IMG_DIR "arnaud001.png"));
+  test_paste_image(cv::imread(vision_utils::IMG_DIR() + "arnaud001.png"),
+                   cv::imread(vision_utils::IMG_DIR() + "paleo.png"));
+  test_paste_image(cv::imread(vision_utils::IMG_DIR() + "paleo.png"),
+                   cv::imread(vision_utils::IMG_DIR() + "arnaud001.png"));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -226,16 +226,16 @@ TEST(TestSuite, paste_images) {
   std::vector<cv::Mat3b> imgs;
   test_paste_images(imgs);
 
-  imgs.push_back(cv::imread(IMG_DIR "maggie.png"));
+  imgs.push_back(cv::imread(vision_utils::IMG_DIR() + "maggie.png"));
   test_paste_images(imgs);
 
   imgs.push_back(cv::Mat());
   test_paste_images(imgs);
 
-  imgs.push_back(cv::imread(IMG_DIR "frenadol.png"));
+  imgs.push_back(cv::imread(vision_utils::IMG_DIR() + "frenadol.png"));
   test_paste_images(imgs);
 
-  imgs.push_back(cv::imread(IMG_DIR "paleo.png"));
+  imgs.push_back(cv::imread(vision_utils::IMG_DIR() + "paleo.png"));
   test_paste_images(imgs);
 }
 

@@ -82,7 +82,7 @@ TEST(TestSuite, constructor_empty_model) {
 TEST(TestSuite, constructor_one_file) {
   vision_utils::ImageComparer_<Pt2Vec> comparer;
   std::vector<std::string> models;
-  models.push_back(IMG_DIR "comparer/1.png");
+  models.push_back(vision_utils::IMG_DIR() + "comparer/1.png");
   comparer.set_models(models, cv::Size(10, 10));
   ASSERT_TRUE(comparer.get_models_nb() == models.size());
   printf("model[0]:'%s'\n", comparer.model_to_string(0).c_str());
@@ -109,10 +109,10 @@ template<class Pt2Iterable>
 void test_four_files() {
   vision_utils::ImageComparer_<Pt2Iterable> comparer;
   std::vector<std::string> models;
-  models.push_back(IMG_DIR "comparer/1.png");
-  models.push_back(IMG_DIR "comparer/2.png");
-  models.push_back(IMG_DIR "comparer/3.png");
-  models.push_back(IMG_DIR "comparer/4.png");
+  models.push_back(vision_utils::IMG_DIR() + "comparer/1.png");
+  models.push_back(vision_utils::IMG_DIR() + "comparer/2.png");
+  models.push_back(vision_utils::IMG_DIR() + "comparer/3.png");
+  models.push_back(vision_utils::IMG_DIR() + "comparer/4.png");
   int nmodels = models.size();
   comparer.set_models(models, cv::Size(64, 64));
   ASSERT_TRUE(comparer.get_models_nb() == models.size());
@@ -150,9 +150,9 @@ TEST(TestSuite, constructor_four_files) {
 
 TEST(TestSuite, test_comparer) {
   vision_utils::ImageComparer im;
-  im.set_models(IMG_DIR "paintRecognizer/index.txt", cv::Size(32, 32));
+  im.set_models(vision_utils::IMG_DIR() + "paintRecognizer/index.txt", cv::Size(32, 32));
 
-  cv::Mat img = cv::imread(IMG_DIR "paintRecognizer/inputs/m.png",
+  cv::Mat img = cv::imread(vision_utils::IMG_DIR() + "paintRecognizer/inputs/m.png",
                            CV_LOAD_IMAGE_GRAYSCALE);
   int nbTimes = 5;
   vision_utils::Timer timer;
@@ -167,14 +167,14 @@ TEST(TestSuite, test_comparer) {
 TEST(TestSuite, test_comparer2) {
   printf("test_comparer()\n");
   vision_utils::ImageComparer im;
-  im.set_models(IMG_DIR "comparer/index.txt", cv::Size(32, 32));
+  im.set_models(vision_utils::IMG_DIR() + "comparer/index.txt", cv::Size(32, 32));
 
   std::vector<std::string> filenames;
-  filenames.push_back(IMG_DIR "comparer/model.png");
-  filenames.push_back(IMG_DIR "comparer/1.png");
-  filenames.push_back(IMG_DIR "comparer/2.png");
-  filenames.push_back(IMG_DIR "comparer/3.png");
-  filenames.push_back(IMG_DIR "comparer/4.png");
+  filenames.push_back(vision_utils::IMG_DIR() + "comparer/model.png");
+  filenames.push_back(vision_utils::IMG_DIR() + "comparer/1.png");
+  filenames.push_back(vision_utils::IMG_DIR() + "comparer/2.png");
+  filenames.push_back(vision_utils::IMG_DIR() + "comparer/3.png");
+  filenames.push_back(vision_utils::IMG_DIR() + "comparer/4.png");
   for (int i = 0 ; i < 5 ; ++i) {
     im.compareFile(cv::imread(filenames.at(i), CV_LOAD_IMAGE_GRAYSCALE));
     printf("Comparing with '%s', results:'%s'\n",
