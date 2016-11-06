@@ -1,6 +1,7 @@
 #ifndef VALUE_REMOVER_H
 #define VALUE_REMOVER_H
 
+#include <stdio.h> // for printf(), etc
 // OpenCV
 #include <opencv2/core/core.hpp>
 #if CV_MAJOR_VERSION > 2 || (CV_MAJOR_VERSION == 2 && CV_MINOR_VERSION >= 4)
