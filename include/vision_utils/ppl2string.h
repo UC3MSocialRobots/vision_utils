@@ -73,8 +73,4 @@ std::string ppl2string(const people_msgs::People & ppl,
 
 } // end namespace vision_utils
 
-#endif // vision_utils_H
-
-} // end namespace vision_utils
-
 #endif // PPL2STRING_H

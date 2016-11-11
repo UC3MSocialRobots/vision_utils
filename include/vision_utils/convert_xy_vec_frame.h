@@ -26,6 +26,8 @@ ________________________________________________________________________________
 #include <stdio.h> // for printf(), etc
 #include <string>
 #include <vector>
+#include <vision_utils/copy2.h>
+#include <tf/transform_listener.h>
 
 namespace vision_utils {
 
@@ -83,10 +85,6 @@ static inline bool convert_xy_vec_frame(const std_msgs::Header & src_header,
   } // end try / catch
   return true;
 } // end convert_xy_vec_frame()
-
-} // end namespace vision_utils
-
-#endif // LASER_UTILS_H
 
 } // end namespace vision_utils
 

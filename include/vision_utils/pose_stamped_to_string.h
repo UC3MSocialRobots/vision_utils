@@ -25,6 +25,8 @@ ________________________________________________________________________________
 // std includes
 #include <sstream> // for ostringstream
 #include <string>
+#include <vision_utils/printP.h>
+#include <vision_utils/printP4.h>
 
 namespace vision_utils {
 

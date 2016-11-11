@@ -33,7 +33,6 @@ inline void save_file_split(const std::string & filepath,
   //printf("save_file_vec('%s')", filepath.c_str());
   save_file(filepath, concatenate_vector(content));
 }
-} // end namespace vision_utils
 
 } // end namespace vision_utils
 

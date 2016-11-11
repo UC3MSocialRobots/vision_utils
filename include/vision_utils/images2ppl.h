@@ -284,7 +284,6 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-namespace vision_utils {
 /*! Convert a PP into a (rgb, depth, user_mask) triplet.
    * \param curr_pose
    * \param rgb, depth, user_mask
@@ -410,7 +409,6 @@ inline bool indices2names(const people_msgs::People& ppl,
     names.push_back(ppl.people[pp_indices[i]].name);
   return true;
 } // end indices2names()
-} // end namespace vision_utils
 
 } // end namespace vision_utils
 #endif // IMAGES2PPL_H

@@ -1,8 +1,8 @@
 /*!
-  \file        extractLayer.h
+  \file        vector2path.h
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
-  \date        2016/11/2
+  \date        2016/11/11
 ________________________________________________________________________________
 
 This program is free software: you can redistribute it and/or modify
@@ -19,40 +19,25 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
  */
-
-#ifndef EXTRACTLAYER_H
-#define EXTRACTLAYER_H
-// std includes
-#include <opencv2/core/core.hpp>
+#ifndef VECTOR2PATH_H
+#define VECTOR2PATH_H
+#include <nav_msgs/Path.h>
 #include <vector>
 
 namespace vision_utils {
 
-/*!
- *\brief   extract one of the layer from an image
-     *
- *\param   src the source
- *\param   dest the destination
- *\param   layer_idx the number of the layer (between 0 and 2)
- */
-inline void extractLayer(const cv::Mat3b & src, cv::Mat1b & dest,
-                         const int layer_idx) {
-  // TODO check there is a copy done
-#if 1
-  std::vector<cv::Mat> planes;
-  cv::split(src, planes);
-  dest = planes.at(layer_idx);
-#else
-  IplImage src_ipl = src, dest_ipl = dest;
-  if (layer == 0)
-    cvSplit(&src_ipl, &dest_ipl, 0, 0, 0); // hue
-  if (layer == 1)
-    cvSplit(&src_ipl, 0, &dest_ipl, 0, 0); // saturation
-  if (layer == 2)
-    cvSplit(&src_ipl, 0, 0, &dest_ipl, 0); // value
-#endif
+template<class _Pt2>
+inline void vector2path(const std::vector<_Pt2> & traj_xy, nav_msgs::Path & _path_msg) {
+  unsigned int npts = traj_xy.size();
+  _path_msg.poses.resize(npts);
+  for (unsigned int i = 0; i < npts; ++i) {
+    _path_msg.poses[i].pose.position.x = traj_xy[i].x;
+    _path_msg.poses[i].pose.position.y = traj_xy[i].y;
+    _path_msg.poses[i].pose.orientation = tf::createQuaternionMsgFromYaw(0);;
+  }
 }
 
 } // end namespace vision_utils
 
-#endif // EXTRACTLAYER_H
+#endif // VECTOR2PATH_H
+

@@ -124,13 +124,15 @@ static void make_trajectory(const float & vel_lin, const float & vel_ang,
                             std::vector<_Pt2> & out_traj,
                             const float & time_end, const float & dt,
                             const float & x0, const float & y0, const float & yaw0) {
-  float x = x0, y = y0, yaw = yaw0;
-  out_traj.clear();
-  out_traj.reserve(time_end / dt);
-  for (float t = 0; t < time_end; t+= dt) {
+  float x = x0, y = y0, yaw = yaw0, t = 0;
+  unsigned int npts = time_end / dt;
+  out_traj.resize(npts);
+  for (unsigned int i = 0; i < npts; ++i) {
+    out_traj[i].x = x;
+    out_traj[i].y = y;
     update_pos_rot(x, y, yaw, vel_lin, 0, vel_ang, dt);
-    out_traj.push_back(_Pt2(x, y));
-  } // end loop t
+    t += dt;
+  } // end for i
 } // end make_trajectory();
 
 ////////////////////////////////////////////////////////////////////////////////
