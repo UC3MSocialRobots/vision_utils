@@ -48,12 +48,17 @@ A template skill to subscribe to a synchronized stream of RGB and depth images.
 #ifndef RGB_DEPTH_SKILL_H
 #define RGB_DEPTH_SKILL_H
 
-// ROS
+//vision_utils
+#include "vision_utils/kinect_serials.h"
 #include "vision_utils/nano_skill.h"
+#include "vision_utils/pixel2world_depth.h"
+#include "vision_utils/read_camera_model_files.h"
+#include "vision_utils/world2pixel.h"
+// ROS
 #include <image_transport/image_transport.h>
 #include <image_transport/subscriber_filter.h>
 #include <sensor_msgs/image_encodings.h>
-
+#include <image_geometry/pinhole_camera_model.h>
 
 //#define USE_EXACT_TIME // comment to use approx time
 #ifdef USE_EXACT_TIME
@@ -97,8 +102,8 @@ public:
     // check display param
     _nh_private.param("display", _display, _display);
     // get camera model
-    read_camera_model_files
-        (DEFAULT_KINECT_SERIAL(), _default_depth_camera_model, _default_rgb_camera_model);
+    vision_utils::read_camera_model_files
+        (vision_utils::DEFAULT_KINECT_SERIAL(), _default_depth_camera_model, _default_rgb_camera_model);
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -171,7 +176,7 @@ public:
 
   //! conversion functions between image pixels and 3D points
   inline cv::Point3f pixel2world_depth(const cv::Point & p2d) const {
-    return pixel2world_depth<cv::Point3d>
+    return ::vision_utils::pixel2world_depth<cv::Point3d>
     (p2d, _default_depth_camera_model, _depth_bridge->image);
   }
   inline cv::Point3f pixel2world_rgb(const cv::Point & p2d) const {
