@@ -25,6 +25,8 @@ ________________________________________________________________________________
 // std includes
 #include <stdio.h> // for printf(), etc
 #include <string>
+#include "vision_utils/try_to_get_kinect_serial_number.h"
+#include "vision_utils/read_camera_model_files.h"
 
 namespace vision_utils {
 

@@ -69,8 +69,4 @@ std::string translateToGibberishLanguage(const std::string & stringSource){
 
 } // end namespace vision_utils
 
-#endif // TRANSLATOR_H
-
-} // end namespace vision_utils
-
 #endif // TRANSLATETOGIBBERISHLANGUAGE_H

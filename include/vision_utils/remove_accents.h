@@ -53,7 +53,6 @@ inline std::string remove_accents(const std::string & str) {
   find_and_replace(ans, "Ü", "U");
   return ans;
 }
-} // end namespace vision_utils
 
 } // end namespace vision_utils
 

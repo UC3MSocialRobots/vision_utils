@@ -55,11 +55,6 @@ inline std::string print_pose(const geometry_msgs::PoseStamped & pose) {
   return out.str();
 }
 
-
-} // end namespace vision_utils
-
-#endif // PT_UTILS_H
-
 } // end namespace vision_utils
 
 #endif // PRINT_POSE_H

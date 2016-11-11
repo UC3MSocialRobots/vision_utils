@@ -75,8 +75,4 @@ void uchar_bgr_image_to_ros_rgba_color_vector
 
 } // end namespace vision_utils
 
-#endif // COLOR_UTILS_ROS_H
-
-} // end namespace vision_utils
-
 #endif // UCHAR_BGR_IMAGE_TO_ROS_RGBA_COLOR_VECTOR_H
