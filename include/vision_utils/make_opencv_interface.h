@@ -29,7 +29,7 @@ ________________________________________________________________________________
 
 #include <opencv2/highgui/highgui.hpp>
 // vision
-
+#include <vision_utils/paste_images.h>
 
 namespace vision_utils {
 
@@ -80,7 +80,7 @@ void make_opencv_interface(const cv::Mat3b & src, cv::Mat3b & dst,
   // paint the buttons
   unsigned int nbuttons = button_names.size();
   if (nbuttons != button_colors.size()) {
-    printf("nbuttons:%i != button_colors.size():%i\n",
+    printf("nbuttons:%i != button_colors.size():%li\n",
            nbuttons, button_colors.size());
     return;
   }
