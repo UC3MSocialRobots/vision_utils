@@ -22,23 +22,5 @@ ________________________________________________________________________________
 
 #ifndef READ_VEC_H
 #define READ_VEC_H
-// std includes
-#include <opencv2/core/core.hpp>
-#include <string>
-#include <vector>
-
-namespace vision_utils {
-
-template<class _T>
-inline void read(std::vector<_T> & phs,
-                 const cv::FileNode &fn,
-                 const std::string & key) {
-  cv::FileNode hist_nodes = fn[key];
-  phs.resize(hist_nodes.size());
-  for (unsigned int hist_idx = 0; hist_idx < hist_nodes.size(); ++hist_idx)
-    hist_nodes[hist_idx] >> phs[hist_idx];
-} // end write
-
-} // end namespace vision_utils
 
 #endif // READ_VEC_H

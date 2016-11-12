@@ -22,10 +22,14 @@ ________________________________________________________________________________
 
 #ifndef PROPAGATIVE_FLOODFILL_H
 #define PROPAGATIVE_FLOODFILL_H
+// vision_utils
+#include <vision_utils/find_top_point_centered.h>
+#include <vision_utils/depth_image_to_vizualisation_color_image.h>
 // std includes
 #include <opencv2/core/core.hpp>
 #include <stdio.h> // for printf(), etc
 #include <vector>
+#include <queue>
 
 namespace vision_utils {
 

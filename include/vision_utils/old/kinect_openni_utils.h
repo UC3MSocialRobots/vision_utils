@@ -49,7 +49,7 @@ useful functions for working with a Kinect
 
 inline std::string KINECT_SERIAL_ARNAUD() { return "A00365A10630110A"; }
 inline std::string KINECT_SERIAL_LAB() { return "A00365A82054035A"; }
-inline std::string DEFAULT_KINECT_SERIAL() { return KINECT_SERIAL_LAB(); }
+inline std::string DEFAULT_KINECT_SERIAL() { return vision_utils::KINECT_SERIAL_LAB(); }
 
 namespace vision_utils {
 

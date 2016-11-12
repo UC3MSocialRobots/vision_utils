@@ -25,6 +25,8 @@ ________________________________________________________________________________
 // std includes
 #include <stdio.h> // for printf(), etc
 #include <vector>
+#include "vision_utils/is_histogram_empty.h"
+#include "vision_utils/distance_hists.h"
 
 namespace vision_utils {
 

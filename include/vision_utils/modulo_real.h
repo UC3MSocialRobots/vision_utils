@@ -1,8 +1,8 @@
 /*!
-  \file        to_yaml.h
-  \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
+  file
+  author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
-  \date        2016/11/2
+  date        2016/11/12
 ________________________________________________________________________________
 
 This program is free software: you can redistribute it and/or modify
@@ -18,35 +18,23 @@ Lesser General Public License for more details.
 You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ________________________________________________________________________________
+
+  odo Description of the file
  */
 
-#ifndef TO_YAML_H
-#define TO_YAML_H
-// std includes
-#include <opencv2/core/core.hpp>
-#include <sstream> // for ostringstream
-#include <stdio.h> // for printf(), etc
-#include <string>
+#ifndef MODULO_REAL_H
+#define MODULO_REAL_H
 
 namespace vision_utils {
-
-/*!
- * Save file to YAML / XML
- * \param yaml_filename_prefix
- */
-template<class _T>
-inline void to_yaml(_T & obj,
-                    const std::string & yaml_filename_prefix,
-                    const std::string & key) {
-  std::ostringstream full_filename;
-  full_filename << yaml_filename_prefix << "_" << key << ".yaml";
-  cv::FileStorage fs(full_filename.str(), cv::FileStorage::WRITE);
-  obj.write(fs);
-  fs.release();
-  printf("Succesfully written '%s' to file '%s'\n",
-         key.c_str(), full_filename.str().c_str());
-} // end to_yaml();
-
+template<typename T>
+inline T modulo_real(T Value, const T Min, const T Max) {
+  T ans = Value;
+  while (ans >= Max)
+    ans = Min + (ans - Max);
+  while (ans < Min)
+    ans = Max + (ans - Min);
+  return ans;
+}
 } // end namespace vision_utils
+#endif // MODULO_REAL_H
 
-#endif // TO_YAML_H

@@ -28,8 +28,26 @@ ________________________________________________________________________________
 #include <stdio.h> // for printf(), etc
 #include <string>
 #include <vector>
+#include <vision_utils/to_yaml.h>
 
 namespace vision_utils {
+
+template<class _T>
+inline void write(const std::vector<_T> & phs,
+                  cv::FileStorage &fs,
+                  const std::string & key) {
+  fs << key << "[";
+  for( unsigned int i = 0; i < phs.size(); i++ ) {
+    printf("write key '%s' #%i\n", key.c_str(), i);
+    fs << "{";
+    //fs << phs[i];
+    phs[i].write(fs);
+    fs << "}";
+  }
+  fs << "]";
+} // end write()
+
+////////////////////////////////////////////////////////////////////////////////
 
 /*!
  * Save file to YAML / XML

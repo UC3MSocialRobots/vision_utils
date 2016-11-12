@@ -26,6 +26,7 @@ ________________________________________________________________________________
 #include <sstream> // for ostringstream
 #include <string>
 #include "vision_utils/match.h"
+#include "vision_utils/assignment_list_cost.h"
 
 namespace vision_utils {
 
@@ -34,7 +35,7 @@ inline std::string assignment_list_to_string(const MatchList & list) {
   std::ostringstream out;
   unsigned int npairs = list.size();
   out << "AssignmentList:" << npairs
-      << " pairs, total cost:" << assignment_list_cost(list) << ": ";
+      << " pairs, total cost:" << vision_utils::assignment_list_cost(list) << ": ";
   for (unsigned int pair_idx = 0; pair_idx < npairs; ++pair_idx)
     out << list[pair_idx].first << "->" << list[pair_idx].second
         << " (" << std::setprecision(3) << list[pair_idx].cost << "); ";

@@ -26,6 +26,9 @@ ________________________________________________________________________________
 #include <opencv2/core/core.hpp>
 #include <stdio.h> // for printf(), etc
 #include <vector>
+#include "vision_utils/colormaps.h"
+#include "vision_utils/normalize_hist.h"
+#include "vision_utils/histogram_to_image.h"
 
 namespace vision_utils {
 

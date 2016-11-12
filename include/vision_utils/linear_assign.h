@@ -26,9 +26,10 @@ ________________________________________________________________________________
 #include <algorithm> // for std::min(), std::max()...
 #include <stdio.h> // for printf(), etc
 #include <vector>
+#include "vision_utils/cmatrix.h"
 #include "vision_utils/reverse_assignment_list.h"
 #include "vision_utils/lap.h"
-
+#include "vision_utils/linear_assign.h"
 
 namespace vision_utils {
 

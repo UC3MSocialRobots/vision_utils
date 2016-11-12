@@ -30,8 +30,23 @@ ________________________________________________________________________________
 #include <stdio.h> // for printf(), etc
 #include <string>
 #include <vector>
+#include <vision_utils/from_yaml.h>
 
 namespace vision_utils {
+
+// https://github.com/UC3MSocialRobots/vision_utils/blob/af1ca8abf21a49ef53e38a4d96bc8eb797f88fdc/include/vision_utils/io.h
+template<class _T>
+inline void read(std::vector<_T> & phs,
+                 const cv::FileNode &fn,
+                 const std::string & key) {
+  cv::FileNode hist_nodes = fn[key];
+  phs.resize(hist_nodes.size());
+  for (unsigned int hist_idx = 0; hist_idx < hist_nodes.size(); ++hist_idx)
+    hist_nodes[hist_idx] >> phs[hist_idx];
+} // end write
+
+////////////////////////////////////////////////////////////////////////////////
+
 /*!
  * Load from YAML / XML file
  * \param yaml_filename_prefix

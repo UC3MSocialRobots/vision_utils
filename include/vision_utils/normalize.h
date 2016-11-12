@@ -24,6 +24,7 @@ ________________________________________________________________________________
 #define NORMALIZE_H
 // std includes
 #include <vector>
+#include <vision_utils/norm.h>
 
 namespace vision_utils {
 

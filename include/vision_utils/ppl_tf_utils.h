@@ -45,29 +45,30 @@ namespace vision_utils {
  *    true if success
  */
 bool convert_people_pose_tf(people_msgs::Person & pose,
+                            const std_msgs::Header & pose_header,
                             const std::string & target_frame,
                             const tf::TransformListener & transform_listener) {
   // do nothing if same frame
-  if (pose.header.frame_id == target_frame)
+  if (pose_header.frame_id == target_frame)
     return true;
 
   // convert geometry_msgs::Pose -> geometry_msgs::PoseStamped
   geometry_msgs::PoseStamped pin, pout;
-  pin.header = pose.header;
-  pin.pose = pose.position;
+  pin.header = pose_header;
+  pin.pose.position = pose.position;
+  pin.pose.orientation = tf::createQuaternionMsgFromYaw(0);
   pout.header.stamp = pin.header.stamp;
   pout.header.frame_id = target_frame;
   try {
     // make transform
     transform_listener.transformPose
-        (target_frame, pose.header.stamp, pin, target_frame, pout);
+        (target_frame, pose_header.stamp, pin, target_frame, pout);
   } catch (tf::TransformException & e){
     printf("convert_people_pose_tf(): error in TF conversion '%s'->'%s': '%s'\n",
-           pose.header.frame_id.c_str(), target_frame.c_str(), e.what());
+           pose_header.frame_id.c_str(), target_frame.c_str(), e.what());
     return false;
   }
-  pose.position = pout.pose;
-  pose.header.frame_id = target_frame;
+  pose.position = pout.pose.position;
   return true;
 } // end convert_people_pose_tf()
 
@@ -87,9 +88,10 @@ bool convert_people_pose_tf(people_msgs::Person & pose,
 bool convert_ppl_tf(people_msgs::People & list,
                     const std::string & target_frame,
                     tf::TransformListener & transform_listener) {
-  for (unsigned int pose_idx = 0; pose_idx < list.poses.size(); ++pose_idx) {
+  for (unsigned int pose_idx = 0; pose_idx < list.people.size(); ++pose_idx) {
     bool success = convert_people_pose_tf
-                   (list.poses[pose_idx], target_frame, transform_listener);
+                   (list.people[pose_idx], list.header,
+                    target_frame, transform_listener);
     if (!success)
       return false;
   } // end loop pose_idx
@@ -106,9 +108,6 @@ inline void set_ppl_header(people_msgs::People & ppl,
                            const ros::Time & stamp) {
   ppl.header.frame_id = frame;
   ppl.header.stamp = stamp;
-  unsigned int npps = ppl.people.size();
-  for (unsigned int i = 0; i < npps; ++i)
-    ppl.people[i].header = ppl.header;
 }
 
 } // end namespace vision_utils

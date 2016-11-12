@@ -22,6 +22,7 @@ ________________________________________________________________________________
 
 #ifndef CLEAN_ASSIGN_H
 #define CLEAN_ASSIGN_H
+#include <vision_utils/match.h>
 
 namespace vision_utils {
 

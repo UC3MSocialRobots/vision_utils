@@ -30,8 +30,8 @@ ________________________________________________________________________________
 #include <string>
 #include <vector>
 #include <opencv2/core/core.hpp>
-
 #include <vision_utils/img_path.h>
+#include <vision_utils/kinect_serials.h>
 
 #define DEPTH_DIR  IMG_DIR() + "depth/"
 #define BREAST_DIR  IMG_DIR() + "breast/"
@@ -55,7 +55,8 @@ cv::Point juggling_seeds_array[] = {juggling1_seed, juggling2_seed, juggling3_se
 // convert it to vectors
 std::vector<std::string> juggling_filename_prefixes
 (juggling_filename_prefixes_array, juggling_filename_prefixes_array + juggling_hists_nb);
-std::vector<std::string> juggling_kinect_serials(juggling_hists_nb, KINECT_SERIAL_LAB());
+std::vector<std::string> juggling_kinect_serials(juggling_hists_nb,
+                                                 vision_utils::KINECT_SERIAL_LAB());
 std::vector<cv::Point> juggling_seeds(juggling_seeds_array, juggling_seeds_array + juggling_hists_nb);
 std::vector<int> juggling_labels(juggling_hists_nb, juggling_label);
 
@@ -70,7 +71,8 @@ cv::Point alberto_seeds_array[] = {alberto1_seed, alberto2_seed};
 // convert it to vectors
 std::vector<std::string> alberto_filename_prefixes
 (alberto_filename_prefixes_array, alberto_filename_prefixes_array + alberto_hists_nb);
-std::vector<std::string> alberto_kinect_serials(alberto_hists_nb, KINECT_SERIAL_LAB());
+std::vector<std::string> alberto_kinect_serials(alberto_hists_nb,
+                                                vision_utils::KINECT_SERIAL_LAB());
 std::vector<cv::Point> alberto_seeds(alberto_seeds_array, alberto_seeds_array + alberto_hists_nb);
 std::vector<int> alberto_labels(alberto_hists_nb, alberto_label);
 
@@ -85,7 +87,8 @@ cv::Point alvaro_seeds_array[] = {alvaro1_seed, alvaro2_seed};
 // convert it to vectors
 std::vector<std::string> alvaro_filename_prefixes
 (alvaro_filename_prefixes_array, alvaro_filename_prefixes_array + alvaro_hists_nb);
-std::vector<std::string> alvaro_kinect_serials(alvaro_hists_nb, KINECT_SERIAL_LAB());
+std::vector<std::string> alvaro_kinect_serials(alvaro_hists_nb,
+                                               vision_utils::KINECT_SERIAL_LAB());
 std::vector<cv::Point> alvaro_seeds(alvaro_seeds_array, alvaro_seeds_array + alvaro_hists_nb);
 std::vector<int> alvaro_labels(alvaro_hists_nb, alvaro_label);
 
@@ -99,7 +102,8 @@ cv::Point refset_seeds_array[] =
 // convert it to vectors
 std::vector<std::string> refset_filename_prefixes
 (refset_filename_prefixes_array, refset_filename_prefixes_array + refset_hists_nb);
-std::vector<std::string> refset_kinect_serials(refset_hists_nb, KINECT_SERIAL_LAB());
+std::vector<std::string> refset_kinect_serials(refset_hists_nb,
+                                               vision_utils::KINECT_SERIAL_LAB());
 std::vector<cv::Point> refset_seeds(refset_seeds_array, refset_seeds_array + refset_hists_nb);
 std::vector<int> refset_labels() {
   std::vector<int> ans;
@@ -137,7 +141,8 @@ std::string ainara_filename_prefixes_array[] =  {BREAST_DIR "2013-10-05_15-46-03
 // convert it to vectors
 std::vector<std::string> ainara_filename_prefixes
 (ainara_filename_prefixes_array, ainara_filename_prefixes_array + ainara_hists_nb);
-std::vector<std::string> ainara_kinect_serials(ainara_hists_nb, KINECT_SERIAL_ARNAUD());
+std::vector<std::string> ainara_kinect_serials(ainara_hists_nb,
+                                               vision_utils::KINECT_SERIAL_ARNAUD());
 std::vector<int> ainara_labels(ainara_hists_nb, ainara_label);
 std::vector<int> ainara_user_idx(ainara_hists_nb, 4); // value of user mask in the user image
 
@@ -167,7 +172,8 @@ std::string david_filename_prefixes_array[] =
 // convert it to vectors
 std::vector<std::string> david_filename_prefixes
 (david_filename_prefixes_array, david_filename_prefixes_array + david_hists_nb);
-std::vector<std::string> david_kinect_serials(david_hists_nb, KINECT_SERIAL_LAB());
+std::vector<std::string> david_kinect_serials(david_hists_nb,
+                                              vision_utils::KINECT_SERIAL_LAB());
 std::vector<int> david_labels(david_hists_nb, david_label);
 std::vector<int> david_user_idx(david_hists_nb, 1); // value of user mask in the user image
 
@@ -178,7 +184,8 @@ std::string arnaud_filename_prefixes_array[] =
 // convert it to vectors
 std::vector<std::string> arnaud_filename_prefixes
 (arnaud_filename_prefixes_array, arnaud_filename_prefixes_array + arnaud_hists_nb);
-std::vector<std::string> arnaud_kinect_serials(arnaud_hists_nb, KINECT_SERIAL_LAB());
+std::vector<std::string> arnaud_kinect_serials(arnaud_hists_nb,
+                                               vision_utils::KINECT_SERIAL_LAB());
 std::vector<int> arnaud_labels(arnaud_hists_nb, arnaud_label);
 std::vector<int> arnaud_user_idx(arnaud_hists_nb, 2); // value of user mask in the user image
 

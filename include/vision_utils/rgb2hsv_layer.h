@@ -23,7 +23,7 @@ ________________________________________________________________________________
 #ifndef RGB2HSV_LAYER_H
 #define RGB2HSV_LAYER_H
 // std includes
-#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include "vision_utils/extractLayer.h"
 
 namespace vision_utils {

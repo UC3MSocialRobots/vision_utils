@@ -26,6 +26,7 @@ ________________________________________________________________________________
 #include <stdio.h> // for printf(), etc
 #include <vector>
 #include <numeric> // for accumulate
+#include <vision_utils/modulo_real.h>
 
 namespace vision_utils {
 

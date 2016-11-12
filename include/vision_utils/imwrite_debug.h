@@ -57,43 +57,6 @@ inline bool imwrite_debug(const std::string& filename, cv::InputArray img,
   return true;
 } // end imwrite_debug()
 
-////////////////////////////////////////////////////////////////////////////////
-
-/*!
- * It’s possible to serialize this through the OpenCV I/O XML/YAML interface
- *(just as in case of the OpenCV data structures) by adding a read and
- * a write function inside and outside of your class. Cf:
- * http://docs.opencv.org/doc/tutorials/core/file_input_output_with_xml_yml/file_input_output_with_xml_yml.html
- * \param fs
- *  the stream
- * \param x
- *  the value to serialize
- */
-template<class _T>
-void write(cv::FileStorage & fs, const std::string &, const _T& x) {
-  x.write(fs);
-} // end write()
-
-////////////////////////////////////////////////////////////////////////////////
-
-/*!
- * It’s possible to serialize this through the OpenCV I/O XML/YAML interface
- *(just as in case of the OpenCV data structures) by adding a read and
- * a write function inside and outside of your class. Cf:
- * http://docs.opencv.org/doc/tutorials/core/file_input_output_with_xml_yml/file_input_output_with_xml_yml.html
- * \param node
- * \param x
- * \param default_value
- *
- */
-template<class _T>
-void read(const cv::FileNode & node, _T & x, const _T& default_value = _T()) {
-  if (node.empty())
-    x = default_value;
-  else
-    x.read(node);
-} //end read()
-
 } // end namespace vision_utils
 
 #endif // IMWRITE_DEBUG_H

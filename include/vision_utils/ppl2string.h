@@ -35,12 +35,9 @@ std::string pp2string(const people_msgs::Person & pp,
   out << "Track '" << pp.name << "':("
       << std::setprecision(precision) << pp.position.x << ","
       << std::setprecision(precision) << pp.position.y << ","
-      << std::setprecision(precision) << pp.position.z
-      << ")@" << pp.header.frame_id;
+      << std::setprecision(precision) << pp.position.z;
   if (print_last_update)
-    out << ",confidence:" << std::setprecision(precision) << pp.reliability
-        << ",updated "
-        << (int) (1000*(ros::Time::now() - pp.header.stamp).toSec()) << " ms ago";
+    out << ",confidence:" << std::setprecision(precision) << pp.reliability;
   unsigned int nattr = pp.tagnames.size();
   if (nattr == 0 || nattr != pp.tags.size())
     return out.str();
@@ -60,11 +57,13 @@ std::string ppl2string(const people_msgs::People & ppl,
   if (ppl.people.empty())
     return "empty PPL";
   std::ostringstream out;
+  out << "PPL @" << ppl.header.frame_id
+      << "(updated " << (int) (1000*(ros::Time::now() - ppl.header.stamp).toSec()) << " ms ago):";
   if (ppl.people.size() == 1) {
-    out << "PPL:{1 PP=" << pp2string(ppl.people.front(), precision, print_last_update) << "}";
+    out << "{1 PP=" << pp2string(ppl.people.front(), precision, print_last_update) << "}";
     return out.str();
   }
-  out << "PPL (" << ppl.people.size() << " PPs):{";
+  out << ppl.people.size() << " PPs:{";
   for (unsigned int user = 0; user < ppl.people.size(); ++user)
     out << std::endl << "  " << pp2string(ppl.people[user], precision, print_last_update);
   out << std::endl << "}";

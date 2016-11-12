@@ -27,6 +27,8 @@ ________________________________________________________________________________
 #include <sstream> // for ostringstream
 #include <stdio.h> // for printf(), etc
 #include <string>
+#include <vision_utils/file_exists.h>
+#include "vision_utils/infosimage.h"
 
 namespace vision_utils {
 

@@ -24,6 +24,7 @@ ________________________________________________________________________________
 #define IS_HISTOGRAM_EMPTY_H
 // std includes
 #include <opencv2/core/core.hpp>
+#include <vision_utils/normalize_hist.h>
 
 namespace vision_utils {
 

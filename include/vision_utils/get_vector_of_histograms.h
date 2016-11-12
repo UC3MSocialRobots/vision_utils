@@ -25,6 +25,7 @@ ________________________________________________________________________________
 // std includes
 #include <opencv2/core/core.hpp>
 #include <vector>
+#include <vision_utils/get_histogram.h>
 
 namespace vision_utils {
 

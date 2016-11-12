@@ -24,27 +24,22 @@ ________________________________________________________________________________
 #define PPL2POINTS_H
 // std includes
 #include <vector>
+#include <people_msgs/People.h>
 
 namespace vision_utils {
 
 template<class Pt3>
-inline std::vector<Pt3> ppvec2points(const people_msgs::People & ppvec) {
-  unsigned int nusers = ppvec.size();
+inline std::vector<Pt3> ppl2points(const people_msgs::People & ppl) {
+  unsigned int nusers = ppl.people.size();
   std::vector<Pt3> ans(nusers);
   for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx) {
-    const geometry_msgs::Point *src = &(ppvec[user_idx].position.position);
+    const geometry_msgs::Point *src = &(ppl.people[user_idx].position);
     Pt3 *dst = &(ans[user_idx]);
     dst->x = src->x;
     dst->y = src->y;
     dst->z = src->z;
   }
   return ans;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-template<class Pt3>
-inline std::vector<Pt3> ppl2points(const people_msgs::People & ppl) {
-  return ppvec2points<Pt3>(ppl.people);
 }
 
 } // end namespace vision_utils

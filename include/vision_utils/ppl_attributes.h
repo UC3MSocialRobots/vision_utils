@@ -26,11 +26,12 @@ ________________________________________________________________________________
 #ifndef PPL_tagS_H
 #define PPL_tagS_H
 
-// msg
-#include <people_msgs/People.h>
 // AD
 #include <vision_utils/cast_to_string.h>
 #include <vision_utils/cast_from_string.h>
+// msg
+#include <people_msgs/People.h>
+#include <stdio.h>
 
 namespace vision_utils {
 
@@ -180,7 +181,7 @@ bool copy_tags(const people_msgs::Person & src,
                                 src.tags.size());
   for (unsigned int tag_idx = 0; tag_idx < ntags; ++tag_idx) {
     if (!set_tag(dst, src.tagnames[tag_idx],
-                               src.tags[tag_idx]))
+                 src.tags[tag_idx]))
       return false;
   } // end for (tag_idx)
   return true;
@@ -188,17 +189,27 @@ bool copy_tags(const people_msgs::Person & src,
 
 ////////////////////////////////////////////////////////////////////////////////
 
-bool copy_tags(const people_msgs::People & ppl_src,
-               people_msgs::People & ppl_dst) {
-  unsigned int nppls = ppl_src.people.size();
-  if (ppl_dst.people.size() != nppls) {
-    printf("copy_tags(): cannot copy, tags vector of size %i,"
-           "dest PPL of size %li\n", nppls, ppl_dst.people.size());
+bool apply_new_tags(const std::vector<std::string> & added_tagnames,
+                    const std::vector<std::string> & added_tags,
+                    const std::vector<unsigned int> & added_indices,
+                    people_msgs::People & ppl_dst) {
+  unsigned int ntags = added_indices.size(), npp = ppl_dst.people.size();
+  if (ntags != added_tagnames.size()
+      || ntags != added_tags.size()) {
+    printf("Incorrect size of new_ppl new tags: %i, %li, %li!\n",
+             ntags , added_tagnames.size(), added_tags.size());
+    return false;
   }
-  for (unsigned int i = 0; i < nppls; ++i) {
-    if (!copy_tags(ppl_src.people[i], ppl_dst.people[i]))
+  for (unsigned int i = 0; i < ntags; ++i) {
+    short ppidx = added_indices[i];
+    if (ppidx >= npp) {
+      printf("Incorrect value of added_indices: %i >= %i!\n",
+               ppidx, npp);
+      continue;
+    }
+    if (!set_tag(ppl_dst.people[ppidx], added_tagnames[i], added_tags[i]))
       return false;
-  } // end for (i)
+  } // end for i
   return true;
 } // end copy_tags()
 

@@ -44,16 +44,6 @@ inline T clamp(T Value, const T Min, const T Max) {
   return (Value < Min)? Min : (Value > Max)? Max : Value;
 }
 
-template<typename T>
-inline T modulo_real(T Value, const T Min, const T Max) {
-  T ans = Value;
-  while (ans >= Max)
-    ans = Min + (ans - Max);
-  while (ans < Min)
-    ans = Max + (ans - Min);
-  return ans;
-}
-
 } // end namespace vision_utils
 
 #endif // CLAMP_H
