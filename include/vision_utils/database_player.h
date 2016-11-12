@@ -27,12 +27,12 @@ A template class for iteratively access RGB+depth+user databases.
 
 #include <opencv2/highgui/highgui.hpp>
 // AD
-#include "vision_utils/user_image_to_rgb.h"
 #include "vision_utils/depth_image_to_vizualisation_color_image.h"
-#include "vision_utils/filename_handling.h"
 #include "vision_utils/imwrite_debug.h"
-#include "vision_utils/timestamp.h"
 #include "vision_utils/iterable_to_string.h"
+#include "vision_utils/resolve_file_regex.h"
+#include "vision_utils/timestamp.h"
+#include "vision_utils/user_image_to_rgb.h"
 
 namespace vision_utils {
 

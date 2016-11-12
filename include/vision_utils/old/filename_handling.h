@@ -37,6 +37,7 @@ changing extensions, extracting folder, etc.
 namespace vision_utils {
 typedef std::set<std::string> StringSet;
 
+//cut:extract_filename_from_full_path
 /*!
  \param path
  \return std::string
@@ -52,7 +53,7 @@ inline std::string extract_filename_from_full_path(const std::string & path) {
 } // end extract_filename_from_full_path()
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:extract_folder_from_full_path
 /*!
  \param path
  \return std::string
@@ -69,7 +70,7 @@ inline std::string extract_folder_from_full_path(const std::string & path) {
 } // end extract_folder_from_full_path()
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:get_filename_extension
 /*!
  * Retrieve the extension from a filename
  * \param path
@@ -92,7 +93,7 @@ inline std::string get_filename_extension
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:remove_filename_extension
 /*!
  * Remove the extension from a filename
  * \param path
@@ -115,7 +116,7 @@ inline std::string remove_filename_extension
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:change_filename_extension
 inline std::string change_filename_extension
 (const std::string & path,
  const std::string & new_extension) {
@@ -123,7 +124,7 @@ inline std::string change_filename_extension
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:add_suffix_before_filename_extension
 /*!
   Add a suffix to a filename
  \param path
@@ -150,7 +151,7 @@ inline std::string add_suffix_before_filename_extension
 } // end add_suffix_before_filename_extension()
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:absolutePath
 /*! \brief   returns the absolute path from a relative path.
  * For instance, absolutePath("../3", "C:/1/2/") = "C:/1/3"
  *
@@ -186,7 +187,7 @@ std::string absolutePath(const char* filename,
 //inline std::string absolutePath(const char* filename);
 
 ////////////////////////////////////////////////////////////////////////////////
-
+//cut:resolve_file_regex
 /*!
  * Transform a regular expression into a list of files
  * \param files semicolor-separated list
@@ -244,7 +245,7 @@ inline bool resolve_file_regex(const std::string & files_regex,
   std::copy(files_set.begin(), files_set.end(), std::back_inserter(files));
   return true;
 } // end resolve_file_regex()
-
+//cut:
 } // end namespace vision_utils
 
 #endif // FILENAME_HANDLING_H

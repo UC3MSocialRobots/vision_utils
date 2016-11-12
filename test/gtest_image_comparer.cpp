@@ -31,6 +31,7 @@ Some tests for ImageComparer
 
 #include <opencv2/highgui/highgui.hpp>
 #include <queue>
+#include <list>
 
 typedef std::vector<cv::Point> Pt2Vec;
 typedef std::list<cv::Point>   Pt2List;
