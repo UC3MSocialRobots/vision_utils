@@ -22,6 +22,7 @@ ________________________________________________________________________________
 
 #ifndef DISTANCE_POINT_SEGMENT_SQ_H
 #define DISTANCE_POINT_SEGMENT_SQ_H
+#include <vision_utils/distance_points_squared.h>
 
 namespace vision_utils {
 
