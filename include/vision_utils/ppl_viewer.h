@@ -95,7 +95,6 @@ public:
     // prepair GUI
     _window_name = "ukf_multimodal";
     //_ms.set_mouse_move_callback(_window_name);
-    // cv::namedWindow(_window_name);
     _frame = "/odom";
     set_display(true);
     _ppl2ms.clear_bg(_ms);
@@ -134,7 +133,11 @@ public:
    *  then it is = get_nb_subscribed_methods() */
   inline unsigned int get_nb_PPL_publishers() const { return ppl_subscribers.getNumPublishers(); }
 
-  inline void set_display(bool display) { _display = display; }
+  inline void set_display(bool display) {
+    _display = display;
+    if (display)
+      cv::namedWindow(_window_name);
+  }
 
   //////////////////////////////////////////////////////////////////////////////
 

@@ -3,7 +3,7 @@
   \author      Arnaud Ramey <arnaud.a.ramey@gmail.com>
                 -- Robotics Lab, University Carlos III of Madrid
   \date        2013/11/7
-  
+
 ________________________________________________________________________________
 
 This program is free software: you can redistribute it and/or modify

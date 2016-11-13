@@ -22,19 +22,22 @@ ________________________________________________________________________________
 
 Tests for the histogram_utils namespace.
  */
-//#define DISPLAY
+bool display = false;
 // Bring in gtest
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
 // AD
 #include "vision_utils/analyse_image.h"
+#include <vision_utils/cast_to_string.h>
 #include <vision_utils/colormaps.h>
 #include <vision_utils/distance_hists.h>
 #include "vision_utils/get_histogram.h"
 #include "vision_utils/get_hue_histogram.h"
 #include "vision_utils/get_vector_of_histograms.h"
+#include <vision_utils/histogram2gnuplot.h>
 #include <vision_utils/histogram_to_image.h>
 #include "vision_utils/hist_to_string.h"
+#include "vision_utils/hue_to_rgb_mat.h"
 #include <vision_utils/img_path.h>
 #include "vision_utils/matrix_testing.h"
 #include <vision_utils/mean_std_dev_modulo.h>
@@ -86,14 +89,14 @@ void test_mean_std_dev(const std::string & filename,
   ASSERT_NEAR(std_dev, exp_std_dev, 1);
 
   // display
-#ifdef DISPLAY
+if (display) {
   cv::imshow("h_illus", h_illus); cv::waitKey(0);
   cv::destroyAllWindows();
   printf("mean:%g, std_dev:%g\n", mean, std_dev);
   //gaussian_pdf2gnuplot(mean, std_dev, false, -50, 230);
   //VU::histogram2gnuplot(h, 180, -50, 230, mean, std_dev);
   VU::histogram2gnuplot(h, 180, 0, 180, mean, std_dev);
-#endif // DISPLAY
+    } // end if display
 }
 
 //TEST(TestSuite, test_mean_std_dev_red_grad) { test_mean_std_dev(vision_utils::IMG_DIR() + "red_grad.png", 0.5, 13); }
@@ -139,13 +142,13 @@ void test_histo_bw(const std::string filename) {
   // draw it
   cv::Mat3b histo_illus;
   VU::histogram_to_image(histo, histo_illus, 800, 600);
-#ifdef DISPLAY
+if (display) {
   cv::imwrite("histo_illus.png", histo_illus); printf("'histo_illus.png' saved.\n");
   cv::imshow("img", img);
   cv::imshow("histo_illus", histo_illus);
   cv::waitKey(0);
   cv::destroyAllWindows();
-#endif // DISPLAY
+    } // end if display
 }
 
 TEST(TestSuite, histo_bw) {
@@ -168,13 +171,13 @@ void test_histo_hue_mask(const std::string filename,
   VU::histogram_to_image
       (histo_full, histo_full_illus, illus_w, illus_h, vision_utils::ratio2hue);
 
-#ifdef DISPLAY
+if (display) {
   cv::imshow("img", img);
   cv::imwrite("hue.png", vision_utils::hue2rgb(hue)); printf("'hue.png' saved.\n");
   cv::imshow("hue", vision_utils::hue2rgb(hue));
   cv::imshow("histo_full_illus", histo_full_illus);
   cv::imwrite("histo_full_illus.png", histo_full_illus); printf("'histo_full_illus.png' saved.\n");
-#endif // DISPLAY
+    } // end if display
 
   if (mask_filename.size() > 0) {
     cv::Mat1b mask = cv::imread(mask_filename, CV_LOAD_IMAGE_GRAYSCALE);
@@ -182,15 +185,15 @@ void test_histo_hue_mask(const std::string filename,
     VU::Histogram histo_mask = VU::get_histogram(hue, nbins, max_value, mask);
     VU::histogram_to_image
         (histo_mask, histo_mask_illus, illus_w, illus_h, vision_utils::ratio2hue);
-#ifdef DISPLAY
+if (display) {
     cv::imshow("histo_mask_illus", histo_mask_illus);
     cv::imwrite("histo_mask_illus.png", histo_mask_illus); printf("'histo_mask_illus.png' saved.\n");
-#endif // DISPLAY
+    } // end if display
   }
-#ifdef DISPLAY
+if (display) {
   cv::waitKey(0);
   cv::destroyAllWindows();
-#endif // DISPLAY
+    } // end if display
 }
 
 TEST(TestSuite, histo_hue_mask) {
@@ -236,7 +239,7 @@ void test_dist_roi_moving_mouse(const std::string filename) {
       (hists, hist_img, hist_w, hist_h, vision_utils::ratio2hue, &refresh_mask);
   refresh_mask[0] = false; // no need to refresh this histogram anymore
 
-#ifdef DISPLAY
+if (display) {
   cv::Mat3b img_illus;
   while (true) {
     // compute and draw moving histogram
@@ -285,7 +288,7 @@ void test_dist_roi_moving_mouse(const std::string filename) {
       break;
   } // end while (true)
   cv::destroyAllWindows();
-#endif // DISPLAY
+    } // end if display
 }
 
 TEST(TestSuite, dist_roi_moving_mouse) {
@@ -295,8 +298,8 @@ TEST(TestSuite, dist_roi_moving_mouse) {
 ////////////////////////////////////////////////////////////////////////////////
 
 void test_get_vector_of_histograms_illus
-(const std::vector<cv::Mat> & /*hues*/,
- const std::vector<cv::Mat> & /*masks*/,
+(const std::vector<cv::Mat> & hues,
+ const std::vector<cv::Mat> & masks,
  const std::vector<VU::Histogram> & hists,
  const int /*nbins*/)
 {
@@ -304,7 +307,7 @@ void test_get_vector_of_histograms_illus
   cv::Mat3b hists_img;
   VU::vector_of_histograms_to_image(hists, hists_img, 300, 200,
                                     vision_utils::ratio2hue);
-#ifdef DISPLAY
+if (display) {
   // show everything
   for (unsigned int i = 0; i < hues.size(); ++i)
     cv::imshow(std::string("hue #") + vision_utils::cast_to_string(i),
@@ -315,7 +318,7 @@ void test_get_vector_of_histograms_illus
   cv::imshow("hists_img", hists_img);
   cv::waitKey(0);
   cv::destroyAllWindows();
-#endif // DISPLAY
+    } // end if display
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -379,6 +382,7 @@ TEST(TestSuite, get_vector_of_histograms_1_image_1_multimask) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
+  display = (argc > 1); printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

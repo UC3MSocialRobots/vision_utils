@@ -38,11 +38,12 @@ and a ground truth PPL.
         The ground truth positions
  */
 
+// vision_utils
 #include "vision_utils/dgaitdb.h"
-//#include "vision_utils/dgaitdb_filename.h"
-#include <image_transport/image_transport.h>
-// people_msgs
 #include "vision_utils/images2ppl.h"
+// ROS
+#include <image_transport/image_transport.h>
+#include <cv_bridge/cv_bridge.h>
 
 typedef people_msgs::Person PP;
 typedef people_msgs::People PPL;

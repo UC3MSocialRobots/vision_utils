@@ -23,7 +23,7 @@ ________________________________________________________________________________
 Some tests for the TimerChart class.
 
  */
-//#define DISPLAY
+bool display = false;
 // put the line "#define CHART_TIMER_ON" in your code to activate the TimerChart
 #define CHART_TIMER_ON
 #include "vision_utils/rand_gaussian.h"
@@ -48,18 +48,19 @@ TEST(TestSuite, test1) {
     TIMER_PRINT_RESET(timer, "zim");
     usleep_gauss(50E3);
     TIMER_PRINT_RESET(timer, "zam");
-#ifdef DISPLAY
+if (display) {
     TIMER_DISPLAY_CHART(timer, 1);
     char c = cv::waitKey(50);
     if ((int) c == 27)
       break;
-#endif // DISPLAY
+    } // end if display
   } // end while (true)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char** argv) {
+  display = (argc > 1); printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

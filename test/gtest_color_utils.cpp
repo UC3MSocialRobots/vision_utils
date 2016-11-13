@@ -1,5 +1,5 @@
 
-//#define DISPLAY
+bool display = false;
 #include <gtest/gtest.h>
 #include "vision_utils/hue_to_string.h"
 #include "vision_utils/hue2rgb.h"
@@ -28,7 +28,7 @@ TEST(TestSuite, test_hue_to_string) {
 
   // set callbacks
   test_hue_to_string_mouse_cb(CV_EVENT_MOUSEMOVE, cols / 2, rows / 2, 0, NULL);
-#ifdef DISPLAY
+if (display) {
   std::string window_name = "hue_to_string";
   cv::namedWindow(window_name);
   cv::setMouseCallback(window_name, test_hue_to_string_mouse_cb);
@@ -40,7 +40,7 @@ TEST(TestSuite, test_hue_to_string) {
     if ((int) c == 27)
       break;
   } // end while true
-#endif // DISPLAY
+    } // end if display
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -67,16 +67,17 @@ TEST(TestSuite, test_hue_scales) {
              vision_utils::hue2rgb<cv::Scalar>(h));
   } // end loop col
 
-#ifdef DISPLAY
+if (display) {
   cv::imshow("img", img);
   cv::imshow("img2", img2);
   cv::waitKey(0);
-#endif // DISPLAY
+    } // end if display
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char** argv) {
+  display = (argc > 1); printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

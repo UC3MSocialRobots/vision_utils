@@ -29,7 +29,7 @@ Some tests for HeadFinder
 #include "vision_utils/head_finder.h"
 #include <vision_utils/distance_points.h>
 
-// #define DISPLAY
+bool display = false;
 
 void test_find(const cv::Mat1b & user_mask, bool expect_success = true,
                cv::Point expected_head_pos = cv::Point(), bool has_answer_in_white = false) {
@@ -44,9 +44,9 @@ void test_find(const cv::Mat1b & user_mask, bool expect_success = true,
     return;
 
   // now try to find the correct value
-#ifdef DISPLAY
-  finder.illus(user_mask_255);
-#endif
+  if (display) {
+    finder.illus(user_mask_255);
+  }
   if (has_answer_in_white) {
     cv::Mat1b user_mask_white = (user_mask == 255);
     std::vector<cv::Point> pts;
@@ -155,6 +155,7 @@ TEST(TestSuite, david_arnaud3) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
+  display = (argc > 1); printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

@@ -22,7 +22,7 @@ ________________________________________________________________________________
 
 Some tests for vision_utils::FilenamePrefix2Imgs.
  */
-//#define DISPLAY
+bool display = false;
 #include <gtest/gtest.h>
 #include "vision_utils/filename_prefix2imgs.h"
 #include <vision_utils/img_path.h>
@@ -44,10 +44,10 @@ void test_load(const std::string & filename_regex,
   ASSERT_TRUE(db.get_user_idx() == exp_user_idx)
       << "db.get_user_idx():" << db.get_user_idx()
       << ", exp_user_idx:" << exp_user_idx;
-#ifdef DISPLAY
+if (display) {
   db.display();
   cv::waitKey(0);
-#endif // DISPLAY
+    } // end if display
   for (unsigned int frame_idx = 0; frame_idx < nframes - 1; ++frame_idx) {
     ASSERT_TRUE(db.go_to_next_frame());
   } // end for (frame_idx)
@@ -62,6 +62,7 @@ TEST(TestSuite, breast)    { test_load(vision_utils::IMG_DIR() + "breast/*_rgb.p
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
+  display = (argc > 1); printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

@@ -23,7 +23,7 @@ ________________________________________________________________________________
 Some tests for PPLViewer
 
  */
-//#define DISPLAY
+bool display = false;
 
 // Bring in gtest
 #include <gtest/gtest.h>
@@ -59,19 +59,18 @@ TEST(TestSuite, empty_ppl) {
   // create viewer
   nh_private.setParam(nh_private.resolveName("ppl_topics"), ppl_pub.getTopic());
   vision_utils::PPLViewer viewer;
-#ifndef DISPLAY
-  viewer.set_display(false);
-#endif
+  viewer.set_display(display);
   // check viewer and PPL publihser are connected
   ASSERT_TRUE_TIMEOUT(viewer.get_nb_PPL_publishers() == 1, MYTIMEOUT);
 
   // publish empty PPL
   vision_utils::PPLViewer::PPL ppl;
   ppl.header.stamp = ros::Time::now();
+  vision_utils::set_method(ppl, "testmethod"); // the PPL is empty so we won't set anything
   ppl_pub.publish(ppl);
 
   // check the PPLViewer got the emitted PPL
-  ASSERT_TRUE_TIMEOUT(viewer.get_nb_received_methods() == 1, MYTIMEOUT)
+  ASSERT_TRUE_TIMEOUT(viewer.get_nb_received_methods() == 0, MYTIMEOUT)
       << "methods:" << vision_utils::iterable_to_string(viewer.get_all_received_methods());
   ASSERT_TRUE(viewer.get_nb_total_received_tracks() == 0);
 }
@@ -98,9 +97,7 @@ void test_publish(std::string filename_prefix = vision_utils::IMG_DIR() + "depth
   // create viewer
   nh_private.setParam(nh_private.resolveName("ppl_topics"), ppl_pub.getTopic());
   vision_utils::PPLViewer viewer;
-#ifndef DISPLAY
-  viewer.set_display(false);
-#endif
+  viewer.set_display(display);
   ASSERT_TRUE(viewer.get_nb_received_methods() == 0);
   ASSERT_TRUE(viewer.get_nb_total_received_tracks() == 0);
   // check viewer and PPL publihser are connected
@@ -115,11 +112,12 @@ void test_publish(std::string filename_prefix = vision_utils::IMG_DIR() + "depth
   ppl_pub.publish(ppl_conv.get_ppl());
 
   // check the PPLViewer got the emitted PPL
-  ASSERT_TRUE_TIMEOUT(viewer.get_nb_received_methods() == 1, MYTIMEOUT)
+  unsigned int nexp_methods = (nusers == 0 ? 0 : use_2_ppl_methods ? 2 : 1);
+  ASSERT_TRUE_TIMEOUT(viewer.get_nb_received_methods() == nexp_methods, MYTIMEOUT)
       << "methods:" << vision_utils::iterable_to_string(viewer.get_all_received_methods());
   ASSERT_TRUE(viewer.get_nb_total_received_tracks() == nusers);
   std::vector<vision_utils::PPLViewer::MethodName> methods = viewer.get_all_received_methods();
-  ASSERT_TRUE(methods.size() == 1);
+  ASSERT_TRUE(methods.size() == nexp_methods);
   ASSERT_TRUE(methods.front() ==
               vision_utils::get_tag_people_default(ppl_conv.get_ppl(), "method", std::string()));
 
@@ -152,9 +150,9 @@ void test_publish(std::string filename_prefix = vision_utils::IMG_DIR() + "depth
     }
   } // end if (use_2_ppl_methods || generate_path)
 
-#ifdef DISPLAY
-  cv::waitKey(0);
-#endif // DISPLAY
+  if (display) {
+    cv::waitKey(0);
+  } // end if display
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -190,9 +188,7 @@ void test_image_no_image(std::string filename_prefix = vision_utils::IMG_DIR() +
   // create viewer
   nh_private.setParam(nh_private.resolveName("ppl_topics"), ppl_pub.getTopic());
   vision_utils::PPLViewer viewer;
-#ifndef DISPLAY
-  viewer.set_display(false);
-#endif
+  viewer.set_display(display);
   ASSERT_TRUE(viewer.get_nb_received_methods() == 0);
   ASSERT_TRUE(viewer.get_nb_total_received_tracks() == 0);
   // check viewer and PPL publihser are connected
@@ -216,9 +212,9 @@ void test_image_no_image(std::string filename_prefix = vision_utils::IMG_DIR() +
     std::vector<vision_utils::PPLViewer::MethodName> methods = viewer.get_all_received_methods();
     ASSERT_TRUE(methods.size() == 1);
     ASSERT_TRUE(methods.front() == vision_utils::get_tag_people_default(ppl_conv.get_ppl(), "method", std::string()));
-#ifdef DISPLAY
-    cv::waitKey(0);
-#endif // DISPLAY
+    if (display) {
+      cv::waitKey(0);
+    } // end if display
 
     // now re-emit without image
     for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx) {
@@ -234,9 +230,9 @@ void test_image_no_image(std::string filename_prefix = vision_utils::IMG_DIR() +
     sleep(1);
     EXPECT_NO_FATAL_FAILURE();
 
-#ifdef DISPLAY
-    cv::waitKey(0);
-#endif // DISPLAY
+    if (display) {
+      cv::waitKey(0);
+    } // end if display
   } // end loop time_idx
 } // end test_image_no_image();
 
@@ -248,7 +244,9 @@ TEST(TestSuite, image_no_image_david_arnaud1){ test_image_no_image(vision_utils:
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char** argv) {
+  display = (argc > 1); printf("display:%i\n", display);
   ros::init(argc, argv, "gtest_ppl_viewer");
+  display = (argc > 1); printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

@@ -35,7 +35,6 @@ ________________________________________________________________________________
         [people_msgs::People]
         The ground truth positions
  */
-#include <image_transport/image_transport.h>
 // AD
 #include "vision_utils/blob_segmenter.h"
 #include "vision_utils/color_utils.h"
@@ -50,6 +49,9 @@ ________________________________________________________________________________
 #include "vision_utils/timer.h"
 #include "vision_utils/images2ppl.h"
 #include "vision_utils/ppl_attributes.h"
+// ROS
+#include <image_transport/image_transport.h>
+#include <cv_bridge/cv_bridge.h>
 
 namespace vision_utils {
 

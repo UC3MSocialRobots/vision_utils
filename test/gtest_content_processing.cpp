@@ -45,7 +45,7 @@ and \b cvstage_plugins namespace.
 #include "vision_utils/user_image_to_rgb.h"
 
 #define GRAYSCALE CV_LOAD_IMAGE_GRAYSCALE
-//#define DISPLAY
+bool display = false;
 
 #if 1
 
@@ -748,9 +748,9 @@ TEST(TestSuite, HighestPointFinder_arnaud1) {
   highest_pt = finder.find(mask, seed);
   cv::circle(mask, seed, 3, cv::Scalar::all(0), 2);
   cv::circle(mask, highest_pt, 3, cv::Scalar::all(120), 2);
-#ifdef DISPLAY
+if (display) {
   cv::imshow("mask", mask); cv::waitKey(0);
-#endif // DISPLAY
+    } // end if display
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -762,9 +762,9 @@ TEST(TestSuite, HighestPointFinder_arnaud3) {
   highest_pt = finder.find(mask, seed);
   cv::circle(mask, seed, 3, cv::Scalar::all(0), 2);
   cv::circle(mask, highest_pt, 3, cv::Scalar::all(120), 2);
-#ifdef DISPLAY
+if (display) {
   cv::imshow("mask", mask); cv::waitKey(0);
-#endif // DISPLAY
+    } // end if display
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -773,9 +773,9 @@ TEST(TestSuite, floodfill_edge_closer_david_arnaud1) {
   cv::Mat1b mask = cv::imread(vision_utils::IMG_DIR() + "depth/david_arnaud1_canny.png", GRAYSCALE);
   vision_utils::FloodFillEdgeCloser closer;
   closer.close(mask, cv::Point(433, 168));
-#ifdef DISPLAY
+if (display) {
   cv::imshow("mask", mask); cv::waitKey(0);
-#endif // DISPLAY
+    } // end if display
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -786,9 +786,9 @@ TEST(TestSuite, floodfill_edge_closer_david_arnaud3) {
   vision_utils::FloodFillEdgeCloser closer;
   closer.close(mask, seed, true, false, (uchar) 0, 50, .8f);
   cv::circle(mask, seed, 3, cv::Scalar::all(0), 2);
-#ifdef DISPLAY
+if (display) {
   cv::imshow("mask", mask); cv::waitKey(0);
-#endif // DISPLAY
+    } // end if display
 }
 #endif // end of the skipped tests
 
@@ -796,6 +796,7 @@ TEST(TestSuite, floodfill_edge_closer_david_arnaud3) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
+  display = (argc > 1); printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   // srand(time(NULL));
   testing::InitGoogleTest(&argc, argv);

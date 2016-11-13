@@ -26,13 +26,14 @@ ________________________________________________________________________________
 // Bring in gtest
 #include <gtest/gtest.h>
 #include "vision_utils/timer.h"
+#include "vision_utils/imwrite_debug.h"
 #include "vision_utils/matrix_testing.h"
 #include "vision_utils/blob_segmenter.h"
 #include "vision_utils/read_rgb_depth_user_image_from_image_file.h"
 #include "vision_utils/user_image_to_rgb.h"
 #include <vision_utils/img_path.h>
 
-//#define DISPLAY
+bool display = false;
 
 TEST(TestSuite, empty_ctor) {
   vision_utils::BlobSegmenter segmenter;
@@ -89,27 +90,27 @@ void blob_vs_nite(const std::string & filename_prefix,
   bool ok = segmenter.find_blob(depth, seed, user_mask, method);
   timer.printTime("find_blob");
   ASSERT_TRUE(ok);
-#ifdef DISPLAY
-  vision_utils::imwrite_debug("rgb.png", rgb,
-                             vision_utils::COLOR_24BITS);
-  vision_utils::imwrite_debug("depth.png", vision_utils::depth2viz(depth),
-                             vision_utils::COLORS256);
-  vision_utils::imwrite_debug("segmenter_final_mask.png", segmenter.get_final_mask(),
-                             vision_utils::COLORS256);
-  vision_utils::imwrite_debug("user_mask.png", user_mask,
-                             vision_utils::MONOCHROME);
-  //vision_utils::imwrite_debug("nite_user_mask.png", nite_user_mask);
+  if (display) {
+    vision_utils::imwrite_debug("rgb.png", rgb,
+                                vision_utils::COLOR_24BITS);
+    vision_utils::imwrite_debug("depth.png", vision_utils::depth2viz(depth),
+                                vision_utils::COLORS256);
+    vision_utils::imwrite_debug("segmenter_final_mask.png", segmenter.get_final_mask(),
+                                vision_utils::COLORS256);
+    vision_utils::imwrite_debug("user_mask.png", user_mask,
+                                vision_utils::MONOCHROME);
+    //vision_utils::imwrite_debug("nite_user_mask.png", nite_user_mask);
 
-  cv::imshow("rgb", rgb);
-  cv::imshow("depth", vision_utils::depth2viz(depth));
-  cv::imshow("segmenter_final_mask", segmenter.get_final_mask());
-  cv::imshow("user_mask", user_mask);
-  cv::imshow("nite_user_mask", nite_user_mask);
-  cv::waitKey(0);
-#endif // DISPLAY
+    cv::imshow("rgb", rgb);
+    cv::imshow("depth", vision_utils::depth2viz(depth));
+    cv::imshow("segmenter_final_mask", segmenter.get_final_mask());
+    cv::imshow("user_mask", user_mask);
+    cv::imshow("nite_user_mask", nite_user_mask);
+    cv::waitKey(0);
+  } // end if display
   cv::Mat1b frame_diff;
   double rate_change = vision_utils::rate_of_changes_between_two_images
-                       (nite_user_mask, user_mask, frame_diff, (uchar) 1);
+      (nite_user_mask, user_mask, frame_diff, (uchar) 1);
   printf("%s, method:%i: rate_change:%g\n",
          filename_prefix.c_str(), method, rate_change);
   ASSERT_NEAR(rate_change, 0, 5E-2);
@@ -171,11 +172,11 @@ TEST(TestSuite, blobs_vs_nite_one_blob) {
   cv::circle(user_mask, cv::Point(cols/2, cols/3), cols/4, 255, -1);
   depth.setTo(dist, user_mask);
 
-#ifdef DISPLAY
-  cv::imshow("depth", vision_utils::depth2viz(depth));
-  cv::imshow("user_mask", user_mask);
-  cv::waitKey(0);
-#endif
+  if (display) {
+    cv::imshow("depth", vision_utils::depth2viz(depth));
+    cv::imshow("user_mask", user_mask);
+    cv::waitKey(0);
+  } // end if display
 
   vision_utils::BlobSegmenter segmenter;
   ASSERT_TRUE(segmenter.find_all_blobs(depth, components_pts, boundingBoxes));
@@ -205,7 +206,7 @@ void generate_user_mask(const std::string & filename_prefix) {
 
   cv::Mat1b user_mask;
   int nusers = segmenter.all_blobs_to_user_img
-               (depth.size(), components_pts, user_mask);
+      (depth.size(), components_pts, user_mask);
   printf("Found %i users\n", nusers);
   ASSERT_TRUE(nusers > 0);
   user_mask = (user_mask > 0); // normalization
@@ -243,14 +244,14 @@ void blobs_vs_nite(const std::string & filename_prefix,
   // paint all components
   ASSERT_TRUE(segmenter.all_blobs_to_user_img(depth.size(), components_pts, all_comps)
               == nblobs);
-#ifdef DISPLAY
-  cv::destroyAllWindows();
-  cv::imshow("rgb", rgb);
-  cv::imshow("depth", vision_utils::depth2viz(depth));
-  //cv::imshow("all_comps", all_comps);
-  cv::imshow("all_comps2rgb", user_image_to_rgb(all_comps));
-  cv::waitKey(0); cv::destroyAllWindows();
-#endif // DISPLAY
+  if (display) {
+    cv::destroyAllWindows();
+    cv::imshow("rgb", rgb);
+    cv::imshow("depth", vision_utils::depth2viz(depth));
+    //cv::imshow("all_comps", all_comps);
+    cv::imshow("all_comps2rgb", vision_utils::user_image_to_rgb(all_comps));
+    cv::waitKey(0); cv::destroyAllWindows();
+  } // end if display
 
   // now try to find user
   cv::Mat1b user_mask;
@@ -273,13 +274,13 @@ void blobs_vs_nite(const std::string & filename_prefix,
     cv::Mat1b curr_user_mask = (user_mask == curr_idx);
     cv::Mat1b curr_nite_user_mask = (nite_user_mask == *nite_idx);
     double rate_change = vision_utils::rate_of_changes_between_two_images
-                         (curr_nite_user_mask, curr_user_mask, frame_diff, (uchar) 1);
-#ifdef DISPLAY
-    cv::imshow("user_mask2rgb", user_image_to_rgb(user_mask));
-    cv::imshow("curr_user_mask", curr_user_mask);
-    cv::imshow("curr_nite_user_mask", curr_nite_user_mask);
-    cv::waitKey(0);
-#endif // DISPLAY
+        (curr_nite_user_mask, curr_user_mask, frame_diff, (uchar) 1);
+    if (display) {
+      cv::imshow("user_mask2rgb", vision_utils::user_image_to_rgb(user_mask));
+      cv::imshow("curr_user_mask", curr_user_mask);
+      cv::imshow("curr_nite_user_mask", curr_nite_user_mask);
+      cv::waitKey(0);
+    } // end if display
 
     printf("%s, method:%i: rate_change:%g\n",
            filename_prefix.c_str(), method, rate_change);
@@ -309,6 +310,7 @@ TEST(TestSuite, blobs_vs_nite_david_arnaud3) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
+  display = (argc > 1); printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   // srand(time(NULL));
   testing::InitGoogleTest(&argc, argv);

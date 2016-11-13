@@ -201,7 +201,7 @@ bool apply_new_tags(const std::vector<std::string> & added_tagnames,
     return false;
   }
   for (unsigned int i = 0; i < ntags; ++i) {
-    short ppidx = added_indices[i];
+    unsigned int ppidx = added_indices[i];
     if (ppidx >= npp) {
       printf("Incorrect value of added_indices: %i >= %i!\n",
                ppidx, npp);

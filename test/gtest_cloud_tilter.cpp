@@ -37,7 +37,7 @@ ________________________________________________________________________________
 #include "vision_utils/read_camera_model_files.h"
 #include "vision_utils/pixel2world_depth.h"
 
-//#define DISPLAY
+bool display = false;
 
 typedef cv::Point3f Pt3f;
 
@@ -71,9 +71,9 @@ void test_straighten_picture(const std::string & filename_prefix,
   vision_utils::Timer timer;
   ASSERT_TRUE(tilter.straighten(pts));
   timer.printTime("straighten()");
-#ifdef DISPLAY
+if (display) {
   viewer.view_cloud(pts);
-#endif // DISPLAY
+    } // end if display
 }
 
 void test_straighten_picture(int dgaitdb_index) {
@@ -108,6 +108,7 @@ TEST(TestSuite, dgaitdb_ltm_depth) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
+  display = (argc > 1); printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

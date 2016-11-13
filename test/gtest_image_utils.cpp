@@ -7,7 +7,7 @@
  *
  * \date April 2009
  *******************************************************************************/
-//#define DISPLAY
+bool display = false;
 // std
 #include <gtest/gtest.h>
 #include <iostream>
@@ -98,10 +98,10 @@ inline void test_string(const std::string & img_filename, int nb_times) {
   // for (size_t var = 0; var < image_cp.cols * image_cp.rows
   // * image_cp.elemSize(); ++var)
   // ROS_INFO("from_string:var %i=%i", var, *mat_data_ptr++);
-#ifdef DISPLAY
+if (display) {
   cv::imshow("image_cp", image_cp);
   cv::waitKey(5000);
-#endif // DISPLAY
+    } // end if display
 
   /*
      * check with the diff
@@ -151,10 +151,10 @@ TEST(TestSuite, redim_content) {
   out.setTo(0);
   vision_utils::drawListOfPoints(out, comp_resized, cv::Vec3b(255, 0 ,0));
   vision_utils::drawListOfPoints(out, comp, cv::Vec3b(0, 255 , 0));
-#ifdef DISPLAY
+if (display) {
   cv::imshow("out", out);
   cv::waitKey(0);
-#endif // DISPLAY
+    } // end if display
   cv::imwrite("/tmp/out.png", out);
 }
 
@@ -184,11 +184,11 @@ TEST(TestSuite, redim_content2) {
     vision_utils::drawListOfPoints(test, comp_resized,
                                   (uchar) (255 * occur / occur_max));
   }
-#ifdef DISPLAY
+if (display) {
   cv::imshow("test", test);
   cv::waitKey(0);
   cv::imwrite("/tmp/test.png", test);
-#endif // DISPLAY
+    } // end if display
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -213,13 +213,13 @@ inline void test_redim_content3(cv::Mat1b & img_out) {
     timer.printTime("redimContent_vector_without_repetition()\n");
     cv::rectangle(img_out, bbox, CV_RGB(100, 100, 100), 5);
     vision_utils::drawListOfPoints(img_out, comp_resized, (uchar) 255);
-#ifdef DISPLAY
+if (display) {
     cv::imshow("img_out", img_out);
-#endif // DISPLAY
+    } // end if display
   } // end loop var
-#ifdef DISPLAY
+if (display) {
   cv::waitKey();
-#endif // DISPLAY
+    } // end if display
 
   for(std::vector<cv::Point>::const_iterator pt = comp_resized.begin();
       pt != comp_resized.end() ; ++pt) {
@@ -253,11 +253,11 @@ void test_remove_value(const std::string image_filename) {
   cv::Mat3b depth_illus;
   vision_utils::depth_image_to_vizualisation_color_image
       (depth, depth_illus, vision_utils::FULL_RGB_STRETCHED);
-#ifdef DISPLAY
+if (display) {
   cv::imshow("rgb", rgb);
   cv::imshow("depth_illus", depth_illus);
   cv::waitKey(0); cv::destroyAllWindows();
-#endif // DISPLAY
+    } // end if display
 
   // remove nans
   cv::Mat1b img_uchar_with_no_nan_arr[4];
@@ -286,13 +286,13 @@ void test_remove_value(const std::string image_filename) {
       inpaint_mask, vision_utils::VALUE_REMOVAL_METHOD_AVERAGE_BORDER);
   timer.printTime("VALUE_REMOVAL_METHOD_AVERAGE_BORDER"); timer.reset();
 
-#ifdef DISPLAY
+if (display) {
   cv::imshow("VALUE_REMOVAL_METHOD_DO_NOTHING", img_uchar_with_no_nan_arr[0]);
   cv::imshow("VALUE_REMOVAL_METHOD_DIRECTIONAL_VALUE_PROPAGATION", img_uchar_with_no_nan_arr[1]);
   cv::imshow("VALUE_REMOVAL_METHOD_INPAINT", img_uchar_with_no_nan_arr[2]);
   cv::imshow("VALUE_REMOVAL_METHOD_AVERAGE_BORDER", img_uchar_with_no_nan_arr[3]);
   cv::waitKey(0); cv::destroyAllWindows();
-#endif // DISPLAY
+    } // end if display
 } // end test_remove_value();
 
 TEST(TestSuite, value_remover) {
@@ -316,12 +316,12 @@ void test_floodfill_edge_closer(const std::string filename,
   cv::Mat1b img_closed_scale;
   cv::resize(img_closed, img_closed_scale, cv::Size(), 15, 15, CV_INTER_NN);
   // cv::imwrite("img_closed.png", img_closed);
-#ifdef DISPLAY
+if (display) {
   cv::imshow("img", img);
   cv::imshow("img_closed", img_closed);
   cv::imshow("img_closed_scale", img_closed_scale);
   cv::waitKey(0);
-#endif // DISPLAY
+    } // end if display
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -339,11 +339,11 @@ void test_find_top_point_centered(const cv::Mat1b & img) {
   cv::rectangle(img_illus, search_window, CV_RGB(255, 0, 0));
   cv::circle(img_illus, top_point, 3, CV_RGB(0, 0, 255), 2);
 
-#ifdef DISPLAY
+if (display) {
   cv::imshow("img", img);
   cv::imshow("img_illus", img_illus);
   cv::waitKey(0); cv::destroyAllWindows();
-#endif // DISPLAY
+    } // end if display
 } // end test_find_top_point_centered();
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -373,11 +373,11 @@ void test_propagative_floodfill(const std::string filename,
       (seen_buffer_short, seen_buffer_float_buffer, seen_buffer_illus);
   cv::circle(seen_buffer_illus, seed_copy, 4, CV_RGB(0, 0, 255), 2);
 
-#ifdef DISPLAY
+if (display) {
   cv::imshow("img", img);
   cv::imshow("seen_buffer_illus", seen_buffer_illus);
   cv::waitKey(0); cv::destroyAllWindows();
-#endif // DISPLAY
+    } // end if display
 } // end test_propagative_floodfill();
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -412,12 +412,12 @@ void test_propagative_floodfill_custom_lookup
   lookup_result.convertTo(lookup_result_uchar, CV_8U);
   vision_utils::user_image_to_rgb(lookup_result_uchar, lookup_result_illus, 8);
 
-#ifdef DISPLAY
+if (display) {
   cv::imshow("img", img);
   cv::imshow("seen_buffer_illus", seen_buffer_illus);
   cv::imshow("lookup_result_illus", lookup_result_illus);
   cv::waitKey(0); cv::destroyAllWindows();
-#endif // DISPLAY
+    } // end if display
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -455,9 +455,9 @@ void test_compute_pixel2meters_factor_mouse_cb
     return;
   cv::circle(data->illus_img, cv::Point(x, y), 2, CV_RGB(255, 0, 0), -1);
   cv::circle(data->illus_img, cv::Point(x, y), fifty_cm_radius, CV_RGB(255, 0, 0), 2);
-#ifdef DISPLAY
+if (display) {
   cv::imshow(data->window_name, data->illus_img);
-#endif // DISPLAY
+    } // end if display
 }
 
 void test_compute_pixel2meters_factor(const std::string & rgb_depth_filename_prefix,
@@ -474,7 +474,7 @@ void test_compute_pixel2meters_factor(const std::string & rgb_depth_filename_pre
   data.rgb_img.copyTo(data.illus_img);
 
   data.window_name = "test_compute_pixel2meters_factor";
-#ifdef DISPLAY
+if (display) {
   cv::namedWindow(data.window_name);
   cv::setMouseCallback(data.window_name, test_compute_pixel2meters_factor_mouse_cb, &data);
   cv::imshow("rgb_img", data.rgb_img);
@@ -486,7 +486,7 @@ void test_compute_pixel2meters_factor(const std::string & rgb_depth_filename_pre
     if ((int) c == 27)
       break;
   }
-#endif // DISPLAY
+    } // end if display
 } // end test_compute_pixel2meters_factor();
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -537,6 +537,7 @@ TEST(TestSuite, test_compute_pixel2meters_factor) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char** argv) {
+  display = (argc > 1); printf("display:%i\n", display);
   //ros::Time::init();
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);

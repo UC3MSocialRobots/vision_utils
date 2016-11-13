@@ -25,12 +25,13 @@ ________________________________________________________________________________
 // Bring in gtest
 #include <gtest/gtest.h>
 #include "vision_utils/timer.h"
+#include "vision_utils/depth_image_to_vizualisation_color_image.h"
 #include "vision_utils/ground_plane_finder.h"
 #include "vision_utils/read_rgb_and_depth_image_from_image_file.h"
 
 #include <vision_utils/img_path.h>
 
-//#define DISPLAY
+bool display = false;
 
 TEST(TestSuite, empty) {
   vision_utils::GroundPlaneFinder finder;
@@ -67,12 +68,12 @@ void test_prefix(const std::string & filename_prefix) {
   timer.printTime("find");
   cv::Mat1b mask;
   ASSERT_TRUE(finder.to_img(depth, mask));
-#ifdef DISPLAY
+if (display) {
   cv::imshow("rgb", rgb);
   cv::imshow("depth", vision_utils::depth2viz(depth));
   cv::imshow("mask", mask);
   cv::waitKey(0);
-#endif // DISPLAY
+    } // end if display
   //vision_utils::imwrite_debug(vision_utils::timestamp()+"_mask.png", mask, vision_utils::MONOCHROME);
   ASSERT_TRUE(mask.size() == depth.size());
   double ratio = 1.*cv::countNonZero(mask)/(mask.cols*mask.rows);
@@ -96,6 +97,7 @@ TEST(TestSuite, ainara1) { test_prefix(vision_utils::IMG_DIR() + "breast/2013-10
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
+  display = (argc > 1); printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   // srand(time(NULL));
   testing::InitGoogleTest(&argc, argv);

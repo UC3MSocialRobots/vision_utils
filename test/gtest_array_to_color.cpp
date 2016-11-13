@@ -23,13 +23,15 @@ ________________________________________________________________________________
 Some tests for array_to_color()
 
  */
-//#define DISPLAY
+bool display = false;
 #include <gtest/gtest.h>
 #include <opencv2/highgui/highgui.hpp>
 #include "vision_utils/cmatrix.h"
 #include "vision_utils/array_to_color.h"
 
 int main(int argc, char** argv) {
+  display = (argc > 1); printf("display:%i\n", display);
+
   // create some data
   unsigned int ncols = 8, nrows = 12;
   vision_utils::CMatrix<double> data(nrows, ncols);
@@ -52,7 +54,7 @@ int main(int argc, char** argv) {
   vision_utils::colormap_to_caption_image(caption2, 100, 300, vision_utils::ratio2red_green,
                       0., 1., .05, .2, false);
 
-#ifdef DISPLAY
+if (display) {
   cv::imshow("out1", out1);
   cv::imshow("out2", out2);
   cv::imshow("caption1", caption1);
@@ -60,7 +62,7 @@ int main(int argc, char** argv) {
   cv::imwrite("out1.png", out1);
   cv::imwrite("out2.png", out2);
   cv::waitKey(0);
-#endif // DISPLAY
+    } // end if display
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

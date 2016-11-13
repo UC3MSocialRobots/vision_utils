@@ -23,7 +23,7 @@ ________________________________________________________________________________
 \todo Description of the file
 
  */
-//#define DISPLAY
+bool display = false;
 #include <gtest/gtest.h>
 
 #include "vision_utils/timer.h"
@@ -53,12 +53,12 @@ void test_pie1(const std::vector<_T> & values,
   timer.printTime_factor("make_pie_and_caption()", ntimes);
 
   // display generated images
-#ifdef DISPLAY
-  cv::imshow("pie_img", pie_img);
-  cv::imshow("pie_caption", pie_caption);
-  cv::imshow("pie_chart", pie_chart);
-  cv::waitKey(0);
-#endif // DISPLAY
+  if (display) {
+    cv::imshow("pie_img", pie_img);
+    cv::imshow("pie_caption", pie_caption);
+    cv::imshow("pie_chart", pie_chart);
+    cv::waitKey(0);
+  } // end if display
 } // end if test_pie1()
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -79,20 +79,21 @@ void test_pie2(std::vector<_T> & values,
     vision_utils::make_pie(values, pie_img);
     vision_utils::make_caption(labels, pie_caption);
     vision_utils::make_pie_and_caption(values, labels, pie_chart);
-#ifdef DISPLAY
-    cv::imshow("pie_img", pie_img);
-    cv::imshow("pie_caption", pie_caption);
-    cv::imshow("pie_chart", pie_chart);
-    char c = cv::waitKey(50);
-    if ((int) c == 27)
-      break;
-#endif // DISPLAY
+    if (display) {
+      cv::imshow("pie_img", pie_img);
+      cv::imshow("pie_caption", pie_caption);
+      cv::imshow("pie_chart", pie_chart);
+      char c = cv::waitKey(50);
+      if ((int) c == 27)
+        break;
+    } // end if display
   } // end while (true)
 } // end if test_pie2()
 
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char** argv) {
+  display = (argc > 1); printf("display:%i\n", display);
   // make vectors from C arrays
   int nvals = 4;
   double values_arr[] = {.1, .2, .2, .4};

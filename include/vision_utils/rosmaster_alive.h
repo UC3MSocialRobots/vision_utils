@@ -4,7 +4,10 @@ namespace vision_utils {
 
 //! Check whether the master is up
 bool rosmaster_alive() {
-  return ros::master::check();
+  bool ok = ros::master::check();
+  if (!ok)
+    ROS_WARN("rosmaster_alive() is false!");
+  return ok;
 }
 
 } // end namespace vision_utils

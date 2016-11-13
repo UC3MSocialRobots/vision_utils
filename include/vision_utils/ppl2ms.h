@@ -65,7 +65,9 @@ on a MiniStage visualizer.
 #include "vision_utils/drawPolygon.h"
 #include "vision_utils/map_direct_search.h"
 #include "vision_utils/map_keys_to_container.h"
-#include "vision_utils/ppl_attributes.h"
+#include "vision_utils/paste_images.h"
+#include "vision_utils/ppl_tags_images.h"
+#include "vision_utils/resize_if_bigger.h"
 
 #define DEBUG_PRINT(...)   {}
 //#define DEBUG_PRINT(...)   printf(__VA_ARGS__)
@@ -274,9 +276,9 @@ private:
 
       // add the image
       if (_draw_track_images) {
-        _rgb_buffer = vision_utils::get_image_tag<cv::Vec3b>(*curr_pose, "rgb");
-        _user_buffer = vision_utils::get_image_tag<uchar>(*curr_pose, "user");
-        if (!_rgb_buffer.empty() && _rgb_buffer.size() = _user_buffer.size()) {
+        _rgb_buffer = vision_utils::get_image_tag<cv::Vec3b>(*pp, "rgb");
+        _user_buffer = vision_utils::get_image_tag<uchar>(*pp, "user");
+        if (!_rgb_buffer.empty() && _rgb_buffer.size() == _user_buffer.size()) {
           resize_if_bigger(_rgb_buffer, _rgb_buffer,
                            MAX_PERSON_HEIGHT, MAX_PERSON_HEIGHT);
           resize_if_bigger(_user_buffer, _user_buffer,

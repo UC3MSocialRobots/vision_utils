@@ -25,6 +25,11 @@ ________________________________________________________________________________
 // std includes
 #include <sstream> // for ostringstream
 #include <vector>
+#include <vision_utils/histogram2vectors.h>
+#include <vision_utils/hist_max.h>
+#include <vision_utils/gaussian_pdf.h>
+#include <vision_utils/wait_for_key.h>
+#include <vision_utils/gnuplot-cpp/gnuplot_i.hpp>
 
 namespace vision_utils {
 

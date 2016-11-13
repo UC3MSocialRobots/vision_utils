@@ -24,7 +24,7 @@ Some tests for class \a ImageClusterer
 
  */
 
-//#define DISPLAY
+bool display = false;
 
 // Bring in gtest
 #include <gtest/gtest.h>
@@ -63,19 +63,19 @@ void test_image_roi(const std::string & rgb_depth_filename_prefix,
   std::vector<cv::Point2i> cluster_pixels;
   std::vector<cv::Scalar> cluster_colors;
   ASSERT_TRUE(clusterer.get_biggest_cluster_pixels
-            (depth_camera_model, cluster_pixels, cluster_colors));
+              (depth_camera_model, cluster_pixels, cluster_colors));
   ASSERT_TRUE(cluster_pixels.size() == cluster_colors.size());
   unsigned int npts_cluster = cluster_pixels.size();
 
-#ifdef DISPLAY
-  cv::Mat3b out = rgb.clone();
-  cv::rectangle(out, roi, CV_RGB(255, 0, 0), 2); // paint selection
-  for (unsigned int pt_idx = 0; pt_idx < npts_cluster; ++pt_idx)
-    cv::circle(out, cluster_pixels[pt_idx], 2, CV_RGB(0, 255, 0), -1);
-  cv::imshow("rgb", rgb);
-  cv::imshow("out", out);
-  cv::waitKey(0);
-#endif
+  if (display) {
+    cv::Mat3b out = rgb.clone();
+    cv::rectangle(out, roi, CV_RGB(255, 0, 0), 2); // paint selection
+    for (unsigned int pt_idx = 0; pt_idx < npts_cluster; ++pt_idx)
+      cv::circle(out, cluster_pixels[pt_idx], 2, CV_RGB(0, 255, 0), -1);
+    cv::imshow("rgb", rgb);
+    cv::imshow("out", out);
+    cv::waitKey(0);
+  } // end if display
 
   // check cluster somewhat big
   double ratio_cluster2roi = 1.f * npts_cluster * data_step * data_step / npts_roi,
@@ -113,6 +113,7 @@ TEST(TestSuite, all_tests) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
+  display = (argc > 1); printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

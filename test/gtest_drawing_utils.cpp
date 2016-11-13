@@ -35,7 +35,7 @@ ________________________________________________________________________________
 #include "vision_utils/timer.h"
 #include "vision_utils/titlemaps.h"
 
-//#define DISPLAY
+bool display = false;
 
 TEST(TestSuite, paste_images_gallery_empty) {
   std::vector<cv::Mat1b> ims;
@@ -52,11 +52,11 @@ void check_imgs(const std::vector<cv::Mat_<T> > & ims,
                 T background_color) {
   cv::Mat_<T> out;
   vision_utils::paste_images_gallery(ims, out, gallerycols, background_color, false); // no border
-#ifdef DISPLAY
+if (display) {
   cv::imshow("out", out);
   cv::waitKey(0);
   cv::destroyAllWindows();
-#endif // DISPLAY
+    } // end if display
   int cols1 = ims.front().cols, rows1 = ims.front().rows;
   unsigned int neededgalrows = std::ceil(1. * ims.size() / gallerycols);
   ASSERT_TRUE(out.cols == (int) gallerycols * cols1);
@@ -102,16 +102,16 @@ TEST(TestSuite, text_rotated) {
     vision_utils::draw_text_rotated(img, buffer1, buffer2, text.str(),
                                    cv::Point(50 * i, 100), 0.2 * i,
                                    CV_FONT_HERSHEY_DUPLEX, 1, CV_RGB(255, 0, 0));
-#ifdef DISPLAY
+if (display) {
     cv::imshow("buffer1", buffer1);
     // cv::imshow("buffer2", buffer2);
     cv::imshow("img", img);
     cv::waitKey(5000);
-#endif // DISPLAY
+    } // end if display
   } // end loop i
-#ifdef DISPLAY
+if (display) {
   cv::destroyAllWindows();
-#endif // DISPLAY
+    } // end if display
 } // end test_text_rotated();
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -131,11 +131,11 @@ TEST(TestSuite, text_rotated2) {
     // cv::imshow("img", img); cv::waitKey(1);
   } // end loop i
   timer.printTime_factor("draw_text_rotated()", n_times);
-#ifdef DISPLAY
+if (display) {
   cv::imshow("img", img);
   cv::waitKey(0);
   cv::destroyAllWindows();
-#endif // DISPLAY
+    } // end if display
 } // end test_text_rotated2();
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -147,20 +147,20 @@ TEST(TestSuite, resize_constrain_proportions) {
   vision_utils::resize_if_bigger(img, img_resize_if_bigger2, 200, 100);
   vision_utils::resize_constrain_proportions(img, img_resize_constrain_proportions, 100, 200);
 
-#ifdef DISPLAY
+if (display) {
   cv::imshow("img_resize_if_bigger", img_resize_if_bigger);
   cv::imshow("img_resize_if_bigger2", img_resize_if_bigger2);
   cv::imshow("img_resize_constrain_proportions", img_resize_constrain_proportions);
   cv::waitKey(0);
   cv::destroyAllWindows();
-#endif // DISPLAY
+    } // end if display
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 inline void test_paste_image(const cv::Mat & bg, const cv::Mat & fg) {
   printf("test_paste_image() - use keys to move foreground image\n");
-#ifdef DISPLAY
+if (display) {
   cv::Mat pasted;
   int fg_x = (bg.cols - fg.cols) / 2, fg_y = (bg.rows - fg.rows) / 2;
   while (true) {
@@ -180,7 +180,7 @@ inline void test_paste_image(const cv::Mat & bg, const cv::Mat & fg) {
       fg_x += 10;
   } // end while
   cv::destroyAllWindows();
-#endif // DISPLAY
+    } // end if display
 }
 
 TEST(TestSuite, paste_image) {
@@ -211,14 +211,14 @@ inline void test_paste_images(const std::vector<cv::Mat_<_T> > & imgs) {
     cv::Mat_<_T> out4;
     vision_utils::paste_images(imgs, out4, horiz, width1, height1, 5, true,
                               &vision_utils::int_to_number, std::vector<cv::Mat1b>(), true);
-#ifdef DISPLAY
+if (display) {
     cv::imshow("no headers, constrained width", out1);
     cv::imshow("headers, constrained width", out2);
     cv::imshow("no headers, no constrained width", out3);
     cv::imshow("headers, no constrained width", out4);
     cv::waitKey(0);
     cv::destroyAllWindows();
-#endif // DISPLAY
+    } // end if display
   } // end loop horiz
 }
 
@@ -242,6 +242,7 @@ TEST(TestSuite, paste_images) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
+  display = (argc > 1); printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

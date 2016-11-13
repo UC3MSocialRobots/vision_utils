@@ -92,6 +92,7 @@ TEST(TestSuite, speed_test) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
+  display = (argc > 1); printf("display:%i\n", display);
   ros::init(argc, argv, "gtest_RgbDepthPPLPublisherTemplate");
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);

@@ -26,7 +26,7 @@ Some tests for MaskAcceleration
 #include "vision_utils/mask_acceleration.h"
 #include <vision_utils/distance_points.h>
 
-//#define DISPLAY
+bool display = false;
 
 TEST(TestSuite, empty_img) {
   vision_utils::MaskAcceleration acc;
@@ -80,11 +80,11 @@ TEST(TestSuite, octogon_at_border) {
                  cv::Scalar::all(255));
     ASSERT_TRUE(acc.from_mask(mask, offset));
     acc.draw_illus(illus);
-#ifdef DISPLAY
+if (display) {
     cv::imshow("mask", mask);
     cv::imshow("illus", illus);
     cv::waitKey(0);
-#endif // DISPLAY
+    } // end if display
     std::vector<vision_utils::MaskAcceleration::PixelAcceleration> accs
         = acc.get_pixel_accelerations();
     if (pass == 0)
@@ -113,11 +113,11 @@ void test_growing_circle(const cv::Point & offset) {
     ASSERT_TRUE(naccs > 0);
     cv::Mat3b illus;
     acc.draw_illus(illus, 10);
-#ifdef DISPLAY
+if (display) {
     cv::imshow("mask", mask);
     cv::imshow("illus", illus);
     cv::waitKey(0);
-#endif // DISPLAY
+    } // end if display
     for (unsigned int i = 0; i < naccs; ++i) {
       vision_utils::MaskAcceleration::PixelAcceleration acc = accs[i];
       ASSERT_TRUE(acc.norm > 0 && acc.norm <= 4 * radius_step)
@@ -152,6 +152,7 @@ TEST(TestSuite, growing_circle_neg_offset) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
+  display = (argc > 1); printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   // srand(time(NULL));
   testing::InitGoogleTest(&argc, argv);
