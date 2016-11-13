@@ -272,33 +272,19 @@ private:
       cv::circle(ms.get_viz(), user_center, 15, cv::Scalar::all(0), -1);
       cv::circle(ms.get_viz(), user_center, 15, color, 5);
 
-#if 0 // TODO images
       // add the image
-      if (_draw_track_images
-          && pp->rgb.width > 0
-          && pp->rgb.height > 0
-          && pp->user.width == pp->rgb.width
-          && pp->user.height == pp->rgb.height) {
-        boost::shared_ptr<void const> tracked_object;
-        try {
-          cv_bridge::CvImageConstPtr pp_rgb = cv_bridge::toCvShare(pp->rgb, tracked_object);
-          cv_bridge::CvImageConstPtr pp_user = cv_bridge::toCvShare(pp->user, tracked_object);
-          pp_rgb->image.copyTo(_rgb_buffer);
-          pp_user->image.copyTo(_user_buffer);
+      if (_draw_track_images) {
+        _rgb_buffer = vision_utils::get_image_tag<cv::Vec3b>(*curr_pose, "rgb");
+        _user_buffer = vision_utils::get_image_tag<uchar>(*curr_pose, "user");
+        if (!_rgb_buffer.empty() && _rgb_buffer.size() = _user_buffer.size()) {
+          resize_if_bigger(_rgb_buffer, _rgb_buffer,
+                           MAX_PERSON_HEIGHT, MAX_PERSON_HEIGHT);
+          resize_if_bigger(_user_buffer, _user_buffer,
+                           MAX_PERSON_HEIGHT, MAX_PERSON_HEIGHT);
+          int x = user_center.x + 10, y = user_center.y + 10;
+          paste_img(_rgb_buffer, ms.get_viz(), x, y, &_user_buffer);
         }
-        // DEBUG_PRINT("Channels:rgb:%i, user:%i\n", pp_rgb->image.channels(), pp_user->image.channels());
-        catch (cv_bridge::Exception e) {
-          printf("PPL2MS: exception in cv_bridge: '%s'\n", e.what());
-          return;
-        }
-        resize_if_bigger(_rgb_buffer, _rgb_buffer,
-                                      MAX_PERSON_HEIGHT, MAX_PERSON_HEIGHT);
-        resize_if_bigger(_user_buffer, _user_buffer,
-                                      MAX_PERSON_HEIGHT, MAX_PERSON_HEIGHT);
-        int x = user_center.x + 10, y = user_center.y + 10;
-        paste_img(_rgb_buffer, ms.get_viz(), x, y, &_user_buffer);
-      }
-#endif
+      } // end if _draw_track_images
 
       // draw method name
       std::ostringstream label;
@@ -335,7 +321,7 @@ private:
       unsigned int npts = user_track3d->size();
       if (user_track2d->size() != npts) { // reconvert 3D -> 2D if needed
         DEBUG_PRINT("PPLViewer:recomputing track2d for method '%s', user '%s'\n",
-                   method.c_str(), user_name.c_str());
+                    method.c_str(), user_name.c_str());
         user_track2d->clear();
         user_track2d->reserve(npts);
         for (unsigned int pt_idx = 0; pt_idx < npts; ++pt_idx)

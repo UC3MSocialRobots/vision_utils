@@ -25,9 +25,6 @@ A useful class for converting a set of (rgb, depth, user)
 frames to a PPL message.
 
 The list of users is obtained thanks to the unique values of the user mask.
-
-The whole cv_bridge conversion is hidden from the end user,
-making life easier.
  */
 
 #ifndef IMAGES2PPL_H
@@ -42,13 +39,12 @@ making life easier.
 #include "vision_utils/kinect_serials.h"
 #include "vision_utils/mask.h"
 #include "vision_utils/pixel2world_depth.h"
-#include "vision_utils/ppl_attributes.h"
+#include "vision_utils/ppl_tags_images.h"
 #include "vision_utils/read_camera_model_files.h"
 #include "vision_utils/read_rgb_depth_user_image_from_image_file.h"
 // ROS
 #include <image_geometry/pinhole_camera_model.h>
 #include <sensor_msgs/image_encodings.h>
-#include <cv_bridge/cv_bridge.h>
 
 namespace vision_utils {
 
@@ -106,11 +102,11 @@ public:
       }
       // crop the images
       if (has_rgb)
-        rgb_bridge.image = (*rgb)(bbox_user);
+        vision_utils::set_image_tag(pp_out, "rgb", (*rgb)(bbox_user));
       if (has_depth)
-        depth_bridge.image = (*depth)(bbox_user);
+        vision_utils::set_image_tag(pp_out, "depth", (*depth)(bbox_user));
       if (has_user)
-        user_bridge.image = (*user)(bbox_user);
+        vision_utils::set_image_tag(pp_out, "user", (*user)(bbox_user));
       set_tag(pp_out, "images_offsetx", bbox_user.x);
       set_tag(pp_out, "images_offsety", bbox_user.y);
     }
@@ -135,29 +131,14 @@ public:
         return false;
       }
       if (has_rgb)
-        rgb_bridge.image = (*rgb);
+        vision_utils::set_image_tag(pp_out, "rgb", (*rgb));
       if (has_depth)
-        depth_bridge.image = (*depth);
+        vision_utils::set_image_tag(pp_out, "depth", (*depth));
       if (has_user)
-        user_bridge.image = (*user);
+        vision_utils::set_image_tag(pp_out, "user", (*user));
       set_tag(pp_out, "images_offsetx", rgb_offset.x);
       set_tag(pp_out, "images_offsety", rgb_offset.y);
     } // end if (!need_crop_with_userbbox)
-
-#if 0 // TODO deal better with the image
-    rgb_bridge.header = pp_out.header;
-    rgb_bridge.encoding = sensor_msgs::image_encodings::BGR8;
-    pp_out.rgb = (has_rgb ? *(rgb_bridge.toImageMsg()) : sensor_msgs::Image());
-
-    depth_bridge.header = pp_out.header;
-    depth_bridge.encoding = sensor_msgs::image_encodings::TYPE_32FC1;
-    pp_out.depth = (has_depth ? *(depth_bridge.toImageMsg()) : sensor_msgs::Image());
-
-    user_bridge.header = pp_out.header;
-    user_bridge.encoding = sensor_msgs::image_encodings::TYPE_8UC1;
-    pp_out.user = (has_user ? *(user_bridge.toImageMsg()) : sensor_msgs::Image());
-#endif
-
     return true; // success
   } // end convert()
 
@@ -179,7 +160,6 @@ public:
 
 protected:
   cv::Mat1b _rgb2user;
-  cv_bridge::CvImage rgb_bridge, depth_bridge, user_bridge;
 }; // end class Images2PP
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -306,35 +286,12 @@ bool convert(const people_msgs::Person* curr_pose,
     printf("PP2Images: user has no name!\n");
     return false;
   }
-  //Try to convert ros_image to We make a copy of the image because it will be modified afterwards
-#if 0 // TODO
-  cv_bridge::CvImageConstPtr rgb_bridge, depth_bridge, user_mask_bridge;
-  const boost::shared_ptr<void const> tracked_object;
-  try {
-    if (rgb)
-      rgb_bridge = cv_bridge::toCvShare(curr_pose->rgb,
-                                        tracked_object,
-                                        sensor_msgs::image_encodings::TYPE_8UC3);
-    if (depth)
-      depth_bridge = cv_bridge::toCvShare(curr_pose->depth,
-                                          tracked_object,
-                                          sensor_msgs::image_encodings::TYPE_32FC1);
-    if (user_mask)
-      user_mask_bridge = cv_bridge::toCvShare(curr_pose->user,
-                                              tracked_object,
-                                              sensor_msgs::image_encodings::TYPE_8UC1);
-  }
-  catch (cv_bridge::Exception& e) {
-    printf("PP2Images: cv_bridge exception: %s\n", e.what());
-    return false;
-  }
   if (rgb)
-    rgb_bridge->image.copyTo(*rgb);
+    vision_utils::get_image_tag<cv::Vec3b>(*curr_pose, "rgb").copyTo(*rgb);
   if (depth)
-    depth_bridge->image.copyTo(*depth);
+    vision_utils::get_image_tag<float>(*curr_pose, "depth").copyTo(*depth);
   if (user_mask)
-    user_mask_bridge->image.copyTo(*user_mask);
-#endif
+    vision_utils::get_image_tag<uchar>(*curr_pose, "user").copyTo(*user_mask);
   return true;
 } // end convert()
 
@@ -372,10 +329,10 @@ bool convert(const people_msgs::People& ppl,
   cv::Mat1b user_mask;
   for (unsigned int idx=0; idx< nposes; idx++) {
     bool success = convert(&(ppl.people[idx]),
-                                      (rgbs ? &rgb : NULL),
-                                      (depths ? &depth : NULL),
-                                      (user_masks ? &user_mask : NULL),
-                                      discarded_unnammed_poses);
+                           (rgbs ? &rgb : NULL),
+                           (depths ? &depth : NULL),
+                           (user_masks ? &user_mask : NULL),
+                           discarded_unnammed_poses);
     if (!success)
       return false;
     if (rgbs)

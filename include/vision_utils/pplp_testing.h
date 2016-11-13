@@ -34,9 +34,10 @@ Some useful functions for testing PPLPublisherTemplate-based classes.
 #include "vision_utils/pplp_template.h"
 #include "vision_utils/printP.h"
 #include "vision_utils/timer.h"
-// utils
-// long_term_memory
 #include <vision_utils/img_path.h>
+// ROS
+#include <sensor_msgs/Image.h>
+#include <cv_bridge/cv_bridge.h>
 
 #define ASSERT_TRUE_TIMEOUT(cond, timeout) { ::vision_utils::Timer timer; while (timer.getTimeSeconds() < timeout && !(cond)) usleep(50 * 1000); } ASSERT_TRUE(cond)
 

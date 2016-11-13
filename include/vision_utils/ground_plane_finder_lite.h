@@ -183,7 +183,6 @@ public:
           continue;
         if (use_max_dist && depth_ptr[col] > max_dist)
           continue;
-        // TODO
         Pt3f curr_cv = pixel2world(col, row, depth_ptr[col]);
         pcl::PointXYZ curr(curr_cv.x, curr_cv.y, curr_cv.z);
         // = pixel2world_depth<pcl::PointXYZ>
