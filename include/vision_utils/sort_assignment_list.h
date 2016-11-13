@@ -22,6 +22,7 @@ ________________________________________________________________________________
 
 #ifndef SORT_ASSIGNMENT_LIST_H
 #define SORT_ASSIGNMENT_LIST_H
+#include <vision_utils/match.h>
 
 namespace vision_utils {
 

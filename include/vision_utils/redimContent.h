@@ -25,11 +25,11 @@ ________________________________________________________________________________
 // std includes
 #include <opencv2/core/core.hpp>
 #include <vector>
-#include <vision_utils/boundingBox.h>
-#include <vision_utils/bbox_full.h>
 #include <vision_utils/bboxes_included.h>
-#include <vision_utils/resizeMonochromeImage.h>
+#include <vision_utils/bbox_full.h>
+#include <vision_utils/boundingBox.h>
 #include <vision_utils/boundingBox_vec.h>
+#include <vision_utils/resizeMonochromeImage.h>
 
 namespace vision_utils {
 

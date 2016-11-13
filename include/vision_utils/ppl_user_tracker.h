@@ -54,9 +54,9 @@ int get_closest_pp(const people_msgs::People & ppl,
     return -1;
   }
   int closest_pp_idx = 0;
-  double best_dist = dist3sq(center, ppl.people[0].position.position);
+  double best_dist = dist3sq(center, ppl.people[0].position);
   for (unsigned int pp_idx = 1; pp_idx < npeople; ++pp_idx) {
-    double dist = dist3sq(center, ppl.people[pp_idx].position.position);
+    double dist = dist3sq(center, ppl.people[pp_idx].position);
     if (best_dist > dist) {
       best_dist = dist;
       closest_pp_idx = pp_idx;
@@ -103,9 +103,9 @@ public:
       if (ppl.people[pp_idx].name != _user_name)
         continue;
       if (user_pos != NULL) { // store position
-        user_pos->x = ppl.people[pp_idx].position.position.x;
-        user_pos->y = ppl.people[pp_idx].position.position.y;
-        user_pos->z = ppl.people[pp_idx].position.position.z;
+        user_pos->x = ppl.people[pp_idx].position.x;
+        user_pos->y = ppl.people[pp_idx].position.y;
+        user_pos->z = ppl.people[pp_idx].position.z;
       }
       return true;
     } // end loop pp_idx

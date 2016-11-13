@@ -24,6 +24,7 @@ ________________________________________________________________________________
 #define PPL2STRING_H
 // std includes
 #include <sstream> // for ostringstream
+#include <iomanip> // for setprecision
 #include <string>
 
 namespace vision_utils {

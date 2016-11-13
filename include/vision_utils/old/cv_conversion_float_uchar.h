@@ -12,13 +12,10 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-//"
-//#include "vision_utils/timer.h"
-#include "vision_utils/nan_handling.h"
-
 #include "vision_utils/file_exists.h"
-#include "vision_utils/min_max.h"
 #include <vision_utils/HSVtoRGB.h>
+#include "vision_utils/min_max.h"
+#include "vision_utils/nan_handling.h"
 
 namespace vision_utils {
 

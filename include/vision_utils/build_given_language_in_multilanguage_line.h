@@ -27,9 +27,9 @@ ________________________________________________________________________________
 #include <string>
 #include <vector>
 // vision_utils
-#include <vision_utils/string_split.h>
 #include <vision_utils/extract_language_id.h>
 #include <vision_utils/find_given_language_in_multilanguage_line.h>
+#include <vision_utils/string_split.h>
 #include <vision_utils/translate.h>
 
 namespace vision_utils {

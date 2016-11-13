@@ -28,8 +28,8 @@ ________________________________________________________________________________
 #include <vector>
 #include "vision_utils/draw_text_centered.h"
 #include "vision_utils/paste_img_compute_rois.h"
-#include "vision_utils/titlemaps.h"
 #include <vision_utils/resize_if_bigger.h>
+#include "vision_utils/titlemaps.h"
 
 namespace vision_utils {
 

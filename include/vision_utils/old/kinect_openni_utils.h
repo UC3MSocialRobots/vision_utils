@@ -42,7 +42,7 @@ useful functions for working with a Kinect
 
 #include "vision_utils/file_exists.h"
 #include "vision_utils/is_nan_depth.h"
-#include "vision_utils/kinect_serials.h
+#include "vision_utils/kinect_serials.h"
 #include "vision_utils/ros_object_from_file.h"
 
 

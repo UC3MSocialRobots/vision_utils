@@ -50,12 +50,12 @@ void draw_ppl_on_image(const people_msgs::People & list,
                        cv::Mat & out,
                        cv::Scalar color = CV_RGB(0, 255, 0),
                        int thickness = 2) {
-  unsigned int npeople = list.poses.size();
+  unsigned int npeople = list.people.size();
   //printf("draw_ppl_on_image(%i people)", npeople);
   for (unsigned int people_idx = 0; people_idx < npeople; ++people_idx) {
     // get face position
     cv::Point3d face_pt3d;
-    copy3(list.poses[people_idx].position.position, face_pt3d);
+    copy3(list.poses[people_idx].position, face_pt3d);
     cv::Point2i face_pt2d
         = world2pixel<cv::Point2i>(face_pt3d, rgb_camera_model);
     //printf("face_pt3d:%s\n", print_point(face_pt3d).c_str());

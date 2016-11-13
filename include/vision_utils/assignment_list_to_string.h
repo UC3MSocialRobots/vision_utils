@@ -24,6 +24,7 @@ ________________________________________________________________________________
 #define ASSIGNMENT_LIST_TO_STRING_H
 // std includes
 #include <sstream> // for ostringstream
+#include <iomanip> // for setprecision
 #include <string>
 #include "vision_utils/match.h"
 #include "vision_utils/assignment_list_cost.h"

@@ -47,11 +47,11 @@ RGB, depth and user images.
 #define RGB_DEPTH_USER_SKILL_H
 
 // vision_utils
-#include "vision_utils/nano_skill.h"
 #include "vision_utils/kinect_serials.h"
+#include "vision_utils/nano_skill.h"
+#include "vision_utils/pixel2world_depth.h"
 #include "vision_utils/read_camera_model_files.h"
 #include "vision_utils/world2pixel.h"
-#include "vision_utils/pixel2world_depth.h"
 // ROS
 #include <image_transport/image_transport.h>
 #include <image_transport/subscriber_filter.h>

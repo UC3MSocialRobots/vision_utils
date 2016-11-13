@@ -38,7 +38,7 @@ inline std::vector<Pt3> ppvec2points(const people_msgs::People & ppvec) {
   unsigned int nusers = ppvec.size();
   std::vector<Pt3> ans(nusers);
   for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx) {
-    const geometry_msgs::Point *src = &(ppvec[user_idx].position.position);
+    const geometry_msgs::Point *src = &(ppvec[user_idx].position);
     Pt3 *dst = &(ans[user_idx]);
     dst->x = src->x;
     dst->y = src->y;

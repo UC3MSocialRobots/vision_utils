@@ -28,15 +28,15 @@ ________________________________________________________________________________
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 //AD
-#include "vision_utils/draw_arrow.h"
-#include "vision_utils/oriented_angle_of_a_vector.h"
-#include "vision_utils/barycenter.h"
 #include "vision_utils/absolute_angle_between_three_points.h"
-#include "vision_utils/from_string.h"
-#include "vision_utils/timer.h"
+#include "vision_utils/barycenter.h"
 #include <vision_utils/distance_point_polygon.h>
-#include <vision_utils/distance_points_squared.h>
 #include <vision_utils/distance_point_polygon_squared.h>
+#include <vision_utils/distance_points_squared.h>
+#include "vision_utils/draw_arrow.h"
+#include "vision_utils/from_string.h"
+#include "vision_utils/oriented_angle_of_a_vector.h"
+#include "vision_utils/timer.h"
 // trying to solve the problem of the white pixels at edge
 // cf https://stackoverflow.com/questions/20418416/how-to-fill-contours-that-touch-the-image-border
 

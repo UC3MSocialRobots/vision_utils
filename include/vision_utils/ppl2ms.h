@@ -214,7 +214,7 @@ public:
            ++assign_id) {
         int uap_idx = unassociated_poses_to_blobs_assignments[blob_idx][assign_id];
         geometrymsgs::Point head_position =
-            unassociated_poses[uap_idx].position.position;
+            unassociated_poses[uap_idx].position;
         cv::line(ms.get_viz(),
                  world2pixel(blob_position.x, blob_position.y),
                  world2pixel(head_position.x, head_position.y),
@@ -353,7 +353,7 @@ private:
       Pt3d track_pos;
       _method2user2data[track_idx].get_position(track_pos);
       cv::line(ms.get_viz(),
-               world2pixel(ms, new_measure.people[detec_idx].position.position),
+               world2pixel(ms, new_measure.people[detec_idx].position),
                world2pixel(ms, track_pos),
                pp_color, 1);
     } // end loop affec_idx
@@ -361,7 +361,7 @@ private:
     // draw unassociated_poses
     for (unsigned int uap_idx = 0; uap_idx < _unassociated_poses.size(); ++uap_idx) {
       geometrymsgs::Point head_position =
-          _unassociated_poses[uap_idx].position.position;
+          _unassociated_poses[uap_idx].position;
       cv::circle(ms.get_viz(), world2pixel(ms, head_position.x, head_position.y),
                  3, pp_color, 2);
     } // end loop uap_idx

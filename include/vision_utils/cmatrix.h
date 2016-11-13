@@ -43,8 +43,7 @@ No need to use "new", "free()" or "delete" at any point.
 #include <stdio.h>
 #include <string.h>
 #include <sstream>
-#include <iomanip>
-#include <vector>
+#include <iomanip> // for setprecision#include <vector>
 #include "vision_utils/cast_type_to_string.h"
 
 namespace vision_utils {

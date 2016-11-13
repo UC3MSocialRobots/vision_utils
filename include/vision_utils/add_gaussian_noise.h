@@ -22,6 +22,7 @@ ________________________________________________________________________________
 
 #ifndef ADD_GAUSSIAN_NOISE_H
 #define ADD_GAUSSIAN_NOISE_H
+#include <vision_utils/rand_gaussian.h>
 
 namespace vision_utils {
 
@@ -32,10 +33,6 @@ inline void add_gaussian_noise(Pt3 & p,
   p.y +=  rand_gaussian() * pos_error_std_dev;
   p.z +=  rand_gaussian() * pos_error_std_dev;
 }
-
-}; // end vision_utils
-
-#endif // COMBINATORICS_UTILS_H
 
 } // end namespace vision_utils
 

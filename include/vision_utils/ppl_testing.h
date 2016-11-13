@@ -29,14 +29,18 @@ ________________________________________________________________________________
 #include <gtest/gtest.h>
 // AD
 #include <people_msgs/People.h>
-
-
-
+#include <vision_utils/add_gaussian_noise.h>
+#include <vision_utils/assign_and_dists.h>
+#include <vision_utils/cast_to_string.h>
+#include <vision_utils/copy3.h>
+#include <vision_utils/distance_points3.h>
+#include <vision_utils/ppl2points.h>
+#include <vision_utils/ppl2string.h>
+#include <vision_utils/print_point.h>
 
 #define ASSERT_TRUE_TIMEOUT(cond, timeout) { ::vision_utils::Timer timer; while (timer.getTimeSeconds() < timeout && !(cond)) usleep(50 * 1000); } ASSERT_TRUE(cond)
 
 namespace vision_utils {
-
 
 template<class Pt3>
 inline void ppl_factory(people_msgs::People & ppl,
@@ -48,9 +52,7 @@ inline void ppl_factory(people_msgs::People & ppl,
   ppl.people.clear();
   for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx) {
     people_msgs::Person pp;
-    pp.header = ppl.header;
     pp.name = cast_to_string(user_idx);
-    pp.std_dev = .1;
     copy3(exp_users_pos[user_idx], pp.position);
     add_gaussian_noise(pp.position, pos_error_std_dev);
     pp.reliability = 1;

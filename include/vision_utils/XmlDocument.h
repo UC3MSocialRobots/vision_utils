@@ -15,11 +15,11 @@
 #define XML_USED_IMPLEMENTATION       XML_IMPLEMENTATION_RAPID_XML
 
 #include <vision_utils/cast_to_string.h>
+#include <vision_utils/cast_to_string.h>
 #include "vision_utils/extract_utils.h"
 #include "vision_utils/retrieve_file.h"
 #include "vision_utils/save_file.h"
 #include "vision_utils/string_split.h"
-#include <vision_utils/cast_to_string.h>
 
 /*
  * include the wanted implementation file

@@ -30,9 +30,9 @@ Optionnal header drawing.
 #define ARRAY_TO_COLOR_H
 
 #include <opencv2/imgproc/imgproc.hpp>
-#include <vision_utils/rect_center.h>
-#include <vision_utils/draw_text_centered.h>
 #include "vision_utils/colormaps.h"
+#include <vision_utils/draw_text_centered.h>
+#include <vision_utils/rect_center.h>
 #include "vision_utils/titlemaps.h"
 
 namespace vision_utils {

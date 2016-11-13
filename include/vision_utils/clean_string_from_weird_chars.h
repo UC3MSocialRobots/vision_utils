@@ -29,9 +29,9 @@ ________________________________________________________________________________
 #include <string>
 #include <vector>
 // vision_utils
+#include <vision_utils/contains_any_letter.h>
 #include <vision_utils/load_letter_dict.h>
 #include <vision_utils/string_split.h>
-#include <vision_utils/contains_any_letter.h>
 #include <vision_utils/to_lowercase.h>
 
 namespace vision_utils {

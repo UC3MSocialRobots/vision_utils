@@ -74,7 +74,6 @@ ________________________________________________________________________________
 #ifndef PPL_VIEWER_H
 #define PPL_VIEWER_H
 
-
 #include "vision_utils/convert_sensor_data_to_xy.h"
 #include "vision_utils/foo_point.h"
 #include "vision_utils/multi_subscriber.h"

@@ -79,7 +79,6 @@ and evaluates the mean error of each PPL method.
 #include "vision_utils/ppl_attributes.h"
 #include "vision_utils/save_file.h"
 #include "vision_utils/timer.h"
-
 // ros
 #include <ros/package.h>
 

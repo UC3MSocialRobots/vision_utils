@@ -33,9 +33,8 @@ Some useful functions for testing PPLPublisherTemplate-based classes.
 #include "vision_utils/paste_images.h"
 #include "vision_utils/pplp_template.h"
 #include "vision_utils/printP.h"
-
-// utils
 #include "vision_utils/timer.h"
+// utils
 // long_term_memory
 #include <vision_utils/img_path.h>
 

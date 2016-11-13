@@ -40,9 +40,9 @@ making life easier.
 #include "vision_utils/copy3.h"
 #include "vision_utils/get_all_non_null_values_and_com.h"
 #include "vision_utils/kinect_serials.h"
-#include "vision_utils/ppl_attributes.h"
 #include "vision_utils/mask.h"
 #include "vision_utils/pixel2world_depth.h"
+#include "vision_utils/ppl_attributes.h"
 #include "vision_utils/read_camera_model_files.h"
 #include "vision_utils/read_rgb_depth_user_image_from_image_file.h"
 // ROS
