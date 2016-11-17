@@ -276,8 +276,8 @@ private:
 
       // add the image
       if (_draw_track_images) {
-        _rgb_buffer = vision_utils::get_image_tag<cv::Vec3b>(*pp, "rgb");
-        _user_buffer = vision_utils::get_image_tag<uchar>(*pp, "user");
+        vision_utils::get_image_tag<cv::Vec3b>(*pp, "rgb", _rgb_buffer);
+        vision_utils::get_image_tag<uchar>(*pp, "user", _user_buffer);
         if (!_rgb_buffer.empty() && _rgb_buffer.size() == _user_buffer.size()) {
           resize_if_bigger(_rgb_buffer, _rgb_buffer,
                            MAX_PERSON_HEIGHT, MAX_PERSON_HEIGHT);

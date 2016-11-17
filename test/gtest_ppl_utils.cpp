@@ -1,6 +1,7 @@
 // Bring in gtest
 #include <gtest/gtest.h>
 #include "vision_utils/ppl_attributes.h"
+#include "vision_utils/ppl_tags_images.h"
 
 TEST(TestSuite, get_attribute) {
   people_msgs::Person pose;
@@ -83,6 +84,17 @@ TEST(TestSuite, copy_attribute) {
   EXPECT_TRUE(s == "string1");
   EXPECT_TRUE(vision_utils::get_tag(dst, "s2", s));
   EXPECT_TRUE(s == "string2");
+}
+
+TEST(TestSuite, image_tag) {
+  cv::Mat3b rgb(100, 100), rgb2;
+  cv::Mat1f depth(100, 100), depth2;
+  cv::Mat1b user(100, 100), user2;
+
+  people_msgs::Person src;
+  EXPECT_TRUE(vision_utils::set_image_tag(src, "rgb", rgb));
+  vision_utils::get_image_tag(src, "rgb", rgb2);
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////

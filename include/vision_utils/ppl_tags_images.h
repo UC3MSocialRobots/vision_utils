@@ -33,12 +33,12 @@ ________________________________________________________________________________
 namespace vision_utils {
 
 template<class T>
-inline cv::Mat_<T> get_image_tag(const people_msgs::Person & pp,
-                                 const std::string & img_name) {
-  cv::Mat_<T> ans;
+inline bool get_image_tag(const people_msgs::Person & pp,
+                          const std::string & img_name,
+                          cv::Mat_<T> & img) {
   // get filename
   // try to read image
-  return ans;
+  return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

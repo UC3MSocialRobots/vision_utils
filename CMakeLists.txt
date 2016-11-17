@@ -1,5 +1,7 @@
 ### 1 - Required CMake Version
 cmake_minimum_required(VERSION 2.8.3)
+# Debug, Release, RelWithDebInfo and MinSizeRe
+set(CMAKE_BUILD_TYPE RelWithDebInfo)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra") # add extra warnings
 ### 2- Package Name
 project(vision_utils)
@@ -24,7 +26,6 @@ include_directories(
   include
   third_parties
   ${catkin_INCLUDE_DIRS}
-  ${CATKIN_DEVEL_PREFIX}/include # for the generated "img_path"
   ${PCL_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
   /usr/include/openni  /usr/include/nite  /usr/include/ni

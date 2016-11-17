@@ -286,13 +286,14 @@ bool convert(const people_msgs::Person* curr_pose,
     printf("PP2Images: user has no name!\n");
     return false;
   }
+  bool ok = true;
   if (rgb)
-    vision_utils::get_image_tag<cv::Vec3b>(*curr_pose, "rgb").copyTo(*rgb);
+    ok = ok && vision_utils::get_image_tag<cv::Vec3b>(*curr_pose, "rgb", *rgb);
   if (depth)
-    vision_utils::get_image_tag<float>(*curr_pose, "depth").copyTo(*depth);
+    ok = ok && vision_utils::get_image_tag<float>(*curr_pose, "depth", *depth);
   if (user_mask)
-    vision_utils::get_image_tag<uchar>(*curr_pose, "user").copyTo(*user_mask);
-  return true;
+    ok = ok && vision_utils::get_image_tag<uchar>(*curr_pose, "user", *user_mask);
+  return ok;
 } // end convert()
 
 ////////////////////////////////////////////////////////////////////////////////
