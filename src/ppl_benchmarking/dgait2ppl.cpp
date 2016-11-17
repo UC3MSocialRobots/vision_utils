@@ -104,7 +104,7 @@ int dgait2ppl(int argc, char **argv) {
 
     // transform to PPL
     if (_ppl_conv.convert(bgr, depth, user, NULL, &curr_header)) {
-      vision_utils::set_tag_people(_ppl_conv.get_ppl(), "method", "ground_truth");
+      vision_utils::set_method(_ppl_conv.get_ppl(), "ground_truth");
       ppl_pub.publish(_ppl_conv.get_ppl());
     }
 

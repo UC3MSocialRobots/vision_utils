@@ -82,7 +82,7 @@ void test_publish(std::string filename_prefix = vision_utils::IMG_DIR() + "depth
                   bool use_2_ppl_methods = false,
                   bool generate_path = false) {
   if (!vision_utils::rosmaster_alive()) return;
-  printf("\ntest_publish('%s', %i users, use_2_ppl_methods:%i, generate_path:%i)\n",
+  ROS_INFO("test_publish('%s', %i users, use_2_ppl_methods:%i, generate_path:%i)\n",
          filename_prefix.c_str(), nusers, use_2_ppl_methods, generate_path);
 
   ros::AsyncSpinner spinner(0);
@@ -118,15 +118,15 @@ void test_publish(std::string filename_prefix = vision_utils::IMG_DIR() + "depth
   ASSERT_TRUE(viewer.get_nb_total_received_tracks() == nusers);
   std::vector<vision_utils::PPLViewer::MethodName> methods = viewer.get_all_received_methods();
   ASSERT_TRUE(methods.size() == nexp_methods);
-  ASSERT_TRUE(methods.front() ==
-              vision_utils::get_tag_people_default(ppl_conv.get_ppl(), "method", std::string()));
+  if (nexp_methods > 0)
+    ASSERT_TRUE(methods.front() == vision_utils::get_method(ppl_conv.get_ppl()));
 
   if (use_2_ppl_methods || generate_path) {
     unsigned int nmethods = (use_2_ppl_methods ? 2 : 1),
         nppls_per_method = (generate_path ? 12 : 1),
         theta_incr = 360/nppls_per_method;
     people_msgs::People ppl = ppl_conv.get_ppl();
-    std::string method1 = vision_utils::get_tag_people_default(ppl, "method", std::string()),
+    std::string method1 = vision_utils::get_method(ppl),
         method2 = "new_method";
     for (unsigned int theta = 0; theta < 360; theta += theta_incr) {
       for (unsigned int method = 1; method <= nmethods; ++method) {
@@ -211,7 +211,7 @@ void test_image_no_image(std::string filename_prefix = vision_utils::IMG_DIR() +
     ASSERT_TRUE(viewer.get_nb_total_received_tracks() == nusers);
     std::vector<vision_utils::PPLViewer::MethodName> methods = viewer.get_all_received_methods();
     ASSERT_TRUE(methods.size() == 1);
-    ASSERT_TRUE(methods.front() == vision_utils::get_tag_people_default(ppl_conv.get_ppl(), "method", std::string()));
+    ASSERT_TRUE(methods.front() == vision_utils::get_method(ppl_conv.get_ppl()));
     if (display) {
       cv::waitKey(0);
     } // end if display
@@ -244,7 +244,6 @@ TEST(TestSuite, image_no_image_david_arnaud1){ test_image_no_image(vision_utils:
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char** argv) {
-  display = (argc > 1); printf("display:%i\n", display);
   ros::init(argc, argv, "gtest_ppl_viewer");
   display = (argc > 1); printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()

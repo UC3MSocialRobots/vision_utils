@@ -93,7 +93,7 @@ public:
 
   PPLViewer() {
     // prepair GUI
-    _window_name = "ukf_multimodal";
+    _window_name = "ppl_viewer";
     //_ms.set_mouse_move_callback(_window_name);
     _frame = "/odom";
     set_display(true);
@@ -163,6 +163,7 @@ public:
 protected:
   // callback called on reception of a new PPL. Clear the image and redraw all tracks
   void draw_new_ppl(const PPL::ConstPtr & ppl) {
+    printf("draw_new_ppl()\n");
     _frame = ppl->header.frame_id;
     _ppl2ms.add_ppl_and_redraw_all(_ms, *ppl, true);
     // draw scan
@@ -196,10 +197,13 @@ protected:
   //////////////////////////////////////////////////////////////////////////////
 
   void save_images_and_display() {
+    printf("save_images_and_display()\n");
     // show stuff
     if (!_display)
       return;
+    printf("imshow\n");
     cv::imshow(_window_name, _ms.get_viz());
+    printf("waitkey\n");
     char c = cv::waitKey(50);
     if (c == 's' || _save_images) {
       std::ostringstream filename;

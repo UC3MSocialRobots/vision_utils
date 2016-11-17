@@ -254,7 +254,7 @@ protected:
     if (!_ppl_conv.convert(_bgr, _depth32f, _user8, NULL, &_header))
       return false;
     _ground_truth_ppl = _ppl_conv.get_ppl();
-    set_tag_people(_ground_truth_ppl, "method", "ground_truth");
+    set_method(_ground_truth_ppl, "ground_truth");
     _ground_truth_ppl.header.frame_id = BASEFRAME;
     // use real 3D positions
     nusers = _ground_truth_ppl.people.size();
@@ -277,7 +277,7 @@ protected:
     }
 
       // anonymise it
-    set_tag_people(_anonymous_ppl, "method", "ktp2ppl");
+    set_method(_anonymous_ppl, "ktp2ppl");
     _anonymous_ppl = _ground_truth_ppl;
     for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx) {
       PP* curr_pp = &(_anonymous_ppl.people[user_idx]);

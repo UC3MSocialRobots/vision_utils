@@ -64,7 +64,7 @@ void ppl_cb(const people_msgs::PeopleConstPtr & ppl) {
   unsigned int n_people = ppl->people.size();
   marker.header = ppl->header;
   //ROS_INFO_THROTTLE(5, "ppl_cb(method.'%s')", ppl->method.c_str());
-  std::string method = vision_utils::get_tag_people_default(*ppl, "method", std::string());
+  std::string method = vision_utils::get_method(*ppl, "method");
   ROS_INFO_ONCE("ppl_cb(method.'%s')", method.c_str());
   if (n_people == 0) {
     return; // not much to do here
@@ -106,8 +106,7 @@ void ppl_cb(const people_msgs::PeopleConstPtr & ppl) {
   marker.scale.z = .1; // scale.z specifies the height of an uppercase "A".
   for (unsigned int detec_idx = 0; detec_idx < n_people; ++detec_idx) {
     std::ostringstream caption;
-    caption << vision_utils::get_tag_people_default
-               (*ppl, "method", std::string()) << ":";
+    caption << vision_utils::get_method(*ppl) << ":";
     caption << ppl->people[detec_idx].name;
     //caption << (int) (100 * list->poses[detec_idx].std_dev) / 100.f;
     caption << "(" << (int) (100 * ppl->people[detec_idx].reliability) << "%)";

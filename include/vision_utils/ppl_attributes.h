@@ -31,6 +31,7 @@ ________________________________________________________________________________
 #include <vision_utils/cast_from_string.h>
 // msg
 #include <people_msgs/People.h>
+#include <ros/ros.h>
 #include <stdio.h>
 
 namespace vision_utils {
@@ -39,7 +40,7 @@ namespace vision_utils {
 bool check_tags_not_corrupted(const people_msgs::Person & p) {
   if (p.tagnames.size() == p.tags.size())
     return true;
-  printf("Pose tags corrupted, %li names, %li values!\n",
+  ROS_WARN("Pose tags corrupted, %li names, %li values!",
          p.tagnames.size(), p.tags.size());
   return false;
 }
@@ -110,6 +111,7 @@ bool get_tag(const people_msgs::Person & p,
     tag_value = cast_from_string<T>(p.tags[tag_idx], success);
     return success;
   } // end loop tag_idx
+  ROS_WARN("Could not get tag '%s'", tag_name.c_str());
   return false;
 }
 
@@ -196,14 +198,14 @@ bool apply_new_tags(const std::vector<std::string> & added_tagnames,
   unsigned int ntags = added_indices.size(), npp = ppl_dst.people.size();
   if (ntags != added_tagnames.size()
       || ntags != added_tags.size()) {
-    printf("Incorrect size of new_ppl new tags: %i, %li, %li!\n",
+    ROS_WARN("Incorrect size of new_ppl new tags: %i, %li, %li!",
              ntags , added_tagnames.size(), added_tags.size());
     return false;
   }
   for (unsigned int i = 0; i < ntags; ++i) {
     unsigned int ppidx = added_indices[i];
     if (ppidx >= npp) {
-      printf("Incorrect value of added_indices: %i >= %i!\n",
+      ROS_WARN("Incorrect value of added_indices: %i >= %i!",
                ppidx, npp);
       continue;
     }

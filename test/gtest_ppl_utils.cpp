@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 #include "vision_utils/ppl_attributes.h"
 #include "vision_utils/ppl_tags_images.h"
+#include "vision_utils/matrix_testing.h"
 
 TEST(TestSuite, get_attribute) {
   people_msgs::Person pose;
@@ -86,15 +87,38 @@ TEST(TestSuite, copy_attribute) {
   EXPECT_TRUE(s == "string2");
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
 TEST(TestSuite, image_tag) {
   cv::Mat3b rgb(100, 100), rgb2;
   cv::Mat1f depth(100, 100), depth2;
   cv::Mat1b user(100, 100), user2;
 
   people_msgs::Person src;
-  EXPECT_TRUE(vision_utils::set_image_tag(src, "rgb", rgb));
-  vision_utils::get_image_tag(src, "rgb", rgb2);
+  // test for an empty image
+  EXPECT_FALSE(vision_utils::get_image_tag(src, "foo", rgb2));
 
+  // test for each type
+  EXPECT_TRUE(vision_utils::set_image_tag(src, "rgb", rgb));
+  EXPECT_TRUE(vision_utils::get_image_tag(src, "rgb", rgb2));
+  EXPECT_TRUE(vision_utils::matrices_equal(rgb, rgb2));
+
+  EXPECT_TRUE(vision_utils::set_image_tag(src, "depth", depth));
+  EXPECT_TRUE(vision_utils::get_image_tag(src, "depth", depth2));
+  EXPECT_TRUE(vision_utils::matrices_equal(depth, depth2));
+
+  EXPECT_TRUE(vision_utils::set_image_tag(src, "user", user));
+  EXPECT_TRUE(vision_utils::get_image_tag(src, "user", user2));
+  EXPECT_TRUE(vision_utils::matrices_equal(user, user2));
+
+  // change types
+  EXPECT_TRUE(vision_utils::set_image_tag(src, "rgb", user));
+  EXPECT_TRUE(vision_utils::get_image_tag(src, "rgb", user2));
+  EXPECT_TRUE(vision_utils::matrices_equal(user, user2));
+
+  // type cast
+  EXPECT_TRUE(vision_utils::get_image_tag(src, "depth", user2));
+  EXPECT_TRUE(vision_utils::matrices_equal(user, user2));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -27,8 +27,15 @@ ________________________________________________________________________________
 
 // vision_utils
 #include <vision_utils/ppl_attributes.h>
+#include <vision_utils/file_exists.h>
+#include <vision_utils/timestamp.h>
+#include <vision_utils/file_format.h>
+// ROS
+#include <ros/ros.h>
 // OpenCV
 #include <opencv2/highgui/highgui.hpp>
+// C++
+#include <sstream>
 
 namespace vision_utils {
 
@@ -37,8 +44,13 @@ inline bool get_image_tag(const people_msgs::Person & pp,
                           const std::string & img_name,
                           cv::Mat_<T> & img) {
   // get filename
+  std::string img_file;
+  if (!get_tag(pp, img_name, img_file))
+    return false;
   // try to read image
-  return false;
+  //ROS_INFO("Reading '%s'", img_file.c_str());
+  img = cv::imread(img_file, cv::IMREAD_UNCHANGED);
+  return !img.empty();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -47,7 +59,23 @@ template<class T>
 inline bool set_image_tag(people_msgs::Person & pp,
                           const std::string & img_name,
                           const cv::Mat_<T> & img) {
-   return false;
+  std::ostringstream filename;
+  int i = 0;
+  while(i < 100) { // 100 tries
+    ++i;
+    filename.str("");
+    filename << "/tmp/ppl_" << vision_utils::timestamp()
+             << "_" << img_name;
+    if (i > 1) filename << i;
+    filename << ".png";
+    if (file_exists(filename.str()))
+      continue;
+    if (!cv::imwrite(filename.str(), img))
+      return false;
+    return set_tag(pp, img_name, filename.str());
+  }
+  ROS_WARN("Could not save '%s' to '%s'", img_name.c_str(), filename.str().c_str());
+  return false;
 }
 
 } // end namespace vision_utils

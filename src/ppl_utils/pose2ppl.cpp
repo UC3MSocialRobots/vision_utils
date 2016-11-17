@@ -62,7 +62,7 @@ std::string method_name = "pose2ppl";
 void pose_cb(const geometry_msgs::PoseStamped & msg) {
   ROS_INFO_THROTTLE(1, "pose2ppl:point_cb()");
   people_msgs::People ppl;
-  vision_utils::set_tag_people(ppl, "method", method_name);
+  vision_utils::set_method(ppl, method_name);
   ppl.header = msg.header;
   ppl.people.resize(1);
   people_msgs::Person* pp = &(ppl.people.front());
