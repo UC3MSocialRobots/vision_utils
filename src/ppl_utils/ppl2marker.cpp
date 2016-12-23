@@ -64,7 +64,7 @@ void ppl_cb(const people_msgs::PeopleConstPtr & ppl) {
   unsigned int n_people = ppl->people.size();
   marker.header = ppl->header;
   //ROS_INFO_THROTTLE(5, "ppl_cb(method.'%s')", ppl->method.c_str());
-  std::string method = vision_utils::get_method(*ppl, "method");
+  std::string method = vision_utils::get_method(*ppl);
   ROS_INFO_ONCE("ppl_cb(method.'%s')", method.c_str());
   if (n_people == 0) {
     return; // not much to do here

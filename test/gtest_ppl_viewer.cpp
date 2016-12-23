@@ -40,6 +40,13 @@ bool display = false;
 #define ASSERT_TRUE_TIMEOUT(cond, timeout) { vision_utils::Timer timer; while (timer.getTimeSeconds() < timeout && !(cond)) usleep(50 * 1000); } ASSERT_TRUE(cond)
 #define DEG2RAD     0.01745329251994329577  //!< to convert degrees to radians
 
+void imshow_if_needed() {
+  if (display) {
+    printf("\nPress a key..\n");
+    cv::waitKey(0);
+  } // end if display
+}
+
 TEST(TestSuite, ctor) {
   if (!vision_utils::rosmaster_alive()) return;
   vision_utils::PPLViewer viewer;
@@ -73,6 +80,7 @@ TEST(TestSuite, empty_ppl) {
   ASSERT_TRUE_TIMEOUT(viewer.get_nb_received_methods() == 0, MYTIMEOUT)
       << "methods:" << vision_utils::iterable_to_string(viewer.get_all_received_methods());
   ASSERT_TRUE(viewer.get_nb_total_received_tracks() == 0);
+  imshow_if_needed();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -82,7 +90,7 @@ void test_publish(std::string filename_prefix = vision_utils::IMG_DIR() + "depth
                   bool use_2_ppl_methods = false,
                   bool generate_path = false) {
   if (!vision_utils::rosmaster_alive()) return;
-  ROS_INFO("test_publish('%s', %i users, use_2_ppl_methods:%i, generate_path:%i)\n",
+  printf("test_publish('%s', %i users, use_2_ppl_methods:%i, generate_path:%i)\n",
          filename_prefix.c_str(), nusers, use_2_ppl_methods, generate_path);
 
   ros::AsyncSpinner spinner(0);
@@ -109,50 +117,45 @@ void test_publish(std::string filename_prefix = vision_utils::IMG_DIR() + "depth
   ASSERT_TRUE(vision_utils::read_rgb_depth_user_image_from_image_file
               (filename_prefix, &rgb, &depth, &exp_masks));
   ASSERT_TRUE(ppl_conv.convert(rgb, depth, exp_masks));
-  ppl_pub.publish(ppl_conv.get_ppl());
+  // ppl_pub.publish(ppl_conv.get_ppl());
+
+  // publish some more
+  unsigned int nexp_methods = (nusers == 0 ? 0 : use_2_ppl_methods ? 2 : 1);
+  people_msgs::People ppl = ppl_conv.get_ppl();
+  std::string method1 = vision_utils::get_method(ppl),
+      method2 = "new_method";
+  unsigned int nppls_per_method = (generate_path ? 12 : 1),
+      theta_incr = 360/nppls_per_method;
+  printf("nexp_methods: %i, nppls_per_method:%i, theta_incr:%i\n",
+         nexp_methods, nppls_per_method, theta_incr);
+  for (unsigned int theta = 0; theta < 360; theta += theta_incr) {
+    printf("theta:%i\n", theta);
+    for (unsigned int methodidx = 1; methodidx <= nexp_methods; ++methodidx) {
+      std::string curr_method = (methodidx == 1 ? method1 : method2);
+      vision_utils::set_method(ppl, curr_method);
+      printf("methodidx:%i: setting method '%s'\n", methodidx, curr_method.c_str());
+      for (unsigned int pp_idx = 0; pp_idx < ppl.people.size(); ++pp_idx) {
+        ppl.people[pp_idx].position.x = pp_idx + cos(theta*DEG2RAD);
+        ppl.people[pp_idx].position.z = methodidx + sin(theta*DEG2RAD);
+      }
+      ppl_pub.publish(ppl);
+      usleep(100*1000);
+    } // end for method
+  } // end for theta
 
   // check the PPLViewer got the emitted PPL
-  unsigned int nexp_methods = (nusers == 0 ? 0 : use_2_ppl_methods ? 2 : 1);
   ASSERT_TRUE_TIMEOUT(viewer.get_nb_received_methods() == nexp_methods, MYTIMEOUT)
       << "methods:" << vision_utils::iterable_to_string(viewer.get_all_received_methods());
-  ASSERT_TRUE(viewer.get_nb_total_received_tracks() == nusers);
+  ASSERT_TRUE(viewer.get_nb_total_received_tracks() == nexp_methods * nusers);
   std::vector<vision_utils::PPLViewer::MethodName> methods = viewer.get_all_received_methods();
   ASSERT_TRUE(methods.size() == nexp_methods);
-  if (nexp_methods > 0)
+  if (nexp_methods == 1)
     ASSERT_TRUE(methods.front() == vision_utils::get_method(ppl_conv.get_ppl()));
+  else if (nexp_methods ==  2)
+    ASSERT_TRUE((methods.front() == method1 && methods.back() == method2)
+                || (methods.front() == method2 && methods.back() == method1));
 
-  if (use_2_ppl_methods || generate_path) {
-    unsigned int nmethods = (use_2_ppl_methods ? 2 : 1),
-        nppls_per_method = (generate_path ? 12 : 1),
-        theta_incr = 360/nppls_per_method;
-    people_msgs::People ppl = ppl_conv.get_ppl();
-    std::string method1 = vision_utils::get_method(ppl),
-        method2 = "new_method";
-    for (unsigned int theta = 0; theta < 360; theta += theta_incr) {
-      for (unsigned int method = 1; method <= nmethods; ++method) {
-        vision_utils::set_method(ppl, (method == 1 ? method1 : method2));
-        for (unsigned int pp_idx = 0; pp_idx < ppl.people.size(); ++pp_idx) {
-          ppl.people[pp_idx].position.x = pp_idx + cos(theta*DEG2RAD);
-          ppl.people[pp_idx].position.z = method + sin(theta*DEG2RAD);
-        }
-        ppl_pub.publish(ppl);
-        usleep(100*1000);
-      } // end for method
-    } // end for theta
-    // check the viewer has received everything.
-    ASSERT_TRUE_TIMEOUT(viewer.get_nb_received_methods() == nmethods, MYTIMEOUT);
-    ASSERT_TRUE(viewer.get_nb_total_received_tracks() == nmethods * nusers);
-    if (nmethods ==  2) {
-      std::vector<vision_utils::PPLViewer::MethodName> methods = viewer.get_all_received_methods();
-      ASSERT_TRUE(methods.size() == 2);
-      ASSERT_TRUE((methods.front() == method1 && methods.back() == method2)
-                  || (methods.front() == method2 && methods.back() == method1));
-    }
-  } // end if (use_2_ppl_methods || generate_path)
-
-  if (display) {
-    cv::waitKey(0);
-  } // end if display
+  imshow_if_needed();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -206,15 +209,14 @@ void test_image_no_image(std::string filename_prefix = vision_utils::IMG_DIR() +
     ppl_pub.publish(ppl);
 
     // check the PPLViewer got the emitted PPL
-    ASSERT_TRUE_TIMEOUT(viewer.get_nb_received_methods() == 1, MYTIMEOUT)
+    unsigned int nexp_methods = (nusers == 0 ? 0 : 1);
+    ASSERT_TRUE_TIMEOUT(viewer.get_nb_received_methods() == nexp_methods, MYTIMEOUT)
         << "methods:" << vision_utils::iterable_to_string(viewer.get_all_received_methods());
     ASSERT_TRUE(viewer.get_nb_total_received_tracks() == nusers);
     std::vector<vision_utils::PPLViewer::MethodName> methods = viewer.get_all_received_methods();
-    ASSERT_TRUE(methods.size() == 1);
+    ASSERT_TRUE(methods.size() == nexp_methods);
     ASSERT_TRUE(methods.front() == vision_utils::get_method(ppl_conv.get_ppl()));
-    if (display) {
-      cv::waitKey(0);
-    } // end if display
+    imshow_if_needed();
 
     // now re-emit without image
     for (unsigned int user_idx = 0; user_idx < nusers; ++user_idx) {
@@ -230,9 +232,7 @@ void test_image_no_image(std::string filename_prefix = vision_utils::IMG_DIR() +
     sleep(1);
     EXPECT_NO_FATAL_FAILURE();
 
-    if (display) {
-      cv::waitKey(0);
-    } // end if display
+    imshow_if_needed();
   } // end loop time_idx
 } // end test_image_no_image();
 

@@ -96,7 +96,7 @@ public:
     _window_name = "ppl_viewer";
     //_ms.set_mouse_move_callback(_window_name);
     _frame = "/odom";
-    set_display(true);
+    set_display(false);
     _ppl2ms.clear_bg(_ms);
     // get topic names
     ros::NodeHandle nh_public, nh_private("~");
@@ -133,10 +133,14 @@ public:
    *  then it is = get_nb_subscribed_methods() */
   inline unsigned int get_nb_PPL_publishers() const { return ppl_subscribers.getNumPublishers(); }
 
+  //////////////////////////////////////////////////////////////////////////////
+
   inline void set_display(bool display) {
     _display = display;
-    if (display)
-      cv::namedWindow(_window_name);
+    if (!display)
+      return;
+    cv::namedWindow(_window_name);
+    save_images_and_display();
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -211,8 +215,8 @@ protected:
       if (!cv::imwrite(filename.str(), _ms.get_viz()))
         printf("/!\\ Could not write file '%s'\n", filename.str().c_str());
       printf("Succesfully written file '%s'\n", filename.str().c_str());
-     }
-  }
+    }
+  } // end save_images_and_display();
 
   //////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////
