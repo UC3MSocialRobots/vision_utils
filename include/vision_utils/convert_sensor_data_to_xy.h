@@ -40,7 +40,7 @@ static inline void convert_sensor_data_to_xy(const sensor_msgs::LaserScan & lase
     //printf("idx:%i, curr_range:%g", idx, *curr_range);
     Pt2 newpt;
     newpt.x = *curr_range * cos(curr_angle);
-    newpt.x = *curr_range * sin(curr_angle);
+    newpt.y = *curr_range * sin(curr_angle);
     out_vector.push_back(newpt);
     ++curr_range;
     curr_angle += laser_msg.angle_increment;

@@ -39,11 +39,13 @@ static inline bool convert_xy_vec_frame(const std_msgs::Header & src_header,
                                         std::vector<Pt2> & dst_vector,
                                         double & scan_z_dst_frame) {
   std::string src_frame = src_header.frame_id;
+  //  printf("convert_xy_vec_frame(%li points, '%s' --> '%s')\n",
+  //         src_vector.size(), src_frame.c_str(), dst_frame.c_str());
   if (src_frame.empty()) { // empty scan?
-    printf("convert_xy_vec_frame(): empty source frame_id!");
+    printf("convert_xy_vec_frame(): empty source frame_id!\n");
     return false;
   }
-  if (src_frame != dst_frame) {
+  if (src_frame == dst_frame) {
     //printf_ONCE("Src and dest frame equal '%s'", dst_frame.c_str());
     dst_vector = src_vector;
     return true;

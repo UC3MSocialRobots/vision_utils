@@ -43,7 +43,10 @@ static inline Point2 barycenter(const std::vector<Point2> & src) {
     x += src[pt_idx].x;
     y += src[pt_idx].y;
   } // end loop pt_idx
-  return Point2(x / npts, y / npts);
+  Point2 ans;
+  ans.x = x / npts;
+  ans.y = y / npts;
+  return ans;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
