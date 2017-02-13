@@ -48,8 +48,7 @@ inline bool get_image_tag(const people_msgs::Person & pp,
   if (!get_tag(pp, img_name, img_file))
     return false;
   // try to read image
-  //ROS_INFO("Reading '%s'", img_file.c_str());
-  img = cv::imread(img_file, cv::IMREAD_UNCHANGED);
+  img = cv::imread(img_name, cv::IMREAD_COLOR);
   return !img.empty();
 }
 
@@ -72,7 +71,7 @@ inline bool set_image_tag(people_msgs::Person & pp,
       continue;
     if (!cv::imwrite(filename.str(), img))
       return false;
-    return set_tag(pp, img_name, filename.str());
+    return set_tag(pp, "img_name", filename.str());
   }
   ROS_WARN("Could not save '%s' to '%s'", img_name.c_str(), filename.str().c_str());
   return false;
