@@ -22,6 +22,7 @@ ________________________________________________________________________________
 
 #ifndef DISTANCE_POINT_POLYGON_SQUARED_H
 #define DISTANCE_POINT_POLYGON_SQUARED_H
+#include <stdio.h> // printf
 #include <vector>
 #include <vision_utils/distance_point_segment_sq.h>
 

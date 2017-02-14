@@ -23,6 +23,7 @@ ________________________________________________________________________________
 #ifndef FROM_STRING_H
 #define FROM_STRING_H
 // std includes
+#include <stdio.h> // sprintf
 #include <stdexcept> // for invalid_argument
 #include <string>
 
