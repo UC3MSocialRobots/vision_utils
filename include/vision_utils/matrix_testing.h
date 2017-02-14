@@ -28,6 +28,7 @@ Some useful functions for testing if matrices are equal
 #define MATRIX_TESTING_H
 
 #include <vision_utils/infosimage.h>
+#include <stdio.h> // for printf
 
 namespace vision_utils {
 
