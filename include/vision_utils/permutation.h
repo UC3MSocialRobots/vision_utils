@@ -24,6 +24,7 @@ ________________________________________________________________________________
 #define PERMUTATION_H
 // std includes
 #include <vector>
+#include <set>
 
 namespace vision_utils {
 

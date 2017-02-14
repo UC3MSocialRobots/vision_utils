@@ -23,6 +23,9 @@ ________________________________________________________________________________
 #ifndef TOGGLE_POINT_IN_COSTMAP_H
 #define TOGGLE_POINT_IN_COSTMAP_H
 
+#include "vision_utils/remove_point_from_costmap.h"
+#include "vision_utils/add_point_to_costmap.h"
+
 namespace vision_utils {
 
 /*!
@@ -39,11 +42,11 @@ template<class _Pt2>
 inline bool toggle_point_in_costmap(const _Pt2 & pt,
                                     nav_msgs::GridCells & costmap) {
 
-  if (is_point_in_costmap(pt, costmap)) {
-    remove_point_from_costmap(pt, costmap);
+  if (vision_utils::is_point_in_costmap(pt, costmap)) {
+    vision_utils::remove_point_from_costmap(pt, costmap);
     return false;
   }
-  add_point_to_costmap(pt, costmap);
+  vision_utils::add_point_to_costmap(pt, costmap);
   return true;
 } // end if add_point_to_costmap()
 

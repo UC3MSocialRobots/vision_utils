@@ -23,6 +23,8 @@ ________________________________________________________________________________
 #ifndef DISTANCE_POINT_SEGMENT_H
 #define DISTANCE_POINT_SEGMENT_H
 
+#include "vision_utils/distance_points.h"
+
 namespace vision_utils {
 
 /*!

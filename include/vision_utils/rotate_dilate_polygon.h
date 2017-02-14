@@ -24,6 +24,7 @@ ________________________________________________________________________________
 #define ROTATE_DILATE_POLYGON_H
 // std includes
 #include <vector>
+#include "vision_utils/rotate_translate_polygon.h"
 
 namespace vision_utils {
 

@@ -23,6 +23,9 @@ ________________________________________________________________________________
 #ifndef REMOVE_POINT_FROM_COSTMAP_H
 #define REMOVE_POINT_FROM_COSTMAP_H
 
+#include "vision_utils/point_factory.h"
+#include "vision_utils/closest_center_with_costmap_dims.h"
+
 namespace vision_utils {
 
 /*!

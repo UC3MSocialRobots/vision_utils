@@ -23,6 +23,8 @@ ________________________________________________________________________________
 #ifndef DISTANCE_POINT_POLYGON_H
 #define DISTANCE_POINT_POLYGON_H
 #include <vector>
+#include <limits>
+#include "vision_utils/distance_point_segment.h"
 
 namespace vision_utils {
 

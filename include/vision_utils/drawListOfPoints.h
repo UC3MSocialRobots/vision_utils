@@ -23,7 +23,7 @@ ________________________________________________________________________________
 #ifndef DRAWLISTOFPOINTS_H
 #define DRAWLISTOFPOINTS_H
 // std includes
-#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <vector>
 
 namespace vision_utils {

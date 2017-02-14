@@ -28,8 +28,11 @@ ________________________________________________________________________________
 
 // msg
 #include <people_msgs/People.h>
-
-
+#include <image_geometry/pinhole_camera_model.h>
+// vision_utils
+#include <vision_utils/copy3.h>
+#include <vision_utils/draw_text_centered.h>
+#include <vision_utils/world2pixel.h>
 
 namespace vision_utils {
 /*!
@@ -55,9 +58,9 @@ void draw_ppl_on_image(const people_msgs::People & list,
   for (unsigned int people_idx = 0; people_idx < npeople; ++people_idx) {
     // get face position
     cv::Point3d face_pt3d;
-    copy3(list.poses[people_idx].position, face_pt3d);
+    vision_utils::copy3(list.people[people_idx].position, face_pt3d);
     cv::Point2i face_pt2d
-        = world2pixel<cv::Point2i>(face_pt3d, rgb_camera_model);
+        = vision_utils::world2pixel<cv::Point2i>(face_pt3d, rgb_camera_model);
     //printf("face_pt3d:%s\n", print_point(face_pt3d).c_str());
     //printf("face_pt2d:%s\n", printP2(face_pt2d).c_str());
     // draw a circle for the head
@@ -70,11 +73,11 @@ void draw_ppl_on_image(const people_msgs::People & list,
     cv::line(out, face_pt2d, feet_pt2d, color, thickness);
 
     // put text
-    std::string text = list.poses[people_idx].name;
+    std::string text = list.people[people_idx].name;
     cv::Point2i text_pt2d(face_pt2d.x, face_pt2d.y - 50);
     //cv::putText(out, text, text_pt2d, CV_FONT_HERSHEY_PLAIN, 2, color);
-    draw_text_centered(out, text, text_pt2d,
-                                    CV_FONT_HERSHEY_PLAIN, 2, color, thickness);
+    vision_utils::draw_text_centered(out, text, text_pt2d,
+                                     CV_FONT_HERSHEY_PLAIN, 2, color, thickness);
   } // end loop people_idx
 } // end draw_ppl_on_image();
 } // end namespace vision_utils

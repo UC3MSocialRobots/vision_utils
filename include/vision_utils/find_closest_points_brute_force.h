@@ -43,8 +43,8 @@ static inline double find_closest_points_brute_force(
 
   // size check
   if (set1.size() != set2.size()) {
-    throw std::invalid_argument("the two sets have a different size (%li != %li",
-                set1.size(), set2.size());
+    throw std::invalid_argument("the two sets have a different size");// (%li != %li",
+                                //(int) set1.size(), (int) set2.size());
   }
 
   // prepair the stuff
