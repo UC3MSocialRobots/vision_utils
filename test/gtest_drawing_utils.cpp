@@ -25,6 +25,7 @@ ________________________________________________________________________________
 #include <opencv2/highgui/highgui.hpp>
 // Bring in gtest
 #include <gtest/gtest.h>
+#include <ros/ros.h>
 // AD
 #include "vision_utils/draw_text_rotated.h"
 #include <vision_utils/img_path.h>
@@ -242,7 +243,10 @@ TEST(TestSuite, paste_images) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
-  display = (argc > 1); printf("display:%i\n", display);
+  ros::init(argc, argv, "gtest");
+  ros::NodeHandle nh_private("~");
+  nh_private.param("display", display, display);
+  printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

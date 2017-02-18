@@ -23,6 +23,7 @@ ________________________________________________________________________________
 Some tests for MaskAcceleration
 */
 #include <gtest/gtest.h>
+#include <ros/ros.h>
 #include "vision_utils/mask_acceleration.h"
 #include <vision_utils/distance_points.h>
 
@@ -152,7 +153,10 @@ TEST(TestSuite, growing_circle_neg_offset) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
-  display = (argc > 1); printf("display:%i\n", display);
+  ros::init(argc, argv, "gtest");
+  ros::NodeHandle nh_private("~");
+  nh_private.param("display", display, display);
+  printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   // srand(time(NULL));
   testing::InitGoogleTest(&argc, argv);

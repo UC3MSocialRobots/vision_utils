@@ -24,6 +24,7 @@ Some tests for vision_utils::FilenamePrefix2Imgs.
  */
 bool display = false;
 #include <gtest/gtest.h>
+#include <ros/ros.h>
 #include "vision_utils/filename_prefix2imgs.h"
 #include <vision_utils/img_path.h>
 
@@ -62,7 +63,10 @@ TEST(TestSuite, breast)    { test_load(vision_utils::IMG_DIR() + "breast/*_rgb.p
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
-  display = (argc > 1); printf("display:%i\n", display);
+  ros::init(argc, argv, "gtest");
+  ros::NodeHandle nh_private("~");
+  nh_private.param("display", display, display);
+  printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

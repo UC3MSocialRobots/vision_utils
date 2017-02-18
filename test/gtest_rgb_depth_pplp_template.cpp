@@ -92,9 +92,10 @@ TEST(TestSuite, speed_test) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
-  display = (argc > 1); printf("display:%i\n", display);
   ros::init(argc, argv, "gtest_RgbDepthPPLPublisherTemplate");
-  // Run all the tests that were declared with TEST()
+  ros::NodeHandle nh_private("~");
+  nh_private.param("display", display, display);
+  printf("display:%i\n", display);  // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

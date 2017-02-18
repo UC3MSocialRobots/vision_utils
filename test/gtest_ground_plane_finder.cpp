@@ -24,6 +24,7 @@ ________________________________________________________________________________
  */
 // Bring in gtest
 #include <gtest/gtest.h>
+#include <ros/ros.h>
 #include "vision_utils/timer.h"
 #include "vision_utils/depth_image_to_vizualisation_color_image.h"
 #include "vision_utils/ground_plane_finder.h"
@@ -97,7 +98,10 @@ TEST(TestSuite, ainara1) { test_prefix(vision_utils::IMG_DIR() + "breast/2013-10
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
-  display = (argc > 1); printf("display:%i\n", display);
+  ros::init(argc, argv, "gtest");
+  ros::NodeHandle nh_private("~");
+  nh_private.param("display", display, display);
+  printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   // srand(time(NULL));
   testing::InitGoogleTest(&argc, argv);

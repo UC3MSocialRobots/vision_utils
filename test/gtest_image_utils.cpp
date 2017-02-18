@@ -10,6 +10,7 @@
 bool display = false;
 // std
 #include <gtest/gtest.h>
+#include <ros/ros.h>
 #include <iostream>
 // AD
 #include "vision_utils/compute_pixel2meters_factor.h"
@@ -537,7 +538,10 @@ TEST(TestSuite, test_compute_pixel2meters_factor) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char** argv) {
-  display = (argc > 1); printf("display:%i\n", display);
+  ros::init(argc, argv, "gtest");
+  ros::NodeHandle nh_private("~");
+  nh_private.param("display", display, display);
+  printf("display:%i\n", display);
   //ros::Time::init();
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);

@@ -25,12 +25,16 @@ Some tests for array_to_color()
  */
 bool display = false;
 #include <gtest/gtest.h>
+#include <ros/ros.h>
 #include <opencv2/highgui/highgui.hpp>
 #include "vision_utils/cmatrix.h"
 #include "vision_utils/array_to_color.h"
 
 int main(int argc, char** argv) {
-  display = (argc > 1); printf("display:%i\n", display);
+  ros::init(argc, argv, "gtest");
+  ros::NodeHandle nh_private("~");
+  nh_private.param("display", display, display);
+  printf("display:%i\n", display);
 
   // create some data
   unsigned int ncols = 8, nrows = 12;

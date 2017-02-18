@@ -8,12 +8,15 @@
  */
 bool display = false;
 #include <gtest/gtest.h>
+#include <ros/ros.h>
 #include "vision_utils/GraphMaker.h"
 #include "highgui.h"
 
 int main(int argc, char** argv) {
-  printf("main()");
-  display = (argc > 1); printf("display:%i\n", display);
+  ros::init(argc, argv, "gtest_GraphMaker");
+  ros::NodeHandle nh_private("~");
+  nh_private.param("display", display, display);
+  printf("display:%i\n", display);
 
   // rows, cols
   cv::Mat image(500, 800, CV_8UC3);

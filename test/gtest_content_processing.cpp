@@ -25,9 +25,10 @@ and \b cvstage_plugins namespace.
 
  */
 // Bring in gtest
+#include <gtest/gtest.h>
+#include <ros/ros.h>
 #include <opencv2/highgui/highgui.hpp>
 #include <map>
-#include <gtest/gtest.h>
 #include <vision_utils/get_all_different_values.h>
 #include <vision_utils/detect_end_points.h>
 #include <vision_utils/img2string.h>
@@ -796,7 +797,10 @@ if (display) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
-  display = (argc > 1); printf("display:%i\n", display);
+  ros::init(argc, argv, "gtest");
+  ros::NodeHandle nh_private("~");
+  nh_private.param("display", display, display);
+  printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   // srand(time(NULL));
   testing::InitGoogleTest(&argc, argv);

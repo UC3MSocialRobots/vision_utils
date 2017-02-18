@@ -28,6 +28,7 @@ bool display = false;
 
 // Bring in gtest
 #include <gtest/gtest.h>
+#include <ros/ros.h>
 // utils
 #include "vision_utils/image_clusterer.h"
 #include <vision_utils/img_path.h>
@@ -113,7 +114,10 @@ TEST(TestSuite, all_tests) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
-  display = (argc > 1); printf("display:%i\n", display);
+  ros::init(argc, argv, "gtest");
+  ros::NodeHandle nh_private("~");
+  nh_private.param("display", display, display);
+  printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

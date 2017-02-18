@@ -41,39 +41,52 @@ namespace vision_utils {
 
 template<class T>
 inline bool get_image_tag(const people_msgs::Person & pp,
-                          const std::string & img_name,
+                          const std::string & img_tagname,
                           cv::Mat_<T> & img) {
   // get filename
   std::string img_file;
-  if (!get_tag(pp, img_name, img_file))
+  if (!get_tag(pp, img_tagname, img_file))
     return false;
   // try to read image
-  img = cv::imread(img_name, cv::IMREAD_COLOR);
-  return !img.empty();
+  bool ok = true;
+  try {
+    img = cv::imread(img_file, cv::IMREAD_UNCHANGED);
+  }
+  catch (cv::Exception & e) {
+    ok = false;
+  }
+  if (img.empty())
+    ok = false;
+  if (!ok)
+    printf("Error reading file '%s'!\n", img_file.c_str());
+  return ok;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class T>
 inline bool set_image_tag(people_msgs::Person & pp,
-                          const std::string & img_name,
+                          const std::string & img_tagname,
                           const cv::Mat_<T> & img) {
   std::ostringstream filename;
   int i = 0;
+  //std::vector<int> params;
+  //params.push_back(CV_IMWRITE_PNG_COMPRESSION);
+  //params.push_back(0);
   while(i < 100) { // 100 tries
     ++i;
     filename.str("");
     filename << "/tmp/ppl_" << vision_utils::timestamp()
-             << "_" << img_name;
+             << "_" << img_tagname;
     if (i > 1) filename << i;
     filename << ".png";
     if (file_exists(filename.str()))
       continue;
-    if (!cv::imwrite(filename.str(), img))
+    if (!cv::imwrite(filename.str(), img))//, params))
       return false;
-    return set_tag(pp, "img_name", filename.str());
+    return set_tag(pp, img_tagname, filename.str());
   }
-  ROS_WARN("Could not save '%s' to '%s'", img_name.c_str(), filename.str().c_str());
+  ROS_WARN("Could not save '%s' to '%s'", img_tagname.c_str(), filename.str().c_str());
   return false;
 }
 

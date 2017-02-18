@@ -1,8 +1,9 @@
 // Bring in gtest
 #include <gtest/gtest.h>
+#include "vision_utils/img_path.h"
+#include "vision_utils/matrix_testing.h"
 #include "vision_utils/ppl_attributes.h"
 #include "vision_utils/ppl_tags_images.h"
-#include "vision_utils/matrix_testing.h"
 
 TEST(TestSuite, get_attribute) {
   people_msgs::Person pose;
@@ -36,7 +37,7 @@ void test_get_set_tag(_T value1, _T value2) {
   // set attribute "attr2" to value1
   EXPECT_TRUE(vision_utils::set_tag(pose, "attr2", value1));
 
-      // check the attribute "attr2" is well equal to value1
+  // check the attribute "attr2" is well equal to value1
   EXPECT_TRUE(vision_utils::get_tag(pose, "attr2", value_read));
 
   EXPECT_TRUE(value_read == value1) << "value_read:" << value_read << ", value1:" << value1;
@@ -89,10 +90,12 @@ TEST(TestSuite, copy_attribute) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TEST(TestSuite, image_tag) {
-  cv::Mat3b rgb(100, 100), rgb2;
-  cv::Mat1f depth(100, 100), depth2;
-  cv::Mat1b user(100, 100), user2;
+void test_image_tag(const cv::Mat3b & rgb,
+                    const cv::Mat1f & depth,
+                    const cv::Mat1b & user) {
+  cv::Mat3b rgb2;
+  cv::Mat1f depth2;
+  cv::Mat1b user2;
 
   people_msgs::Person src;
   // test for an empty image
@@ -111,14 +114,34 @@ TEST(TestSuite, image_tag) {
   EXPECT_TRUE(vision_utils::get_image_tag(src, "user", user2));
   EXPECT_TRUE(vision_utils::matrices_equal(user, user2));
 
+  // incorrect types
+  //  EXPECT_FALSE(vision_utils::get_image_tag(src, "rgb", depth2));
+  //  EXPECT_FALSE(vision_utils::get_image_tag(src, "rgb", user2));
+  //  EXPECT_FALSE(vision_utils::get_image_tag(src, "depth", rgb2));
+  //  EXPECT_FALSE(vision_utils::get_image_tag(src, "depth", user2));
+  //  EXPECT_FALSE(vision_utils::get_image_tag(src, "user", rgb2));
+  //  EXPECT_FALSE(vision_utils::get_image_tag(src, "user", depth2));
+
   // change types
   EXPECT_TRUE(vision_utils::set_image_tag(src, "rgb", user));
   EXPECT_TRUE(vision_utils::get_image_tag(src, "rgb", user2));
   EXPECT_TRUE(vision_utils::matrices_equal(user, user2));
+}
 
-  // type cast
-  EXPECT_TRUE(vision_utils::get_image_tag(src, "depth", user2));
-  EXPECT_TRUE(vision_utils::matrices_equal(user, user2));
+TEST(TestSuite, image_tag_simple) {
+  test_image_tag(cv::Mat3b(100, 100, cv::Vec3b(0, 127, 255)),
+                 cv::Mat1f (100, 100, 1.f),
+                 cv::Mat1b (100, 100, (uchar) 127));
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+TEST(TestSuite, image_tag_real) {
+  int flag = cv::IMREAD_UNCHANGED;
+  test_image_tag
+      (cv::imread(vision_utils::IMG_DIR() + "depth/alberto1_rgb.png", flag),
+       cv::imread(vision_utils::IMG_DIR() + "depth/alberto1_depth.png", flag),
+       cv::imread(vision_utils::IMG_DIR() + "depth/alberto1_user_mask.png", flag));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

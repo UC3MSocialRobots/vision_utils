@@ -25,7 +25,7 @@ ________________________________________________________________________________
  */
 bool display = false;
 #include <gtest/gtest.h>
-
+#include <ros/ros.h>
 #include "vision_utils/timer.h"
 #include "vision_utils/pie_chart_utils.h"
 #include "vision_utils/rand_gaussian.h"
@@ -93,7 +93,10 @@ void test_pie2(std::vector<_T> & values,
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char** argv) {
-  display = (argc > 1); printf("display:%i\n", display);
+  ros::init(argc, argv, "gtest");
+  ros::NodeHandle nh_private("~");
+  nh_private.param("display", display, display);
+  printf("display:%i\n", display);
   // make vectors from C arrays
   int nvals = 4;
   double values_arr[] = {.1, .2, .2, .4};

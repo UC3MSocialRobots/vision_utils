@@ -24,6 +24,7 @@ ________________________________________________________________________________
  */
 // Bring in gtest
 #include <gtest/gtest.h>
+#include <ros/ros.h>
 #include <opencv2/core/core.hpp>
 #include <image_geometry/pinhole_camera_model.h>
 // vision_utils
@@ -108,7 +109,10 @@ TEST(TestSuite, dgaitdb_ltm_depth) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char **argv){
-  display = (argc > 1); printf("display:%i\n", display);
+  ros::init(argc, argv, "gtest");
+  ros::NodeHandle nh_private("~");
+  nh_private.param("display", display, display);
+  printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
