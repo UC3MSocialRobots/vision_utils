@@ -245,8 +245,8 @@ TEST(TestSuite, image_no_image_david_arnaud1){ test_image_no_image(vision_utils:
 
 int main(int argc, char** argv) {
   ros::init(argc, argv, "gtest");
-  ros::NodeHandle nh_private("~");
-  nh_private.param("display", display, display);
+  ros::NodeHandle nh_public;
+  nh_public.param("display", display, display);
   printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);

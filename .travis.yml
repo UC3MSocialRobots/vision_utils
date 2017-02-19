@@ -42,3 +42,4 @@ script: # compile
   # compile tests
   - cd build
   - make tests
+  - make run_tests

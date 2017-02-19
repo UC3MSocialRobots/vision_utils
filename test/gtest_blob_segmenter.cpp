@@ -312,8 +312,8 @@ TEST(TestSuite, blobs_vs_nite_david_arnaud3) {
 
 int main(int argc, char **argv){
   ros::init(argc, argv, "gtest");
-  ros::NodeHandle nh_private("~");
-  nh_private.param("display", display, display);
+  ros::NodeHandle nh_public;
+  nh_public.param("display", display, display);
   printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   // srand(time(NULL));

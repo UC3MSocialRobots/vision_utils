@@ -58,7 +58,7 @@ public:
   TimerChart(const std::string & window_name = "TimerChart") :
     vision_utils::Timer(), _window_name(window_name) {
     _display_call_counter = 0;
-    cv::namedWindow(_window_name);
+    _windows_created = false;
   }
 
   //! print time needed for a task identified by its string
@@ -94,12 +94,17 @@ public:
       //map_keys_to_container(_times, _labels_vector_dump);
       make_pie_and_caption(_times, _labels_vector_dump,
                                             _chart, 800, 600, false, .08);
+      if (!_windows_created) {
+        _windows_created = true;
+        cv::namedWindow(_window_name);
+      }
       cv::imshow(_window_name, _chart);
       cv::waitKey(5);
     }
   }
 
 private:
+  bool _windows_created;
   std::string _window_name;
   std::vector<Time> _times;
   Label2IndexMap _label2indices;

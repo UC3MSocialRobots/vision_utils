@@ -31,12 +31,14 @@ namespace vision_utils {
 
 //! Computes the 1D histogram of the first channel of the image
 Histogram get_histogram(const cv::Mat &image,
-                        const int & nbins, const double max_value,
+                        const int & nbins, const float max_value,
                         const cv::Mat & mask = cv::Mat(),
                         bool want_normalize_hist = true) {
+  //  printf("get_histogram(image:%ix%i, mask:%ix%i)\n",
+  //         image.cols, image.rows, mask.cols, mask.rows);
   Histogram hist;
   int histSize[] = {nbins};
-  float hranges[] = { 0.f, 1.f * max_value };
+  float hranges[] = { 0.f, max_value };
   const float* ranges[] = { hranges };
   int channels[] = {0};
   // Compute histogram

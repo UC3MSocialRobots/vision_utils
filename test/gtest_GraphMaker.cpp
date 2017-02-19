@@ -14,8 +14,8 @@ bool display = false;
 
 int main(int argc, char** argv) {
   ros::init(argc, argv, "gtest_GraphMaker");
-  ros::NodeHandle nh_private("~");
-  nh_private.param("display", display, display);
+  ros::NodeHandle nh_public;
+  nh_public.param("display", display, display);
   printf("display:%i\n", display);
 
   // rows, cols

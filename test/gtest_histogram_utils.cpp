@@ -90,25 +90,25 @@ void test_mean_std_dev(const std::string & filename,
   ASSERT_NEAR(std_dev, exp_std_dev, 1);
 
   // display
-if (display) {
-  cv::imshow("h_illus", h_illus); cv::waitKey(0);
-  cv::destroyAllWindows();
-  printf("mean:%g, std_dev:%g\n", mean, std_dev);
-  //gaussian_pdf2gnuplot(mean, std_dev, false, -50, 230);
-  //VU::histogram2gnuplot(h, 180, -50, 230, mean, std_dev);
-  VU::histogram2gnuplot(h, 180, 0, 180, mean, std_dev);
-    } // end if display
+  if (display) {
+    cv::imshow("h_illus", h_illus); cv::waitKey(0);
+    cv::destroyAllWindows();
+    printf("mean:%g, std_dev:%g\n", mean, std_dev);
+    //gaussian_pdf2gnuplot(mean, std_dev, false, -50, 230);
+    //VU::histogram2gnuplot(h, 180, -50, 230, mean, std_dev);
+    VU::histogram2gnuplot(h, 180, 0, 180, mean, std_dev);
+  } // end if display
 }
 
-//TEST(TestSuite, test_mean_std_dev_red_grad) { test_mean_std_dev(vision_utils::IMG_DIR() + "red_grad.png", 0.5, 13); }
-TEST(TestSuite, test_mean_std_dev_notebook) { test_mean_std_dev(vision_utils::IMG_DIR() + "notebook.png", 13, 6); }
-TEST(TestSuite, test_mean_std_dev_paleo) { test_mean_std_dev(vision_utils::IMG_DIR() + "paleo.png", 58, 26); }
+//TEST(TestSuite, mean_std_dev_red_grad) { test_mean_std_dev(vision_utils::IMG_DIR() + "red_grad.png", 0.5, 13); }
+TEST(TestSuite, mean_std_dev_notebook) { test_mean_std_dev(vision_utils::IMG_DIR() + "notebook.png", 13, 6); }
+TEST(TestSuite, mean_std_dev_paleo) { test_mean_std_dev(vision_utils::IMG_DIR() + "paleo.png", 58, 26); }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void test_hue_roi_mask(const std::string filename) {
-  cv::Mat3b img = cv::imread(filename, CV_LOAD_IMAGE_COLOR), img_hsv = img.clone();
-  cv::Mat hue = vision_utils::rgb2hue(img_hsv);
+void test_hue_roi_mask(const cv::Mat3b & bgr) {
+  cv::Mat3b hsv = bgr.clone();
+  cv::Mat hue = vision_utils::rgb2hue(hsv);
   // compute histogram
   int nbins = 25, max_value = 180; // hue till 180
   vision_utils::Timer timer;
@@ -121,17 +121,55 @@ void test_hue_roi_mask(const std::string filename) {
   // just keep a ROI
   unsigned int cols = hue.cols, rows = hue.rows;
   cv::Rect ROI(cv::Point(cols/4, rows/4), cv::Point(cols/2, rows/2));
-  VU::Histogram histo_roi = VU::get_histogram(hue(ROI), nbins, max_value);
-  cv::Mat1b mask(img.size(), 0);
-  mask(ROI) = 255;
-  VU::Histogram histo_mask = VU::get_histogram(hue, nbins, max_value, mask);
-
-  ASSERT_TRUE(vision_utils::matrices_equal(histo_mask, histo_roi));
+  VU::Histogram histo_roi = VU::get_histogram(hue(ROI), nbins, max_value, cv::Mat(), false);
+  cv::Mat mask(hue.size(), CV_8UC1, cv::Scalar::all(0));
+  mask(ROI).setTo(255);
+  if (display) {
+    cv::imshow("img", bgr);
+    cv::imshow("hue", hue);
+    cv::imshow("hue(ROI)", hue(ROI));
+    cv::imshow("mask", mask);
+    cv::waitKey(0);
+  }
+  VU::Histogram histo_mask = VU::get_histogram(hue, nbins, max_value, mask, false);
+  ASSERT_TRUE(hue(ROI).cols == ROI.width);
+  ASSERT_TRUE(hue(ROI).rows == ROI.height);
+  ASSERT_TRUE(vision_utils::matrices_equal(histo_mask, histo_roi))
+      << "histo_mask:" << histo_mask.t()
+      << ", sum:" << cv::sum(histo_mask) << std::endl
+      << "histo_roi:" << histo_roi.t()
+      << ", sum:" << cv::sum(histo_roi) << std::endl
+      << "histo_full:" << histo_full.t()
+      << ", sum:" << cv::sum(histo_full) << std::endl;
 }
 
-TEST(TestSuite, test_hue_roi_mask_red_grad) { test_hue_roi_mask(vision_utils::IMG_DIR() + "red_grad.png"); }
-TEST(TestSuite, test_hue_roi_mask_notebook) { test_hue_roi_mask(vision_utils::IMG_DIR() + "notebook.png"); }
-TEST(TestSuite, test_hue_roi_mask_paleo) { test_hue_roi_mask(vision_utils::IMG_DIR() + "paleo.png"); }
+void test_hue_roi_mask(const std::string & filename) {
+  test_hue_roi_mask(cv::imread(vision_utils::IMG_DIR() + filename, CV_LOAD_IMAGE_COLOR));
+}
+
+TEST(TestSuite, hue_roi_mask_red) {
+  cv::Mat3b red(640, 480);
+  red.setTo(cv::Vec3b(0, 0, 255));
+  test_hue_roi_mask(red);
+}
+TEST(TestSuite, hue_roi_mask_green) {
+  cv::Mat3b green(640, 480);
+  green.setTo(cv::Vec3b(0, 255, 0));
+  test_hue_roi_mask(green);
+}
+TEST(TestSuite, hue_roi_mask_blue) {
+  cv::Mat3b blue(640, 480);
+  blue.setTo(cv::Vec3b(255, 0, 0));
+  test_hue_roi_mask(blue);
+}
+TEST(TestSuite, hue_roi_mask_greenblue) {
+  cv::Mat3b greenblue(100, 100, cv::Vec3b(255, 0, 0));
+  greenblue(cv::Rect(20, 30, 40, 50)).setTo(cv::Vec3b(0, 255, 0));
+  test_hue_roi_mask(greenblue);
+}
+//TEST(TestSuite, hue_roi_mask_red_grad) { test_hue_roi_mask("red_grad.png"); }
+//TEST(TestSuite, hue_roi_mask_notebook) { test_hue_roi_mask("notebook.png"); }
+//TEST(TestSuite, hue_roi_mask_paleo)    { test_hue_roi_mask("paleo.png"); }
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -143,13 +181,13 @@ void test_histo_bw(const std::string filename) {
   // draw it
   cv::Mat3b histo_illus;
   VU::histogram_to_image(histo, histo_illus, 800, 600);
-if (display) {
-  cv::imwrite("histo_illus.png", histo_illus); printf("'histo_illus.png' saved.\n");
-  cv::imshow("img", img);
-  cv::imshow("histo_illus", histo_illus);
-  cv::waitKey(0);
-  cv::destroyAllWindows();
-    } // end if display
+  if (display) {
+    cv::imwrite("histo_illus.png", histo_illus); printf("'histo_illus.png' saved.\n");
+    cv::imshow("img", img);
+    cv::imshow("histo_illus", histo_illus);
+    cv::waitKey(0);
+    cv::destroyAllWindows();
+  } // end if display
 }
 
 TEST(TestSuite, histo_bw) {
@@ -172,13 +210,13 @@ void test_histo_hue_mask(const std::string filename,
   VU::histogram_to_image
       (histo_full, histo_full_illus, illus_w, illus_h, vision_utils::ratio2hue);
 
-if (display) {
-  cv::imshow("img", img);
-  cv::imwrite("hue.png", vision_utils::hue2rgb(hue)); printf("'hue.png' saved.\n");
-  cv::imshow("hue", vision_utils::hue2rgb(hue));
-  cv::imshow("histo_full_illus", histo_full_illus);
-  cv::imwrite("histo_full_illus.png", histo_full_illus); printf("'histo_full_illus.png' saved.\n");
-    } // end if display
+  if (display) {
+    cv::imshow("img", img);
+    cv::imwrite("hue.png", vision_utils::hue2rgb(hue)); printf("'hue.png' saved.\n");
+    cv::imshow("hue", vision_utils::hue2rgb(hue));
+    cv::imshow("histo_full_illus", histo_full_illus);
+    cv::imwrite("histo_full_illus.png", histo_full_illus); printf("'histo_full_illus.png' saved.\n");
+  } // end if display
 
   if (mask_filename.size() > 0) {
     cv::Mat1b mask = cv::imread(mask_filename, CV_LOAD_IMAGE_GRAYSCALE);
@@ -186,15 +224,15 @@ if (display) {
     VU::Histogram histo_mask = VU::get_histogram(hue, nbins, max_value, mask);
     VU::histogram_to_image
         (histo_mask, histo_mask_illus, illus_w, illus_h, vision_utils::ratio2hue);
-if (display) {
-    cv::imshow("histo_mask_illus", histo_mask_illus);
-    cv::imwrite("histo_mask_illus.png", histo_mask_illus); printf("'histo_mask_illus.png' saved.\n");
+    if (display) {
+      cv::imshow("histo_mask_illus", histo_mask_illus);
+      cv::imwrite("histo_mask_illus.png", histo_mask_illus); printf("'histo_mask_illus.png' saved.\n");
     } // end if display
   }
-if (display) {
-  cv::waitKey(0);
-  cv::destroyAllWindows();
-    } // end if display
+  if (display) {
+    cv::waitKey(0);
+    cv::destroyAllWindows();
+  } // end if display
 }
 
 TEST(TestSuite, histo_hue_mask) {
@@ -240,56 +278,56 @@ void test_dist_roi_moving_mouse(const std::string filename) {
       (hists, hist_img, hist_w, hist_h, vision_utils::ratio2hue, &refresh_mask);
   refresh_mask[0] = false; // no need to refresh this histogram anymore
 
-if (display) {
-  cv::Mat3b img_illus;
-  while (true) {
-    // compute and draw moving histogram
-    if (recompute_hist) {
-      recompute_hist = false;
-      // check the ROI does not get out of image
-      ROI2 = vision_utils::rectangle_intersection(ROI2, img_bbox);
-      // recompute histogram and draw it
-      hists[1] = VU::get_histogram(hue(ROI2), nbins, max_value);
-      // printf("\nhistograms[1]:'%s'\n", VU::hist_to_string(hists[1]).c_str());
-      VU::vector_of_histograms_to_image
-          (hists, hist_img, hist_w, hist_h, vision_utils::ratio2hue, &refresh_mask);
+  if (display) {
+    cv::Mat3b img_illus;
+    while (true) {
+      // compute and draw moving histogram
+      if (recompute_hist) {
+        recompute_hist = false;
+        // check the ROI does not get out of image
+        ROI2 = vision_utils::rectangle_intersection(ROI2, img_bbox);
+        // recompute histogram and draw it
+        hists[1] = VU::get_histogram(hue(ROI2), nbins, max_value);
+        // printf("\nhistograms[1]:'%s'\n", VU::hist_to_string(hists[1]).c_str());
+        VU::vector_of_histograms_to_image
+            (hists, hist_img, hist_w, hist_h, vision_utils::ratio2hue, &refresh_mask);
 
-      // for each possible dist method, get distance and print it in text area of hist_img
-      text_area =  cv::Vec3b(230, 230, 230);
-      unsigned int n_methods = 4;
-      int methods[] = {CV_COMP_INTERSECT, CV_COMP_CHISQR, CV_COMP_BHATTACHARYYA, CV_COMP_CORREL};
-      const char* method_str[] = {"INTERSECT", "CHISQR", "BHATTACHARYYA", "CORREL"};
-      for (unsigned int method_idx = 0; method_idx < n_methods; ++method_idx) {
-        double dist = VU::distance_hists(hists[0], hists[1], methods[method_idx]);
-        double dist_raw = VU::distance_hists(hists[0], hists[1], methods[method_idx], false);
-        std::ostringstream text;
-        text << method_str[method_idx] << ":" << std::setprecision(3) << dist
-             << " (" << std::setprecision(3) << dist_raw << ")";
-        //cv::Scalar bg_color = CV_RGB(255, 100, 100)
-        cv::Scalar bg_color = vision_utils::ratio2red_green(dist);
-        cv::rectangle(text_area,
-                      cv::Rect(0, method_idx * text_area_roi.height / 4,
-                               text_area_roi.width * dist, text_area_roi.height / 4),
-                      bg_color, -1);
-        cv::putText(text_area, text.str(),
-                    cv::Point(5, -3 + (method_idx+1) * text_area_roi.height / n_methods),
-                    CV_FONT_HERSHEY_PLAIN, 1, cv::Scalar::all(0));
-      } // end loop method_idx
+        // for each possible dist method, get distance and print it in text area of hist_img
+        text_area =  cv::Vec3b(230, 230, 230);
+        unsigned int n_methods = 4;
+        int methods[] = {CV_COMP_INTERSECT, CV_COMP_CHISQR, CV_COMP_BHATTACHARYYA, CV_COMP_CORREL};
+        const char* method_str[] = {"INTERSECT", "CHISQR", "BHATTACHARYYA", "CORREL"};
+        for (unsigned int method_idx = 0; method_idx < n_methods; ++method_idx) {
+          double dist = VU::distance_hists(hists[0], hists[1], methods[method_idx]);
+          double dist_raw = VU::distance_hists(hists[0], hists[1], methods[method_idx], false);
+          std::ostringstream text;
+          text << method_str[method_idx] << ":" << std::setprecision(3) << dist
+               << " (" << std::setprecision(3) << dist_raw << ")";
+          //cv::Scalar bg_color = CV_RGB(255, 100, 100)
+          cv::Scalar bg_color = vision_utils::ratio2red_green(dist);
+          cv::rectangle(text_area,
+                        cv::Rect(0, method_idx * text_area_roi.height / 4,
+                                 text_area_roi.width * dist, text_area_roi.height / 4),
+                        bg_color, -1);
+          cv::putText(text_area, text.str(),
+                      cv::Point(5, -3 + (method_idx+1) * text_area_roi.height / n_methods),
+                      CV_FONT_HERSHEY_PLAIN, 1, cv::Scalar::all(0));
+        } // end loop method_idx
 
-      // draw rectangles
-      img.copyTo(img_illus);
-      cv::rectangle(img_illus, ROI, CV_RGB(255, 0, 0), 2);
-      cv::rectangle(img_illus, ROI2, CV_RGB(0, 0, 255), 2);
-      cv::imshow(window_name, img_illus);
-    } // end if (recompute_hist)
+        // draw rectangles
+        img.copyTo(img_illus);
+        cv::rectangle(img_illus, ROI, CV_RGB(255, 0, 0), 2);
+        cv::rectangle(img_illus, ROI2, CV_RGB(0, 0, 255), 2);
+        cv::imshow(window_name, img_illus);
+      } // end if (recompute_hist)
 
-    cv::imshow("hist_img", hist_img);
-    char c = cv::waitKey(50);
-    if ((int) c == 27)
-      break;
-  } // end while (true)
-  cv::destroyAllWindows();
-    } // end if display
+      cv::imshow("hist_img", hist_img);
+      char c = cv::waitKey(50);
+      if ((int) c == 27)
+        break;
+    } // end while (true)
+    cv::destroyAllWindows();
+  } // end if display
 }
 
 TEST(TestSuite, dist_roi_moving_mouse) {
@@ -308,18 +346,18 @@ void test_get_vector_of_histograms_illus
   cv::Mat3b hists_img;
   VU::vector_of_histograms_to_image(hists, hists_img, 300, 200,
                                     vision_utils::ratio2hue);
-if (display) {
-  // show everything
-  for (unsigned int i = 0; i < hues.size(); ++i)
-    cv::imshow(std::string("hue #") + vision_utils::cast_to_string(i),
-               vision_utils::hue2rgb(hues[i]));
-  for (unsigned int i = 0; i < masks.size(); ++i)
-    cv::imshow(std::string("mask #") + vision_utils::cast_to_string(i), masks[i]);
-  cv::imwrite("hists_img.png", hists_img); printf("'hists_img.png' saved.\n");
-  cv::imshow("hists_img", hists_img);
-  cv::waitKey(0);
-  cv::destroyAllWindows();
-    } // end if display
+  if (display) {
+    // show everything
+    for (unsigned int i = 0; i < hues.size(); ++i)
+      cv::imshow(std::string("hue #") + vision_utils::cast_to_string(i),
+                 vision_utils::hue2rgb(hues[i]));
+    for (unsigned int i = 0; i < masks.size(); ++i)
+      cv::imshow(std::string("mask #") + vision_utils::cast_to_string(i), masks[i]);
+    cv::imwrite("hists_img.png", hists_img); printf("'hists_img.png' saved.\n");
+    cv::imshow("hists_img", hists_img);
+    cv::waitKey(0);
+    cv::destroyAllWindows();
+  } // end if display
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -384,8 +422,8 @@ TEST(TestSuite, get_vector_of_histograms_1_image_1_multimask) {
 
 int main(int argc, char **argv){
   ros::init(argc, argv, "gtest");
-  ros::NodeHandle nh_private("~");
-  nh_private.param("display", display, display);
+  ros::NodeHandle nh_public;
+  nh_public.param("display", display, display);
   printf("display:%i\n", display);
   // Run all the tests that were declared with TEST()
   testing::InitGoogleTest(&argc, argv);

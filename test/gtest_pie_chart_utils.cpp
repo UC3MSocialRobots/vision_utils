@@ -94,8 +94,8 @@ void test_pie2(std::vector<_T> & values,
 
 int main(int argc, char** argv) {
   ros::init(argc, argv, "gtest");
-  ros::NodeHandle nh_private("~");
-  nh_private.param("display", display, display);
+  ros::NodeHandle nh_public;
+  nh_public.param("display", display, display);
   printf("display:%i\n", display);
   // make vectors from C arrays
   int nvals = 4;

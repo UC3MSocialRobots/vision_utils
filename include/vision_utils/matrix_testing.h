@@ -45,9 +45,9 @@ inline bool matrices_near(const cv::Mat & A, const cv::Mat & B,
   double minVal, maxVal;
   cv::minMaxLoc(diff, &minVal, &maxVal, &minLoc, &maxLoc);
   if (maxVal > max_diff) {
-    if (A.cols * A.rows < 500)
-      std::cout << "matrices_near(): A:" << std::endl << A << std::endl
-                << ", B:" << std::endl << B << std::endl;
+    //    if (A.cols * A.rows < 500)
+    //      std::cout << "matrices_near(): A:" << std::endl << A << std::endl
+    //                << ", B:" << std::endl << B << std::endl;
     std::cout << "matrices_near(): " << maxLoc << ": diff:" << maxVal << std::endl;
     return false;
   }

@@ -40,7 +40,7 @@ class DatabasePlayer {
 public:
   typedef unsigned int UserIdx;
 
-  DatabasePlayer() {}
+  DatabasePlayer() { _windows_created = false; }
 
   //////////////////////////////////////////////////////////////////////////////
 
@@ -100,9 +100,12 @@ public:
   //////////////////////////////////////////////////////////////////////////////
 
   virtual char display() {
+    if (!_windows_created) {
+      _windows_created = true;
     cv::namedWindow("bgr");
     cv::namedWindow("depth");
     cv::namedWindow("user");
+    }
     if (_has_rgb)
       cv::imshow("bgr", _bgr);
     if (_has_depth) {
@@ -157,7 +160,7 @@ protected:
 
   //////////////////////////////////////////////////////////////////////////////
 
-  bool _has_rgb;
+  bool _has_rgb, _windows_created;
   cv::Mat3b _bgr;
   bool _has_depth;
   cv::Mat1f _depth32f;
