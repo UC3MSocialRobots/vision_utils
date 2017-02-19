@@ -42,4 +42,6 @@ script: # compile
   # compile tests
   - cd build
   - make tests
+  # run tests
+  - roscore &
   - make run_tests
