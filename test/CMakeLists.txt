@@ -64,6 +64,9 @@ target_link_libraries(gtest_image_contour ${catkin_LIBRARIES})
 catkin_add_gtest     (gtest_image_utils  gtest_image_utils.cpp)
 TARGET_LINK_LIBRARIES(gtest_image_utils  ${catkin_LIBRARIES})
 
+catkin_add_gtest     (gtest_interpolator gtest_interpolator.cpp)
+target_link_libraries(gtest_interpolator ${catkin_LIBRARIES})
+
 catkin_add_gtest     (gtest_io gtest_io.cpp)
 target_link_libraries(gtest_io ${catkin_LIBRARIES})
 
@@ -108,6 +111,9 @@ TARGET_LINK_LIBRARIES(gtest_timer_chart  ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_voronoi  gtest_voronoi.cpp)
 target_link_libraries(gtest_voronoi ${catkin_LIBRARIES})
+
+catkin_add_gtest     (gtest_string2msg  gtest_string2msg.cpp)
+target_link_libraries(gtest_string2msg ${catkin_LIBRARIES})
 
 catkin_add_gtest     (gtest_xml_images_interface  gtest_xml_images_interface.cpp)
 TARGET_LINK_LIBRARIES(gtest_xml_images_interface  ${catkin_LIBRARIES})
