@@ -60,28 +60,32 @@ inline void StringSplit(const std::string & str, const std::string & delim,
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class _T>
-void StringSplit_(const std::string & str, const std::string & delim,
+bool StringSplit_(const std::string & str, const std::string & delim,
                   std::vector<_T>* results) {
   // //printf("StringSplit_(str:'%s', delim:'%s')", str.c_str(), delim.c_str());
-  bool success;
   results->clear();
-  if (str == "")
-    return;
+  if (str.empty())
+    return true; // success
+  bool ok = true, ok_tmp;
   size_t delim_pos, search_pos = 0;
   while (search_pos <= str.size() - 1) {
     delim_pos = str.find(delim, search_pos);
     //printf("delim_pos:%i, search_pos:%i", delim_pos, search_pos);
     if (delim_pos == std::string::npos) { // no more delim
       results->push_back(cast_from_string<_T>(str.substr(search_pos),
-                                              success));
-      return;
+                                              ok_tmp));
+      ok = ok && ok_tmp;
+      return ok;
     }
     if (delim_pos > 0) // == 0 only happens if str starts with delim
-      results->push_back(cast_from_string<_T>(str.substr(search_pos, delim_pos - search_pos),
-                                              success));
+      results->push_back(cast_from_string<_T>
+                         (str.substr(search_pos, delim_pos - search_pos),
+                          ok_tmp));
+    ok = ok && ok_tmp;
     search_pos = delim_pos + delim.size();
     // quit if we reached the end of the string or string empty
-  }
+  } // end while()
+  return ok;
 } //end StringSplit_()
 } // end namespace vision_utils
 

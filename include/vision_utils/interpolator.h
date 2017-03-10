@@ -13,6 +13,8 @@
 #include <geometry_msgs/Vector3.h>
 #include <ros/ros.h>
 // vision_utils
+#include <vision_utils/msg2string.h>
+#include <vision_utils/string2msg.h>
 #include <vision_utils/spline/spline.h>
 
 namespace vision_utils {
@@ -20,27 +22,47 @@ namespace vision_utils {
 template<class _Msg>
 class Interpolator {
 public:
+  Interpolator() : _msg_dim(0) {}
+
   //! train with two vectors
   bool train(const std::vector<double> & T,
              const std::vector<_Msg> & msgs) {
     if (!Tmsgs_sanity_checks(T, msgs))
       return false;
-    std::vector<double> X;
-    unsigned int n = T.size();
-    for (unsigned int i = 0; i < n; ++i)
-      X.push_back(msgs[i].data);
-    _splines.resize(1);
-    _splines.front().set_points(T, X);
+    // get the number of fields of the message
+    if (!msg2dvec(msgs.front(), _values_buffer))
+      return false;
+    _msg_dim = _values_buffer.size();
+    ROS_INFO("Interpolator: training %i splines...", _msg_dim);
+    // for each field, get all of its values across time
+    std::vector< std::vector<double> > X;
+    X.resize(_msg_dim);
+    unsigned int nT = T.size();
+    for (unsigned int t = 0; t < nT; ++t) {
+      if (!msg2dvec(msgs[t], _values_buffer))
+        return false;
+      for (unsigned int j = 0; j < _msg_dim; ++j)
+        X[j].push_back(_values_buffer[j]);
+    } // end for t
+    // now train
+    _splines.resize(_msg_dim);
+    for (unsigned int i = 0; i < _msg_dim; ++i) {
+      _splines[i].set_points(T, X[i]);
+    } // end for i
     return true;
   }
   //! predict once trained
   bool predict(const double & t, _Msg & out) {
-    if (_splines.size() != 1) {
+    if (!_msg_dim || _splines.size() != _msg_dim) {
       ROS_WARN("Spline was not trained with the good type of data!");
       return false;
     }
-    out.data = (_splines.front())(t);
-    return true;
+    // get each of the fields
+    _values_buffer.resize(_msg_dim);
+    for (unsigned int i = 0; i < _msg_dim; ++i)
+      _values_buffer[i] = (_splines[i])(t);
+    // now fill the message
+    return vision_utils::dvec2msg(_values_buffer, out);
   }
 
 protected:
@@ -57,42 +79,10 @@ protected:
     return true;
   } // end Tmsgs_sanity_checks()
 
+  unsigned int _msg_dim;
   std::vector<tk::spline> _splines;
+  std::vector<double> _values_buffer;
 }; // end class Interpolator
-
-////////////////////////////////////////////////////////////////////////////////
-// template specifications
-template<>
-bool Interpolator<std_msgs::ColorRGBA>::train(const std::vector<double> & T,
-                                              const std::vector<std_msgs::ColorRGBA> & msgs) {
-  if (!Tmsgs_sanity_checks(T, msgs))
-    return false;
-  unsigned int n = T.size(), dim = 4;
-  std::vector<std::vector<double> > RGBA(dim);
-  for (unsigned int i = 0; i < n; ++i) {
-    RGBA[0].push_back(msgs[i].r);
-    RGBA[1].push_back(msgs[i].g);
-    RGBA[2].push_back(msgs[i].b);
-    RGBA[3].push_back(msgs[i].a);
-  }
-  _splines.resize(dim);
-  for (unsigned int i = 0; i < dim; ++i)
-    _splines[i].set_points(T, RGBA[i]);
-  return true;
-}
-template<>
-bool Interpolator<std_msgs::ColorRGBA>::predict(const double & t,
-                                                std_msgs::ColorRGBA & out) {
-  if (_splines.size() != 4) {
-    ROS_WARN("Spline was not trained with the good type of data!");
-    return false;
-  }
-  out.r = (_splines[0])(t);
-  out.g = (_splines[1])(t);
-  out.b = (_splines[2])(t);
-  out.a = (_splines[3])(t);
-  return true;
-}
 
 } // end namespace vision_utils
 

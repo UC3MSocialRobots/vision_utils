@@ -39,37 +39,27 @@ Some tests for interpolator functions
 
 //! a quick function to build a standard ROS message
 template<class _Msg>
-_Msg factory(double data) {
-  _Msg msg; msg.data = data; return msg;
+_Msg factory(unsigned int dim, double data) {
+  std::vector<double> values(dim, data);
+  _Msg msg;
+  vision_utils::dvec2msg<_Msg>(values, msg);
+  return msg;
 }
 //! a comparer function
 template<class _Msg>
-bool equals(const _Msg & msg, double data) {
-  typename _Msg::_data_type data_cast = data;
-  return msg.data == data_cast;
+bool between(const _Msg & msg, double min, double max) {
+  std::vector<double> values;
+  vision_utils::msg2dvec<_Msg>(msg, values);
+  for (unsigned int i = 0; i < values.size(); ++i) {
+    if(values[i] < min || values[i] > max)
+      return false;
+  }
+  return true;
 }
 template<class _Msg>
-bool between(const _Msg & msg, double min, double max) {
-  typename _Msg::_data_type min_cast = min, max_cast = max;
-  return msg.data > min_cast && msg.data < max_cast;
+bool equals(const _Msg & msg, double data) {
+  return between(msg, data, data);
 }
-// template specifications
-template<>
-std_msgs::ColorRGBA factory(double data) {
-  std_msgs::ColorRGBA msg;
-  msg.r = msg.g = msg.b = msg.a = data;
-  return msg;
-}
-template<>
-bool equals(const std_msgs::ColorRGBA & msg, double data) {
-  return msg.r == data && msg.g == data && msg.b == data && msg.a == data;
-}
-template<>
-bool between(const std_msgs::ColorRGBA & msg, double min, double max) {
-  return msg.r > min && msg.r < max && msg.g > min && msg.g < max
-      && msg.b > min && msg.b < max && msg.a > min && msg.a < max;
-}
-
 
 TEST(TestSuite, ctor) {
   vision_utils::Interpolator<std_msgs::UInt8> inter;
@@ -89,11 +79,11 @@ void test_empty() {
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class _Msg>
-void test_singleton() {
+void test_singleton(unsigned int dim) {
   ROS_INFO("test_singleton()");
   vision_utils::Interpolator<_Msg> inter;
   std::vector<double> T(1, 42);
-  std::vector<_Msg> X(1, factory<_Msg>(43));
+  std::vector<_Msg> X(1, factory<_Msg>(dim, 43));
   ASSERT_TRUE(inter.train(T, X));
   _Msg p;
   ASSERT_TRUE(inter.predict(42, p));
@@ -103,15 +93,15 @@ void test_singleton() {
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class _Msg>
-void test_pair() {
+void test_pair(unsigned int dim) {
   ROS_INFO("test_pair()");
   vision_utils::Interpolator<_Msg> inter;
   std::vector<double> T;
   std::vector<_Msg> X;
   T.push_back(0);
-  X.push_back(factory<_Msg>(10));
+  X.push_back(factory<_Msg>(dim, 10));
   T.push_back(1);
-  X.push_back(factory<_Msg>(20));
+  X.push_back(factory<_Msg>(dim, 20));
   ASSERT_TRUE(inter.train(T, X));
   _Msg p;
   ASSERT_TRUE(inter.predict(0, p));
@@ -125,23 +115,32 @@ void test_pair() {
 ////////////////////////////////////////////////////////////////////////////////
 
 template<class _Msg>
-void test_suite() {
+void test_suite(unsigned int dim) {
   test_empty<_Msg>();
-  test_singleton<_Msg>();
-  test_pair<_Msg>();
+  test_singleton<_Msg>(dim);
+  test_pair<_Msg>(dim);
 }
 
-TEST(TestSuite, UInt8)   { test_suite<std_msgs::UInt8>(); }
-TEST(TestSuite, Int8)    { test_suite<std_msgs::Int8>(); }
-TEST(TestSuite, UInt16)  { test_suite<std_msgs::UInt16>(); }
-TEST(TestSuite, Int16)   { test_suite<std_msgs::Int16>(); }
-TEST(TestSuite, UInt32)  { test_suite<std_msgs::UInt32>(); }
-TEST(TestSuite, Int32)   { test_suite<std_msgs::Int32>(); }
-TEST(TestSuite, UInt64)  { test_suite<std_msgs::UInt64>(); }
-TEST(TestSuite, Int64)   { test_suite<std_msgs::Int64>(); }
-TEST(TestSuite, Float32) { test_suite<std_msgs::Float32>(); }
-TEST(TestSuite, Float64) { test_suite<std_msgs::Float64>(); }
-TEST(TestSuite, ColorRGBA) { test_suite<std_msgs::ColorRGBA>(); }
+TEST(TestSuite, UInt8)    { test_suite<std_msgs::UInt8>(1); }
+TEST(TestSuite, Int8)     { test_suite<std_msgs::Int8>(1); }
+TEST(TestSuite, UInt16)   { test_suite<std_msgs::UInt16>(1); }
+TEST(TestSuite, Int16)    { test_suite<std_msgs::Int16>(1); }
+TEST(TestSuite, UInt32)   { test_suite<std_msgs::UInt32>(1); }
+TEST(TestSuite, Int32)    { test_suite<std_msgs::Int32>(1); }
+TEST(TestSuite, UInt64)   { test_suite<std_msgs::UInt64>(1); }
+TEST(TestSuite, Int64)    { test_suite<std_msgs::Int64>(1); }
+TEST(TestSuite, Float32)  { test_suite<std_msgs::Float32>(1); }
+TEST(TestSuite, Float64)  { test_suite<std_msgs::Float64>(1); }
+TEST(TestSuite, ColorRGBA){ test_suite<std_msgs::ColorRGBA>(4); }
+
+TEST(TestSuite, Point32)   { test_suite<geometry_msgs::Point32>(3); }
+TEST(TestSuite, Point)     { test_suite<geometry_msgs::Point>(3); }
+TEST(TestSuite, Vector3)   { test_suite<geometry_msgs::Vector3>(3); }
+TEST(TestSuite, Pose2D)    { test_suite<geometry_msgs::Pose2D>(3); }
+TEST(TestSuite, Quaternion){ test_suite<geometry_msgs::Quaternion>(4); }
+TEST(TestSuite, Accel)     { test_suite<geometry_msgs::Accel>(6); }
+TEST(TestSuite, Twist)     { test_suite<geometry_msgs::Twist>(6); }
+TEST(TestSuite, Pose)      { test_suite<geometry_msgs::Pose>(7); }
 
 ////////////////////////////////////////////////////////////////////////////////
 

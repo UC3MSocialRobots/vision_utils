@@ -24,6 +24,7 @@ Some tests for string2msg functions
  */
 // Bring in gtest
 #include <gtest/gtest.h>
+#include <ros/ros.h>
 #include <std_msgs/Bool.h>
 #include <std_msgs/UInt8.h>
 #include <std_msgs/Int8.h>
@@ -39,50 +40,13 @@ Some tests for string2msg functions
 // vision_utils
 #include "vision_utils/string2msg.h"
 #include "vision_utils/msg2string.h"
+#include "vision_utils/iterable_to_string.h"
 
 void test_empty() {
   std_msgs::Empty in, out_msg;
   std::string out_str;
   ASSERT_TRUE(vision_utils::msg2string(in, out_str));
   ASSERT_TRUE(vision_utils::string2msg(out_str, out_msg));
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-template<class _Msg>
-void test_single_number(double data) {
-  _Msg in, out_msg;
-  in.data = (typename _Msg::_data_type) data;
-  std::string out_str;
-  ASSERT_TRUE(vision_utils::msg2string(in, out_str));
-  ASSERT_TRUE(vision_utils::string2msg(out_str, out_msg));
-  ASSERT_TRUE(fabs(in.data - out_msg.data) < 1E-3)
-      << "in:" << in << ", out_str:" << out_str << ", out_msg:" << out_msg;
-}
-
-template<class _Msg>
-void test_batch() {
-  test_single_number<_Msg>(0);
-  test_single_number<_Msg>(1);
-  test_single_number<_Msg>(-1);
-  test_single_number<_Msg>(42);
-  test_single_number<_Msg>(3.14);
-  test_single_number<_Msg>(-3.14);
-  test_single_number<_Msg>(M_PI);
-}
-
-TEST(TestSuite, batches_single_types) {
-  test_batch<std_msgs::Bool>();
-  test_batch<std_msgs::UInt8>();
-  test_batch<std_msgs::Int8>();
-  test_batch<std_msgs::UInt16>();
-  test_batch<std_msgs::Int16>();
-  test_batch<std_msgs::UInt32>();
-  test_batch<std_msgs::Int32>();
-  test_batch<std_msgs::UInt64>();
-  test_batch<std_msgs::Int64>();
-  test_batch<std_msgs::Float32>();
-  test_batch<std_msgs::Float64>();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -95,6 +59,7 @@ void test_string(std::string data) {
   ASSERT_TRUE(vision_utils::string2msg(out_str, out_msg));
   ASSERT_TRUE(in.data == out_msg.data && in.data == data)
       << "in:" << in << ", out_str:" << out_str << ", out_msg:" << out_msg;
+  ROS_INFO("out_str:'%s'", out_str.c_str());
 }
 
 TEST(TestSuite, string) {
@@ -106,146 +71,175 @@ TEST(TestSuite, string) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void test_rgba(double r, double g, double b, double a) {
-  std_msgs::ColorRGBA in, out_msg;
-  in.r = r;
-  in.g = g;
-  in.b = b;
-  in.a = a;
+template<class _Type, class _Msg>
+void test_dvec2msg(std::vector<double> & in_values) {
+  // cast vector to message,
+  _Msg in_msg, out_msg;
+  ASSERT_TRUE(vision_utils::dvec2msg(in_values, in_msg));
+  // then message to string,
   std::string out_str;
-  ASSERT_TRUE(vision_utils::msg2string(in, out_str));
+  ASSERT_TRUE(vision_utils::msg2string(in_msg, out_str));
+  // then string back to message,
   ASSERT_TRUE(vision_utils::string2msg(out_str, out_msg));
-  ASSERT_TRUE(in.r == out_msg.r && in.g == out_msg.g
-              && in.b == out_msg.b && in.a == out_msg.a)
-      << "in:" << in << ", out_str:" << out_str << ", out_msg:" << out_msg;
+  // then message then back to vector
+  std::vector<double> out_values;
+  ASSERT_TRUE(vision_utils::msg2dvec(out_msg, out_values));
+  // we should have the same number of values
+  unsigned int dim = in_values.size();
+  ASSERT_TRUE(out_values.size() == dim)
+      << "in_values:" << vision_utils::iterable_to_string(in_values)
+      << "; out:" << vision_utils::iterable_to_string(out_values);
+  // check all values are equal
+  for (unsigned int i = 0; i < dim; ++i) {
+    _Type in_value_cast = in_values[i];
+    double error = fabs( in_value_cast - out_values[i]),
+        max_error = 1E-3 * fabs(in_value_cast);
+    ASSERT_TRUE(error <= max_error)
+        << "in_values:" << vision_utils::iterable_to_string(in_values)
+        << ", in_value_cast:" << in_value_cast
+        << ", in_msg:" << in_msg
+        << ", out_str:'" << out_str
+        << "', out_msg:" << out_msg
+        << ", out_values:" << vision_utils::iterable_to_string(out_values)
+        << ", error:" << error
+        << ", max_error:" << max_error;
+  } // end for i
+  ROS_INFO("out_str:'%s'", out_str.c_str());
 }
 
-TEST(TestSuite, rgba) {
-  test_rgba(0,0,0,0);
-  test_rgba(1,0,1,0);
-  test_rgba(.1,.2,.3,.4);
+template<class _Type, class _Msg>
+void test_msg1(double x1) {
+  std::vector<double> in_values;
+  in_values.push_back(x1);
+  test_dvec2msg<_Type, _Msg>(in_values);
+}
+template<class _Type, class _Msg>
+void test_msg3(double x1, double x2, double x3) {
+  std::vector<double> in_values;
+  in_values.push_back(x1);
+  in_values.push_back(x2);
+  in_values.push_back(x3);
+  test_dvec2msg<_Type, _Msg>(in_values);
+}
+template<class _Type, class _Msg>
+void test_msg4(double x1, double x2, double x3, double x4) {
+  std::vector<double> in_values;
+  in_values.push_back(x1);
+  in_values.push_back(x2);
+  in_values.push_back(x3);
+  in_values.push_back(x4);
+  test_dvec2msg<_Type, _Msg>(in_values);
+}
+template<class _Type, class _Msg>
+void test_msg6(double x1, double x2, double x3, double x4, double x5, double x6) {
+  std::vector<double> in_values;
+  in_values.push_back(x1);
+  in_values.push_back(x2);
+  in_values.push_back(x3);
+  in_values.push_back(x4);
+  in_values.push_back(x5);
+  in_values.push_back(x6);
+  test_dvec2msg<_Type, _Msg>(in_values);
+}
+template<class _Type, class _Msg>
+void test_msg7(double x1, double x2, double x3, double x4, double x5,
+               double x6, double x7) {
+  std::vector<double> in_values;
+  in_values.push_back(x1);
+  in_values.push_back(x2);
+  in_values.push_back(x3);
+  in_values.push_back(x4);
+  in_values.push_back(x5);
+  in_values.push_back(x6);
+  in_values.push_back(x7);
+  test_dvec2msg<_Type, _Msg>(in_values);
 }
 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
+template<class _Type, class _Msg>
+void test_suite_msg1(bool skip_neg = false) {
+  test_msg1<_Type, _Msg>(0);
+  test_msg1<_Type, _Msg>(1);
+  test_msg1<_Type, _Msg>(42);
+  test_msg1<_Type, _Msg>(3.14);
+  test_msg1<_Type, _Msg>(M_PI);
+  test_msg1<_Type, _Msg>(123456789012345);
+  test_msg1<_Type, _Msg>(5E20);
+  if (skip_neg)
+    return;
+  test_msg1<_Type, _Msg>(-1);
+  test_msg1<_Type, _Msg>(-5E20);
+  test_msg1<_Type, _Msg>(-3.14);
+  test_msg1<_Type, _Msg>(-5E-20);
+}
+
+// std_msgs::Bool actually embeds a "unsigned char" and not a bool
+TEST(TestSuite, suite_Bool)    { test_suite_msg1<unsigned char, std_msgs::Bool>(); }
+TEST(TestSuite, suite_UInt8)   { test_suite_msg1<unsigned char, std_msgs::UInt8>(true); }
+TEST(TestSuite, suite_Int8)    { test_suite_msg1<char, std_msgs::Int8>(); }
+TEST(TestSuite, suite_UInt16)  { test_suite_msg1<unsigned short, std_msgs::UInt16>(true); }
+TEST(TestSuite, suite_Int16)   { test_suite_msg1<short, std_msgs::Int16>(); }
+TEST(TestSuite, suite_UInt32)  { test_suite_msg1<unsigned int, std_msgs::UInt32>(true); }
+TEST(TestSuite, suite_Int32)   { test_suite_msg1<int, std_msgs::Int32>(); }
+TEST(TestSuite, suite_UInt64)  { test_suite_msg1<unsigned long, std_msgs::UInt64>(true); }
+TEST(TestSuite, suite_Int64)   { test_suite_msg1<long, std_msgs::Int64>(); }
+TEST(TestSuite, suite_Float32) { test_suite_msg1<float, std_msgs::Float32>(); }
+TEST(TestSuite, suite_Float64) { test_suite_msg1<double, std_msgs::Float64>(); }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void test_xyzw(double x, double y, double z, double w) {
-  geometry_msgs::Quaternion in, out_msg;
-  in.x = x;
-  in.y = y;
-  in.z = z;
-  in.w = w;
-  std::string out_str;
-  ASSERT_TRUE(vision_utils::msg2string(in, out_str));
-  ASSERT_TRUE(vision_utils::string2msg(out_str, out_msg));
-  ASSERT_TRUE(in.x == out_msg.x && in.y == out_msg.y
-              && in.z == out_msg.z && in.w == out_msg.w)
-      << "in:" << in << ", out_str:" << out_str << ", out_msg:" << out_msg;
+template<class _Type, class _Msg>
+void test_suite_msg3() {
+  test_msg3<_Type, _Msg>(0,0,0);
+  test_msg3<_Type, _Msg>(1,0,-1);
+  test_msg3<_Type, _Msg>(.1,.2,.3);
+  test_msg3<_Type, _Msg>(123456789012345,0,0);
+  test_msg3<_Type, _Msg>(5E20,-5E20,5E-20);
 }
 
-TEST(TestSuite, Quaternion) {
-  test_xyzw(0,0,0,0);
-  test_xyzw(1,0,1,0);
-  test_xyzw(.1,.2,.3,.4);
-}
+TEST(TestSuite, Point32) { test_suite_msg3<float, geometry_msgs::Point32>(); }
+TEST(TestSuite, Point) { test_suite_msg3<double, geometry_msgs::Point>(); }
+TEST(TestSuite, Vector3) { test_suite_msg3<double, geometry_msgs::Vector3>(); }
+TEST(TestSuite, Pose2D) { test_suite_msg3<double, geometry_msgs::Pose2D>(); }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-template<class _Msg>
-void test_xyz(double x, double y, double z) {
-  _Msg in, out_msg;
-  in.x = x; in.y = y; in.z = z;
-  std::string out_str;
-  ASSERT_TRUE(vision_utils::msg2string(in, out_str));
-  ASSERT_TRUE(vision_utils::string2msg(out_str, out_msg));
-  ASSERT_TRUE(in.x == out_msg.x && in.y == out_msg.y && in.z == out_msg.z)
-      << "in:" << in << ", out_str:" << out_str << ", out_msg:" << out_msg;
+template<class _Type, class _Msg>
+void test_suite_msg4() {
+  test_msg4<_Type, _Msg>(0,0,0,0);
+  test_msg4<_Type, _Msg>(1,0,-1,1);
+  test_msg4<_Type, _Msg>(.1,.2,.3,.4);
+  test_msg4<_Type, _Msg>(123456789012345,0,0,0);
+  test_msg4<_Type, _Msg>(5E20,5E20,-5E20,0);
 }
 
-template<class _Msg>
-void test_xyz() {
-  test_xyz<_Msg>(0,0,0);
-  test_xyz<_Msg>(1,0,-1);
-  test_xyz<_Msg>(.1,.2,.3);
-}
-
-TEST(TestSuite, point) { test_xyz<geometry_msgs::Point>(); }
-TEST(TestSuite, point32) { test_xyz<geometry_msgs::Point32>(); }
-TEST(TestSuite, Vector3) { test_xyz<geometry_msgs::Vector3>(); }
+TEST(TestSuite, ColorRGBA) { test_suite_msg4<double, std_msgs::ColorRGBA>(); }
+TEST(TestSuite, Quaternion) { test_suite_msg4<double, geometry_msgs::Quaternion>(); }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-template<class _Msg>
-void test_xyt(double x, double y, double theta) {
-  _Msg in, out_msg;
-  in.x = x; in.y = y; in.theta = theta;
-  std::string out_str;
-  ASSERT_TRUE(vision_utils::msg2string(in, out_str));
-  ASSERT_TRUE(vision_utils::string2msg(out_str, out_msg));
-  ASSERT_TRUE(in.x == out_msg.x && in.y == out_msg.y && in.theta == out_msg.theta)
-      << "in:" << in << ", out_str:" << out_str << ", out_msg:" << out_msg;
+template<class _Type, class _Msg>
+void test_suite_msg6() {
+  test_msg6<_Type, _Msg>(0,0,0, 0,0,0);
+  test_msg6<_Type, _Msg>(1,0,-1, 1,0,-1);
+  test_msg6<_Type, _Msg>(.1,.2,.3, .4,.5,.6);
+  test_msg6<_Type, _Msg>(123456789012345,0,0,0,0,0);
+  test_msg6<_Type, _Msg>(5E20,-5E20,5E-20,0,0,0);
 }
 
-template<class _Msg>
-void test_xyt() {
-  test_xyt<_Msg>(0,0,0);
-  test_xyt<_Msg>(1,0,-1);
-  test_xyt<_Msg>(.1,.2,.3);
-}
-
-TEST(TestSuite, Pose2D) { test_xyt<geometry_msgs::Pose2D>(); }
+TEST(TestSuite, Accel) { test_suite_msg6<double, geometry_msgs::Accel>(); }
+TEST(TestSuite, Twist) { test_suite_msg6<double, geometry_msgs::Twist>(); }
 
 ////////////////////////////////////////////////////////////////////////////////
-
-template<class _Msg>
-void test_xyzxyz(double lx, double ly, double lz,
-                 double ax, double ay, double az) {
-  _Msg in, out_msg;
-  in.linear.x = lx;  in.linear.y = ly;  in.linear.z = lz;
-  in.angular.x = ax; in.angular.y = ay; in.angular.z = az;
-  std::string out_str;
-  ASSERT_TRUE(vision_utils::msg2string(in, out_str));
-  ASSERT_TRUE(vision_utils::string2msg(out_str, out_msg));
-  ASSERT_TRUE(in.linear.x == out_msg.linear.x && in.linear.y == out_msg.linear.y && in.linear.z == out_msg.linear.z
-              && in.angular.x == out_msg.angular.x
-              && in.angular.y == out_msg.angular.y
-              && in.angular.z == out_msg.angular.z)
-      << "in:" << in << ", out_str:" << out_str << ", out_msg:" << out_msg;
-}
-
-template<class _Msg>
-void test_xyzxyz() {
-  test_xyzxyz<_Msg>(0,0,0, 0,0,0);
-  test_xyzxyz<_Msg>(1,0,-1, 1,0,-1);
-  test_xyzxyz<_Msg>(.1,.2,.3, .4,.5,.6);
-}
-
-TEST(TestSuite, Accel) { test_xyzxyz<geometry_msgs::Accel>(); }
-TEST(TestSuite, Twist) { test_xyzxyz<geometry_msgs::Twist>(); }
-
-////////////////////////////////////////////////////////////////////////////////
-
-void test_Pose(double px, double py, double pz,
-                 double ox, double oy, double oz, double ow) {
-  geometry_msgs::Pose in, out_msg;
-  in.position.x = px;  in.position.y = py;  in.position.z = pz;
-  in.orientation.x = ox; in.orientation.y = oy; in.orientation.z = oz;
-  in.orientation.w = ow;
-  std::string out_str;
-  ASSERT_TRUE(vision_utils::msg2string(in, out_str));
-  ASSERT_TRUE(vision_utils::string2msg(out_str, out_msg));
-  ASSERT_TRUE(in.position.x == out_msg.position.x && in.position.y == out_msg.position.y && in.position.z == out_msg.position.z
-              && in.orientation.x == out_msg.orientation.x
-              && in.orientation.y == out_msg.orientation.y
-              && in.orientation.z == out_msg.orientation.z
-              && in.orientation.w == out_msg.orientation.w)
-      << "in:" << in << ", out_str:" << out_str << ", out_msg:" << out_msg;
-}
 
 TEST(TestSuite, Pose) {
-  test_Pose(0,0,0, 0,0,0, 1);
-  test_Pose(1,0,-1, 1,0,-1,1);
-  test_Pose(.1,.2,.3, .4,.5,.6,.7);
+  test_msg7<double, geometry_msgs::Pose>(0,0,0, 0,0,0, 1);
+  test_msg7<double, geometry_msgs::Pose>(1,0,-1, 1,0,-1,1);
+  test_msg7<double, geometry_msgs::Pose>(.1,.2,.3, .4,.5,.6,.7);
+  test_msg7<double, geometry_msgs::Pose>(123456789012345,0,0,0,0,0,0);
+  test_msg7<double, geometry_msgs::Pose>(5E20,-5E20,5E-20,0,0,0,0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
