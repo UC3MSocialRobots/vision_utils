@@ -11,21 +11,4 @@
   <license>LGPLv3</license>
   <!-- dependencies -->
   <buildtool_depend>catkin</buildtool_depend>
-  <!-- Ubuntu packages -->
-  <depend>curl</depend>
-  <depend>libgsl</depend>
-  <depend>libopenni2-dev</depend>
-  <!-- ROS -->
-  <depend>cv_bridge</depend>
-  <depend>image_geometry</depend>
-  <depend>image_transport</depend>
-  <depend>people_msgs</depend>
-  <depend>pcl_ros</depend>
-  <depend>rosbag</depend>
-  <!-- AD -->
-  <depend>cvstage</depend>
-
-  <export>
-    <rosdoc config="rosdoc.yaml" /> <!-- http://wiki.ros.org/rosdoc_lite -->
-  </export>
 </package>

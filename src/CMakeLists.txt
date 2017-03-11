@@ -1,6 +1,0 @@
-ADD_SUBDIRECTORY(compressed_rounded_image_transport)
-ADD_SUBDIRECTORY(databases_io)
-ADD_SUBDIRECTORY(image_utils)
-ADD_SUBDIRECTORY(ppl_benchmarking)
-ADD_SUBDIRECTORY(ppl_utils)
-ADD_SUBDIRECTORY(tests_opencv)
