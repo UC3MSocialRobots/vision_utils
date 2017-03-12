@@ -167,6 +167,13 @@ bool msg2string(const _Msg & in, std::string & out) {
   return true;
 }
 
+//! a version returning directly the string
+template<class _Msg>
+std::string msg2string(const _Msg & in) {
+  std::string out;
+  return (msg2string(in, out) ? "error" : out);
+}
+
 // template specifications
 //! std_msgs::String
 template<>
