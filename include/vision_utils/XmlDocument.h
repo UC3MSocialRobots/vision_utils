@@ -354,6 +354,20 @@ public:
   #endif
   }
 
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  bool has_node_attribute(const Node* node, const std::string & attribute) const {
+    if (node == NULL)
+      return false;
+
+  #if XML_USED_IMPLEMENTATION == XML_IMPLEMENTATION_MXML
+    assert(false); // not implemented
+  #elif XML_USED_IMPLEMENTATION == XML_IMPLEMENTATION_RAPID_XML
+    return (node->first_attribute(attribute.c_str()) != NULL);
+  #endif
+  }
+
   //////////////////////////////////////////////////////////////////////////////
 
   /*!

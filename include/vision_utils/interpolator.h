@@ -73,7 +73,7 @@ public:
     if (_msg_dim == 0) { // empty messages
       return true;
     }
-    if (_msg_dim < 0 || _splines.size() != _msg_dim) {
+    if (_msg_dim < 0 || (int) _splines.size() != _msg_dim) {
       ROS_WARN("Spline was not trained with the good type of data!");
       return false;
     }
