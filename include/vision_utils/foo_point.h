@@ -36,9 +36,16 @@ public:
     return FooPoint2<_Type>(x - B.x, y - B.y);
   }
 
-  //! the * operator, that multiplies field by field
-  FooPoint2<_Type> operator * (const float & alpha) const {
-    return FooPoint2<_Type>(alpha * x, alpha * y);
+  //! the *= operator, that multiplies field by field
+  void operator *= (const double & alpha) {
+    x = alpha * x;
+    y = alpha * y;
+  }
+
+  //! the += operator, that adds field by field
+  void operator += (const FooPoint2<_Type>& B) {
+    x += B.x;
+    y += B.y;
   }
 
   //! the dot operator
@@ -60,9 +67,25 @@ public:
     return ans.str();
   }
 
+  double norm() const { return hypot(x, y); }
+  void renorm(const double & newnorm) {
+    double currn = norm();
+    if (fabs(currn) < 1E-6)
+      return;
+    x *= newnorm / currn;
+    y *= newnorm / currn;
+  }
+
+
   _Type x; //!< the first data field
   _Type y; //!< the second data field
 }; // end FooPoint2
+
+ //! the * operator, that multiplies field by field
+template<class _Type>
+static FooPoint2<_Type> operator * (double alpha, const FooPoint2<_Type> & p) {
+  return FooPoint2<_Type>(alpha * p.x, alpha * p.y);
+}
 
 typedef FooPoint2<int> FooPoint2i;
 typedef FooPoint2<float> FooPoint2f;

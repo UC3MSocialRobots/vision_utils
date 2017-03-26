@@ -25,15 +25,17 @@ ________________________________________________________________________________
 #ifndef SDL_UTILS_H
 #define SDL_UTILS_H
 
+// vision_utils
+#include <vision_utils/foo_point.h>
+#include <vision_utils/timer.h>
+#include <vision_utils/point_inside_polygon.h>
+// Ros
+#include <sensor_msgs/Image.h>
+// C++
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <SDL2/SDL2_gfxPrimitives.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_mixer.h>
-#include "timer.h"
 #include <sstream>
 #include <vector>
-#include <sensor_msgs/Image.h>
 
 // uncomment to render bounding boxes and to display function calls in terminals
 //#define DEBUG
@@ -78,103 +80,8 @@ bool operator ==(const SDL_Color &A, const SDL_Color &B) {
   return A.r == B.r && A.g == B.g && A.b == B.b && A.a == B.a;
 }
 
-
-/*! a generic templated class for 2D points.
-  It contains a x and a y field so as to be compatible
-  with OpenCV Point2d*
-*/
-template<class _Type>
-class Point2 {
-public:
-  typedef _Type value_type; //!< an alias for the data type (compat with OpenCV)
-
-  //! a constructor without arguments
-  Point2() : x(0), y(0) {}
-
-  //! a constructor
-  Point2(const _Type & x_, const _Type & y_) :
-    x(x_), y(y_) {}
-
-  //! the == operator, for some std algorithms
-  bool operator== (const Point2<_Type>& b) const {
-    return (x == b.x) && (y == b.y);
-  }
-
-  double norm() const { return hypot(x, y); }
-  void renorm(const double & newnorm) {
-    double currn = norm();
-    if (fabs(currn) < 1E-6)
-      return;
-    x *= newnorm / currn;
-    y *= newnorm / currn;
-  }
-
-  //! the + operator, that adds field by field
-  Point2<_Type> operator + (const Point2<_Type>& B) const {
-    return Point2<_Type>(x + B.x, y + B.y);
-  }
-
-  //! the - operator, that substracts field by field
-  Point2<_Type> operator - (const Point2<_Type>& B) const {
-    return Point2<_Type>(x - B.x, y - B.y);
-  }
-
-  //! the * operator, that multiplies field by field
-  void operator *= (const double & alpha) {
-    x = alpha * x;
-    y = alpha * y;
-  }
-
-  //! the * operator, that multiplies field by field
-  void operator += (const Point2<_Type>& B) {
-    x += B.x;
-    y += B.y;
-  }
-
-  //! the dot operator
-  inline _Type dot(const Point2<_Type>& B) const {
-    return x * B.x + y * B.y;
-  }
-
-  //! define the output to a stream
-  friend std::ostream & operator << (std::ostream & stream,
-                                     const Point2<_Type> & P) {
-    stream << P.to_string();
-    return stream;
-  }
-
-  std::string to_string() const {
-    std::ostringstream out;
-    out << '[' << x << ", " << y << ']';
-    return out.str();
-  }
-
-  SDL_Point to_sdl() const {
-    SDL_Point ans;
-    ans.x = x;
-    ans.y = y;
-    return ans;
-  }
-  //implicit conversion
-  operator SDL_Point() const { return to_sdl(); }
-
-  template<class _Type2>
-  Point2<_Type2> recast() const {
-    return Point2<_Type2>(x, y);
-  }
-
-  _Type x; //!< the first data field
-  _Type y; //!< the second data field
-}; // end Point2
-
-//! the * operator, that multiplies field by field
-template<class _Type>
-static Point2<_Type> operator * (double alpha, const Point2<_Type> & p) {
-  return Point2<_Type>(alpha * p.x, alpha * p.y);
-}
-
-typedef Point2<int> Point2i;
-typedef Point2<double> Point2d;
+typedef vision_utils::FooPoint2i Point2i;
+typedef vision_utils::FooPoint2d Point2d;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -184,48 +91,6 @@ inline Point2d rotate(const Point2d &pt, double angle) {
   ans.x = ROTATE_COSSIN_X(pt.x, pt.y, cosa, sina);
   ans.y = ROTATE_COSSIN_Y(pt.x, pt.y, cosa, sina);
   return ans;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-/*!
- * \brief   detect if a point is inside a polygon - return true or false
- *  http://en.wikipedia.org/wiki/Point_in_polygon#Winding_number_algorithm
-     *
- * \param   p the point
- * \param   poly the polygon
- * \return  true if the point is in the polygon
- */
-static inline bool point_inside_polygon(const Point2d & p,
-                                        const std::vector<Point2d> & poly) {
-  /*
-     * algo from http://www.visibone.com/inpoly/
-     */
-  Point2d p_old, p_new, p1, p2;
-  bool inside = false;
-  int npoints = poly.size();
-  if (npoints < 3) {
-    return false;
-  }
-  p_old = poly[npoints-1];
-  for (int i=0 ; i < npoints ; i++) {
-    p_new = poly[i];
-    if (p_new.x > p_old.x) {
-      p1 = p_old;
-      p2 = p_new;
-    }
-    else {
-      p1 = p_new;
-      p2 = p_old;
-    }
-    if ((p_new.x < p.x) == (p.x <= p_old.x)          /* edge "open" at one end */
-        && 1.f * (p.y-p1.y) * (p2.x-p1.x) < 1.f * (p2.y-p1.y) * (p.x-p1.x)) {
-      inside = !inside;
-    }
-    p_old.x = p_new.x;
-    p_old.y = p_new.y;
-  } // end loop i
-  return(inside);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -363,100 +228,6 @@ SDL_Surface *ScaleSurface(SDL_Surface *Surface, Uint16 Width, Uint16 Height)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void render_point(SDL_Renderer* renderer, Point2d p, int thickness,
-                  Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255) {
-  Uint8 r0, g0, b0, a0; // get original colors of the renderer
-  SDL_GetRenderDrawColor( renderer, &r0, &g0, &b0, &a0 );
-  SDL_SetRenderDrawColor( renderer, r, g, b, a );
-  SDL_Rect fillRect = { (int) (p.x-thickness/2),
-                        (int) (p.y-thickness/2),
-                        thickness, thickness };
-  SDL_RenderFillRect( renderer, &fillRect );
-  SDL_SetRenderDrawColor( renderer, r0, g0, b0, a0 );
-}
-
-//! \caution CPU costs are much higher if \arg thickness > 1
-bool render_line(SDL_Renderer* renderer, Point2d pt1, Point2d pt2,
-                 Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, int thickness=1) {
-  Uint8 r0, g0, b0, a0; // get original colors of the renderer
-  SDL_GetRenderDrawColor( renderer, &r0, &g0, &b0, &a0 );
-  // https://stackoverflow.com/questions/21560384/how-to-specify-width-or-point-size-in-sdl-2-0-draw-points-lines-or-rect
-  if (thickness == 1) {
-    SDL_SetRenderDrawColor( renderer, r, g, b, a );
-    if (SDL_RenderDrawLine(renderer, pt1.x, pt1.y, pt2.x, pt2.y) != 0) {
-      printf("SDL_RenderDrawLine() returned an error!\n");
-      return false;
-    }
-  }
-  // http://www.ferzkopp.net/Software/SDL2_gfx/Docs/html/_s_d_l2__gfx_primitives_8h.html#a247136a562abec2649718d38f5819b44
-  else if (thickLineRGBA(renderer, pt1.x, pt1.y, pt2.x, pt2.y, thickness, r, g, b, a) != 0) {
-    printf("thickLineRGBA() returned an error!\n");
-    return false;
-  }
-  SDL_SetRenderDrawColor( renderer, r0, g0, b0, a0 );
-  return true;
-}
-
-//! \caution CPU costs are much higher if \arg thickness > 1
-bool render_polygon(SDL_Renderer* renderer, const std::vector<Point2d> & poly,
-                    Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, int thickness=1) {
-  unsigned int npts = poly.size();
-  if (npts == 0)
-    return true;
-  bool ok = true;
-  for (unsigned int i = 0; i < npts-1; ++i)
-    ok = ok && render_line(renderer, poly[i], poly[i+1], r, g, b, a, thickness);
-  ok = ok && render_line(renderer, poly[0], poly[npts-1], r, g, b, a, thickness);
-  return ok;
-}
-
-//! \caution CPU costs are much higher if \arg thickness > 1
-bool render_rect(SDL_Renderer* renderer, const SDL_Rect & rect,
-                 Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, int thickness=1) {
-  std::vector<Point2d> pts;
-  pts.push_back(Point2d(rect.x, rect.y));
-  pts.push_back(Point2d(rect.x, rect.y+rect.h));
-  pts.push_back(Point2d(rect.x+rect.w, rect.y+rect.h));
-  pts.push_back(Point2d(rect.x+rect.w, rect.y));
-  return render_polygon(renderer, pts, r, g, b, a, thickness);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-//! \caution CPU costs are much higher if \arg thickness > 1
-inline bool render_arrow
-(SDL_Renderer* renderer, const Point2d & pt1, const Point2d & pt2,
- Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, int thickness=1) {
-  // draw the body of the arrow
-  if (!render_line(renderer, pt1, pt2, r, g, b, a, thickness))
-    return false;
-  // compute parameters of the arrow
-  double side_strokes_length = hypot(pt2.y - pt1.y, pt2.x - pt1.x) / 3;
-  double arrow_orien = atan2(pt2.y - pt1.y, pt2.x - pt1.x);
-  Point2d pt_end;
-  // draw first side stroke
-  pt_end.x  = pt2.x + side_strokes_length * cos(arrow_orien + M_PI + M_PI / 6);
-  pt_end.y  = pt2.y + side_strokes_length * sin(arrow_orien + M_PI + M_PI / 6);
-  if (!render_line(renderer, pt2, pt_end, r, g, b, a, thickness))
-    return false;
-  // draw second side stroke
-  pt_end.x  = pt2.x + side_strokes_length * cos(arrow_orien + M_PI - M_PI / 6);
-  pt_end.y  = pt2.y + side_strokes_length * sin(arrow_orien + M_PI - M_PI / 6);
-  if (!render_line(renderer, pt2, pt_end, r, g, b, a, thickness))
-    return false;
-  return true;
-} // end draw_arrow();
-
-////////////////////////////////////////////////////////////////////////////////
-
-inline void Mix_FreeChunk_safe(Mix_Chunk * & chunk) {
-  if (chunk)
-    Mix_FreeChunk(chunk);
-  chunk = NULL;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
 class Texture {
 public:
   Texture() {
@@ -503,7 +274,7 @@ public:
       printf( "Unable to load image %s! SDL Error: %s\n", str.c_str(), SDL_GetError() );
       return false;
     }
-    return from_surface(renderer, goalwidth, goalheight, goalscale);
+    return from_inner_surface(renderer, goalwidth, goalheight, goalscale);
   }// end from_file()
 
   //////////////////////////////////////////////////////////////////////////////
@@ -512,6 +283,7 @@ public:
                       int goalwidth = -1, int goalheight = -1, double goalscale = -1) {
     DEBUG_PRINT("Texture::from_ros_image(), goal:(%i, %i, %g)\n",
                 goalwidth, goalheight, goalscale);
+    free();
     // Load image as SDL_Surface
     const unsigned char* data = img.data.data();
     int depth = 24; // the depth of the surface in bits
@@ -557,13 +329,99 @@ public:
               SDL_GetError() );
       return false;
     }
-    return from_surface(renderer, goalwidth, goalheight, goalscale);
+    return from_inner_surface(renderer, goalwidth, goalheight, goalscale);
   } // end from_ros_image()
 
   //////////////////////////////////////////////////////////////////////////////
 
-  bool from_surface(SDL_Renderer* renderer,
-                    int goalwidth = -1, int goalheight = -1, double goalscale = -1) {
+  inline bool from_surface(SDL_Surface* s,
+                           SDL_Renderer* renderer) {
+    free();
+    _sdlsurface_raw = s;
+    return from_inner_surface(renderer, -1, -1, -1);
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  bool render( SDL_Renderer* renderer, const Point2i & p,
+               double scale = 1, SDL_Rect* clip = NULL,
+               double angle_rad = 0, Point2d center = Point2d(-1, -1),
+               SDL_RendererFlip flip = SDL_FLIP_NONE) const {
+    //Set rendering space and render to screen
+    SDL_Rect renderQuad = { p.x, p.y,
+                            (int) (scale * _width),
+                            (int) (scale * _height) };
+
+    //Set clip rendering dimensions
+    if( clip != NULL ) {
+      renderQuad.w = scale * clip->w;
+      renderQuad.h = scale * clip->h;
+    }
+    //Render to screen
+    if (flip == SDL_FLIP_NONE && fabs(angle_rad) < 1E-2) {
+      bool ok = (SDL_RenderCopy( renderer, _sdltex, clip, &renderQuad ) == 0);
+      if (!ok)
+        printf("SDL_RenderCopy() returned an error '%s'!\n", SDL_GetError());
+      return ok;
+    }
+
+    SDL_Point psdl = { p.x, p.y };
+    SDL_Point* psdl_ptr = (center.x < 0 && center.y < 0 ? NULL : &psdl);
+    bool ok = (SDL_RenderCopyEx( renderer, _sdltex, clip, &renderQuad,
+                                 angle_rad * RAD2DEG, psdl_ptr, flip ) == 0);
+    if (!ok)
+      printf("SDL_RenderCopyEx() returned an error '%s'!\n", SDL_GetError());
+    return ok;
+  } // end render()
+
+  inline bool render_center( SDL_Renderer* renderer, const Point2i & p,
+                             double scale = 1, SDL_Rect* clip = NULL,
+                             double angle_rad = 0, Point2d center = Point2d(-1, -1),
+                             SDL_RendererFlip flip = SDL_FLIP_NONE) const {
+    Point2i p_c;
+    p_c.x = p.x - scale*this->center().x;
+    p_c.y = p.y - scale*this->center().y;
+    return render( renderer, p_c, scale, clip, angle_rad, center, flip);
+  } // end render_center()
+
+  inline bool render_center( SDL_Renderer* renderer, const Point2d & p,
+                             double scale = 1, SDL_Rect* clip = NULL,
+                             double angle_rad = 0, Point2d center = Point2d(-1, -1),
+                             SDL_RendererFlip flip = SDL_FLIP_NONE) const {
+    return render_center(renderer, Point2i(p.x, p.y), scale, clip, angle_rad, center, flip);
+  } // end render_center()
+
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  // http://www.sdltutorials.com/sdl-per-pixel-collision
+  //! \return alpha in [0, 255], or < 0 if out of bounds
+  inline int get_alpha(const Point2d & p) const {
+    if (p.x < 0 || p.x >= get_width()
+        || p.y < 0 || p.y >= get_height())
+      return -1;
+    Uint8 red, green, blue, alpha;
+    SDL_GetRGBA(getpixel(_sdlsurface_raw, p.x, p.y),
+                _sdlsurface_raw->format, &red, &green, &blue, &alpha);
+    return alpha;
+  }
+
+  //Image dimensions
+  int _width, _height;
+
+  //////////////////////////////////////////////////////////////////////////////
+
+  //! get raw fields of the texture. Only use if you know what you are doing.
+  inline SDL_Surface* get_sdlsurface_raw()       { return _sdlsurface_raw; }
+  //! get raw fields of the texture. Only use if you know what you are doing.
+  inline SDL_Texture* get_sdltex()       { return _sdltex; }
+
+  //////////////////////////////////////////////////////////////////////////////
+private:
+  //////////////////////////////////////////////////////////////////////////////
+
+  bool from_inner_surface(SDL_Renderer* renderer,
+                          int goalwidth = -1, int goalheight = -1, double goalscale = -1) {
     SDL_Surface* src_surface = _sdlsurface_raw;
     if (goalwidth <= 0 && goalheight <= 0 && goalscale <= 0) {
       _resize_scale = 1;
@@ -596,106 +454,6 @@ public:
 
   //////////////////////////////////////////////////////////////////////////////
 
-  bool from_rendered_text(SDL_Renderer* renderer,
-                          TTF_Font *font,
-                          std::string textureText,
-                          Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255,
-                          Uint8 bgr = 0, Uint8 bgg = 0, Uint8 bgb = 0, Uint8 bga = 0) {
-    //Get rid of preexisting texture
-    free();
-    //Render text surface
-    SDL_Color fg = {r, g, b, a};
-    if (bga <= 0)
-      _sdlsurface_raw = TTF_RenderText_Solid( font, textureText.c_str(), fg );
-    else {
-      SDL_Color bg = {bgr, bgg, bgb, bga};
-      _sdlsurface_raw = TTF_RenderText_Shaded( font, textureText.c_str(), fg, bg );
-    }
-    if( _sdlsurface_raw == NULL ) {
-      printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
-      return false;
-    }
-    //Create texture from surface pixels
-    _sdltex = SDL_CreateTextureFromSurface( renderer, _sdlsurface_raw );
-    if( _sdltex == NULL ) {
-      printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
-      return false;
-    }
-    //Get image dimensions
-    _width = _sdlsurface_raw->w;
-    _height = _sdlsurface_raw->h;
-    return true;
-  }
-
-  //////////////////////////////////////////////////////////////////////////////
-
-  bool render( SDL_Renderer* renderer, const Point2i & p,
-               double scale = 1, SDL_Rect* clip = NULL,
-               double angle_rad = 0, Point2d center = Point2d(-1, -1),
-               SDL_RendererFlip flip = SDL_FLIP_NONE) const {
-    //Set rendering space and render to screen
-    SDL_Rect renderQuad = { p.x, p.y,
-                            (int) (scale * _width),
-                            (int) (scale * _height) };
-
-    //Set clip rendering dimensions
-    if( clip != NULL ) {
-      renderQuad.w = scale * clip->w;
-      renderQuad.h = scale * clip->h;
-    }
-    //Render to screen
-    if (flip == SDL_FLIP_NONE && fabs(angle_rad) < 1E-2) {
-      bool ok = (SDL_RenderCopy( renderer, _sdltex, clip, &renderQuad ) == 0);
-      if (!ok)
-        printf("SDL_RenderCopy() returned an error '%s'!\n", SDL_GetError());
-      return ok;
-    }
-
-    SDL_Point psdl = p.to_sdl();
-    SDL_Point* psdl_ptr = (center.x < 0 && center.y < 0 ? NULL : &psdl);
-    bool ok = (SDL_RenderCopyEx( renderer, _sdltex, clip, &renderQuad,
-                                 angle_rad * RAD2DEG, psdl_ptr, flip ) == 0);
-    if (!ok)
-      printf("SDL_RenderCopyEx() returned an error '%s'!\n", SDL_GetError());
-    return ok;
-  } // end render()
-
-  inline bool render_center( SDL_Renderer* renderer, const Point2i & p,
-                             double scale = 1, SDL_Rect* clip = NULL,
-                             double angle_rad = 0, Point2d center = Point2d(-1, -1),
-                             SDL_RendererFlip flip = SDL_FLIP_NONE) const {
-    Point2i p_c;
-    p_c.x = p.x - scale*this->center().x;
-    p_c.y = p.y - scale*this->center().y;
-    return render( renderer, p_c, scale, clip, angle_rad, center, flip);
-  } // end render_center()
-
-  inline bool render_center( SDL_Renderer* renderer, const Point2d & p,
-                             double scale = 1, SDL_Rect* clip = NULL,
-                             double angle_rad = 0, Point2d center = Point2d(-1, -1),
-                             SDL_RendererFlip flip = SDL_FLIP_NONE) const {
-    return render_center(renderer, p.recast<int>(), scale, clip, angle_rad, center, flip);
-  } // end render_center()
-
-
-  //////////////////////////////////////////////////////////////////////////////
-
-  // http://www.sdltutorials.com/sdl-per-pixel-collision
-  //! \return alpha in [0, 255], or < 0 if out of bounds
-  inline int get_alpha(const Point2d & p) const {
-    if (p.x < 0 || p.x >= get_width()
-        || p.y < 0 || p.y >= get_height())
-      return -1;
-    Uint8 red, green, blue, alpha;
-    SDL_GetRGBA(getpixel(_sdlsurface_raw, p.x, p.y),
-                _sdlsurface_raw->format, &red, &green, &blue, &alpha);
-    return alpha;
-  }
-
-  //Image dimensions
-  int _width, _height;
-
-private:
   //The actual hardware texture
   SDL_Texture* _sdltex;
   SDL_Surface* _sdlsurface_raw, *_sdlsurface_rescaled;
@@ -865,8 +623,8 @@ public:
       for (int y = 0; y < inter.h; ++y) {
         _collision_pt.y = inter.y + y;
         // first check the test pt belongs to the tight bbox
-        if (!point_inside_polygon(_collision_pt, aT)
-            || !point_inside_polygon(_collision_pt, bT))
+        if (!vision_utils::point_inside_polygon(_collision_pt, aT)
+            || !vision_utils::point_inside_polygon(_collision_pt, bT))
           continue;
         // transform test point in picture frame
         Point2d PA = world_pos2offset(_collision_pt);

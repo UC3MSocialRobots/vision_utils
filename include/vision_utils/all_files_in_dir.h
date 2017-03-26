@@ -72,6 +72,7 @@ inline int all_files_in_dir(const std::string & folder,
       ans.push_back(filename);
   }
   closedir (dir);
+  std::sort(ans.begin(), ans.end());
 #elif 0
   std::ostringstream order;
   order << "ls -1 " << folder_and_slash << "*" << pattern << "*";
