@@ -141,6 +141,16 @@ bool IsPolygonsIntersecting(const std::vector<Point2d> & A,
 
 ////////////////////////////////////////////////////////////////////////////////
 
+Uint32 color2int(const SDL_Color & c) {
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+  return c.r << 16 | c.g << 8 | c.b;
+#else
+  return c.r | c.g << 8 | c.b << 16;
+#endif
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 // https://www.libsdl.org/release/SDL-1.2.15/docs/html/guidevideo.html
 Uint32 getpixel(SDL_Surface *surface, int x, int y) {
   int bpp = surface->format->BytesPerPixel;
