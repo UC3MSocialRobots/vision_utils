@@ -58,6 +58,8 @@ ________________________________________________________________________________
 #define ROTATE_ANGLE_Y(x, y, angle) \
   (ROTATE_COSSIN_Y(x, y, cos(angle), sin(angle)) )
 
+////////////////////////////////////////////////////////////////////////////////
+
 SDL_Color SDL_Color_ctor(Uint8 r = 0, Uint8 g = 0, Uint8 b = 0, Uint8 a = 255)  {
   SDL_Color ans;
   ans.r = r;
@@ -66,6 +68,31 @@ SDL_Color SDL_Color_ctor(Uint8 r = 0, Uint8 g = 0, Uint8 b = 0, Uint8 a = 255)  
   ans.a = a;
   return ans;
 }
+
+////////////////////////////////////////////////////////////////////////////////
+
+inline Uint32 color2int(const SDL_Color & c) {
+  Uint32 ans = * ((Uint32*) &c);
+  return ans;
+}
+inline Uint32 color2int(Uint8 r = 0, Uint8 g = 0, Uint8 b = 0, Uint8 a = 255) {
+  return color2int(SDL_Color_ctor(r, g, b, a));
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+inline SDL_Color int2color(const Uint32 & i) {
+  SDL_Color c = * ((SDL_Color*) &i);
+  return c;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+bool operator ==(const SDL_Color &A, const SDL_Color &B) {
+  return A.r == B.r && A.g == B.g && A.b == B.b && A.a == B.a;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 
 SDL_Rect SDL_Rect_ctor(int x, int y, int w, int h)  {
   SDL_Rect ans;
@@ -76,9 +103,7 @@ SDL_Rect SDL_Rect_ctor(int x, int y, int w, int h)  {
   return ans;
 }
 
-bool operator ==(const SDL_Color &A, const SDL_Color &B) {
-  return A.r == B.r && A.g == B.g && A.b == B.b && A.a == B.a;
-}
+////////////////////////////////////////////////////////////////////////////////
 
 typedef vision_utils::FooPoint2i Point2i;
 typedef vision_utils::FooPoint2d Point2d;
@@ -137,16 +162,6 @@ bool IsPolygonsIntersecting(const std::vector<Point2d> & A,
   if (!reverse_already_checked)
     return true;
   return IsPolygonsIntersecting(B, A, false);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-Uint32 color2int(const SDL_Color & c) {
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-  return c.r << 16 | c.g << 8 | c.b;
-#else
-  return c.r | c.g << 8 | c.b << 16;
-#endif
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -344,10 +359,18 @@ public:
 
   //////////////////////////////////////////////////////////////////////////////
 
-  inline bool from_surface(SDL_Surface* s,
+  inline bool from_surface(SDL_Surface* in,
                            SDL_Renderer* renderer) {
     free();
-    _sdlsurface_raw = s;
+    // copy surface
+    _sdlsurface_raw = SDL_CreateRGBSurface(in->flags, in->w, in->h,
+                                           in->format->BitsPerPixel,
+                                           in->format->Rmask, in->format->Gmask,
+                                           in->format->Bmask, in->format->Amask);
+    if (SDL_BlitSurface(in, NULL, _sdlsurface_raw, NULL) < 0) {
+      printf("SDL_BlitSurface() returned an error: '%s'\n", SDL_GetError());
+      return false;
+    }
     return from_inner_surface(renderer, -1, -1, -1);
   }
 
