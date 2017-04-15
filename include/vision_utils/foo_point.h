@@ -1,6 +1,7 @@
 #ifndef FOO_POINT_H
 #define FOO_POINT_H
 
+#include <math.h>
 #include <sstream>
 
 namespace vision_utils {
