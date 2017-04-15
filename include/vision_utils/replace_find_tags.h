@@ -6,7 +6,7 @@
 
 namespace vision_utils {
 
-std::string replace_find_tags(const std::string & path) {
+inline std::string replace_find_tags(const std::string & path) {
   std::string out = path, pattern_begin = "$(find ", pattern_end = ")";
   size_t begin = 0, end = 0, pbs = pattern_begin.size();
   while(true) {
