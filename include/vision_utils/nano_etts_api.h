@@ -28,7 +28,7 @@ public:
   }
 
   inline void say_text(const std::string & sentence) {
-    printf("NanoEttsApi:say_text('%s')\n", sentence.c_str());
+    ROS_INFO("NanoEttsApi:say_text('%s')", sentence.c_str());
     if (_pub.getTopic() == "")
       advertise();
     std_msgs::String msg;
