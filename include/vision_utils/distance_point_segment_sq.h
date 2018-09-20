@@ -45,7 +45,9 @@ static inline double distance_point_segment_sq(const Point2 & pt,
                                                const Point2 & seg2,
                                                Point2 & proj) {
   // compute the projection of P3 on [P1, P2]
-  Point2 diff (seg2.x - seg1.x, seg2.y - seg1.y);
+  Point2 diff;
+  diff.x = seg2.x - seg1.x;
+  diff.y = seg2.y - seg1.y;
   double u = 1.f * ((pt.x - seg1.x) * diff.x + (pt.y - seg1.y) * diff.y)
              / (diff.x * diff.x + diff.y * diff.y);
 
