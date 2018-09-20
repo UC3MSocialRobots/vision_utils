@@ -48,8 +48,10 @@ static inline double distance_point_segment_sq(const Point2 & pt,
   Point2 diff;
   diff.x = seg2.x - seg1.x;
   diff.y = seg2.y - seg1.y;
-  double u = 1.f * ((pt.x - seg1.x) * diff.x + (pt.y - seg1.y) * diff.y)
-             / (diff.x * diff.x + diff.y * diff.y);
+  double u = -1; // default
+  double denom = diff.x * diff.x + diff.y * diff.y;
+  if (denom > 0)
+    u = 1.f * ((pt.x - seg1.x) * diff.x + (pt.y - seg1.y) * diff.y) / denom;
 
   if (u < 0) { // the projection is before seg1
     proj.x = seg1.x;
